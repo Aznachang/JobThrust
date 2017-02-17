@@ -4,9 +4,9 @@
 
 ## Team
 
-  - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+  - __Product Owner__: James Briggs
+  - __Scrum Master__: Marcus Svehlak
+  - __Development Team Members__: Ahmed Zoghayyer, Albert Chang
 
 ## Table of Contents
 
@@ -24,11 +24,13 @@
 
 ## Requirements
 
-- Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
+- Node 
+- React
+- Redux
+- React native
+- postgres
+- Express
+
 
 ## Development
 
