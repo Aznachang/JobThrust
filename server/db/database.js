@@ -1,5 +1,8 @@
 var Sequelize = require('sequelize');
-var db = new Sequelize('jobseeker', 'root', '');
+var db = new Sequelize('jobseeker', null, null, {
+  dialect: "postgres",
+  port: 5432
+});
 
 var User = db.define('user', {
   id: {type:Sequelize.STRING, primaryKey: true},
