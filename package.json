@@ -1,0 +1,31 @@
+{
+  "name": "thesis-project",
+  "version": "1.0.0",
+  "description": "Q-Avo",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zoghayyer/hrsf53-thesis.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zoghayyer/hrsf53-thesis/issues"
+  },
+  "homepage": "https://github.com/Zoghayyer/hrsf53-thesis#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.16.1",
+    "express": "^4.14.1",
+    "express-partials": "^0.3.0",
+    "express-session": "^1.13.0",
+    "mysql": "^2.13.0",
+    "nodemon": "^1.11.0",
+    "passport": "^0.3.2",
+    "request": "^2.69.0",
+    "sequelize": "^3.30.2"
+  }
+}
