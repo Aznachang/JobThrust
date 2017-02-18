@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize');
 var db = new Sequelize('jobseeker', null, null, {
   dialect: "postgres",
-  port: 5432
+  port: 3000
 });
 
 var User = db.define('user', {
@@ -16,8 +16,6 @@ var Job = db.define('job', {
   description: Sequelize.STRING,
   full_time: Sequelize.BOOLEAN
 });
-//creates a corresponding table for that model, sync function cannot update tables. only creates if not exists
-//force:true deletes the table completely and recreates a new table with new updates
 
 var Application = db.define('application', {
   jobId: Sequelize.INTEGER,
