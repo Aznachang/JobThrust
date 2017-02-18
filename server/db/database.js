@@ -16,10 +16,13 @@ var Job = db.define('job', {
   description: Sequelize.STRING,
   full_time: Sequelize.BOOLEAN
 });
-
+//creates a corresponding table for that model, sync function cannot update tables. only creates if not exists
+//force:true deletes the table completely and recreates a new table with new updates
 
 var Application = db.define('application', {
-  full_time: {type:Sequelize.STRING, allowNull: true}
+  jobId: Sequelize.INTEGER,
+  userId: Sequelize.INTEGER,
+  stageId: Sequelize.INTEGER
 });
 
 var Company = db.define('company', {
@@ -31,31 +34,6 @@ var Stage = db.define('stage', {
   name: Sequelize.STRING
 });
 
-// Job : User (N : M ) --> 'Application' is the JOIN table
-User.belongsToMany(Job, {through: Application});
-Job.belongsToMany(User, {through: Application});
-
-// Stage : Application (1 : M)
-Stage.hasMany(Application);
-Application.belongsTo(Stage);
-
-var newUser = User.create({
-  id:'wqrewqtreytup',
-  token: 'aaaaaaaa',
-  email:'hello@gmail.com',
-  name: 'Jawwad'
-});
-
-var newJob = Job.create({
-  title: 'Software Engineering-google',
-  description: 'coder',
-  full_time: true
-});
-
-Stage.sync();
-Application.sync();
-Company.sync();
-User.sync();
-Job.sync();
+db.sync({force:true});
 
 module.exports = db;
