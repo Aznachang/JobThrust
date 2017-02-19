@@ -31,7 +31,7 @@ export default class SearchContainer extends React.Component {
       format: 'json',
       v: '2'
     }, function(json){
-      context.setState({results: context.state.results.concat(json.results)})
+      context.setState({results: json.results})
     });
   }
 

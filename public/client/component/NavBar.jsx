@@ -10,7 +10,7 @@ class NavBar extends React.Component {
 
   render() {
     var pages = ['manage', 'search', 'logout'];
-    var navBar = pages.map((page, index)=> {
+    var navBar = pages.map((page, index) => {
       return (
         <li key={index}>
           <Link to={'/' + page}>{page}</Link>

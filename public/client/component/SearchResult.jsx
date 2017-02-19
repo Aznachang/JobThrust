@@ -14,8 +14,8 @@ class SearchResult extends React.Component {
       return (
         <li key={index}>
           <div>
-            <h3>{result.jobtitle}</h3>
-            <p>{result.company}</p>
+            <h3>{result.jobtitle}-{result.formattedLocation}<SearchResultIcons /></h3>
+            <h3>{result.company}</h3>
             <p>{result.snippet}</p>
           </div>
         </li>
