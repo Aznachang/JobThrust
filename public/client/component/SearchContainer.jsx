@@ -11,7 +11,8 @@ export default class SearchContainer extends React.Component {
     super(props);
     this.state = {
       search: null,
-      location: null
+      location: null,
+      results: []
     }
     this.getJobs = this.getJobs.bind(this);
     this.stateHandler = this.stateHandler.bind(this);
@@ -30,7 +31,7 @@ export default class SearchContainer extends React.Component {
       format: 'json',
       v: '2'
     }, function(json){
-      console.log(json.results);
+      context.setState({results: context.state.results.concat(json.results)})
     });
   }
 
@@ -45,7 +46,7 @@ export default class SearchContainer extends React.Component {
       <div>
        <SearchBar onSubmit={this.getJobs} onChange={this.stateHandler} />
        <Recommend recItems={['Software Engineering - Google', 'FrontEnd - Yahoo']}/>
-       <SearchResultsContainer/>
+       <SearchResultsContainer results={this.state.results}/>
       </div>
     )
   };
