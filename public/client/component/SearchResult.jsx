@@ -11,10 +11,10 @@ class SearchResult extends React.Component {
     return (
       <div>
         <span>
-          <h3>{jobName}</h3>
+          <h3>jobName</h3>
           <SearchResultIcons />
         </span>
-        <div>{description}</div>
+        <div>description</div>
       </div>
     )  
   }

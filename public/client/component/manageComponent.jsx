@@ -1,5 +1,6 @@
 import React from 'react';
-import StageList from './stagesComponent.jsx';
+import StageList from './StagesComponent.jsx';
+import ApplicationList from './ApplicationList.jsx';
 
 export default class ManageComponent extends React.Component {
   constructor(props) {
@@ -7,7 +8,12 @@ export default class ManageComponent extends React.Component {
   }
   render() {
     return (
-      <StageList stages={['Stage One', 'Stage Two ','Stage Three'] }/>
+      <div>
+        
+        <StageList stages={['Stage One', 'Stage Two ','Stage Three'] }/>
+        <ApplicationList/>
+
+      </div>
     )
   }
 }

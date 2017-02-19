@@ -1,4 +1,5 @@
 import React from 'react';
+import Application from './Application.jsx';
 
 var stages = {
   1: 'Interested',
@@ -20,8 +21,8 @@ var applications = [
 
 export default class ApplicationList extends React.Component {
 
-  constructor() {
-
+  constructor(props) {
+    super(props);
   }
 
   render() {
