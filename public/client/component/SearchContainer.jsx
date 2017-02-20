@@ -31,9 +31,28 @@ export default class SearchContainer extends React.Component {
       format: 'json',
       v: '2'
     }, function(json){
-      context.setState({results: json.results})
+      context.setState({results: json.results});
     });
+
+    // var query = '?q=' + this.state.search + '&where=' + this.state.location;
+    // console.log('query: ', query)
+    
+    // axios.get('/api/jobs/' + query).then(function(response) {
+    //   console.log(response);
+    // })
+
+
+  //   $.get("/api/jobs/")
+  //     .done(function(response) {
+  //       console.log('MONSTER ', response);
+  //     })
   }
+
+  //FOR Scraping MONSTER
+  //$.get("http://www.monster.com/jobs/search/?")
+  //https://www.monster.com/jobs/search/?q=Software-Engineer&where=94553
+  //$('script[type="store"]')
+  //$.get( "test.php", { name: "John", time: "2pm" } );
 
   stateHandler(event) {
     console.log('name: ', event.target.name, 'value: ', event.target.value);
