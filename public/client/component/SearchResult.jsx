@@ -8,14 +8,21 @@ class SearchResult extends React.Component {
   }
 
   render() {
+    console.log('SearchResults in Result: ', this.props.results);
+    var results = this.props.results;
+    var resultsList = results.map((result, index) => {
+      return (
+        <li key={index}>
+          <div>
+            <h3>{result.jobtitle}</h3>
+            <p>{result.company}</p>
+            <p>{result.snippet}</p>
+          </div>
+        </li>
+      );
+    })
     return (
-      <div>
-        <span>
-          <h3>jobName</h3>
-          <SearchResultIcons />
-        </span>
-        <div>description</div>
-      </div>
+      <ul>{resultsList}</ul>
     )  
   }
 }
