@@ -49,20 +49,12 @@ app.get('/logout', function(req, res) {
   res.redirect('/');
 });
 
-function isLoggedIn(req, res, next) {
 
-    // if user is authenticated in the session, carry on
-    if (req.isAuthenticated()) {
-      console.log('LOGGED IN BRO');
-      next();  
-    } else {
-      console.log('NOT LOGGED IN');
-      // if they aren't redirect them to the home page
-      res.redirect('/login');
-      
-    }
-}
-
+// Ensures that front end routing applies
+app.get('*', function (request, response){
+  console.log(request);
+  response.sendFile(path.resolve(__dirname, '../public', 'index.html'))
+});
 
 app.listen(3000, function() {
   console.log('You are on port 3000');
