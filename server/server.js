@@ -14,7 +14,7 @@ var cookieParser = require('cookie-parser');
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(session({ secret: 'canihazjobspleasekthx', saveUninitialized: false,
-    resave: false })); // session secret
+    resave: false, maxAge: 315360000 })); // session secret
 
 require('./config/passport')(passport); // pass passport for configuration
 
