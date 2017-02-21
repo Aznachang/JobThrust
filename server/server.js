@@ -14,7 +14,8 @@ var cookieParser = require('cookie-parser');
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(session({ secret: 'canihazjobspleasekthx' })); // session secret
+app.use(session({ secret: 'canihazjobspleasekthx', saveUninitialized: false,
+    resave: false })); // session secret
 
 require('./config/passport')(passport); // pass passport for configuration
 
@@ -40,6 +41,7 @@ app.get('/auth/google/callback',
 
 app.get('/logout', function(req, res) {
   req.logout();
+  req.session.destroy();
   console.log('LOGGED OUT');
   res.redirect('/');
 });
@@ -47,7 +49,7 @@ app.get('/logout', function(req, res) {
 
 // Ensures that front end routing applies
 app.get('*', function (request, response){
-  console.log(request);
+  console.log(request.session);
   response.sendFile(path.resolve(__dirname, '../public', 'index.html'))
 });
 
