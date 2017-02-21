@@ -17,11 +17,11 @@ class SearchResult extends React.Component {
       if (this.props.info[index]) {
         infoWindow = <p>{this.props.info[index]}</p>
       } else {
-        infoWindow = <button onClick={this.props.onClick.bind(null, result.jobkey, index)}>See actual job</button>
+        infoWindow = <button className="more-info-btn" onClick={this.props.onClick.bind(null, result.jobkey, index)}><span>More Info</span></button>
       }
 
       return (
-        <li key={index}>
+        <li key={index} className="search-result">
           <div>
             <h3>{result.jobtitle}-{result.formattedLocation}<SearchResultIcons result={result} onClick={this.props.onClick.bind(null, result.jobkey, index)} /></h3>
             <h3>{result.company}</h3>

@@ -18,7 +18,7 @@ class NavBar extends React.Component {
       );
     });
     return (
-      <ul>{navBar}</ul>
+      <ul className="nav-bar">{navBar}</ul>
     )  
   }
 }

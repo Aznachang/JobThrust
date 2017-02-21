@@ -7,12 +7,13 @@ export default class App extends React.Component {
 	constructor(props) {
     super(props);
   }
+
+
   render() {
     return (
       <div>
         <NavBar/>
-        <SearchContainer/>
-        <ManageComponent/>
+        {this.props.children}
       </div>
     )
   }

@@ -10,7 +10,7 @@ class SearchBar extends React.Component {
 //http://api.indeed.com/ads/apisearch?publisher=5024495540845813&q=software%20engineer&format=json&v=2
   render() {
     return (
-    <form onSubmit={this.props.onSubmit}>
+    <form onSubmit={this.props.onSubmit} className="job-search-form">
       <input type="text" name="search" placeholder="Job Title..." onChange={this.props.onChange} />
       <input type="text" name="location" placeholder="ZIP Code.." pattern="[0-9]{5}" onChange={this.props.onChange} />
       <input type="submit" value="Find Jobs" />

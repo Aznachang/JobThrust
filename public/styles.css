@@ -1,0 +1,112 @@
+/* ========= GENERAL STYLING =========== */
+
+body {
+  font-family: 'Raleway', sans-serif;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+h3, p {
+  margin: 3px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0 10px 0;
+  font-weight: bold;
+}
+
+/* ========== NAV BAR ========== */
+
+.nav-bar {
+  background-color: black;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-bar li {
+  display: inline-block;
+  margin: 0 20px 0 20px;
+}
+
+.nav-bar li a {
+  color: white;
+}
+
+.nav-bar li a:hover {
+  color: #DDDA00;
+}
+
+/* ========== SEARCH ========== */
+
+.job-search-form {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+input[type=text] {
+  width: 200px;
+  margin: 0 10px 0 0;
+  padding: 15px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  height: 50px;
+}
+
+input[type=submit] {
+  background-color: #007FFF;
+  color: white;
+  padding: 15px;
+  margin: 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #005AB5;
+}
+
+.search-result {
+  background-color: rgba(0, 153, 255, 0.25);
+  margin-bottom: 8px;
+  border-radius: 5px;
+  padding: 0 8px;
+  border: 1px solid #ccc;
+  font-size: 0.8em;
+}
+
+.search-result:hover {
+  background-color: rgba(0, 153, 255, 0.6)
+}
+
+.more-info-btn {
+  background-color: #000;
+  color: white;
+  padding: 15px;
+  margin: 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 30px;
+  height: 20px;
+}
+
+.more-info-btn span {
+
+}
