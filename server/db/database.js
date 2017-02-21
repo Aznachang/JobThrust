@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-var db = new Sequelize('jobseeker', null, null, {
+var db = new Sequelize('jobseeker', 'postgres', 'r00tv3ggies', {
   dialect: "postgres",
   port: 5432
 });
@@ -32,6 +32,8 @@ var Stage = db.define('stage', {
   name: Sequelize.STRING
 });
 
-db.sync({force:true});
+db.sync();
 
-module.exports = db;
+module.exports = {
+  User: User
+};
