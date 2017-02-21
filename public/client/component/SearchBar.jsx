@@ -12,7 +12,7 @@ class SearchBar extends React.Component {
     return (
     <form onSubmit={this.props.onSubmit}>
       <input type="text" name="search" placeholder="Job Title..." onChange={this.props.onChange} />
-      <input type="text" pattern="[0-9]{5}" name="location" placeholder="ZIP Code.." onChange={this.props.onChange} />
+      <input type="text" name="location" placeholder="ZIP Code.." pattern="[0-9]{5}" onChange={this.props.onChange} />
       <input type="submit" value="Find Jobs" />
     </form>
     )  
