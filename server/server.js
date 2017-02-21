@@ -5,7 +5,6 @@ var app = express();
 var routes = require('./routes');
 var db = require('./db/database');
 var passport = require('passport');
-var flash = require('connect-flash');
 var session = require('express-session');
 
 var morgan = require('morgan');
