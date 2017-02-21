@@ -5,11 +5,8 @@ import $ from 'jQuery'
 
 class SearchResult extends React.Component {
   constructor(props){
-    super(props)
-    
+    super(props) 
   }
-
- 
 
   render() {
     console.log('info: ', this.props.info);
@@ -26,7 +23,7 @@ class SearchResult extends React.Component {
       return (
         <li key={index}>
           <div>
-            <h3>{result.jobtitle}-{result.formattedLocation}<SearchResultIcons /></h3>
+            <h3>{result.jobtitle}-{result.formattedLocation}<SearchResultIcons result={result} onClick={this.props.onClick.bind(null, result.jobkey, index)} /></h3>
             <h3>{result.company}</h3>
             <p>{result.snippet}</p>
             {infoWindow}

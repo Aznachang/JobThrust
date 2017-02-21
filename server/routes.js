@@ -17,23 +17,19 @@ router.route('/jobs/:jk').get(function(req, res) {
   })
 });
 
-router.post('/', function(req, res) {
-    table.Job.create({
-      title: obj.job,
-      description: 'Temp',
-      companyName: obj.company,
-      stage: obj.stage
-    }).then(function(res) {
+router.post('/job', function(req, res) {
+    table.Job.create(req.body).then(function(res) {
+      console.log('session', req.session)
       table.Application.create({
-        jobId: res.id,
-        userId: 1,
-        stageId: 1
+        jobId: res.dataValues.id,
+        userId: req.session.passport.user,
+        stageId: 0
       })
      })
-  res.json('Hi');
+  res.json(req.body.company);
 })
 
-router.get('/hello', function(req, ress) {
+router.get('/application', function(req, ress) {
   var jobs = [];
 
   table.Application.findAll({
