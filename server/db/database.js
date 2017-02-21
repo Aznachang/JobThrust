@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-var db = new Sequelize('jobseeker', 'postgres', 'r00tv3ggies', {
+var db = new Sequelize('jobseeker', null, null {
   dialect: "postgres",
   port: 5432
 });
