@@ -8,7 +8,6 @@ import LogIn from './component/LogIn.jsx';
 render(
     <Router history={browserHistory}>
         <Route path="/" component={App}/>
-        <Route path="signup" component={SignUp} />
         <Route path="login" component={LogIn} />
     </Router>,
     document.getElementById('app'))
