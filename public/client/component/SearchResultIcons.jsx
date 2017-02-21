@@ -8,16 +8,14 @@ class SearchResultIcons extends React.Component {
   }
 
   render() {
-    var icons = ['✔', '✘', 'i'];
+    var icons = [' ✔ ', ' ✘ ', ' info '];
     var iconBar = icons.map((icon, index)=> {
       return (
-        <li key={index}>
-          <Link>{icon}</Link>
-        </li>
+        <span key={index}>{icon}</span>
       );
     });
     return (
-      <ul>{iconBar}</ul>
+      <div style={{'display': 'inline', 'float': 'right'}}>{iconBar}</div>
     )  
   }
 }

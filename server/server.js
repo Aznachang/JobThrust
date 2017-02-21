@@ -11,7 +11,6 @@ var session = require('express-session');
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 
-// app.use('/api', routes);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -25,12 +24,8 @@ app.use(cookieParser());
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use('/api/', routes);
 app.use(express.static(path.join(__dirname, '../public')));
-
-
-// ===========================
-// AUTHENTICATION
-// ===========================
 
 app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
 

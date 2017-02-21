@@ -11,7 +11,7 @@ class SearchResultContainer extends React.Component {
     //recursively render results
     return (
       <div>
-        <SearchResult results={this.props.results} />
+        <SearchResult info={this.props.info} results={this.props.results} onClick={this.props.onClick}/>
       </div>
     )  
   }
