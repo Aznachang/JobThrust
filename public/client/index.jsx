@@ -2,7 +2,6 @@ import React from 'react';
 import {render} from 'react-dom';
 import {Router, Route, browserHistory} from 'react-router';
 import App from './component/App.jsx';
-import SignUp from './component/SignUp.jsx';
 import LogIn from './component/LogIn.jsx';
 
 render(
