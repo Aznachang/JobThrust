@@ -9,12 +9,13 @@ import Note from './component/NoteContainer.jsx'
 
 render((
     <Router history={browserHistory}>
-        <Route path="/" component={App}>
-          <Route path="manage" component={ManageComponent}/>
-          <Route path="search" component={SearchContainer}/>
-          <Route path= "notes" component={Note} />
+        <Route component={App}>
+          <Route path="/manage" component={ManageComponent}/>
+          <Route path="/search" component={SearchContainer}/>
+          <Route path= "/notes" component={Note} />
         </Route>
-        <Route path="login" component={LogIn} />
+        <Route path="/" component={LogIn} />
+        <Route path="/login" component={LogIn} />
     </Router>
 ), document.getElementById('app'))
 
