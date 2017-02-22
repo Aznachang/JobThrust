@@ -161,6 +161,7 @@ input[type=submit]:hover {
 
 .stage-box:hover {
   background-color: rgba(0, 153, 255, 0.6);
+  cursor: pointer;
 }
 
 .stage-box:nth-child(1) {
@@ -170,6 +171,10 @@ input[type=submit]:hover {
 #AppList {
   width: 95%;
   margin: 0 auto;
+}
+
+.application:hover {
+  cursor: pointer;
 }
 
 /* =========== LOGIN ========= */
