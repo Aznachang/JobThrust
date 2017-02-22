@@ -1,5 +1,6 @@
 import React from 'react';
 import {Router, Route, browserHistory, Link} from 'react-router';
+import axios from 'axios';
 
 //import ReactDOM from 'react-dom';
 
@@ -8,17 +9,23 @@ class NavBar extends React.Component {
     super(props)
   }
 
+  logOut() {
+    axios.get('/auth/logout');
+  }
+
   render() {
-    var pages = ['manage', 'search', 'logout'];
-    var navBar = pages.map((page, index) => {
-      return (
-        <li key={index}>
-          <Link to={'/' + page}>{page}</Link>
-        </li>
-      );
-    });
     return (
-      <ul className="nav-bar">{navBar}</ul>
+      <ul className="nav-bar">
+        <li>
+          <Link to={'/manage'}>Manage</Link>
+        </li>
+        <li>
+          <Link to={'/search'}>Search</Link>
+        </li>
+        <li>
+          <a href="/login" className="logout-btn" onClick={this.logOut}>Log Out</a>
+        </li>
+      </ul>
     )  
   }
 }
