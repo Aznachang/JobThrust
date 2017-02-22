@@ -15,11 +15,10 @@ export default class ManageComponent extends React.Component {
   getJobs() {
     var context = this;
     $.ajax({
-      url: 'http://localhost:3000/api/job',
+      url: 'http://localhost:3000/api/application',
       method: 'GET',
       contentType: 'application/json',
       success: function(data) {
-        console.log('--------33333', data)
         context.setState({
           jobs: data
         }) 
