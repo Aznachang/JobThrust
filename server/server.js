@@ -38,16 +38,27 @@ app.get('/auth/google/callback',
 );
 
 
-app.get('/logout', function(req, res) {
+app.get('/auth/logout', function(req, res) {
   req.logout();
   req.session.destroy();
   console.log('LOGGED OUT');
-  res.redirect('/');
+  res.end();
 });
 
+function isLoggedIn (req, res, next) {
+  if (req.url !== '/login') {
+    if (req.session.passport) {
+      next();
+    } else {
+      res.redirect('/login');
+    }
+  } else {
+    next();
+  }
+}
 
 // Ensures that front end routing applies
-app.get('*', function (request, response){
+app.get('*', isLoggedIn, function (request, response){
   console.log(request.session);
   response.sendFile(path.resolve(__dirname, '../public', 'index.html'))
 });

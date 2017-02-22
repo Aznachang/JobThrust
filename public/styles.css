@@ -69,13 +69,18 @@ thead tr {
   margin: 0 20px 0 20px;
 }
 
-.nav-bar li a {
+.nav-bar li a, .nav-bar div {
   color: white;
 }
 
-.nav-bar li a:hover {
+.nav-bar li a:hover, .nav-bar div:hover {
   color: #DDDA00;
 }
+
+.logout-btn {
+  cursor: pointer;
+}
+
 
 /* ========== SEARCH ========== */
 
