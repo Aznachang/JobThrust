@@ -5,12 +5,14 @@ import App from './component/App.jsx';
 import LogIn from './component/LogIn.jsx';
 import ManageComponent from './component/manageComponent.jsx';
 import SearchContainer from './component/SearchContainer.jsx';
+import Comment from './component/CommentContainer.jsx'
 
 render((
     <Router history={browserHistory}>
         <Route path="/" component={App}>
           <Route path="manage" component={ManageComponent}/>
           <Route path="search" component={SearchContainer}/>
+          <Route path= "comments" component={Comment} />
         </Route>
         <Route path="login" component={LogIn} />
     </Router>
