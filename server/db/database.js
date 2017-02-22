@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-var db = new Sequelize('jobseeker', 'postgres', 'r00tv3ggies', {
+var db = new Sequelize('jobseeker', null, null, {
   dialect: "postgres",
   port: 8080
 });
@@ -24,7 +24,8 @@ var Job = db.define('job', {
 var Application = db.define('application', {
   jobId: Sequelize.INTEGER,
   userId: Sequelize.STRING,
-  stageId: Sequelize.INTEGER
+  stageId: Sequelize.INTEGER,
+  title: Sequelize.STRING
 });
 
 var Company = db.define('company', {

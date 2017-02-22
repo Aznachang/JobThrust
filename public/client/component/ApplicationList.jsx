@@ -2,11 +2,11 @@ import React from 'react';
 import Application from './Application.jsx';
 
 var stages = {
-  1: 'Interested',
-  2: 'Phone Screen',
-  3: 'On-Site',
-  4: 'Decision',
-  5: 'Offered'
+  0: 'Interested',
+  1: 'Phone Screen',
+  2: 'On-Site',
+  3: 'Decision',
+  4: 'Offered'
 };
 
 var applications = [
@@ -36,8 +36,8 @@ export default class ApplicationList extends React.Component {
             </tr>
           </thead>
           <tbody>
-          { applications.map((app, i) =>
-            <Application key={i} job={app.job} stage={stages[app.stage]} />
+          { this.props.jobInfo.map((app, i) =>
+            <Application key={i} job={app.title} stage={stages[app.stageId]} />
           ) }
           </tbody>
         </table>
