@@ -6,7 +6,7 @@ var db = new Sequelize('jobseeker', 'postgres', 'r00tv3ggies', {
 
 var User = db.define('user', {
   id: {
-    type: Sequelize.STRING, 
+    type: Sequelize.STRING,
     primaryKey: true
   },
   token:Sequelize.STRING,
@@ -36,10 +36,16 @@ var Stage = db.define('stage', {
   name: Sequelize.STRING
 });
 
-db.sync({force:true});
+var Note = db.define('note', {
+  note: Sequelize.TEXT,
+  applicationId: Sequelize.INTEGER
+});
+
+db.sync({force: true});
 
 module.exports.User = User;
 module.exports.Job = Job;
 module.exports.Application = Application;
 module.exports.Stage = Stage;
+module.exports.Note = Note;
 module.exports.db = db;
