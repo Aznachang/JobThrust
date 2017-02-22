@@ -25,16 +25,18 @@ router.post('/job', function(req, res) {
         userId: req.session.passport.user,
         stageId: 0
       })
+     }).then(function() {
+
+       res.json(req.body.company);
      })
-  res.json(req.body.company);
 })
 
 router.get('/application', function(req, ress) {
   var jobs = [];
-
+  console.log('-=-----', req.session.passport.user)
   table.Application.findAll({
   where: {
-    userId: 1
+    userId: String(req.session.passport.user)
   }
   }).then(function(res) {
     res.forEach(function(application, i) {
@@ -45,7 +47,7 @@ router.get('/application', function(req, ress) {
       }).then(function(respond) {
         jobs.push(respond)
         if (res.length-1 === i) {
-            ress.send(jobs);
+            ress.json(jobs);
         }
         // console.log('jobs array', respond);
       })
