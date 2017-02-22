@@ -9,7 +9,6 @@ class SearchResult extends React.Component {
   }
 
   render() {
-    console.log('info: ', this.props.info);
     console.log('SearchResults in Result: ', this.props.results);
     var results = this.props.results;
     var resultsList = results.map((result, index) => {
@@ -17,13 +16,13 @@ class SearchResult extends React.Component {
       if (this.props.info[index]) {
         infoWindow = <p>{this.props.info[index]}</p>
       } else {
-        infoWindow = <button className="more-info-btn" onClick={this.props.onClick.bind(null, result.jobkey, index)}><span>More Info</span></button>
+        infoWindow = <br />
       }
 
       return (
         <li key={index} className="search-result">
           <div>
-            <h3>{result.jobtitle}-{result.formattedLocation}<SearchResultIcons result={result} onClick={this.props.onClick.bind(null, result.jobkey, index)} /></h3>
+            <h3>{result.jobtitle}-{result.formattedLocation}<SearchResultIcons index={index} addJob={this.props.addJob} removeJob={this.props.removeJob} result={result} getInfo={this.props.getInfo.bind(null, result.jobkey, index)} /></h3>
             <h3>{result.company}</h3>
             <p>{result.snippet}</p>
             {infoWindow}

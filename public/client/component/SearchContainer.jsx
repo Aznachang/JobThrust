@@ -13,15 +13,17 @@ export default class SearchContainer extends React.Component {
       search: null,
       location: null,
       results: [],
-      info: {0: "Can I get this??"}
+      info: {}
     }
     this.getJobs = this.getJobs.bind(this);
     this.searchHandler = this.searchHandler.bind(this);
     this.getInfo = this.getInfo.bind(this);
+    this.removeJob = this.removeJob.bind(this);
+    this.addJob = this.addJob.bind(this);
   };
 
+  // GET JOBS FROM INDEED API
   getJobs(event) {
-    console.log(event);
     event.preventDefault();
     var context = this;
     //JSONP request to bypass CORS HEADERS
@@ -32,31 +34,63 @@ export default class SearchContainer extends React.Component {
       format: 'json',
       v: '2'
     }, function(json){
-      context.setState({results: json.results});
+      context.setState({
+        results: json.results,
+        info: {}
+      });
     });
   }
 
+  // ADD JOB TO DB
+  addJob(result, index) {
+    var context = this
+    axios.post('/api/job', {
+      title: result.jobtitle,
+      description: result.snippet,
+      company: result.company,
+      key: result.jobkey
+    }).then(function() {
+      context.state.results.splice(index, 1)
+      context.setState({
+        results: context.state.results,
+        info: {}
+      })
+    })
+  }
+
+  // REMOVE INDIVIDUAL JOB COMPONENT FROM VIEW (NOT DB)
+  removeJob(jobIndex) {
+    var context = this;
+    context.state.results.splice(jobIndex, 1)
+    context.setState({
+      results: context.state.results,
+      info: {}
+    })  
+  }
+
+  // HANDLES STATE RELATED TO FORMS
   searchHandler(event) {
     this.setState({[event.target.name]: event.target.value})
   }
 
-   getInfo(jobkey, index) {
+  // SCRAPE INFO FROM INDEED JOB AND SET IT AS STATE TO DISPLAY
+  getInfo(jobkey, index) {
     var context = this;
     $.get("/api/jobs/" + jobkey)
     .done(function(response) {
-      context.setState({info: {[index]: response}})
+      context.setState({
+        info: {[index]: response}
+      })
     })
   }
 
   render() {
     return(
       <div>
-       <div className="page-header">
-         Search For Current Openings
-       </div>
-       <SearchBar onSubmit={this.getJobs} onChange={this.searchHandler} />
+       <div className="page-header">Search For Current Openings</div>
+       <SearchBar getJobs={this.getJobs} searchHandler={this.searchHandler} />
        <Recommend recItems={['Software Engineering - Google', 'FrontEnd - Yahoo']}/>
-       <SearchResultsContainer info={this.state.info} results={this.state.results} onClick={this.getInfo}/>
+       <SearchResultsContainer info={this.state.info} results={this.state.results} addJob={this.addJob} getInfo={this.getInfo} removeJob={this.removeJob} />
       </div>
     )
   };
