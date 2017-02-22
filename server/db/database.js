@@ -36,7 +36,7 @@ var Stage = db.define('stage', {
   name: Sequelize.STRING
 });
 
-db.sync({force: true});
+db.sync({force:true});
 
 module.exports.User = User;
 module.exports.Job = Job;
