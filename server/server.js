@@ -14,7 +14,7 @@ var cookieParser = require('cookie-parser');
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(session({ secret: 'canihazjobspleasekthx', saveUninitialized: false,
-    resave: false, maxAge: 315360000 })); // session secret
+    resave: false, maxAge:315360000 })); // session secret
 
 require('./config/passport')(passport); // pass passport for configuration
 
@@ -32,7 +32,7 @@ app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'e
 // the callback after google has authenticated the user
 app.get('/auth/google/callback',
   passport.authenticate('google', {
-          successRedirect : '/',
+          successRedirect : '/manage',
           failureRedirect : '/login'
   })
 );

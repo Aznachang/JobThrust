@@ -51,6 +51,9 @@ export default class SearchContainer extends React.Component {
   render() {
     return(
       <div>
+       <div className="page-header">
+         Search For Current Openings
+       </div>
        <SearchBar onSubmit={this.getJobs} onChange={this.searchHandler} />
        <Recommend recItems={['Software Engineering - Google', 'FrontEnd - Yahoo']}/>
        <SearchResultsContainer info={this.state.info} results={this.state.results} onClick={this.getInfo}/>
