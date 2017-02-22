@@ -15,10 +15,11 @@ export default class ManageComponent extends React.Component {
   getJobs() {
     var context = this;
     $.ajax({
-      url: 'http://localhost:3000/api/application',
+      url: 'http://localhost:3000/api/job',
       method: 'GET',
       contentType: 'application/json',
       success: function(data) {
+        console.log('--------33333', data)
         context.setState({
           jobs: data
         }) 
@@ -28,16 +29,8 @@ export default class ManageComponent extends React.Component {
   render() {
     return (
       <div>
-       { this.state.jobs.map((app, i) =>
-        <ul key={i}>
-          <li><strong>{app[0].company}</strong>
-            <p>{app[0].description.replace(/\//g, '').replace(/<b>/g, '')}</p>
-            <p>{app[0].title}</p>
-          </li>
-        </ul>
-        ) }
         <StageList stages={['Interested', 'Applied', 'Phone Screen','On-Site', 'Decision', 'Offered'] }/>
-        <ApplicationList/>
+        <ApplicationList jobInfo={this.state.jobs} />
       </div>
     )
   }

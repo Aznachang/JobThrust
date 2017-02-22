@@ -18,19 +18,20 @@ router.route('/jobs/:jk').get(function(req, res) {
 });
 
 router.post('/job', function(req, res) {
+  console.log('----------------', req.body)
     table.Job.create(req.body).then(function(res) {
       console.log('session', req.session)
       table.Application.create({
         jobId: res.dataValues.id,
         userId: req.session.passport.user,
-        stageId: 0
+        stageId: 0,
+        title: req.body.title +' ' +'-' +' '+req.body.company
       })
      }).then(function() {
 
        res.json(req.body.company);
      })
 })
-
 router.get('/application', function(req, ress) {
   var jobs = [];
   console.log('-=-----', req.session.passport.user)
@@ -52,6 +53,16 @@ router.get('/application', function(req, ress) {
         // console.log('jobs array', respond);
       })
     })
+  })
+})
+router.get('/job', function(req, res) {
+  console.log('-=-----', req.session.passport.user)
+  table.Application.findAll({
+  where: {
+    userId: String(req.session.passport.user)
+  }
+  }).then(function(respond) {
+    res.json(respond);
   })
 })
 
