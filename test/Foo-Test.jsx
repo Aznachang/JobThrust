@@ -1,8 +1,11 @@
 'use strict';
+require("babel-core").transform("code", {
+  presets: ["react"]
+});
 import React from 'react';
 import { expect } from 'chai';
 import { shallow, mount, render } from 'enzyme';
-import Foo from './public/client/component/Foo.jsx';
+import Foo from '../public/client/component/Foo.jsx';
 
 describe('Component Foo', function() {
  it ('should have a class named foo', function() {
