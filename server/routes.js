@@ -32,30 +32,30 @@ router.post('/job', function(req, res) {
        res.json(req.body.company);
      })
 })
-router.get('/application', function(req, ress) {
-  var jobs = [];
-  console.log('-=-----', req.session.passport.user)
-  table.Application.findAll({
-  where: {
-    userId: String(req.session.passport.user)
-  }
-  }).then(function(res) {
-    res.forEach(function(application, i) {
-      table.Job.findAll({
-        where: {
-          id: application.jobId
-        }
-      }).then(function(respond) {
-        jobs.push(respond)
-        if (res.length-1 === i) {
-            ress.json(jobs);
-        }
-        // console.log('jobs array', respond);
-      })
-    })
-  })
-})
-router.get('/job', function(req, res) {
+// router.get('/application', function(req, ress) {
+//   var jobs = [];
+//   console.log('-=-----', req.session.passport.user)
+//   table.Application.findAll({
+//   where: {
+//     userId: String(req.session.passport.user)
+//   }
+//   }).then(function(res) {
+//     res.forEach(function(application, i) {
+//       table.Job.findAll({
+//         where: {
+//           id: application.jobId
+//         }
+//       }).then(function(respond) {
+//         jobs.push(respond)
+//         if (res.length-1 === i) {
+//             ress.json(jobs);
+//         }
+//         // console.log('jobs array', respond);
+//       })
+//     })
+//   })
+// })
+router.get('/application', function(req, res) {
   console.log('-=-----', req.session.passport.user)
   table.Application.findAll({
   where: {
