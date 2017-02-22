@@ -3,11 +3,11 @@ import React from 'react';
 var StageList = (props) => {
   return (
     <div>
-      <ul>
+      <div id="pipeline">
        {props.stages.map((stage, index) => 
-        <li key={index}>{stage}</li>
+        <div className="stage-box" key={index}>{stage}</div>
        )}
-      </ul>
+      </div>
     </div>
   )
 }

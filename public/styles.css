@@ -17,6 +17,34 @@ h3, p {
   margin: 3px;
 }
 
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 2px;
+}
+
+th {
+  width: 50%;
+}
+
+th, td {
+  text-align: center;
+  padding: 5px 0;
+}
+
+tr {
+  background-color: rgba(0, 153, 255, 0.25);
+}
+
+tbody tr:hover {
+  background-color: rgba(0, 153, 255, 0.6);
+}
+
+thead tr {
+  background-color: black;
+  color: white;
+}
+
 .page-header {
   display: flex;
   justify-content: center;
@@ -106,4 +134,78 @@ input[type=submit]:hover {
   border-radius: 2px;
   border: none;
   margin: 3px 0;
+}
+
+/* ========= MANAGE =========== */
+
+#pipeline {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  width: 95%;
+  margin: 10px auto;
+}
+
+.stage-box {
+  border: 2px solid grey;
+  height: 100px;
+  flex-basis: 100%;
+  margin-left: 5px;
+  padding: 5px;
+  background-color: rgba(0, 153, 255, 0.25);
+  font-weight: bold;
+}
+
+.stage-box:hover {
+  background-color: rgba(0, 153, 255, 0.6);
+}
+
+.stage-box:nth-child(1) {
+  margin: 0;
+}
+
+#AppList {
+  width: 95%;
+  margin: 0 auto;
+}
+
+/* =========== LOGIN ========= */
+
+.login-container {
+  height: 300px;
+  text-align: center;
+  padding-top: 200px;
+  font-weight: bold;
+}
+
+.login-container p {
+  font-size: 2em;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+.google-button {
+  width: 120px;
+  height: 50px;
+  background-color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+.google-button:hover {
+  background-color: #CC0000;
+}
+
+.google-button a {
+  display: block;
+  color: white;
+  font-weight: bold;
+  font-size: 1.4em;
 }

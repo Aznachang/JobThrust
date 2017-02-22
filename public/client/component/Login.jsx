@@ -6,10 +6,14 @@ export default class SignUp extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="login-container">
         <p>Login or Register with:</p>
-
-        <a href="/auth/google" class="btn btn-danger"><span class="fa fa-google-plus"></span> Google</a>
+        <br />
+        <div className="button-container">
+          <div className="google-button">
+            <a href="/auth/google">Google</a>
+          </div>
+        </div>
       </div>
     )
   }

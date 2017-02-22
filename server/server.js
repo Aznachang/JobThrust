@@ -32,7 +32,7 @@ app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'e
 // the callback after google has authenticated the user
 app.get('/auth/google/callback',
   passport.authenticate('google', {
-          successRedirect : '/',
+          successRedirect : '/manage',
           failureRedirect : '/login'
   })
 );

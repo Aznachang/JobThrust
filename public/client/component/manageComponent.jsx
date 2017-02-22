@@ -10,7 +10,7 @@ export default class ManageComponent extends React.Component {
     return (
       <div>
         
-        <StageList stages={['Stage One', 'Stage Two ','Stage Three'] }/>
+        <StageList stages={['Interested', 'Applied', 'Phone Screen','On-Site', 'Decision', 'Offered'] }/>
         <ApplicationList/>
 
       </div>

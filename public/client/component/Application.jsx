@@ -7,11 +7,10 @@ export default class Application extends React.Component {
 
   render() {
     return (
-      <div>
-        <span className="job-title">{this.props.job}</span>
-        <span className="company">{this.props.company}</span>
-        <span className="stage">{this.props.stage}</span>
-      </div>
+      <tr className="application">
+        <td className="job-title">{this.props.job}</td>
+        <td className="stage">{this.props.stage}</td>
+      </tr>
     )
   }
 }
