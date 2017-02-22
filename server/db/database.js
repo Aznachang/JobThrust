@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize');
 var db = new Sequelize('jobseeker', 'postgres', 'r00tv3ggies', {
   dialect: "postgres",
-  port: 5432
+  port: 8080
 });
 
 var User = db.define('user', {
