@@ -149,9 +149,10 @@ input[type=submit]:hover {
   flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
   width: 95%;
   margin: 10px auto;
+  padding-bottom: 12px;
+  border-bottom: 2px grey solid;
 }
 
 .stage-box {
@@ -184,6 +185,8 @@ input[type=submit]:hover {
 #AppList {
   width: 95%;
   margin: 0 auto;
+  height: 65vh;
+  overflow-y: auto;
 }
 
 .application:hover {
