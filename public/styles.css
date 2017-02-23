@@ -193,6 +193,44 @@ input[type=submit]:hover {
   cursor: pointer;
 }
 
+/* ======== APPLICATION INFO POPUP/MODAL ======== */
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  border: 1px solid rgb(204, 204, 204);
+  background: rgb(255, 255, 255);
+  overflow: auto;
+  border-radius: 4px;
+  outline: none;
+  padding: 15px;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.modal-content .inner-container {
+  border: 1px solid grey;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.modal-content h2 {
+  color: blue;
+  margin: 0;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: rgba(255, 255, 255, 0.74902);
+}
+
 /* =========== LOGIN ========= */
 
 .login-container {
