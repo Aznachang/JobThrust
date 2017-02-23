@@ -2,6 +2,7 @@ import React from 'react';
 import StageList from './StagesComponent.jsx';
 import ApplicationList from './ApplicationList.jsx';
 import $ from 'jQuery';
+import axios from 'axios';
 
 export default class ManageComponent extends React.Component {
   constructor(props) {
@@ -44,6 +45,7 @@ export default class ManageComponent extends React.Component {
     })
   }
 
+
   getStageCounts() {
     var jobData = this.state.jobs;
     var stageValues = {
@@ -71,15 +73,22 @@ export default class ManageComponent extends React.Component {
     });
   }
 
-  changeStage(id) {
+  changeStage(id, newStageId) {
     console.log('Running changeStage from parent!');
     var jobsCurrent = this.state.jobs;
     for (var i = 0; i < jobsCurrent.length; i++) {
       if (id === jobsCurrent[i].id && jobsCurrent[i].stageId < 5) {
         console.log('Changing stage ID for:', jobsCurrent[i]);
-        jobsCurrent[i].stageId++;
+        jobsCurrent[i].stageId = newStageId;
         this.postStageChange(jobsCurrent[i].id, jobsCurrent[i].stageId);
         console.log('StageID changed:', jobsCurrent[i]);
+
+        // Re-sort jobsCurrent by stageID
+
+        jobsCurrent.sort(function(a, b) {
+          return b.stageId - a.stageId
+        });
+
         this.setState({jobs: jobsCurrent});
         this.getStageCounts();
 
@@ -95,7 +104,7 @@ export default class ManageComponent extends React.Component {
     return (
       <div>
         <StageList stageCounts={this.state.stageCounts} stages={stages}/>
-        <ApplicationList jobInfo={this.state.jobs} stages={stages} changeStage={this.changeStage} />
+        <ApplicationList jobInfo={this.state.jobs} stages={stages} selectedAppJob={this.state.selectedAppJob} changeStage={this.changeStage} />
       </div>
     )
   }
