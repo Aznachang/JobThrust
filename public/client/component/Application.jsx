@@ -35,10 +35,8 @@ export default class Application extends React.Component {
     var context = this;
     // Query database for related job information given a jobId
     axios.get('/api/job/' + this.props.jobId).then(function(res) {
-      console.log(res);
       res.data.fullDescription = res.data.fullDescription.split('\n');
       context.setState({selectedAppJob: res.data});
-      console.log(res.data.fullDescription);
     });
   }
 
