@@ -55,6 +55,17 @@ router.post('/job', function(req, res) {
 //     })
 //   })
 // })
+
+router.post('/application/stagechange', function(req, res) {
+  console.log('Application post request:', req.body);
+  table.Application.update(
+    {stageId: req.body.stageId},
+    {where: {id: req.body.id}}
+  ).then(function(thing) {
+    console.log('Application stage updated');
+  });;
+});
+
 router.get('/application', function(req, res) {
   console.log('-=-----', req.session.passport.user)
   table.Application.findAll({

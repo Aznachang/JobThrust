@@ -63,6 +63,14 @@ export default class ManageComponent extends React.Component {
 
   }
 
+  postStageChange(id, stageId) {
+    $.ajax({
+      url: 'http://localhost:3000/api/application/stagechange',
+      method: 'POST',
+      data: {id: id, stageId: stageId}
+    });
+  }
+
   changeStage(id) {
     console.log('Running changeStage from parent!');
     var jobsCurrent = this.state.jobs;
@@ -70,15 +78,16 @@ export default class ManageComponent extends React.Component {
       if (id === jobsCurrent[i].id && jobsCurrent[i].stageId < 5) {
         console.log('Changing stage ID for:', jobsCurrent[i]);
         jobsCurrent[i].stageId++;
+        this.postStageChange(jobsCurrent[i].id, jobsCurrent[i].stageId);
         console.log('StageID changed:', jobsCurrent[i]);
+        this.setState({jobs: jobsCurrent});
+        this.getStageCounts();
+
+        this.render();
         break;
       }
     }
 
-    this.setState({jobs: jobsCurrent});
-    this.getStageCounts();
-
-    this.render();
   }
 
   render() {
