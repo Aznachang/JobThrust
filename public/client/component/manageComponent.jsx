@@ -82,6 +82,13 @@ export default class ManageComponent extends React.Component {
         jobsCurrent[i].stageId = newStageId;
         this.postStageChange(jobsCurrent[i].id, jobsCurrent[i].stageId);
         console.log('StageID changed:', jobsCurrent[i]);
+
+        // Re-sort jobsCurrent by stageID
+
+        jobsCurrent.sort(function(a, b) {
+          return b.stageId - a.stageId
+        });
+
         this.setState({jobs: jobsCurrent});
         this.getStageCounts();
 
