@@ -2,6 +2,7 @@ import React from 'react';
 import StageList from './StagesComponent.jsx';
 import ApplicationList from './ApplicationList.jsx';
 import $ from 'jQuery';
+import axios from 'axios';
 
 export default class ManageComponent extends React.Component {
   constructor(props) {
@@ -43,6 +44,7 @@ export default class ManageComponent extends React.Component {
       }
     })
   }
+
 
   getStageCounts() {
     var jobData = this.state.jobs;
@@ -95,7 +97,7 @@ export default class ManageComponent extends React.Component {
     return (
       <div>
         <StageList stageCounts={this.state.stageCounts} stages={stages}/>
-        <ApplicationList jobInfo={this.state.jobs} stages={stages} changeStage={this.changeStage} />
+        <ApplicationList jobInfo={this.state.jobs} stages={stages} selectedAppJob={this.state.selectedAppJob} changeStage={this.changeStage} />
       </div>
     )
   }

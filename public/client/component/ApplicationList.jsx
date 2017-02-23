@@ -1,14 +1,5 @@
 import React from 'react';
 import Application from './Application.jsx';
-
-var stages = {
-  0: 'Interested',
-  1: 'Phone Screen',
-  2: 'On-Site',
-  3: 'Decision',
-  4: 'Offered'
-};
-
 export default class ApplicationList extends React.Component {
 
   constructor(props) {

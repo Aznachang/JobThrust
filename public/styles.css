@@ -209,9 +209,11 @@ input[type=submit]:hover {
   padding: 15px;
   margin-right: -50%;
   transform: translate(-50%, -50%);
+  max-width: 80%;
+  max-height: 90%;
 }
 
-.modal-content .inner-container {
+.modal-content div.inner-container {
   border: 1px solid grey;
   border-radius: 4px;
   padding: 8px;
@@ -229,6 +231,10 @@ input[type=submit]:hover {
   right: 0px;
   bottom: 0px;
   background-color: rgba(255, 255, 255, 0.74902);
+}
+
+.job-desc {
+  font-size: 0.8em;
 }
 
 /* =========== LOGIN ========= */

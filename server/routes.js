@@ -31,7 +31,16 @@ router.post('/job', function(req, res) {
 
        res.json(req.body.company);
      })
+});
+
+router.get('/job/:jobId', function(req, res) {
+  table.Job.findOne({
+    where: {id: req.params.jobId}
+  }).then(function(jobinfo) {
+    res.json(jobinfo);
+  });
 })
+
 // router.get('/application', function(req, ress) {
 //   var jobs = [];
 //   console.log('-=-----', req.session.passport.user)

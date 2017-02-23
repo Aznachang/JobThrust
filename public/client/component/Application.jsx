@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
+import axios from 'axios';
 
 var appElement = document.getElementById('app');
 
@@ -7,8 +8,16 @@ export default class Application extends React.Component {
   constructor(props) {
     super(props);
     this.nextStage = this.nextStage.bind(this);
+    this.getJobInfo = this.getJobInfo.bind(this);
     this.state = {
-      modalIsOpen: false
+      modalIsOpen: false,
+      selectedAppJob: {
+        title: '',
+        description: '',
+        fullDescription: [],
+        company: '',
+        key: ''
+      }
     }
 
     console.log('PROPS:', this.props);
@@ -16,6 +25,18 @@ export default class Application extends React.Component {
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+  }
+
+
+  getJobInfo() {
+    var context = this;
+    // Query database for related job information given a jobId
+    axios.get('/api/job/' + this.props.jobId).then(function(res) {
+      console.log(res);
+      res.data.fullDescription = res.data.fullDescription.split('\n');
+      context.setState({selectedAppJob: res.data});
+      console.log(res.data.fullDescription);
+    });
   }
 
   // TO BE APPLIED SOMEHOW - FULLY FUNCTIONING, JUST NOT ATTACHED TO ANYTHING
@@ -26,6 +47,7 @@ export default class Application extends React.Component {
 
   openModal() {
     this.setState({modalIsOpen: true});
+    this.getJobInfo();
   }
 
   afterOpenModal() {
@@ -58,7 +80,12 @@ export default class Application extends React.Component {
 
             <h2>{this.props.job}</h2>
             <div>Current Stage: {this.props.stage}</div>
-            <div>Job ID: {this.props.jobId}</div>
+            <div>Job Description:</div>
+            <div className="job-desc">
+              { this.state.selectedAppJob.fullDescription.map(chunk =>
+                <span>{chunk}<br/></span>
+              ) }
+            </div>
           </div>
 
         </Modal>
