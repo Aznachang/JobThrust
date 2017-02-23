@@ -43,17 +43,21 @@ export default class SearchContainer extends React.Component {
 
   // ADD JOB TO DB
   addJob(result, index) {
-    var context = this
-    axios.post('/api/job', {
-      title: result.jobtitle,
-      description: result.snippet,
-      company: result.company,
-      key: result.jobkey
-    }).then(function() {
-      context.state.results.splice(index, 1)
-      context.setState({
-        results: context.state.results,
-        info: {}
+    var context = this;
+    axios.get('/api/jobs/' + result.jobkey).then(function(description) {
+
+      axios.post('/api/job', {
+        title: result.jobtitle,
+        description: result.snippet,
+        fullDescription: description.data,
+        company: result.company,
+        key: result.jobkey
+      }).then(function() {
+        context.state.results.splice(index, 1)
+        context.setState({
+          results: context.state.results,
+          info: {}
+        })
       })
     })
   }

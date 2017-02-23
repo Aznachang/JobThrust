@@ -27,7 +27,7 @@ export default class ApplicationList extends React.Component {
           </thead>
           <tbody>
           { this.props.jobInfo.map((app, i) =>
-            <Application key={i} job={app.title} stage={this.props.stages[app.stageId]} id={app.id} changeStage={this.props.changeStage} />
+            <Application key={i} job={app.title} jobId={app.jobId} stage={this.props.stages[app.stageId]} id={app.id} changeStage={this.props.changeStage} />
           ) }
           </tbody>
         </table>

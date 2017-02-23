@@ -11,6 +11,8 @@ export default class Application extends React.Component {
       modalIsOpen: false
     }
 
+    console.log('PROPS:', this.props);
+
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -56,6 +58,7 @@ export default class Application extends React.Component {
 
             <h2>{this.props.job}</h2>
             <div>Current Stage: {this.props.stage}</div>
+            <div>Job ID: {this.props.jobId}</div>
           </div>
 
         </Modal>
