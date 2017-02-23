@@ -1,15 +1,13 @@
 import React from 'react';
 import Application from './Application.jsx';
 
-var applications = [
-  {job: 'Software Engineer - Facebook', stage: 1},
-  {job: 'Software Engineer - Google', stage: 1},
-  {job: 'Software Engineer - Microsoft', stage: 3},
-  {job: 'Full-Stack Engineer - AdRoll', stage: 4},
-  {job: 'Web Developer - IFTTT', stage: 2},
-  {job: 'Software Engineer - Instagram', stage: 5},
-  {job: 'Web Engineer - BasedAvocado', stage: 3}
-];
+var stages = {
+  0: 'Interested',
+  1: 'Phone Screen',
+  2: 'On-Site',
+  3: 'Decision',
+  4: 'Offered'
+};
 
 export default class ApplicationList extends React.Component {
 
