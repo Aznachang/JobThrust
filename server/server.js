@@ -24,6 +24,9 @@ app.use(cookieParser());
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.get('/', function(req, res) {
+  res.json('You are on the main page');
+})
 app.use('/api/', routes);
 app.use(express.static(path.join(__dirname, '../public')));
 
@@ -66,3 +69,4 @@ app.get('*', isLoggedIn, function (request, response){
 app.listen(3000, function() {
   console.log('You are on port 3000');
 });
+module.exports = app;
