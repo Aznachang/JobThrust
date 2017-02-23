@@ -4,7 +4,7 @@ import axios from 'axios'
 import Note from './Note.jsx';
 import $ from 'jQuery';
 
-class NoteContainer extends React.Component {
+export default class NoteContainer extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -55,14 +55,12 @@ class NoteContainer extends React.Component {
 
     return(
       <div>
-      <button onClick={this.add.bind(null, 'Hello, I am Albert')} className='button-info create'>Add new</button>
+      <button onClick={this.add.bind(null, 'Hello, I am Albert')} className='button-info create'>Add new</button> <br/>
         <div className ='noteBoard'>
           {displayNotes}
-        </div>
+        </div><br/>
       </div>
     );
     console.log('[Notes] is now: ', this.state.notes);
   }
 }
-
-export default NoteContainer;

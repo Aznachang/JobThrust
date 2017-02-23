@@ -25,6 +25,7 @@ class Note extends React.Component {
     return (
     <div className='noteContainer'>
       <div className='noteText'>{this.props.children}</div>
+      <br/>
       <button onClick={context.edit} className='button-primary'>Edit</button>
       <button onClick={context.remove} className='button-danger'>Remove</button>
     </div>
@@ -36,6 +37,7 @@ class Note extends React.Component {
     return (
     <div className='noteContainer'>
       <textarea ref='newText' defaultValue={this.props.children}></textarea>
+      <br/>
       <button onClick={context.save} className='button-success'>Save</button>
     </div>
     )

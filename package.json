@@ -48,6 +48,7 @@
     "redux": "^3.6.0",
     "request": "^2.79.0",
     "sequelize": "^3.30.2",
+    "sinon": "^1.17.7",
     "tinyreq": "^3.2.0",
     "webpack": "^2.2.1",
     "webpack-dev-middleware": "^1.10.1",
