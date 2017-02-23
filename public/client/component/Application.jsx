@@ -6,6 +6,7 @@ export default class Application extends React.Component {
     this.nextStage = this.nextStage.bind(this);
   }
 
+  // TO BE APPLIED SOMEHOW - FULLY FUNCTIONING, JUST NOT ATTACHED TO ANYTHING
   nextStage() {
     console.log('Attempting to change stages using ID:', this.props.id);
     this.props.changeStage(this.props.id);
@@ -14,8 +15,8 @@ export default class Application extends React.Component {
   render() {
     return (
       <tr className="application">
-        <td className="job-title" onClick={this.nextStage}>{this.props.job}</td>
-        <td className="stage" onClick={this.nextStage}>{this.props.stage}</td>
+        <td className="job-title">{this.props.job}</td>
+        <td className="stage">{this.props.stage}</td>
       </tr>
     )
   }
