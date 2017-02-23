@@ -203,25 +203,22 @@ input[type=submit]:hover {
   bottom: auto;
   border: 1px solid rgb(204, 204, 204);
   background: rgb(255, 255, 255);
-  overflow: auto;
   border-radius: 4px;
   outline: none;
   padding: 15px;
   margin-right: -50%;
   transform: translate(-50%, -50%);
-  max-width: 80%;
-  max-height: 90%;
+  width: 50%;
+  height: 90%;
+  overflow: auto;
 }
 
 .modal-content div.inner-container {
-  border: 1px solid grey;
-  border-radius: 4px;
   padding: 8px;
 }
 
 .modal-content h2 {
-  color: blue;
-  margin: 0;
+  margin: 0 0 10px 0;
 }
 
 .modal-overlay {
@@ -233,8 +230,57 @@ input[type=submit]:hover {
   background-color: rgba(255, 255, 255, 0.74902);
 }
 
+#stage-name {
+  text-align: center;
+  border-top: 2px solid grey;
+  border-bottom: 2px solid grey;
+  padding: 10px 0 10px 0;
+  font-weight: bold;
+}
+
 .job-desc {
   font-size: 0.8em;
+}
+
+.job-desc, .change-stage {
+  margin-top: 20px;
+}
+
+.stage-choice-header {
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.btn-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 15px;
+  justify-content: space-around;
+}
+
+.app-btn, .stage-btn {
+  border-radius: 5px;
+  padding: 8px;
+  background-color: #007FFF;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.app-btn:nth-child(1) {
+  margin: 0;
+}
+
+.app-btn:hover, .stage-btn:hover {
+  background-color: #006BB3;
+}
+
+.stage-btn {
+  margin-bottom: 5px;
+}
+
+.hidden {
+  display: none;
 }
 
 /* =========== LOGIN ========= */

@@ -7,8 +7,9 @@ var appElement = document.getElementById('app');
 export default class Application extends React.Component {
   constructor(props) {
     super(props);
-    this.nextStage = this.nextStage.bind(this);
+    // this.nextStage = this.nextStage.bind(this);
     this.getJobInfo = this.getJobInfo.bind(this);
+    this.toggle = this.toggle.bind(this);
     this.state = {
       modalIsOpen: false,
       selectedAppJob: {
@@ -17,10 +18,12 @@ export default class Application extends React.Component {
         fullDescription: [],
         company: '',
         key: ''
+      },
+      modalSections: {
+        'job-desc': 'job-desc hidden',
+        'change-stage': 'change-stage hidden'
       }
     }
-
-    console.log('PROPS:', this.props);
 
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -40,9 +43,9 @@ export default class Application extends React.Component {
   }
 
   // TO BE APPLIED SOMEHOW - FULLY FUNCTIONING, JUST NOT ATTACHED TO ANYTHING
-  nextStage() {
+  nextStage(stageId) {
     console.log('Attempting to change stages using ID:', this.props.id);
-    this.props.changeStage(this.props.id);
+    this.props.changeStage(this.props.id, stageId);
   }
 
   openModal() {
@@ -58,6 +61,23 @@ export default class Application extends React.Component {
 
   closeModal() {
     this.setState({modalIsOpen: false});
+  }
+
+  toggle(className) { // handles toggling and ensuring no more than 1 section displays at once
+    var currentSections = this.state.modalSections;
+    for (var key in currentSections) {
+      if (key !== className) {
+        currentSections[key] = key + ' hidden';
+      } else {
+        if (currentSections[key] === className) {
+          currentSections[key] = key + ' hidden';
+        } else {
+          currentSections[key] = key;
+        }
+      }
+    }
+
+    this.setState(currentSections);
   }
 
 
@@ -79,11 +99,24 @@ export default class Application extends React.Component {
           <div className="inner-container">
 
             <h2>{this.props.job}</h2>
-            <div>Current Stage: {this.props.stage}</div>
-            <div>Job Description:</div>
-            <div className="job-desc">
+            <div id="stage-name">Current Stage: {this.props.stage}</div>
+            <div className="btn-container">
+              <div className="app-btn" onClick={this.toggle.bind(null, 'job-desc')}>Job Description</div>
+              <div className="app-btn">Notes</div>
+              <div className="app-btn">Events</div>
+              <div className="app-btn" onClick={this.toggle.bind(null, 'change-stage')}>Change Stage</div>
+            </div>
+
+            <div className={this.state.modalSections['job-desc']}>
               { this.state.selectedAppJob.fullDescription.map(chunk =>
                 <span>{chunk}<br/></span>
+              ) }
+            </div>
+
+            <div className={this.state.modalSections['change-stage']}>
+              <div className="stage-choice-header">Select stage to switch to:</div>
+              { this.props.stages.map((stage, index) => 
+                <div className="stage-btn" onClick={this.nextStage.bind(this, index)}>{stage}, {index}</div>
               ) }
             </div>
           </div>
