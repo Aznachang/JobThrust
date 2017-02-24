@@ -24,7 +24,7 @@ class Note extends React.Component {
     var context = this;
     return (
     <div className='noteContainer'>
-      <div className='noteText'>{this.props.children}</div>
+      <div className='noteText'>{this.props.note}</div>
       <br/>
       <button onClick={context.edit} className='button-primary'>Edit</button>
       <button onClick={context.remove} className='button-danger'>Remove</button>
@@ -36,7 +36,7 @@ class Note extends React.Component {
     var context = this;
     return (
     <div className='noteContainer'>
-      <textarea ref='newText' defaultValue={this.props.children}></textarea>
+      <textarea ref='newText' defaultValue={this.props.note}></textarea>
       <br/>
       <button onClick={context.save} className='button-success'>Save</button>
     </div>
@@ -44,14 +44,14 @@ class Note extends React.Component {
   }
 
   remove() {
-    this.props.deleteNoteText(this.props.index);
+    this.props.deleteNoteText(this.props.noteId);
   }
 
   // when in editing mode Window
   save() {
     var val = this.refs.newText.value;
     console.log('New note: ', val);
-    this.props.updateNoteText(this.refs.newText.value, this.props.index);
+    this.props.updateNoteText(this.refs.newText.value, this.props.noteId);
     // exit out of editing mode!
     this.setState({editing: false});
   }
