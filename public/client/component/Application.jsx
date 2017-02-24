@@ -49,6 +49,7 @@ export default class Application extends React.Component {
   openModal() {
     this.setState({modalIsOpen: true});
     this.getJobInfo();
+    console.log('THIS APPLICATION ID IS:', this.props.id);
   }
 
   afterOpenModal() {
@@ -69,7 +70,7 @@ export default class Application extends React.Component {
       this.props.filter(this.props.filtered);
       this.props.filter(this.props.filtered);
     }
-    // this.props.sortList();
+    this.props.sortList();
 
   }
 

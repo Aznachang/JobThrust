@@ -116,7 +116,7 @@ export default class ManageComponent extends React.Component {
       5: 'stage-box'
     }
 
-    if (stageNum) {
+    if (stageNum !== undefined) {
       boxClasses[stageNum] = 'stage-box selected-box';
       var currentJobs = this.state.jobs;
       var filteredJobs = currentJobs.filter(function(job) {
