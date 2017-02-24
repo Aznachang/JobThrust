@@ -7,6 +7,7 @@ body {
 ul {
   list-style-type: none;
   margin: 0;
+  padding: 0;
 }
 
 a {
@@ -124,30 +125,25 @@ input[type=submit]:hover {
   background-color: #005AB5;
 }
 
+.search-results-header {
+  background-color: black;
+  color: white;
+  padding: 5px 0;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 4px 4px 0 0;
+}
+
 .search-result {
   background-color: rgba(0, 153, 255, 0.25);
-  margin-bottom: 8px;
-  border-radius: 5px;
-  padding: 0 8px;
+  margin-bottom: 2px;
+  padding: 8px 8px 0 8px;
   border: 1px solid #ccc;
   font-size: 0.8em;
 }
 
 .search-result:hover {
   background-color: rgba(0, 153, 255, 0.6)
-}
-
-.more-info-btn {
-  align-items: flex-start;
-  text-align: center;
-  cursor: pointer;
-  color: white;
-  background-color: black;
-  box-sizing: border-box;
-  padding: 6px 6px 6px;
-  border-radius: 2px;
-  border: none;
-  margin: 3px 0;
 }
 
 /* ========= MANAGE =========== */
