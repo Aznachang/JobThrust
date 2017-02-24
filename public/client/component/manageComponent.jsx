@@ -18,7 +18,15 @@ export default class ManageComponent extends React.Component {
         4: 0,
         5: 0
       },
-      filtered: null
+      filtered: null,
+      boxClasses: {
+        0: 'stage-box',
+        1: 'stage-box',
+        2: 'stage-box',
+        3: 'stage-box',
+        4: 'stage-box',
+        5: 'stage-box'
+      }
     }
     this.getJobs();
     this.changeStage = this.changeStage.bind(this);
@@ -99,17 +107,26 @@ export default class ManageComponent extends React.Component {
   }
 
   filter(stageNum) {
+    var boxClasses = {
+      0: 'stage-box',
+      1: 'stage-box',
+      2: 'stage-box',
+      3: 'stage-box',
+      4: 'stage-box',
+      5: 'stage-box'
+    }
+
     if (stageNum) {
-      this.setState({filtered: stageNum});
+      boxClasses[stageNum] = 'stage-box selected-box';
       var currentJobs = this.state.jobs;
       var filteredJobs = currentJobs.filter(function(job) {
         return job.stageId === stageNum;
       });
-      this.setState({filteredJobs: filteredJobs});
+      this.setState({filtered: stageNum, boxClasses: boxClasses, filteredJobs: filteredJobs});
       console.log('FILTER HAPPENED');
       this.render();
     } else {
-      this.setState({filtered: null});
+      this.setState({filtered: null, boxClasses: boxClasses});
       console.log('UNFILTER HAPPENED');
       this.render();
     }
@@ -129,7 +146,7 @@ export default class ManageComponent extends React.Component {
     var stages = ['Interested', 'Applied', 'Phone Screen','On-Site', 'Decision', 'Offered']
     return (
       <div>
-        <StageList filter={this.filter} filtered={this.state.filtered} stageCounts={this.state.stageCounts} stages={stages}/>
+        <StageList boxClasses={this.state.boxClasses} filter={this.filter} filtered={this.state.filtered} stageCounts={this.state.stageCounts} stages={stages}/>
         <ApplicationList filtered={this.state.filtered} filteredJobs={this.state.filteredJobs} jobInfo={this.state.jobs} sortList={this.sortListByStage} stages={stages} selectedAppJob={this.state.selectedAppJob} changeStage={this.changeStage} />
       </div>
     )
