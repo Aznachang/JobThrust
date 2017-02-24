@@ -15,12 +15,24 @@ export default class NoteContainer extends React.Component {
     this.removeNote = this.removeNote.bind(this);
   };
 
-  // 'Add' Note
+  // 'POST' A Note - this.props.applicationId
   add() {
+    var context = this;
+    var last = context.state.notes.length - 1;
+
+    axios.post('/api/application/notes', {
+      note:$('.add-Note').val()
+    }).then(function(notes) {
+      axios.get('/api/application/notes')
+      .then(function(response){
+        console.log('Getting All Notes: ', response.data);
+        context.setState(notes:response.data);
+      });
+    });
     // notes - intially empty
-    var arr = this.state.notes;
-    arr.push('Write a note...'); // default Note
-    this.setState({notes: arr}); //update [notes]
+    // var arr = this.state.notes;
+    // arr.push('Write a note...'); // default Note
+    // this.setState({notes: arr}); //update [notes]
   }
 
   // for 'Remove' Button
@@ -42,7 +54,7 @@ export default class NoteContainer extends React.Component {
   }
 
   render() {
-
+    var context = this;
     var displayNotes = this.state.notes.map((note, index) => {
       var context = this;
       return (
@@ -55,7 +67,8 @@ export default class NoteContainer extends React.Component {
 
     return(
       <div>
-      <button onClick={this.add.bind(null, 'Hello, I am Albert')} className='button-info create'>Add new</button> <br/>
+      <textarea className ='add-Note'></textarea>
+      <button onClick={this.add.bind(null, '')} className='button-info create'>Add new</button> <br/>
         <div className ='noteBoard'>
           {displayNotes}
         </div><br/>

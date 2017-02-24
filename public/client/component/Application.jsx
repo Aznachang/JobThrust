@@ -126,7 +126,7 @@ export default class Application extends React.Component {
 
             <div className={this.state.modalSections['change-stage']}>
               <div className="stage-choice-header">Select stage to switch to:</div>
-              { this.props.stages.map((stage, index) => 
+              { this.props.stages.map((stage, index) =>
                 <div key={index} className="stage-btn" onClick={this.nextStage.bind(this, index)}>{stage}</div>
               ) }
             </div>
