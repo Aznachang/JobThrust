@@ -69,7 +69,7 @@ export default class SearchContainer extends React.Component {
     context.setState({
       results: context.state.results,
       info: {}
-    })  
+    })
   }
 
   // HANDLES STATE RELATED TO FORMS
