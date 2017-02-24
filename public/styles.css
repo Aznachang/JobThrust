@@ -45,6 +45,15 @@ thead tr {
   color: white;
 }
 
+textarea {
+  padding: 1em;   /* space on all directions */
+  font-family: "Montserrat", "sans-serif";
+  font-size: 1em;
+  border: 0.1em solid #ccc;
+  border-radius: 0.5em;
+  background-color: #ffffe6;
+}
+
 .page-header {
   display: flex;
   justify-content: center;
