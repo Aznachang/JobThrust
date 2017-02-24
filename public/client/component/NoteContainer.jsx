@@ -13,54 +13,71 @@ export default class NoteContainer extends React.Component {
     this.add = this.add.bind(this);
     this.updateNote = this.updateNote.bind(this);
     this.removeNote = this.removeNote.bind(this);
+    this.getNotes = this.getNotes.bind(this);
   };
 
-  // 'Add' Note
+  // 'POST' A Note - this.props.applicationId
   add() {
-    // notes - intially empty
-    var arr = this.state.notes;
-    arr.push('Write a note...'); // default Note
-    this.setState({notes: arr}); //update [notes]
+    var context = this;
+    var last = context.state.notes.length - 1;
+
+    axios.post('/api/application/notes', {
+      note:$('.add-Note').val(),
+      applicationId: context.props.appId
+    }).then(function(notes) {
+      context.getNotes();
+      $('.add-Note').val('');
+    });
   }
 
   // for 'Remove' Button
-  removeNote(i) {
-    var arr = this.state.notes;
-    arr.splice(i,1);
-    this.setState({notes:arr});
-    console.log('[notes] after deletion: ', arr);
+  removeNote(noteId) {
+    var context = this;
+    axios.delete('/api/application/notes/' + noteId).then(function(noteDeleted){
+      console.log('Deletion of Note Triggered!');
+      context.getNotes();
+    });
   }
 
   // for 'Edit' Button
-  updateNote(newText, i) {
-    // console.log('update button hit: ', this.refs.newText.value);
-    // this.setState({notEditable: false});
-    console.log('Updating Note');
-    var arr = this.state.notes;
-    arr[i] = newText;
-    this.setState({notes: arr});
+  updateNote(newText, noteId) {
+    var context = this;
+    axios.post('/api/application/notes', {
+      note: newText,
+      applicationId: context.props.appId,
+      id: noteId
+    }).then(function(response){
+      context.getNotes();
+    });
+  }
+
+  // Get Notes
+  getNotes() {
+    var context = this;
+    axios.get('/api/application/' + context.props.appId + '/notes')
+    .then(function(response){
+      console.log('Getting All Notes: ', response.data);
+      context.setState({notes: response.data});
+    });
+  }
+
+  componentDidMount() {
+    // Get Existing Notes Upon First Load
+    this.getNotes();
   }
 
   render() {
-
-    var displayNotes = this.state.notes.map((note, index) => {
-      var context = this;
-      return (
-        <Note key={index} index={index}
-        updateNoteText={context.updateNote} deleteNoteText={context.removeNote}>
-         {note}
-        </Note>
-      )
-    });
-
     return(
       <div>
-      <button onClick={this.add.bind(null, 'Hello, I am Albert')} className='button-info create'>Add new</button> <br/>
+      <textarea className ='add-Note'></textarea>
+      <button onClick={this.add.bind(null, '')} className='button-info create'>Add new</button> <br/>
         <div className ='noteBoard'>
-          {displayNotes}
-        </div><br/>
+          {this.state.notes.map((note, index) =>
+            <Note key={index} index={index} updateNoteText={this.updateNote} deleteNoteText={this.removeNote} note={note.note} noteId={note.id} appId={note.applicationId}/>
+          )}
+          <br/>
+        </div>
       </div>
     );
-    console.log('[Notes] is now: ', this.state.notes);
   }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
+import NoteContainer from './NoteContainer.jsx';
 
 var appElement = document.getElementById('app');
 
@@ -21,7 +22,8 @@ export default class Application extends React.Component {
       },
       modalSections: {
         'job-desc': 'job-desc hidden',
-        'change-stage': 'change-stage hidden'
+        'change-stage': 'change-stage hidden',
+        'notes': 'notes hidden'
       }
     }
 
@@ -113,7 +115,7 @@ export default class Application extends React.Component {
             <div id="stage-name">Current Stage: {this.props.stage}</div>
             <div className="btn-container">
               <div className="app-btn" onClick={this.toggle.bind(null, 'job-desc')}>Job Description</div>
-              <div className="app-btn">Notes</div>
+              <div className="app-btn" onClick={this.toggle.bind(null, 'notes')}>Notes</div>
               <div className="app-btn">Events</div>
               <div className="app-btn" onClick={this.toggle.bind(null, 'change-stage')}>Change Stage</div>
             </div>
@@ -126,9 +128,13 @@ export default class Application extends React.Component {
 
             <div className={this.state.modalSections['change-stage']}>
               <div className="stage-choice-header">Select stage to switch to:</div>
-              { this.props.stages.map((stage, index) => 
+              { this.props.stages.map((stage, index) =>
                 <div key={index} className="stage-btn" onClick={this.nextStage.bind(this, index)}>{stage}</div>
               ) }
+            </div>
+
+            <div className={this.state.modalSections['notes']}>
+              <NoteContainer appId={this.props.id} />
             </div>
           </div>
 

@@ -41,30 +41,6 @@ router.get('/job/:jobId', function(req, res) {
   });
 })
 
-// router.get('/application', function(req, ress) {
-//   var jobs = [];
-//   console.log('-=-----', req.session.passport.user)
-//   table.Application.findAll({
-//   where: {
-//     userId: String(req.session.passport.user)
-//   }
-//   }).then(function(res) {
-//     res.forEach(function(application, i) {
-//       table.Job.findAll({
-//         where: {
-//           id: application.jobId
-//         }
-//       }).then(function(respond) {
-//         jobs.push(respond)
-//         if (res.length-1 === i) {
-//             ress.json(jobs);
-//         }
-//         // console.log('jobs array', respond);
-//       })
-//     })
-//   })
-// })
-
 router.post('/application/stagechange', function(req, res) {
   console.log('Application post request:', req.body);
   table.Application.update(
@@ -87,9 +63,8 @@ router.get('/application', function(req, res) {
 })
 
 // Routes for Notes with Specific Job Application
-// example '/api/application/1/note'
 router.get('/application/:id/notes', function(req, res) {
-  // Find All Notes where
+  // Find All Notes For Specific Job Application ID#
   table.Note.findAll({
     where: {
       applicationId: req.params.id
@@ -100,19 +75,19 @@ router.get('/application/:id/notes', function(req, res) {
 });
 
 router.post('/application/notes', function(req, res) {
+  console.log(req.body);
   // See if this note exists
   table.Note.findOne({
-    note: req.body.note,
     where: {
-      applicationId: req.params.appId,
-      id: req.params.noteId
+      id: req.body.id
     }
   }).then(function(note){
     // if note does not exist
     if (!note) {
       // Find All Notes where
+      console.log('NOTE DOES NOT EXIST YET!');
       table.Note.create({
-        note: req.body.name,
+        note: req.body.note,
         applicationId: req.body.applicationId
       }).then(function(notes){
         console.log('A new note was created!');
@@ -120,31 +95,31 @@ router.post('/application/notes', function(req, res) {
       })
       // update existing note
     } else {
-      table.Note.update({
-        note: req.body.note,
-        where: {
+      table.Note.update(
+      {note: req.body.note},
+        {where: {
           id: req.body.id
         }
       }).then(function(thing) {
-        console.log('Note Got Updated');
+        // SEND AN 'OK' to updateNote() - NoteContainer
+        res.sendStatus('200');
       });
     }
 
   })
 });
 
-// // UPDATE 'note'
-// router.put('/application/:appId/notes/:noteId', function(req, res) {
-//   // Find and Update Specific Note where
-//   table.Note.findOne({
-//     note: req.body.note;
-//     where: {
-//       applicationId: req.params.appId,
-//       id: req.params.noteId
-//     }
-//   }).then(function(notes){
-//     res.json(notes);
-//   })
-// });
+// DELETE a 'NOTE'
+router.delete('/application/notes/:noteId', function(req, res){
+  table.Note.destroy({
+    where: {
+      // applicationId: req.params.appId,
+      id: req.params.noteId
+    }
+  }).then(function(deletedNote){
+    // SEND AN 'OK' to removeNote() - NoteContainer
+    res.sendStatus('200');
+  });
+});
 
 module.exports = router;
