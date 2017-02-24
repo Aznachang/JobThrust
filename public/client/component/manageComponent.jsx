@@ -21,6 +21,7 @@ export default class ManageComponent extends React.Component {
     this.getJobs();
     this.changeStage = this.changeStage.bind(this);
     this.getStageCounts = this.getStageCounts.bind(this);
+    this.sortListByStage = this.sortListByStage.bind(this);
   }
 
   getJobs() {
@@ -85,10 +86,6 @@ export default class ManageComponent extends React.Component {
 
         // Re-sort jobsCurrent by stageID
 
-        jobsCurrent.sort(function(a, b) {
-          return b.stageId - a.stageId
-        });
-
         this.setState({jobs: jobsCurrent});
         this.getStageCounts();
 
@@ -96,6 +93,15 @@ export default class ManageComponent extends React.Component {
         break;
       }
     }
+  }
+
+  sortListByStage() {
+    var jobsCurrent = this.state.jobs;
+    jobsCurrent.sort(function(a, b) {
+      return b.stageId - a.stageId
+    });
+
+    this.setState({jobs: jobsCurrent});
 
   }
 
@@ -104,7 +110,7 @@ export default class ManageComponent extends React.Component {
     return (
       <div>
         <StageList stageCounts={this.state.stageCounts} stages={stages}/>
-        <ApplicationList jobInfo={this.state.jobs} stages={stages} selectedAppJob={this.state.selectedAppJob} changeStage={this.changeStage} />
+        <ApplicationList jobInfo={this.state.jobs} sortList={this.sortListByStage} stages={stages} selectedAppJob={this.state.selectedAppJob} changeStage={this.changeStage} />
       </div>
     )
   }
