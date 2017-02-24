@@ -142,12 +142,13 @@ export default class ManageComponent extends React.Component {
 
   }
 
+
   render() {
     var stages = ['Interested', 'Applied', 'Phone Screen','On-Site', 'Decision', 'Offered']
     return (
       <div>
         <StageList boxClasses={this.state.boxClasses} filter={this.filter} filtered={this.state.filtered} stageCounts={this.state.stageCounts} stages={stages}/>
-        <ApplicationList filtered={this.state.filtered} filteredJobs={this.state.filteredJobs} jobInfo={this.state.jobs} sortList={this.sortListByStage} stages={stages} selectedAppJob={this.state.selectedAppJob} changeStage={this.changeStage} />
+        <ApplicationList filter={this.filter} filtered={this.state.filtered} filteredJobs={this.state.filteredJobs} jobInfo={this.state.jobs} sortList={this.sortListByStage} stages={stages} selectedAppJob={this.state.selectedAppJob} changeStage={this.changeStage} />
       </div>
     )
   }
