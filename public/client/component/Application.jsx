@@ -58,8 +58,15 @@ export default class Application extends React.Component {
   }
 
   closeModal() {
-    this.setState({modalIsOpen: false});
+    this.setState({
+      modalIsOpen: false,
+      modalSections: {
+        'job-desc': 'job-desc hidden',
+        'change-stage': 'change-stage hidden'
+      }
+    });
     this.props.sortList();
+
   }
 
   toggle(className) { // handles toggling and ensuring no more than 1 section displays at once
@@ -115,7 +122,7 @@ export default class Application extends React.Component {
             <div className={this.state.modalSections['change-stage']}>
               <div className="stage-choice-header">Select stage to switch to:</div>
               { this.props.stages.map((stage, index) => 
-                <div key={index} className="stage-btn" onClick={this.nextStage.bind(this, index)}>{stage}, {index}</div>
+                <div key={index} className="stage-btn" onClick={this.nextStage.bind(this, index)}>{stage}</div>
               ) }
             </div>
           </div>
