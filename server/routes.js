@@ -12,7 +12,7 @@ router.route('/jobs/:jk').get(function(req, res) {
   request(url, function(error, response, html) {
     if(!error) {
       var $ = cheerio.load(html);
-      console.log($('#job_summary').text());
+      // console.log($('#job_summary').text());
       var jobSummary = $('#job_summary').text() // A plain DOM element.
       res.send(jobSummary)
     }
@@ -74,13 +74,23 @@ router.get('/company', function(req, res) {
 
   rp(basicUrl+endpoints+req.query.company).then(function(respond) {
     respond = JSON.parse(respond)
-    console.log('-------********',respond)
-    res.json(respond.response.employers)
+    var url = 'https://en.wikipedia.org/wiki/';
+    request(url+req.query.company, function(error, response, html) {
+      if(!error) {
+        var $ = cheerio.load(html);
+        // console.log($('.infobox').text());
+        var jobSummary = $('#mw-content-text').find('p').text() // A plain DOM element.
+        // console.log(jobSummary)
+        var index = jobSummary.match(/[.]/)['index'];
+        res.json([respond.response.employers,jobSummary.slice(0,index+1)])
+      }
+    })
   }).catch(function(err) {
 
     console.log('There was an error with your request', err);
   })
-})
+});
+
 router.get('/application', function(req, res) {
   table.Application.findAll({
   where: {
@@ -89,7 +99,7 @@ router.get('/application', function(req, res) {
   }).then(function(respond) {
     res.json(respond);
   })
-})
+});
 
 /******
 ***      Routes for Notes with Specific Job Application
