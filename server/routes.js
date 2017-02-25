@@ -20,17 +20,15 @@ router.route('/jobs/:jk').get(function(req, res) {
 });
 
 router.post('/job', function(req, res) {
-  console.log('----------------', req.body)
     table.Job.create(req.body).then(function(res) {
       console.log('session', req.session)
       table.Application.create({
         jobId: res.dataValues.id,
         userId: req.session.passport.user,
         stageId: 0,
-        title: req.body.title +' ' +'-' +' '+req.body.company
+        title: req.body.title + ' - ' + req.body.company
       })
      }).then(function() {
-
        res.json(req.body.company);
      })
 });
@@ -68,7 +66,6 @@ router.get('/company', function(req, res) {
   })
 })
 router.get('/application', function(req, res) {
-  console.log('-=-----', req.session.passport.user)
   table.Application.findAll({
   where: {
     userId: String(req.session.passport.user)
@@ -137,5 +134,37 @@ router.delete('/application/notes/:noteId', function(req, res){
     res.sendStatus('200');
   });
 });
+
+router.post('/search', function(req, res) {
+  table.Search.create(req.body)
+  .then(function(response) {
+    table.Query.create({
+      searchId: response.dataValues.id,
+      userId: req.session.passport.user,
+    })
+  })
+})
+
+router.route('/search/:id').get(function(req, res) {
+  console.log('search/:id', req.params.id)
+  table.Search.findAll({
+    where: {
+      id: Number(req.params.id)
+    }
+  }).then(function(search) {
+    console.log(search);
+    res.json(search);
+  })
+})
+
+router.get('/query', function(req, res) {
+  table.Query.findAll({
+    where: {
+      userId: req.session.passport.user
+    }
+  }).then(function(query) {
+    res.json(query);
+  })
+})
 
 module.exports = router;
