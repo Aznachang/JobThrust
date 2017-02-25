@@ -14,9 +14,9 @@ export default class ApplicationList extends React.Component {
             <thead>
               <tr>
                 <th name="company" onClick={this.props.sort.bind(null, 'company')}>Company</th>
-                <th value="role" onClick={this.props.sort.bind(null, 'role')}>Role</th>
-                <th value="stage" onClick={this.props.sort.bind(null, 'stage')}>Current Stage</th>
-                <th value="created" onClick={this.props.sort.bind(null, 'created')}>Created</th>
+                <th value="title" onClick={this.props.sort.bind(null, 'title')}>Role</th>
+                <th value="stageId" onClick={this.props.sort.bind(null, 'stageId')}>Current Stage</th>
+                <th value="createdAt" onClick={this.props.sort.bind(null, 'createdAt')}>Created</th>
               </tr>
             </thead>
             <tbody>
@@ -34,9 +34,9 @@ export default class ApplicationList extends React.Component {
             <thead>
               <tr>
                 <th name="company" onClick={this.props.sort.bind(null, 'company')}>Company</th>
-                <th value="role" onClick={this.props.sort.bind(null, 'role')}>Role</th>
-                <th value="stage" onClick={this.props.sort.bind(null, 'stage')}>Current Stage</th>
-                <th value="created" onClick={this.props.sort.bind(null, 'created')}>Created</th>
+                <th value="title" onClick={this.props.sort.bind(null, 'title')}>Role</th>
+                <th value="stageId" onClick={this.props.sort.bind(null, 'stageId')}>Current Stage</th>
+                <th value="createdAt" onClick={this.props.sort.bind(null, 'createdAt')}>Created</th>
               </tr>
             </thead>
             <tbody>

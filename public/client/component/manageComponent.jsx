@@ -135,41 +135,43 @@ export default class ManageComponent extends React.Component {
   }
 
   sort(value) {
-    console.log(value)
-    if(value === 'company') {
-      this.state.filteredJobs.sort(function(a, b) {
-        b.id - a.id;
-      })
-      this.state.jobs.sort(function(a, b) {
-        b.id - a.id;
-      })
+    console.log("this.state.jobs", this.state.jobs[0][value], typeof this.state.jobs[0][value])
+    if(this.state.filteredJobs.length && typeof this.state.filteredJobs[0][value] === 'string') {
+      console.log('#filtered: ', value)
+      console.log(this.state.filteredJobs.sort(function(a, b) {
+        var A = a[value].toUpperCase();
+        var B = b[value].toUpperCase();
+        if (A < B) { return -1; }
+        if (A > B) { return 1; }
+        return 0;
+      }))
     }
-    if(value === 'role') {
-      this.state.filteredJobs.sort(function(a, b) {
-        a.id - b.id;
-      })
-      this.state.jobs.sort(function(a, b) {
-        a.id - b.id;
-      })
+    if(typeof this.state.jobs[0][value] === 'string') {
+      console.log('#nofilter')
+      console.log(this.state.jobs.sort(function(a, b) {
+        var A = a[value].toUpperCase();
+        var B = b[value].toUpperCase();
+        if (A < B) { return -1; }
+        if (A > B) { return 1; }
+        return 0;
+      }))
     }
-    if(value === 'stage') {
-      this.state.filteredJobs.sort(function(a, b) {
-        a.id - b.id;
-      })
-      this.state.jobs.sort(function(a, b) {
-        a.id - b.id;
-      })
+    if(this.state.filteredJobs.length && typeof this.state.filteredJobs[0][value] === 'number') {
+      console.log('#filtered', value)
+      console.log(this.state.filteredJobs.sort(function(a, b) {
+        return a[value] - b[value];
+      }))
     }
-    if(value === 'created') {
-      this.state.filteredJobs.sort(function(a, b) {
-        b.id - a.id;
-      })
-      this.state.jobs.sort(function(a, b) {
-        b.id - a.id;
-      })
+    if(typeof this.state.jobs[0][value] === 'number') {
+      console.log('#nofilter', value)
+      console.log(this.state.jobs.sort(function(a, b) {
+        return a[value] - b[value];
+      }))
     }
-    this.setState({filteredJobs: this.state.filteredJobs})
-    this.setState({jobs: this.state.jobs})
+    this.setState({
+      //filteredJobs: this.state.filteredJobs,
+      jobs: this.state.jobs
+    })
   }
 
   sortListByStage() {
