@@ -2,8 +2,6 @@ import React from 'react';
 import {Router, Route, browserHistory, Link} from 'react-router';
 import axios from 'axios';
 
-//import ReactDOM from 'react-dom';
-
 class NavBar extends React.Component {
   constructor(props){
     super(props)
@@ -26,7 +24,7 @@ class NavBar extends React.Component {
           <a href="/login" className="logout-btn" onClick={this.logOut}>Log Out</a>
         </li>
       </ul>
-    )  
+    )
   }
 }
 
