@@ -19,32 +19,22 @@ class JobOfferForm extends React.Component {
           <h1>Job Offer Form</h1>
 
           <fieldset className='form-group'>
-           Company Name <br/>
+           <label> Company Name </label><br/>
            <input className='form-offer' name='company' type='text' required onChange={this.props.handleChange} />
-          </fieldset>
 
-          <fieldset className='form-group'>
-            Job Title <br/>
+            <label> Job Title </label><br/>
             <input  className='form-offer' name='title' type='email' required onChange={this.props.handleChange} />
-          </fieldset>
 
-          <fieldset className='form-group'>
-            Salary <br/>
+            <label>Salary</label> <br/>
             <input className='form-offer' name='salary' type='text' required onChange={this.props.handleChange} />
-          </fieldset>
 
-          <fieldset className='form-group'>
-            Signing Bonus <br/>
+            <label> Signing Bonus</label> <br/>
             <input className='form-offer' name='bonus' onChange={this.props.handleChange}></input>
-          </fieldset>
 
-          <fieldset className='form-group'>
-            Vacation Days <br/>
+            <label> Vacation Days </label> <br/>
             <input className='form-offer' name='vacation' required onChange={this.props.handleChange}></input>
-          </fieldset>
 
-          <fieldset className='form-group'>
-            401K Company Match <br/>
+            <label>401K Company Match </label> <br/>
             <input className='form-offer' name='retirement' onChange={this.props.handleChange}></input>
           </fieldset>
 
