@@ -1,5 +1,5 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
+import { Router, Route, browserHistory, Link } from 'react-router';
 import axios from 'axios'
 import Note from './Note.jsx';
 import $ from 'jQuery';
@@ -8,6 +8,7 @@ export default class NoteContainer extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      // [{Note1}, {Note2}, etc...]
       notes: [],
     };
     this.add = this.add.bind(this);
@@ -19,7 +20,7 @@ export default class NoteContainer extends React.Component {
   // 'POST' A Note - this.props.applicationId
   add() {
     var context = this;
-    var last = context.state.notes.length - 1;
+
     if ($('add-note').val() !== '') {
       axios.post('/api/application/notes', {
         note:$('.add-note').val(),
@@ -34,6 +35,7 @@ export default class NoteContainer extends React.Component {
   // for 'Remove' Button
   removeNote(noteId) {
     var context = this;
+
     axios.delete('/api/application/notes/' + noteId).then(function(noteDeleted){
       console.log('Deletion of Note Triggered!');
       context.getNotes();
@@ -43,6 +45,7 @@ export default class NoteContainer extends React.Component {
   // for 'Edit' Button
   updateNote(newText, noteId) {
     var context = this;
+
     axios.post('/api/application/notes', {
       note: newText,
       applicationId: context.props.appId,
@@ -55,6 +58,7 @@ export default class NoteContainer extends React.Component {
   // Get Notes
   getNotes() {
     var context = this;
+
     axios.get('/api/application/' + context.props.appId + '/notes')
     .then(function(response){
       console.log('Getting All Notes: ', response.data);

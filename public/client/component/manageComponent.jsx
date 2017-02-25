@@ -79,11 +79,25 @@ export default class ManageComponent extends React.Component {
 
   }
 
-  postStageChange(id, stageId) {
-    $.ajax({
-      url: 'http://localhost:3000/api/application/stagechange',
-      method: 'POST',
-      data: {id: id, stageId: stageId}
+  //id - applicationId
+  postStageChange(id, stageId, jobId) {
+    axios.post('http://localhost:3000/api/application/stagechange', {
+      applicationId: id,
+      stageId: stageId,
+      jobId: jobId
+    })
+    .then(function(response){
+      console.log('INSIDE postStageChange!');
+      // stageId === 5 --> fire up the form
+      if (stageId === 5) {
+        axios.post('http://localhost:3000/api/application/offers', {
+          // MUST MATCH 'req.body' in 'routes.js'
+          jobId: jobId,
+          applicationId: id
+        }).then(function(offer){
+
+        });
+      } //end of 'if'
     });
   }
 
@@ -94,7 +108,7 @@ export default class ManageComponent extends React.Component {
       if (id === jobsCurrent[i].id && jobsCurrent[i].stageId < 5) {
         console.log('Changing stage ID for:', jobsCurrent[i]);
         jobsCurrent[i].stageId = newStageId;
-        this.postStageChange(jobsCurrent[i].id, jobsCurrent[i].stageId);
+        this.postStageChange(jobsCurrent[i].id, jobsCurrent[i].stageId, jobsCurrent[i].jobId);
         console.log('StageID changed:', jobsCurrent[i]);
 
         // Re-sort jobsCurrent by stageID

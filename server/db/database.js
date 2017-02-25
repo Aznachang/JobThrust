@@ -44,6 +44,7 @@ var Note = db.define('note', {
   applicationId: Sequelize.INTEGER
 });
 
+
 var Search = db.define('search', {
   query: {type: Sequelize.STRING, unique: true}
 })
@@ -53,7 +54,25 @@ var Query = db.define('query', {
   userId: Sequelize.STRING,
 })
 
-db.sync();
+var Offer = db.define('offer', {
+  companyName: Sequelize.STRING,
+  jobTitle: Sequelize.STRING,
+  salary: Sequelize.INTEGER,
+  signBonus: {type:Sequelize.INTEGER, allowNull: true},
+  vacationDays: {type:Sequelize.INTEGER, allowNull: true},
+  retireMatchPercent: {type:Sequelize.INTEGER, allowNull: true},
+  applicationId: Sequelize.INTEGER
+});
+
+db.sync({force: true}).then(function() {
+  // TEMPORARY STUB FOR STYLING MODAL
+  Application.create({
+    jobId: 292052,
+    userId: '108755274178308228818',
+    stageId: 1,
+    title: 'Software Engineer - Based Avocado'
+  });
+});
 
 module.exports.User = User;
 module.exports.Job = Job;
@@ -62,4 +81,5 @@ module.exports.Stage = Stage;
 module.exports.Note = Note;
 module.exports.Search = Search;
 module.exports.Query = Query;
+module.exports.Offer = Offer;
 module.exports.db = db;

@@ -47,6 +47,7 @@ router.post('/application/stagechange', function(req, res) {
     {stageId: req.body.stageId},
     {where: {id: req.body.id}}
   ).then(function(thing) {
+    res.sendStatus('200');
     console.log('Application stage updated');
   });
 });
@@ -75,7 +76,9 @@ router.get('/application', function(req, res) {
   })
 })
 
-// Routes for Notes with Specific Job Application
+/******
+***      Routes for Notes with Specific Job Application
+*******/
 router.get('/application/:id/notes', function(req, res) {
   // Find All Notes For Specific Job Application ID#
   table.Note.findAll({
@@ -87,8 +90,9 @@ router.get('/application/:id/notes', function(req, res) {
   })
 });
 
+// POST or UPDATE a 'NOTE'
 router.post('/application/notes', function(req, res) {
-  console.log(req.body);
+  // console.log(req.body);
   // See if this note exists
   table.Note.findOne({
     where: {
@@ -166,5 +170,88 @@ router.get('/query', function(req, res) {
     res.json(query);
   })
 })
+
+/******
+***      Routes for JOB OFFERS with Specific Job Application
+*******/
+
+// GET ALL 'JOB OFFERS'
+router.get('/application/offers', function(req, res) {
+  // Find All Notes For Specific Job Application ID#
+  table.Offer.findAll({
+    // where: {
+    //   applicationId: req.params.id
+    // }
+  }).then(function(offers){
+    res.json(offers);
+  })
+});
+
+// 'POST' a 'JOB OFFER'
+router.post('/application/offers', function(req, res) {
+  //appId and jobId associated with that appId
+  table.Job.findOne({
+    where :{
+      id: req.body.jobId
+    }
+  })
+  .then(function(job){
+    console.log('Job Record Found is: ', job);
+    res.sendStatus('200');
+    table.Offer.create({
+      companyName: job.company,
+      jobTitle: job.title,
+      applicationId: req.body.applicationId
+    }).then(function(offerCreated){
+      res.sendStatus('200');
+    });
+  });
+});
+
+// 'UPDATE' a 'JOB OFFER'
+router.put('/application/offer/:offerId', function(req, res) {
+  console.log('POST A JOB OFFER: ', req.body);
+  // See if this offer exists
+  table.Offer.findOne({
+    where: {
+      id: req.params.offerId
+    }
+  }).then(function(offer){
+    res.sendStatus('200');
+      // We Will Auto-Populate the companyName, jobTitle above
+      table.Offer.update(
+      {
+        // Database Field: req.body.frontEnd
+        salary: req.body.offer,
+        signBonus: req.body.signBonus,
+        vacationDays: req.body.vacationDays,
+        retireMatchPercent: req.body.retireMatchPercent,
+        workFromHomeDays: req.body.workFromHomeDays,
+        workFromHome: req.body.workFromHome,
+        applicationId: req.body.applicationId
+      },
+      {
+        // GET the specific 'JOB OFFER'
+        where: {
+          id: req.body.id
+        }
+      }).then(function(offer) {
+        // SEND AN 'OK' to updateOffer() - JobOfferContainer
+        res.sendStatus('200');
+      });
+    });
+});
+
+// DELETE a 'JOB OFFER' (Maybe Need this????)
+router.delete('/application/notes/:offerId', function(req, res){
+  table.Offer.destroy({
+    where: {
+      id: req.params.offerId
+    }
+  }).then(function(deletedOffer){
+    // SEND AN 'OK' to removeNote() - JobOfferContainer
+    res.sendStatus('200');
+  });
+});
 
 module.exports = router;
