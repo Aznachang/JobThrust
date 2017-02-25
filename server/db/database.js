@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize');
 var db = new Sequelize('jobseeker', null, null, {
   dialect: "postgres",
-  port: 8000
+  port: 5432
 });
 
 var User = db.define('user', {
@@ -31,7 +31,7 @@ var Application = db.define('application', {
 
 var Company = db.define('company', {
   name: Sequelize.STRING,
-  size: {type:Sequelize.STRING, allowNull: true}
+  size: {type: Sequelize.STRING, allowNull: true}
 });
 
 var Stage = db.define('stage', {
@@ -43,20 +43,22 @@ var Note = db.define('note', {
   applicationId: Sequelize.INTEGER
 });
 
-db.sync({force: true}).then(function() {
-  // TEMPORARY STUB FOR STYLING MODAL
-  Application.create({
-    jobId: 292052,
-    userId: '108755274178308228818',
-    stageId: 1,
-    title: 'Software Engineer - Based Avocado'
-  });
+var Search = db.define('search', {
+  query: {type: Sequelize.STRING, unique: true}
+})
 
-});
+var Query = db.define('query', {
+  searchId: Sequelize.INTEGER,
+  userId: Sequelize.STRING,
+})
+
+db.sync({force: true});
 
 module.exports.User = User;
 module.exports.Job = Job;
 module.exports.Application = Application;
 module.exports.Stage = Stage;
 module.exports.Note = Note;
+module.exports.Search = Search;
+module.exports.Query = Query;
 module.exports.db = db;

@@ -39,7 +39,6 @@ describe("A test suite", function() {
       }).then(function(res) {
       })
     })
-
     done();
   });
   it('should insert data into the job table', function (done) {
@@ -53,7 +52,29 @@ describe("A test suite", function() {
       }).then(function(res) {
       })
     })
+    done();
+  });
+  // QUERY TEST
+    it('should have an "id" and "query" properties', function (done) {
+    db.db.sync({force: true}).then(function() {
+      db.Query.create({
+        query: 'SVEY GOD'
+      }).then(function(res) {
+        
+      })
+    })
+    done();
+  });
+    it('should have a "userID", "queryId", && "count" properties', function (done) {
+    db.db.sync({force: true}).then(function() {
 
+      db.Search.create({
+        userId: '1',
+        queryId: '1',
+        count: 0
+      }).then(function(res) {
+      })
+    })
     done();
   });
   it('retrieve data from the job table', function (done) {

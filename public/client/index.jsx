@@ -4,7 +4,7 @@ import {Router, Route, browserHistory} from 'react-router';
 import App from './component/App.jsx';
 import LogIn from './component/LogIn.jsx';
 import ManageComponent from './component/manageComponent.jsx';
-import SearchContainer from './component/SearchContainer.jsx';
+import SearchContainer from './component/SearchView/SearchContainer.jsx';
 import Note from './component/NoteContainer.jsx'
 import CompanyComponent from './component/CompanyComponent.jsx'
 
