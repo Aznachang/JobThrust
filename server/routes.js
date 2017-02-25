@@ -19,18 +19,29 @@ router.route('/jobs/:jk').get(function(req, res) {
   })
 });
 
+
 router.post('/job', function(req, res) {
-    table.Job.create(req.body).then(function(res) {
-      table.Application.create({
-        jobId: res.dataValues.id,
+  table.Job.findOrCreate({
+    where: {
+      key: req.body.key
+    },
+    defaults: {
+      title: req.body.title,
+      description: req.body.description || 'No snippet available.',
+      fullDescription: req.body.fullDescription || 'No description available.',
+      company: req.body.company
+    }
+  }).spread(function(job, created) {
+    table.Application.create({
+        jobId: job.dataValues.id,
         userId: req.session.passport.user,
         stageId: 0,
         title: req.body.title,
         company: req.body.company
-      })
-     }).then(function() {
-       res.json(req.body.company);
-     })
+    }).then(function(app) {
+      res.sendStatus(200);
+    });
+  });
 });
 
 router.get('/job/:jobId', function(req, res) {
@@ -50,6 +61,10 @@ router.post('/application/stagechange', function(req, res) {
     res.sendStatus('200');
     console.log('Application stage updated');
   });
+});
+
+router.get('/user', function(req, res) {
+  res.send(req.session.passport.user);
 });
 
 router.get('/company', function(req, res) {

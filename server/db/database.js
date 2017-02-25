@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-var db = new Sequelize('jobseeker', 'postgres', 'r00tv3ggies', {
+var db = new Sequelize('jobseeker', null, null, {
   dialect: "postgres",
   port: 5432
 });
@@ -65,13 +65,13 @@ var Offer = db.define('offer', {
 });
 
 db.sync({force: true}).then(function() {
-  // TEMPORARY STUB FOR STYLING MODAL
-  Application.create({
-    jobId: 292052,
-    userId: '108755274178308228818',
-    stageId: 1,
-    title: 'Software Engineer - Based Avocado'
-  });
+  // Application.create({
+  //   jobID: 2940525,
+  //   userId: '108755274178308228818',
+  //   stageId: 1,
+  //   title: 'Software Engineer',
+  //   company: 'BasedAvocado'
+  // });
 });
 
 module.exports.User = User;

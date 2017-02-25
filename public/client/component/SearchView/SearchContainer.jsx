@@ -45,7 +45,6 @@ export default class SearchContainer extends React.Component {
       modalCompany: this.state.results[index].company
     });
     this.getInfo(jobkey, index);
-    console.log('RESULTS LIST BRAH:', this.state.results);
   }
 
   afterOpenModal() {
@@ -82,22 +81,25 @@ export default class SearchContainer extends React.Component {
     var context = this;
     $.get("/api/query")
     .done(function(response) {
-      $.get("api/search/" + response[0].searchId)
-      .done(function(response) {
-        $.getJSON("http://api.indeed.com/ads/apisearch?callback=?", {
-          publisher: '5024495540845813', // TODO: HIDE THIS!!!
-          l: context.state.location,
-          q: response[0].query,
-          limit: 5,
-          format: 'json',
-          v: '2'
-        }, function(json){
-          context.setState({
-            recommendations: json.results,
-            info: {}
+      if (response[0]) {
+        $.get("api/search/" + response[0].searchId)
+        .done(function(response) {
+          $.getJSON("http://api.indeed.com/ads/apisearch?callback=?", {
+            publisher: '5024495540845813', // TODO: HIDE THIS!!!
+            l: context.state.location,
+            q: response[0].query,
+            limit: 5,
+            format: 'json',
+            v: '2'
+          }, function(json){
+            context.setState({
+              recommendations: json.results,
+              info: {}
+            })
           })
         })
-      })
+        
+      }
     })
   }
 
@@ -171,7 +173,6 @@ export default class SearchContainer extends React.Component {
     $.get("/api/jobs/" + jobkey)
     .done(function(response) {
       var responseChunked = response.split('\n');
-      console.log(responseChunked);
       context.setState({
         modalInfo: responseChunked,
         modalIndex: index

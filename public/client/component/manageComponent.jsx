@@ -1,6 +1,7 @@
 import React from 'react';
 import StageList from './StagesComponent.jsx';
 import ApplicationList from './ApplicationList.jsx';
+import AddAppManual from './AddAppManual.jsx';
 import $ from 'jQuery';
 import axios from 'axios';
 
@@ -28,16 +29,18 @@ export default class ManageComponent extends React.Component {
         5: 'stage-box'
       }
     }
-    this.getJobs();
+    this.getJobs = this.getJobs.bind(this);
     this.changeStage = this.changeStage.bind(this);
     this.getStageCounts = this.getStageCounts.bind(this);
     this.sortListByStage = this.sortListByStage.bind(this);
     this.filter = this.filter.bind(this);
     this.sort = this.sort.bind(this);
+    this.getJobs();
   }
 
   getJobs() {
     var context = this;
+    console.log(context);
     $.ajax({
       url: 'http://localhost:3000/api/application',
       method: 'GET',
@@ -204,6 +207,7 @@ export default class ManageComponent extends React.Component {
     return (
       <div>
         <StageList boxClasses={this.state.boxClasses} filter={this.filter} filtered={this.state.filtered} stageCounts={this.state.stageCounts} stages={stages}/>
+        <AddAppManual getJobs={this.getJobs} />
         <ApplicationList sort={this.sort} filter={this.filter} filtered={this.state.filtered} filteredJobs={this.state.filteredJobs} jobInfo={this.state.jobs} sortList={this.sortListByStage} stages={stages} selectedAppJob={this.state.selectedAppJob} changeStage={this.changeStage} />
       </div>
     )

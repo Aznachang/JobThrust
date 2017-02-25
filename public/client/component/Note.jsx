@@ -23,11 +23,13 @@ class Note extends React.Component {
   renderNormal() {
     var context = this;
     return (
-    <div className='noteContainer'>
+    <div className='noteContainer' onClick={this.edit}>
+      <div className='note-top'>
+        <div className='note-created'>{this.props.createdAt.substring(0, 10)}</div>
+        <button className='remove-btn' onClick={context.remove}>x</button>
+      </div>
       <div className='noteText'>{this.props.note}</div>
       <br/>
-      <button onClick={context.edit} className='button-primary'>Edit</button>
-      <button onClick={context.remove} className='button-danger'>Remove</button>
     </div>
     )
   }
@@ -36,9 +38,9 @@ class Note extends React.Component {
     var context = this;
     return (
     <div className='noteContainer'>
-      <textarea ref='newText' defaultValue={this.props.note}></textarea>
+      <textarea ref='newText' className='edit-note' defaultValue={this.props.note}></textarea>
       <br/>
-      <button onClick={context.save} className='button-success'>Save</button>
+      <button onClick={context.save} className='button-info'>Save</button>
     </div>
     )
   }
