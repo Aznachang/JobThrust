@@ -63,10 +63,11 @@ export default class Application extends React.Component {
   closeModal() {
     this.setState({
       modalIsOpen: false,
-      // modalSections: {
-      //   'job-desc': 'job-desc hidden',
-      //   'change-stage': 'change-stage hidden'
-      // }
+      modalSections: {
+        'job-desc': 'job-desc hidden',
+        'change-stage': 'change-stage hidden',
+        'notes': 'notes hidden'
+      }
     });
     if (this.props.filtered !== null) {
       this.props.filter(this.props.filtered);

@@ -10,10 +10,11 @@ class SearchResultIcons extends React.Component {
 
   render() {
     return (
-      <div style={{'display': 'inline', 'float': 'right'}}>
-      <button onClick={this.props.getInfo} >ℹ</button>
-      <button onClick={this.props.addJob.bind(null, this.props.result, this.props.index)} >✔</button>
-      <button onClick={this.props.removeJob.bind(null, this.props.index)} >✘</button>
+      <div className="buttons-div">
+        <div className="buttons-container">
+          <button className="result-btn select" onClick={this.props.addJob.bind(null, this.props.result, this.props.index)} >✔</button>
+          <button className="result-btn remove" onClick={this.props.removeJob.bind(null, this.props.index)} >✘</button>
+        </div>
       </div>
     )  
   }
