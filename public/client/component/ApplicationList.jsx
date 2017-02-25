@@ -28,6 +28,10 @@ export default class ApplicationList extends React.Component {
     } else {
       return (
         <div id="AppList">
+          <form>
+            <input type="button" name="newest" value="newest" onClick={this.props.sort} />
+            <input type="button" name="oldest" value="oldest" onClick={this.props.sort} />
+          </form>
           <table>
             <thead>
               <tr>
