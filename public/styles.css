@@ -146,6 +146,33 @@ input[type=submit]:hover {
   background-color: rgba(0, 153, 255, 0.6)
 }
 
+.result-btn {
+  padding: 1px 6px 3px 6px;
+  background-color: white;
+  border: 1px solid grey;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 4px;
+}
+
+.select {
+  color: green;
+  background-color: rgba(51, 204, 51, 0.3);
+}
+
+.select:hover {
+  background-color: rgba(51, 204, 51, 0.5);
+}
+
+.remove {
+  color: red;
+  background-color: rgba(255, 0, 0, 0.3);
+}
+
+.remove:hover {
+  background-color: rgba(255, 0, 0, 0.5);
+}
+
 /* ========= MANAGE =========== */
 
 #pipeline {
