@@ -21,12 +21,12 @@ router.route('/jobs/:jk').get(function(req, res) {
 
 router.post('/job', function(req, res) {
     table.Job.create(req.body).then(function(res) {
-      console.log('session', req.session)
       table.Application.create({
         jobId: res.dataValues.id,
         userId: req.session.passport.user,
         stageId: 0,
-        title: req.body.title + ' - ' + req.body.company
+        title: req.body.title,
+        company: req.body.company
       })
      }).then(function() {
        res.json(req.body.company);

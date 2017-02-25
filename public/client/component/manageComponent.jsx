@@ -134,19 +134,44 @@ export default class ManageComponent extends React.Component {
     }
   }
 
-  sort(event) {
-    console.log(event)
-    if(event.target.value === 'newest') {
-      this.state.filteredJobs.sort(function(a, b) {
-        return b.id - a.id;
-      })
+  sort(value) {
+    console.log("this.state.jobs", this.state.jobs[0][value], typeof this.state.jobs[0][value])
+    if(this.state.filteredJobs.length && typeof this.state.filteredJobs[0][value] === 'string') {
+      console.log('#filtered: ', value)
+      console.log(this.state.filteredJobs.sort(function(a, b) {
+        var A = a[value].toUpperCase();
+        var B = b[value].toUpperCase();
+        if (A < B) { return -1; }
+        if (A > B) { return 1; }
+        return 0;
+      }))
     }
-    if(event.target.value === 'oldest') {
-      this.state.filteredJobs.sort(function(a, b) {
-        return a.id - b.id;
-      })
+    if(typeof this.state.jobs[0][value] === 'string') {
+      console.log('#nofilter')
+      console.log(this.state.jobs.sort(function(a, b) {
+        var A = a[value].toUpperCase();
+        var B = b[value].toUpperCase();
+        if (A < B) { return -1; }
+        if (A > B) { return 1; }
+        return 0;
+      }))
     }
-    this.setState({filteredJobs: this.state.filteredJobs})
+    if(this.state.filteredJobs.length && typeof this.state.filteredJobs[0][value] === 'number') {
+      console.log('#filtered', value)
+      console.log(this.state.filteredJobs.sort(function(a, b) {
+        return a[value] - b[value];
+      }))
+    }
+    if(typeof this.state.jobs[0][value] === 'number') {
+      console.log('#nofilter', value)
+      console.log(this.state.jobs.sort(function(a, b) {
+        return a[value] - b[value];
+      }))
+    }
+    this.setState({
+      //filteredJobs: this.state.filteredJobs,
+      jobs: this.state.jobs
+    })
   }
 
   sortListByStage() {
