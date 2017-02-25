@@ -26,7 +26,8 @@ var Application = db.define('application', {
   jobId: Sequelize.INTEGER,
   userId: Sequelize.STRING,
   stageId: Sequelize.INTEGER,
-  title: Sequelize.STRING
+  title: Sequelize.STRING,
+  company: Sequelize.STRING
 });
 
 var Company = db.define('company', {
@@ -52,7 +53,7 @@ var Query = db.define('query', {
   userId: Sequelize.STRING,
 })
 
-db.sync({force: true});
+db.sync();
 
 module.exports.User = User;
 module.exports.Job = Job;

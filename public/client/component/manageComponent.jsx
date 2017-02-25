@@ -134,19 +134,42 @@ export default class ManageComponent extends React.Component {
     }
   }
 
-  sort(event) {
-    console.log(event)
-    if(event.target.value === 'newest') {
+  sort(value) {
+    console.log(value)
+    if(value === 'company') {
       this.state.filteredJobs.sort(function(a, b) {
-        return b.id - a.id;
+        b.id - a.id;
+      })
+      this.state.jobs.sort(function(a, b) {
+        b.id - a.id;
       })
     }
-    if(event.target.value === 'oldest') {
+    if(value === 'role') {
       this.state.filteredJobs.sort(function(a, b) {
-        return a.id - b.id;
+        a.id - b.id;
+      })
+      this.state.jobs.sort(function(a, b) {
+        a.id - b.id;
+      })
+    }
+    if(value === 'stage') {
+      this.state.filteredJobs.sort(function(a, b) {
+        a.id - b.id;
+      })
+      this.state.jobs.sort(function(a, b) {
+        a.id - b.id;
+      })
+    }
+    if(value === 'created') {
+      this.state.filteredJobs.sort(function(a, b) {
+        b.id - a.id;
+      })
+      this.state.jobs.sort(function(a, b) {
+        b.id - a.id;
       })
     }
     this.setState({filteredJobs: this.state.filteredJobs})
+    this.setState({jobs: this.state.jobs})
   }
 
   sortListByStage() {
