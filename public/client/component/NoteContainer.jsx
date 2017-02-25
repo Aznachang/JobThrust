@@ -62,7 +62,10 @@ export default class NoteContainer extends React.Component {
     axios.get('/api/application/' + context.props.appId + '/notes')
     .then(function(response){
       console.log('Getting All Notes: ', response.data);
-      context.setState({notes: response.data});
+      var notes = response.data.sort(function(a, b) {
+        return b.id - a.id;
+      });
+      context.setState({notes: notes});
     });
   }
 
@@ -78,7 +81,7 @@ export default class NoteContainer extends React.Component {
         <button onClick={this.add.bind(null, '')} className='button-info create'>Add</button> <br/>
         <div className ='noteBoard'>
           {this.state.notes.map((note, index) =>
-            <Note key={index} index={index} updateNoteText={this.updateNote} deleteNoteText={this.removeNote} note={note.note} noteId={note.id} appId={note.applicationId}/>
+            <Note key={index} index={index} updateNoteText={this.updateNote} deleteNoteText={this.removeNote} note={note.note} createdAt={note.createdAt} noteId={note.id} appId={note.applicationId}/>
           )}
           <br/>
         </div>

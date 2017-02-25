@@ -4,6 +4,10 @@ body {
   font-family: 'Raleway', sans-serif;
 }
 
+button {
+  font-family: 'Raleway', sans-serif;
+}
+
 ul {
   list-style-type: none;
   margin: 0;
@@ -47,15 +51,14 @@ thead tr {
 }
 
 textarea {
-  padding: 1em;   /* space on all directions */
+  padding: 6px;
   font-family: 'Raleway', sans-serif;
-  font-size: 1em;
+  font-size: 0.9em;
   border: 0.1em solid #ccc;
   border-radius: 0.5em;
   background-color: #ffffe6;
-  margin: 15px;
-  width: 90%;
-  display: block;
+  margin: 15px auto 5px auto;
+  width: 80%;
 }
 
 .page-header {
@@ -355,6 +358,10 @@ input[type=submit]:hover {
 
 .notes-container {
   text-align: center;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .button-info {
@@ -364,10 +371,62 @@ input[type=submit]:hover {
   padding: 3px 6px;
   cursor: pointer;
   background-color: #f2f2f2;
+  width: 50px;
+  margin: 0 auto;
 }
 
 .button-info:hover {
   background-color: #d9d9d9;
+}
+
+.noteContainer {
+  border: 1px solid grey;
+  border-radius: 5px;
+  margin-top: 10px;
+  padding: 6px;
+  width: 90%;
+  margin: 15px auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.noteContainer:hover {
+  box-shadow: 2px 2px 2px grey;
+}
+
+.note-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.note-created {
+  font-weight: bold;
+  font-size: 0.8em
+}
+
+.remove-btn {
+  padding: 2px 6px;
+  font-size: 0.8em;
+  background-color: white;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  border: 1px solid white;
+  border-radius: 2px;
+}
+
+.remove-btn:hover {
+  color: red;
+  border: 1px solid grey;
+  background-color: #f2f2f2;
+}
+
+.edit-note {
+  width: 90%;
+  font-size: 0.9em;
+  margin-bottom: 5px;
 }
 
 /* =========== LOGIN ========= */
