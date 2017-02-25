@@ -30,16 +30,18 @@ class SearchRecommendations extends React.Component {
       } else {
         infoWindow = <br />
       }
-
       return (
-        <li key={index} className="search-result">
-            <p>{result.jobtitle}-{result.formattedLocation}-{result.company}<SearchResultIcons index={index} addJob={this.props.addRecommendation} removeJob={this.props.removeRecommendation} result={result} getInfo={this.props.getInfo.bind(null, result.jobkey, index)} /></p>
+        <li className="recommendation" key={index} >
+            <SearchResultIcons index={index} addJob={this.props.addRecommendation} removeJob={this.props.removeRecommendation} result={result} getInfo={this.props.getInfo.bind(null, result.jobkey, index)} />
+            <p>{result.jobtitle}</p>
+            <p>{result.company}</p>
+            <p>{result.formattedLocation}</p>
             {infoWindow}
         </li>
       );
     })
     return (
-      <ul>{recommendationsList}</ul>
+      <ul className="recommendation">{recommendationsList}</ul>
     )  
   }
 }

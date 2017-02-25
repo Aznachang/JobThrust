@@ -260,7 +260,7 @@ export default class SearchContainer extends React.Component {
 
         </Modal>
        <SearchBar getJobs={this.getJobs} searchHandler={this.searchHandler} />
-       <SearchRecommendations info={this.state.info} recommendations={this.state.recommendations} addRecommendation={this.addRecommendation} getInfo={this.getInfo} removeRecommendation={this.removeRecommendation} />
+        <SearchRecommendations info={this.state.info} recommendations={this.state.recommendations} addRecommendation={this.addRecommendation} getInfo={this.getInfo} removeRecommendation={this.removeRecommendation} />
        <SearchResultsContainer info={this.state.info} openModal={this.openModal} results={this.state.results} addJob={this.addJob} getInfo={this.getInfo} removeJob={this.removeJob} />
       </div>
     )
