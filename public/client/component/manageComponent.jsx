@@ -33,6 +33,7 @@ export default class ManageComponent extends React.Component {
     this.getStageCounts = this.getStageCounts.bind(this);
     this.sortListByStage = this.sortListByStage.bind(this);
     this.filter = this.filter.bind(this);
+    this.sort = this.sort.bind(this);
   }
 
   getJobs() {
@@ -56,6 +57,7 @@ export default class ManageComponent extends React.Component {
       }
     })
   }
+
 
 
   getStageCounts() {
@@ -123,13 +125,28 @@ export default class ManageComponent extends React.Component {
         return job.stageId === stageNum;
       });
       this.setState({filtered: stageNum, boxClasses: boxClasses, filteredJobs: filteredJobs});
-      console.log('FILTER HAPPENED');
+      console.log('FILTER HAPPENED: ');
       this.render();
     } else {
       this.setState({filtered: null, boxClasses: boxClasses});
       console.log('UNFILTER HAPPENED');
       this.render();
     }
+  }
+
+  sort(event) {
+    console.log(event)
+    if(event.target.value === 'newest') {
+      this.state.filteredJobs.sort(function(a, b) {
+        return b.id - a.id;
+      })
+    }
+    if(event.target.value === 'oldest') {
+      this.state.filteredJobs.sort(function(a, b) {
+        return a.id - b.id;
+      })
+    }
+    this.setState({filteredJobs: this.state.filteredJobs})
   }
 
   sortListByStage() {
@@ -148,7 +165,7 @@ export default class ManageComponent extends React.Component {
     return (
       <div>
         <StageList boxClasses={this.state.boxClasses} filter={this.filter} filtered={this.state.filtered} stageCounts={this.state.stageCounts} stages={stages}/>
-        <ApplicationList filter={this.filter} filtered={this.state.filtered} filteredJobs={this.state.filteredJobs} jobInfo={this.state.jobs} sortList={this.sortListByStage} stages={stages} selectedAppJob={this.state.selectedAppJob} changeStage={this.changeStage} />
+        <ApplicationList sort={this.sort} filter={this.filter} filtered={this.state.filtered} filteredJobs={this.state.filteredJobs} jobInfo={this.state.jobs} sortList={this.sortListByStage} stages={stages} selectedAppJob={this.state.selectedAppJob} changeStage={this.changeStage} />
       </div>
     )
   }
