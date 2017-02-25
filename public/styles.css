@@ -62,6 +62,19 @@ textarea {
   font-weight: bold;
 }
 
+.desc-header {
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 2px solid grey;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+/*.inner-container span {
+  display: block;
+  padding-bottom: 3px;
+}*/
+
 /* ========== NAV BAR ========== */
 
 .nav-bar {
@@ -137,18 +150,24 @@ input[type=submit]:hover {
 .search-result {
   background-color: rgba(0, 153, 255, 0.25);
   margin-bottom: 2px;
-  padding: 8px 8px 0 8px;
+  padding: 8px 8px 8px 8px;
   border: 1px solid #ccc;
   font-size: 0.8em;
+  cursor: pointer;
 }
 
 .search-result:hover {
   background-color: rgba(0, 153, 255, 0.6)
 }
 
+.buttons-container {
+  position: absolute;
+  left: 92%;
+}
+
 .result-btn {
   padding: 1px 6px 3px 6px;
-  background-color: white;
+  background-color: rgba(0, 153, 255, 0);
   border-radius: 4px;
   cursor: pointer;
   margin-left: 4px;
@@ -156,12 +175,12 @@ input[type=submit]:hover {
 
 .select {
   color: green;
-  background-color: rgba(51, 204, 51, 0.3);
+  background-color: rgba(51, 204, 51, 0.3); 
   border: 1px solid green;
 }
 
 .select:hover {
-  background-color: rgba(51, 204, 51, 0.5);
+   background-color: rgba(51, 204, 51, 0.5); 
 }
 
 .remove {
@@ -171,7 +190,11 @@ input[type=submit]:hover {
 }
 
 .remove:hover {
-  background-color: rgba(255, 0, 0, 0.5);
+   background-color: rgba(255, 0, 0, 0.5); 
+}
+
+.on-demand-desc {
+  font-size: 0.9em;
 }
 
 /* ========= MANAGE =========== */

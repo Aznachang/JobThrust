@@ -4,7 +4,8 @@ import SearchBar from './SearchBar.jsx';
 import SearchRecommendations from './SearchRecommendations.jsx';
 import axios from 'axios'
 import SearchResultsContainer from './SearchResultsContainer.jsx';
-import $ from 'jQuery'
+import $ from 'jQuery';
+import Modal from 'react-modal';
 
 export default class SearchContainer extends React.Component {
   constructor(props) {
@@ -14,8 +15,16 @@ export default class SearchContainer extends React.Component {
       location: null,
       results: [],
       recommendations: [],
-      info: {}
+      modalIsOpen: false,
+      modalInfo: [],
+      modalTitle: '',
+      modalCompany: '',
+      modalLoc: ''
     }
+
+    this.openModal = this.openModal.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
     this.getJobs = this.getJobs.bind(this);
     this.searchHandler = this.searchHandler.bind(this);
     this.getInfo = this.getInfo.bind(this);
@@ -26,6 +35,26 @@ export default class SearchContainer extends React.Component {
     this.addRecommendation = this.addRecommendation.bind(this);
     this.removeRecommendation = this.removeRecommendation.bind(this);
   };
+  
+
+  openModal(jobkey, index) {
+    this.setState({
+      modalIsOpen: true,
+      modalLoc: this.state.results[index].formattedLocation,
+      modalTitle: this.state.results[index].jobtitle,
+      modalCompany: this.state.results[index].company
+    });
+    this.getInfo(jobkey, index);
+    console.log('RESULTS LIST BRAH:', this.state.results);
+  }
+
+  afterOpenModal() {
+
+  }
+
+  closeModal() {
+    this.setState({modalIsOpen: false, modalInfo: []});
+  }
 
   // GET JOBS FROM INDEED API
   getJobs(event) {
@@ -141,9 +170,12 @@ export default class SearchContainer extends React.Component {
     var context = this;
     $.get("/api/jobs/" + jobkey)
     .done(function(response) {
+      var responseChunked = response.split('\n');
+      console.log(responseChunked);
       context.setState({
-        info: {[index]: response}
-      })
+        modalInfo: responseChunked,
+        modalIndex: index
+      });
     })
   }
 
@@ -207,9 +239,29 @@ export default class SearchContainer extends React.Component {
     return(
       <div>
        <div className="page-header">Search For Current Openings</div>
+       <Modal
+          isOpen={this.state.modalIsOpen}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+          contentLabel="Example Modal"
+          className="modal-content"
+          overlayClassName="modal-overlay"
+        >
+          
+          <div className="desc-header">
+            <div>{this.state.modalTitle}</div>
+            <div>{this.state.modalCompany} ({this.state.modalLoc})</div>
+          </div>
+          <div className="inner-container on-demand-desc">
+            { this.state.modalInfo.map((chunk, index) =>
+              <span key={index}>{chunk}<br/></span>
+            ) }
+          </div>
+
+        </Modal>
        <SearchBar getJobs={this.getJobs} searchHandler={this.searchHandler} />
        <SearchRecommendations info={this.state.info} recommendations={this.state.recommendations} addRecommendation={this.addRecommendation} getInfo={this.getInfo} removeRecommendation={this.removeRecommendation} />
-       <SearchResultsContainer info={this.state.info} results={this.state.results} addJob={this.addJob} getInfo={this.getInfo} removeJob={this.removeJob} />
+       <SearchResultsContainer info={this.state.info} openModal={this.openModal} results={this.state.results} addJob={this.addJob} getInfo={this.getInfo} removeJob={this.removeJob} />
       </div>
     )
   };
