@@ -48,11 +48,14 @@ thead tr {
 
 textarea {
   padding: 1em;   /* space on all directions */
-  font-family: "Montserrat", "sans-serif";
+  font-family: 'Raleway', sans-serif;
   font-size: 1em;
   border: 0.1em solid #ccc;
   border-radius: 0.5em;
   background-color: #ffffe6;
+  margin: 15px;
+  width: 90%;
+  display: block;
 }
 
 .page-header {
@@ -160,9 +163,10 @@ input[type=submit]:hover {
   background-color: rgba(0, 153, 255, 0.6)
 }
 
-.buttons-container {
-  position: absolute;
-  left: 92%;
+.buttons-div {
+  float: right;
+  width: 13%;
+  text-align: right;
 }
 
 .result-btn {
@@ -345,6 +349,25 @@ input[type=submit]:hover {
 
 .hidden {
   display: none;
+}
+
+/* ========== NOTES ======== */
+
+.notes-container {
+  text-align: center;
+}
+
+.button-info {
+  text-align: center;
+  border: 1px solid grey;
+  border-radius: 4px;
+  padding: 3px 6px;
+  cursor: pointer;
+  background-color: #f2f2f2;
+}
+
+.button-info:hover {
+  background-color: #d9d9d9;
 }
 
 /* =========== LOGIN ========= */

@@ -20,14 +20,15 @@ export default class NoteContainer extends React.Component {
   add() {
     var context = this;
     var last = context.state.notes.length - 1;
-
-    axios.post('/api/application/notes', {
-      note:$('.add-Note').val(),
-      applicationId: context.props.appId
-    }).then(function(notes) {
-      context.getNotes();
-      $('.add-Note').val('');
-    });
+    if ($('add-note').val() !== '') {
+      axios.post('/api/application/notes', {
+        note:$('.add-note').val(),
+        applicationId: context.props.appId
+      }).then(function(notes) {
+        context.getNotes();
+        $('.add-note').val('');
+      });
+    }
   }
 
   // for 'Remove' Button
@@ -68,9 +69,9 @@ export default class NoteContainer extends React.Component {
 
   render() {
     return(
-      <div>
-      <textarea className ='add-Note'></textarea>
-      <button onClick={this.add.bind(null, '')} className='button-info create'>Add new</button> <br/>
+      <div className='notes-container'>
+        <textarea className='add-note' placeholder="Add new note..."></textarea>
+        <button onClick={this.add.bind(null, '')} className='button-info create'>Add</button> <br/>
         <div className ='noteBoard'>
           {this.state.notes.map((note, index) =>
             <Note key={index} index={index} updateNoteText={this.updateNote} deleteNoteText={this.removeNote} note={note.note} noteId={note.id} appId={note.applicationId}/>
