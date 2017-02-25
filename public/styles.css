@@ -149,7 +149,6 @@ input[type=submit]:hover {
 .result-btn {
   padding: 1px 6px 3px 6px;
   background-color: white;
-  border: 1px solid grey;
   border-radius: 4px;
   cursor: pointer;
   margin-left: 4px;
@@ -158,6 +157,7 @@ input[type=submit]:hover {
 .select {
   color: green;
   background-color: rgba(51, 204, 51, 0.3);
+  border: 1px solid green;
 }
 
 .select:hover {
@@ -167,6 +167,7 @@ input[type=submit]:hover {
 .remove {
   color: red;
   background-color: rgba(255, 0, 0, 0.3);
+  border: 1px solid red;
 }
 
 .remove:hover {
