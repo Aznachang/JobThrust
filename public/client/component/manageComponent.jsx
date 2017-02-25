@@ -1,6 +1,7 @@
 import React from 'react';
 import StageList from './StagesComponent.jsx';
 import ApplicationList from './ApplicationList.jsx';
+import AddAppManual from './AddAppManual.jsx';
 import $ from 'jQuery';
 import axios from 'axios';
 
@@ -204,6 +205,7 @@ export default class ManageComponent extends React.Component {
     return (
       <div>
         <StageList boxClasses={this.state.boxClasses} filter={this.filter} filtered={this.state.filtered} stageCounts={this.state.stageCounts} stages={stages}/>
+        <AddAppManual />
         <ApplicationList sort={this.sort} filter={this.filter} filtered={this.state.filtered} filteredJobs={this.state.filteredJobs} jobInfo={this.state.jobs} sortList={this.sortListByStage} stages={stages} selectedAppJob={this.state.selectedAppJob} changeStage={this.changeStage} />
       </div>
     )

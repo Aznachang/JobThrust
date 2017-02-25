@@ -8,6 +8,10 @@ button {
   font-family: 'Raleway', sans-serif;
 }
 
+input {
+  font-family: 'Raleway', sans-serif;
+}
+
 ul {
   list-style-type: none;
   margin: 0;
@@ -262,6 +266,49 @@ input[type=submit]:hover {
 
 .application:hover {
   cursor: pointer;
+}
+
+.add-app-manual {
+  width: 95%;
+  margin: 5px auto;
+}
+
+.add-app-btn {
+  display: inline-block;
+  padding: 5px 8px;
+  color: white;
+  background-color: #007FFF;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.add-app-btn:hover {
+  background-color: #006BB3;
+}
+
+/* ======== MANUAL APPLICATION ADD ======= */
+
+.add-app-container {
+  margin: 15px;
+  font-size: 0.9em;
+}
+
+.add-app-container input[type=text] {
+  margin: 6px 0 10px 0;
+  height: 40px;
+}
+
+.add-app-container textarea {
+  width: 90%;
+  height: 60px;
+  margin-top: 6px;
+  background-color: white;
+}
+
+input.st-input {
+  width: 60px;
+  height: 40px;
 }
 
 /* ======== APPLICATION INFO POPUP/MODAL ======== */
