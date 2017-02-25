@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
+import axios from 'axios';
 
 export default class AddAppManual extends React.Component {
   constructor(props) {
@@ -7,23 +8,13 @@ export default class AddAppManual extends React.Component {
 
     this.state = {
       modalIsOpen: false,
-      selectedAppJob: {
-        title: '',
-        description: '',
-        fullDescription: [],
-        company: '',
-        key: ''
-      },
-      modalSections: {
-        'job-desc': 'job-desc hidden',
-        'change-stage': 'change-stage hidden',
-        'notes': 'notes hidden'
-      }
+      user: ''
     }
 
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.submitApp = this.submitApp.bind(this);
   }
 
   openModal() {
@@ -31,6 +22,11 @@ export default class AddAppManual extends React.Component {
   }
 
   afterOpenModal() {
+    var context = this;
+    axios.get('/api/user').then(function(res) {
+      context.setState({ user: res.data });
+      console.log('USER:', res.data);
+    });
 
   }
 
@@ -40,8 +36,24 @@ export default class AddAppManual extends React.Component {
     });
   }
 
-  submitApp() {
+  submitApp(e) {
+    e.preventDefault();
+    var context = this;
 
+    var appData = {
+      title: this.refs.title.value,
+      company: this.refs.company.value,
+      city: this.refs.city.value,
+      state: this.refs.state.value,
+      description: this.refs.description.value,
+      key: 'MANUAL-' + this.state.user + Math.round(Math.random() * 1562034)
+    }
+
+    axios.post('/api/job', appData).then(function(res) {
+      context.props.getJobs();
+    });
+    
+    this.closeModal();
   }
 
   render() {
@@ -64,17 +76,17 @@ export default class AddAppManual extends React.Component {
               Enter new opportunity info:
             </div>
             <div className='add-app-container'>
-              <form id="add-app-form">
+              <form id="add-app-form" onSubmit={this.submitApp}>
                 Job Title<br />
-                <input type='text' name='title' placeholder='Job Title' /><br />
+                <input type='text' name='title' ref='title' placeholder='Job Title' /><br />
                 Company<br />
-                <input type='text' name='company' placeholder='Company' /><br />
+                <input type='text' name='company' ref='company' placeholder='Company' /><br />
                 City<br />
-                <input type='text' name='city' placeholder='City' /><br />
+                <input type='text' name='city' ref='city' placeholder='City' /><br />
                 State<br />
-                <input type='text' name='state' placeholder='ST' className="st-input" maxLength='2' /><br />
+                <input type='text' name='state' placeholder='ST' ref='state' className="st-input" maxLength='2' /><br />
                 Job Description<br />
-                <textarea name='description' form='add-app-form' placeholder='Enter job description...'></textarea><br />
+                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter job description...'></textarea><br />
                 <input type='submit' value='Add' />
               </form>
             </div>
