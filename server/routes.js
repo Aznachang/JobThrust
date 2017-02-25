@@ -4,6 +4,8 @@ var cheerio = require('cheerio');
 var axios = require('axios');
 var path = require('path');
 var table = require('./db/database');
+var rp = require('request-promise');
+
 
 router.route('/jobs/:jk').get(function(req, res) {
   var url = "http://www.indeed.com/viewjob?jk=" + req.params.jk;
@@ -51,6 +53,20 @@ router.post('/application/stagechange', function(req, res) {
   });
 });
 
+router.get('/company', function(req, res) {
+
+  var basicUrl = 'http://api.glassdoor.com/api/api.htm?';
+  var endpoints = 't.p=126535&t.k=jzi4LSmsrF5&userip=199.87.82.66&useragent=&format=json&v=1&action=employers&q=';
+
+  rp(basicUrl+endpoints+req.query.company).then(function(respond) {
+    respond = JSON.parse(respond)
+    console.log('-------********',respond)
+    res.json(respond.response.employers)
+  }).catch(function(err) {
+
+    console.log('There was an error with your request', err);
+  })
+})
 router.get('/application', function(req, res) {
   console.log('-=-----', req.session.passport.user)
   table.Application.findAll({
