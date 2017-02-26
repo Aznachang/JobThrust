@@ -37,22 +37,30 @@ export default class CompanyListComponent extends React.Component {
       })
     })
   }
+
+  appendDiv() {
+    $('.newDiv').css('display','block');
+  }
   render() {
     if (this.props.companyInfo[0]) {
-      this.textBox();
+      // this.textBox();
 
     return (
-      <div className='companyInfo'> 
+      <div className='companyInfo'>
         {
           this.props.companyInfo.map((job, i) =>
             <div key={i} >
-              <div>
-                <img src={job.squareLogo} style={{'height':'100px', 'width':'100px'}}/>
-              </div>
+              <img src={job.squareLogo} style={{'height':'100px', 'width':'100px'}}/>
               <h3>{job.name}</h3>
               <p>{this.props.companyView}</p>
               <br></br>
               <br></br>
+              <a href="#"><fieldset className="employerReview">
+              <legend>employerReview:</legend>
+              </fieldset></a>
+              <a href="#" onClick={this.appendDiv}><fieldset className="interviewReview">
+              <legend>interviewReview:</legend>
+              </fieldset></a>
             </div>
           )
         }
@@ -60,7 +68,7 @@ export default class CompanyListComponent extends React.Component {
     )
   } else {
     return (
-     <div></div>
+      <div></div>
     )
   }
   } 

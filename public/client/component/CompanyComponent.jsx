@@ -46,13 +46,11 @@ export default class CompanyComponent extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="container">
         <CompanySearch getCompanyInfo={this.getCompanyInfo} handleChange={this.handleChange}/>
        <div>
        {this.state.hidden ? <CompanyListComponent companyInfo={[this.state.companyInfo[0]]} companyView={this.state.companyView}/> : null}
         </div>
-        <div className="newDiv"></div>
-
       </div>
     )
   }
