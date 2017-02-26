@@ -13,17 +13,20 @@ class NavBar extends React.Component {
 
   render() {
     return (
-      <ul className="nav-bar">
-        <li>
-          <Link to={'/manage'}>Manage</Link>
-        </li>
-        <li>
-          <Link to={'/search'}>Search</Link>
-        </li>
-        <li>
-          <a href="/login" className="logout-btn" onClick={this.logOut}>Log Out</a>
-        </li>
-      </ul>
+      <div className='nav-bar'>
+        <div className='app-name'>HireGuide</div>
+        <ul className='nav-links'>
+          <li>
+            <Link to={'/manage'}>Manage</Link>
+          </li>
+          <li>
+            <Link to={'/search'}>Search</Link>
+          </li>
+          <li>
+            <a href="/login" className="logout-btn" onClick={this.logOut}>Log Out</a>
+          </li>
+        </ul>
+      </div>
     )
   }
 }
