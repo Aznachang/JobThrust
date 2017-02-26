@@ -1,0 +1,33 @@
+#app {
+/*	background-color:#eee;
+*/}
+.companyInfo {
+  background-color:#eee;
+  padding-bottom: 150px;
+  width: 1000px;
+  margin: 0 auto;
+}
+.newDiv {
+  display: none;
+  background-color: #eee;
+  width: 1000px;
+  margin-top: 50px;
+  margin-right:100px;
+  margin-left: 210px;  
+}
+.employerReview {
+  width: 100px;
+  height: 100px;
+  float: right
+}
+
+.interviewReview {
+  width: 100px;
+  height: 100px;
+  float: left;
+}
+.comment{ 
+  background-color: #eee;
+  width: 1000px;
+  height: 80px;
+}

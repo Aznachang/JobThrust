@@ -8,6 +8,7 @@ export default class CompanyComponent extends React.Component {
     super(props);
     this.state = {
       companyInfo: [],
+      companyView: '',
       value: '',
       hidden: false
     }
@@ -30,7 +31,8 @@ export default class CompanyComponent extends React.Component {
       success: function(data) {
         console.log('This glassdoor info', data)
         context.setState({
-          companyInfo: data
+          companyInfo: data[0],
+          companyView: data[1]
         })
       },
       error: function(error) {
@@ -44,10 +46,10 @@ export default class CompanyComponent extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="container">
         <CompanySearch getCompanyInfo={this.getCompanyInfo} handleChange={this.handleChange}/>
        <div>
-       {this.state.hidden ? <CompanyListComponent companyInfo={[this.state.companyInfo[0]]}/> : null}
+       {this.state.hidden ? <CompanyListComponent companyInfo={[this.state.companyInfo[0]]} companyView={this.state.companyView}/> : null}
         </div>
       </div>
     )
