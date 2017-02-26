@@ -60,7 +60,7 @@ export default class AddAppManual extends React.Component {
     return (
       <div className="add-app-manual">
           <div className="add-app-btn" onClick={this.openModal}>
-            <span>Add an opportunity manually...</span>
+            <span>ADD AN OPPORTUNITY MANUALLY</span>
           </div>
           <Modal
           isOpen={this.state.modalIsOpen}
