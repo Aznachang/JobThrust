@@ -56,7 +56,7 @@ router.post('/application/stagechange', function(req, res) {
   console.log('Application post request:', req.body);
   table.Application.update(
     {stageId: req.body.stageId},
-    {where: {id: req.body.id}}
+    {where: {id: req.body.applicationId}}
   ).then(function(thing) {
     res.sendStatus('200');
     console.log('Application stage updated');
