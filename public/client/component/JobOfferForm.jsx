@@ -1,60 +1,94 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import Modal from 'react-modal';
+import axios from 'axios';
 
-class JobOfferForm extends React.Component {
+export default class JobOfferForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      // salary: 0,
-      // signBonus: 0,
-      // vacationDays: 0,
-      // retireMatchPercent: 0,
-    };
-  }
+      this.state = {
+        modalIsOpen: false,
+        user: ''
+      }
+
+      this.openModal = this.openModal.bind(this);
+      this.afterOpenModal = this.afterOpenModal.bind(this);
+      this.closeModal = this.closeModal.bind(this);
+      this.submitJobOffer = this.submitJobOffer.bind(this);
+    }
+
+    openModal() {
+      this.setState({modalIsOpen: true});
+    }
+
+    afterOpenModal() {
+      var context = this;
+      axios.get('/api/user').then(function(res) {
+        context.setState({ user: res.data });
+        console.log('USER:', res.data);
+      });
+    }
+
+    closeModal() {
+      this.setState({
+        modalIsOpen: false,
+      });
+    }
+
+    //UPDATE A JOB OFFER
+    submitJobOffer(e) {
+      // e.preventDefault();
+      var context = this;
+
+      axios.put('/api/application/offers/1', {
+        salary: this.refs.salary.value,
+        signBonus: this.refs.signBonus.value,
+        vacationDays: this.refs.vacationDays.value,
+        retireMatchPercent: this.refs.retireMatchPercent.value,
+      }).then(function(offers) {
+        this.props.getOffers();
+      });
+    }
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.props.getOffers} className='job-offer-form'>
-          <h1>Job Offer Form</h1>
+      <div className="add-app-manual">
+        <div className="add-app-btn" onClick={this.openModal}>
+          <span>Edit Job Offer</span>
+        </div>
+        <Modal
+        isOpen={this.state.modalIsOpen}
+        onAfterOpen={this.afterOpenModal}
+        onRequestClose={this.closeModal}
+        contentLabel="Example Modal"
+        className="modal-content"
+        overlayClassName="modal-overlay"
+        >
 
-          <fieldset className='form-group'>
-           Company Name <br/>
-           <input className='form-offer' name='company' type='text' required onChange={this.props.handleChange} />
-          </fieldset>
-
-          <fieldset className='form-group'>
-            Job Title <br/>
-            <input  className='form-offer' name='title' type='email' required onChange={this.props.handleChange} />
-          </fieldset>
-
-          <fieldset className='form-group'>
-            Salary <br/>
-            <input className='form-offer' name='salary' type='text' required onChange={this.props.handleChange} />
-          </fieldset>
-
-          <fieldset className='form-group'>
-            Signing Bonus <br/>
-            <input className='form-offer' name='bonus' onChange={this.props.handleChange}></input>
-          </fieldset>
-
-          <fieldset className='form-group'>
-            Vacation Days <br/>
-            <input className='form-offer' name='vacation' required onChange={this.props.handleChange}></input>
-          </fieldset>
-
-          <fieldset className='form-group'>
-            401K Company Match <br/>
-            <input className='form-offer' name='retirement' onChange={this.props.handleChange}></input>
-          </fieldset>
-
-          <div className='form-group'>
-            <input className='offer-btn' type='submit' value="Save Job Offer" />
+        <div className="inner-container">
+          <div className='desc-header'>
+            Update Your Job Offer:
           </div>
-        </form>
+          <div className='add-app-container'>
+            <form id="add-app-form" onSubmit={this.submitJobOffer}>
+              Salary<br />
+              <input type='text' name='salary' ref='salary' placeholder='50000' /><br />
+              Signing Bonus<br />
+              <input type='text' name='signBonus' ref='signBonus' placeholder='5000' /><br />
+              Vacation Days<br />
+              <input type='text' name='vacationDays' ref='vacationDays' placeholder='14' /><br />
+              401K Company Match %<br />
+              <input type='text' name='retireMatchPercent' ref='retireMatchPercent' placeholder='5' /><br />
+
+              <input type='submit' value='Add' />
+            </form>
+          </div>
+
+        </div>
+
+        </Modal>
       </div>
     )
   }
 }
 
-export default JobOfferForm;
+// export default JobOfferForm;

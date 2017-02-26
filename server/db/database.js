@@ -55,6 +55,7 @@ var Query = db.define('query', {
 })
 
 var Offer = db.define('offer', {
+  userId: Sequelize.STRING,
   companyName: Sequelize.STRING,
   jobTitle: Sequelize.STRING,
   salary: Sequelize.INTEGER,
@@ -65,13 +66,13 @@ var Offer = db.define('offer', {
 });
 
 db.sync({force: true}).then(function() {
-  // Application.create({
-  //   jobID: 2940525,
-  //   userId: '108755274178308228818',
-  //   stageId: 1,
-  //   title: 'Software Engineer',
-  //   company: 'BasedAvocado'
-  // });
+  Application.create({
+    jobID: 2940525,
+    userId: '108755274178308228818',
+    stageId: 1,
+    title: 'Software Engineer',
+    company: 'BasedAvocado'
+  });
 });
 
 module.exports.User = User;

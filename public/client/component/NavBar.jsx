@@ -23,6 +23,9 @@ class NavBar extends React.Component {
             <Link to={'/search'}>Search</Link>
           </li>
           <li>
+            <Link to={'/offers'}>Job Offers</Link>
+          </li>
+          <li>
             <a href="/login" className="logout-btn" onClick={this.logOut}>Log Out</a>
           </li>
         </ul>

@@ -203,13 +203,13 @@ router.get('/query', function(req, res) {
 // GET ALL 'JOB OFFERS'
 router.get('/application/offers', function(req, res) {
   // Find All Notes For Specific Job Application ID#
-  table.Offer.findAll({
-    // where: {
-    //   applicationId: req.params.id
-    // }
+  table.Offers.findAll({
+    where: {
+      userId: req.session.passport.user
+    }
   }).then(function(offers){
-    res.json(offers);
-  })
+      res.json(offers);
+  }); //end of Application then()
 });
 
 // 'POST' a 'JOB OFFER'
@@ -223,7 +223,9 @@ router.post('/application/offers', function(req, res) {
   .then(function(job){
     console.log('Job Record Found is: ', job);
     res.sendStatus('200');
+
     table.Offer.create({
+      userId: req.session.passport.user,
       companyName: job.company,
       jobTitle: job.title,
       applicationId: req.body.applicationId
@@ -233,42 +235,33 @@ router.post('/application/offers', function(req, res) {
   });
 });
 
-// 'UPDATE' a 'JOB OFFER'
-router.put('/application/offer/:offerId', function(req, res) {
+// 'UPDATE' a 'JOB OFFER' - /api/application/offers/1
+router.put('/application/offers/:offerId', function(req, res) {
   console.log('POST A JOB OFFER: ', req.body);
   // See if this offer exists
   table.Offer.findOne({
     where: {
-      id: req.params.offerId
+      id: req.params.offerId,
+      userId: req.session.passport.user
     }
   }).then(function(offer){
     res.sendStatus('200');
       // We Will Auto-Populate the companyName, jobTitle above
-      table.Offer.update(
-      {
-        // Database Field: req.body.frontEnd
-        salary: req.body.offer,
-        signBonus: req.body.signBonus,
-        vacationDays: req.body.vacationDays,
-        retireMatchPercent: req.body.retireMatchPercent,
-        workFromHomeDays: req.body.workFromHomeDays,
-        workFromHome: req.body.workFromHome,
-        applicationId: req.body.applicationId
-      },
-      {
-        // GET the specific 'JOB OFFER'
-        where: {
-          id: req.body.id
-        }
-      }).then(function(offer) {
-        // SEND AN 'OK' to updateOffer() - JobOfferContainer
-        res.sendStatus('200');
-      });
+    table.Offer.update({
+      // Database Field: req.body.frontEnd
+      salary: req.body.offer,
+      signBonus: req.body.signBonus,
+      vacationDays: req.body.vacationDays,
+      retireMatchPercent: req.body.retireMatchPercent,
+      workFromHomeDays: req.body.workFromHomeDays,
+      workFromHome: req.body.workFromHome,
+      applicationId: req.body.applicationId
     });
+  });
 });
 
 // DELETE a 'JOB OFFER' (Maybe Need this????)
-router.delete('/application/notes/:offerId', function(req, res){
+router.delete('/application/offers/:offerId', function(req, res){
   table.Offer.destroy({
     where: {
       id: req.params.offerId

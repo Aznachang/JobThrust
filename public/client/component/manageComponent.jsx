@@ -98,7 +98,7 @@ export default class ManageComponent extends React.Component {
           jobId: jobId,
           applicationId: id
         }).then(function(offer){
-
+          alert('Job Offer Saved!');
         });
       } //end of 'if'
     });
