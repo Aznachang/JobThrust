@@ -67,13 +67,14 @@ textarea {
   border-radius: 0.5em;
   background-color: #ffffe6;
   margin: 15px auto 5px auto;
-  width: 80%;
+  width: 90%;
+  height: 4em;
 }
 
 .page-header {
   display: flex;
   justify-content: center;
-  padding: 20px 0 10px 0;
+  padding-top: 4px;
   font-weight: bold;
 }
 
@@ -125,7 +126,20 @@ textarea {
 .job-search-form {
   display: flex;
   justify-content: center;
-  margin: 20px 0;
+  margin: 10px 0;
+}
+
+.recommend-container, .search-container {
+  border: 1px solid #b3b3b3;
+  padding: 5px;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+
+.recommend-header {
+  font-weight: bold;
+  margin-bottom: 3px;
+  text-align: center;
 }
 
 input[type=text] {
@@ -133,16 +147,20 @@ input[type=text] {
   margin: 0 10px 0 0;
   padding: 15px;
   display: inline-block;
-  border: 1px solid #ccc;
+  border: 1px solid #b3b3b3;
   border-radius: 5px;
   box-sizing: border-box;
-  height: 50px;
+  height: 40px;
+}
+
+input[type=text]:focus {
+  border: 1px solid blue;
 }
 
 input[type=submit] {
   background-color: #007FFF;
   color: white;
-  padding: 15px;
+  padding: 0 8px;
   margin: 0;
   border: none;
   border-radius: 4px;
@@ -298,6 +316,10 @@ th.th-stage {
 
 .add-app-btn:hover {
   background-color: #006BB3;
+}
+
+input.add-small {
+  padding: 3px 6px;
 }
 
 /* ======== MANUAL APPLICATION ADD ======= */
@@ -545,6 +567,10 @@ input.st-input {
   border: 1px solid #ccc;
   font-size: 0.8em;
   cursor: pointer;
+}
+
+.recommendation li:hover {
+  background-color: rgba(255, 153, 0, 0.4); 
 }
 
 ul.recommendation {

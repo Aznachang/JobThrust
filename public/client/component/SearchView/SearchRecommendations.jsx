@@ -41,7 +41,10 @@ class SearchRecommendations extends React.Component {
       );
     })
     return (
-      <ul className="recommendation">{recommendationsList}</ul>
+      <div className='recommend-container'>
+        <div className='recommend-header'>Jobs You Might Be Interested In</div>
+        <ul className="recommendation">{recommendationsList}</ul>
+      </div>
     )  
   }
 }

@@ -87,7 +87,7 @@ export default class AddAppManual extends React.Component {
                 <input type='text' name='state' placeholder='ST' ref='state' className="st-input" maxLength='2' /><br />
                 Job Description<br />
                 <textarea name='description' form='add-app-form' ref='description' placeholder='Enter job description...'></textarea><br />
-                <input type='submit' value='Add' />
+                <input type='submit' className='add-small' value='Add' />
               </form>
             </div>
 
