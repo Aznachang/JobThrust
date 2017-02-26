@@ -42,7 +42,7 @@ export default class ManageComponent extends React.Component {
     var context = this;
     console.log(context);
     $.ajax({
-      url: 'http://localhost:3000/api/application',
+      url: '/api/application',
       method: 'GET',
       contentType: 'application/json',
       success: function(data) {
@@ -84,7 +84,7 @@ export default class ManageComponent extends React.Component {
 
   //id - applicationId
   postStageChange(id, stageId, jobId) {
-    axios.post('http://localhost:3000/api/application/stagechange', {
+    axios.post('/api/application/stagechange', {
       applicationId: id,
       stageId: stageId,
       jobId: jobId
@@ -93,7 +93,7 @@ export default class ManageComponent extends React.Component {
       console.log('INSIDE postStageChange!');
       // stageId === 5 --> fire up the form
       if (stageId === 5) {
-        axios.post('http://localhost:3000/api/application/offers', {
+        axios.post('/api/application/offers', {
           // MUST MATCH 'req.body' in 'routes.js'
           jobId: jobId,
           applicationId: id
