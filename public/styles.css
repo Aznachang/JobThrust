@@ -109,20 +109,17 @@ textarea {
   font-size: 1.2em;
 }
 
-.nav-links {
 
-}
-
-.nav-bar li {
+.nav-bar li, .nav-bar div {
   display: inline-block;
   margin: 0 20px 0 20px;
 }
 
-.nav-bar li a, .nav-bar div {
+.nav-bar li a, .nav-bar div, .nav-bar div a {
   color: white;
 }
 
-.nav-links li a:hover, .nav-links div:hover {
+.nav-links li a:hover, .nav-bar div a:hover {
   color: #DDDA00;
 }
 
@@ -567,7 +564,11 @@ input.st-input {
 }
 
 .login-container p {
-  font-size: 2em;
+  font-size: 1.5em;
+}
+
+.login-container img {
+  margin-bottom: 8px;
 }
 
 .button-container {

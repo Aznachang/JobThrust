@@ -7,9 +7,10 @@ export default class SignUp extends React.Component {
   render() {
     return (
       <div className="login-container">
-        <p>Welcome to JobThrust!</p>
+        <img src='../favicon.ico' />
+        <p>WELCOME TO JOBTHRUST</p>
         <br />
-        <p>Login or register with:</p>
+        <p>LOGIN OR REGISTER WITH:</p>
         <br />
         <div className="button-container">
           <div className="google-button">
