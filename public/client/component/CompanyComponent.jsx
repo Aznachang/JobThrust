@@ -20,6 +20,7 @@ export default class CompanyComponent extends React.Component {
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.submitApp = this.submitApp.bind(this);
   }
 
   show(){
@@ -63,6 +64,9 @@ export default class CompanyComponent extends React.Component {
     this.setState({
       modalIsOpen: false,
     });
+  }
+  submitApp(event) {
+    event.preventDefault();
   }
   render() {
     var immg = null;
