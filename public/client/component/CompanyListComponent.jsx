@@ -40,27 +40,32 @@ export default class CompanyListComponent extends React.Component {
 
   appendDiv() {
     $('.newDiv').css('display','block');
+    $('#stars').append("<span>&#9734</span><span>&#9734</span><span>&#9734</span><span>&#9734</span><span>&#9734</span>");
   }
   render() {
     if (this.props.companyInfo[0]) {
       // this.textBox();
 
     return (
-      <div className='companyInfo'>
+      <div className='item animated fadeInDownBig companyInfo'>
         {
           this.props.companyInfo.map((job, i) =>
             <div key={i} >
-              <img src={job.squareLogo} style={{'height':'100px', 'width':'100px'}}/>
-              <h3>{job.name}</h3>
-              <p>{this.props.companyView}</p>
-              <br></br>
-              <br></br>
-              <a href="#"><fieldset className="employerReview">
-              <legend>employerReview:</legend>
-              </fieldset></a>
-              <a href="#" onClick={this.appendDiv}><fieldset className="interviewReview">
-              <legend>interviewReview:</legend>
-              </fieldset></a>
+              <img src='http://www.talentculture.com/wp-content/uploads/2015/05/bigstock-New-Job-creative-sign-with-clo-75551917-740x431.jpg' style={{'height':'150px', 'width':'100%'}}/>
+              <div className="innerText">
+                <h3>{job.name}</h3>
+                <p>{this.props.companyView}</p>
+                <br></br>
+                <br></br>
+                <div>
+                  <a href="#"><img className="employerReview" src="https://cdn3.iconfinder.com/data/icons/3d-printing-icon-set/512/Engineer.png"/></a><br/>
+                  <p className="ptage">Interviewers' Reviews</p> 
+                </div>
+                <div>
+                  <a href="#" onClick={this.appendDiv}><img className="interviewReview" src="http://www.clipartkid.com/images/366/figure-sitting-in-a-blue-question-mark-wLA4Pb-clipart.png"/></a>
+                  <p className="ptage1">Employees' Reviews</p>
+                </div>
+              </div>
             </div>
           )
         }
