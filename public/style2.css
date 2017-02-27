@@ -1,24 +1,75 @@
 #app {
 /*	background-color:#eee;
 */}
+.innerText {
+  padding: 50px;
+}
+#stars  > span {
+  display: inline-block;
+  font-size: 30px;
+  color: #2384a7;
+}
+#stars:hover > span:before {
+  content: '\2605';
+  position: absolute;
+}
+#stars > span:hover ~ span:before {
+  content: '';
+}
+.ptage{
+/*  padding-top:20px;*/
+  float: left;
+  color: white; text-shadow: black 0.1em 0.1em 0.2em;
+}
+.ptage1{
+  color: white; text-shadow: black 0.1em 0.1em 0.2em;
+  float: right;
+}
 .companyInfo {
   background-color:#eee;
   padding-bottom: 150px;
   width: 1000px;
-  margin: 0 auto;
+  margin-top: 50px;
+  margin-right:100px;
+  margin-left:210px; 
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
+}
+.textareas{
+  width: 300px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.companyImg:hover {
+    animation-name: rotate; 
+    animation-duration: 2s; 
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+@keyframes rotate {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+}
+.companyImg{
+  width:75px; 
+  height: 75px;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .newDiv {
   display: none;
   background-color: #eee;
   width: 1000px;
+  height: 100%;
   margin-top: 50px;
   margin-right:100px;
-  margin-left: 210px;  
+  margin-left: 210px; 
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .employerReview {
   width: 100px;
   height: 100px;
-  float: right
+  float: right;
 }
 
 .interviewReview {
