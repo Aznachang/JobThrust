@@ -26,7 +26,7 @@ var Application = db.define('application', {
   jobId: Sequelize.INTEGER,
   userId: Sequelize.STRING,
   stageId: Sequelize.INTEGER,
-  title: Sequelize.STRING,
+  title: Sequegilize.STRING,
   company: Sequelize.STRING
 });
 
@@ -65,14 +65,14 @@ var Offer = db.define('offer', {
   applicationId: Sequelize.INTEGER
 });
 
-db.sync({force: true}).then(function() {
-  Application.create({
-    jobID: 2940525,
-    userId: '108755274178308228818',
-    stageId: 1,
-    title: 'Software Engineer',
-    company: 'BasedAvocado'
-  });
+db.sync(/*{force: true}*/).then(function() {
+  // Application.create({
+  //   jobID: 2940525,
+  //   userId: '108755274178308228818',
+  //   stageId: 1,
+  //   title: 'Software Engineer',
+  //   company: 'BasedAvocado'
+  // });
 });
 
 module.exports.User = User;
