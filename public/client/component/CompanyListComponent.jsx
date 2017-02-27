@@ -59,11 +59,11 @@ export default class CompanyListComponent extends React.Component {
                 <br></br>
                 <div>
                   <a href="#"><img className="employerReview" src="https://cdn3.iconfinder.com/data/icons/3d-printing-icon-set/512/Engineer.png"/></a><br/>
-                  <p className="ptage">Interviewers' Reviews</p> 
+                  <p className="ptage">Interview Reviews</p> 
                 </div>
                 <div>
                   <a href="#" onClick={this.appendDiv}><img className="interviewReview" src="http://www.clipartkid.com/images/366/figure-sitting-in-a-blue-question-mark-wLA4Pb-clipart.png"/></a>
-                  <p className="ptage1">Employees' Reviews</p>
+                  <p className="ptage1">Employee Reviews</p>
                 </div>
               </div>
             </div>
