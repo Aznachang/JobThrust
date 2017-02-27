@@ -107,10 +107,20 @@ textarea {
   margin-left: 20px;
   font-weight: bold;
   font-size: 1.2em;
+  display: flex;
+  align-items: center;
+}
+
+.app-logo {
+}
+
+.app-logo img {
+  height: 30px;
+  margin: 4px 7px 0 0;
 }
 
 
-.nav-bar li, .nav-bar div {
+.nav-bar li, div.logout-link {
   display: inline-block;
   margin: 0 20px 0 20px;
 }
