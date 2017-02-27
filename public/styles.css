@@ -107,22 +107,29 @@ textarea {
   margin-left: 20px;
   font-weight: bold;
   font-size: 1.2em;
+  display: flex;
+  align-items: center;
 }
 
-.nav-links {
-
+.app-logo {
 }
 
-.nav-bar li {
+.app-logo img {
+  height: 30px;
+  margin: 4px 7px 0 0;
+}
+
+
+.nav-bar li, div.logout-link {
   display: inline-block;
   margin: 0 20px 0 20px;
 }
 
-.nav-bar li a, .nav-bar div {
+.nav-bar li a, .nav-bar div, .nav-bar div a {
   color: white;
 }
 
-.nav-links li a:hover, .nav-links div:hover {
+.nav-links li a:hover, .nav-bar div a:hover {
   color: #DDDA00;
 }
 
@@ -133,6 +140,11 @@ textarea {
 
 /* ========== SEARCH ========== */
 
+.search-view {
+  width: 95%;
+  margin: 0 auto;
+}
+
 .job-search-form {
   display: flex;
   justify-content: center;
@@ -140,10 +152,12 @@ textarea {
 }
 
 .recommend-container, .search-container {
-  border: 1px solid #b3b3b3;
   padding: 5px;
   margin: 10px 0;
-  border-radius: 5px;
+}
+
+.search-container {
+  border-top: 1px solid #b3b3b3;
 }
 
 .recommend-header {
@@ -188,6 +202,7 @@ input[type=submit]:hover {
   font-weight: bold;
   text-align: center;
   border-radius: 4px 4px 0 0;
+  margin-bottom: 2px;
 }
 
 .search-result {
@@ -239,6 +254,25 @@ input[type=submit]:hover {
 
 .on-demand-desc {
   font-size: 0.9em;
+}
+
+.recommendation li {
+  flex-basis: 100%;
+  background-color: rgba(255, 153, 0, 0.25);
+  margin: 0 2px 2px 2px;
+  padding: 8px 8px 8px 8px;
+  border: 1px solid #ccc;
+  font-size: 0.8em;
+  cursor: pointer;
+}
+
+.recommendation li:hover {
+  background-color: rgba(255, 153, 0, 0.4); 
+}
+
+ul.recommendation {
+  display: flex;
+  margin: auto;
 }
 
 /* ========= MANAGE =========== */
@@ -542,7 +576,11 @@ input.st-input {
 }
 
 .login-container p {
-  font-size: 2em;
+  font-size: 1.5em;
+}
+
+.login-container img {
+  margin-bottom: 8px;
 }
 
 .button-container {
@@ -568,24 +606,4 @@ input.st-input {
   color: white;
   font-weight: bold;
   font-size: 1.4em;
-}
-
-.recommendation li {
-  flex-basis: 100%;
-  background-color: rgba(255, 153, 0, 0.25);
-  margin-bottom: 2px;
-  padding: 8px 8px 8px 8px;
-  border: 1px solid #ccc;
-  font-size: 0.8em;
-  cursor: pointer;
-}
-
-.recommendation li:hover {
-  background-color: rgba(255, 153, 0, 0.4); 
-}
-
-ul.recommendation {
-  display: flex;
-  margin: auto;
-  /*flex-direction: row;*/
 }

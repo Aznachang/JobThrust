@@ -45,7 +45,7 @@ export default class AddAppManual extends React.Component {
       company: this.refs.company.value,
       city: this.refs.city.value,
       state: this.refs.state.value,
-      description: this.refs.description.value,
+      fullDescription: this.refs.description.value,
       key: 'MANUAL-' + this.state.user + Math.round(Math.random() * 1562034)
     }
 

@@ -63,7 +63,9 @@ app.get('*', isLoggedIn, function (request, response){
   response.sendFile(path.resolve(__dirname, '../public', 'index.html'))
 });
 
-app.listen(3000, function() {
+var port = process.env.PORT || 3000;
+
+app.listen(port, function() {
   console.log('You are on port 3000');
 });
 module.exports = app;
