@@ -58,7 +58,7 @@ var Offer = db.define('offer', {
   userId: Sequelize.STRING,
   companyName: Sequelize.STRING,
   jobTitle: Sequelize.STRING,
-  salary: Sequelize.INTEGER,
+  salary: {type:Sequelize.INTEGER, allowNull: true},
   signBonus: {type:Sequelize.INTEGER, allowNull: true},
   vacationDays: {type:Sequelize.INTEGER, allowNull: true},
   retireMatchPercent: {type:Sequelize.INTEGER, allowNull: true},

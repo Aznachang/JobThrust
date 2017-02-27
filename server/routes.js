@@ -203,12 +203,13 @@ router.get('/query', function(req, res) {
 // GET ALL 'JOB OFFERS'
 router.get('/application/offers', function(req, res) {
   // Find All Notes For Specific Job Application ID#
-  table.Offers.findAll({
-    where: {
-      userId: req.session.passport.user
-    }
+  console.log('GETTING OFFERS!');
+  table.Offer.findAll({
+   where: {
+     userId: req.session.passport.user
+   }
   }).then(function(offers){
-      res.json(offers);
+    res.json(offers);
   }); //end of Application then()
 });
 
@@ -238,24 +239,32 @@ router.post('/application/offers', function(req, res) {
 // 'UPDATE' a 'JOB OFFER' - /api/application/offers/1
 router.put('/application/offers/:offerId', function(req, res) {
   console.log('POST A JOB OFFER: ', req.body);
-  // See if this offer exists
+  // See if this offer exists and is the CORRECT USER
   table.Offer.findOne({
     where: {
       id: req.params.offerId,
       userId: req.session.passport.user
     }
   }).then(function(offer){
-    res.sendStatus('200');
-      // We Will Auto-Populate the companyName, jobTitle above
+    console.log('Updating Offer...')
+    // res.sendStatus('200');
+      // 'POST' Auto-Populates the 'companyName', 'jobTitle', 'applicationId'
     table.Offer.update({
       // Database Field: req.body.frontEnd
-      salary: req.body.offer,
+      salary: req.body.salary,
       signBonus: req.body.signBonus,
       vacationDays: req.body.vacationDays,
       retireMatchPercent: req.body.retireMatchPercent,
-      workFromHomeDays: req.body.workFromHomeDays,
-      workFromHome: req.body.workFromHome,
-      applicationId: req.body.applicationId
+      // applicationId: req.body.applicationId
+    },{
+      where: {
+        id: req.params.offerId,
+        userId: req.session.passport.user
+      }
+    })
+    .then(function(updatedOffer){
+      console.log('Updated the Offer: ', updatedOffer);
+      res.sendStatus('200');
     });
   });
 });

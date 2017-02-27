@@ -36,24 +36,36 @@ export default class JobOfferForm extends React.Component {
 
     //UPDATE A JOB OFFER
     submitJobOffer(e) {
-      // e.preventDefault();
+      e.preventDefault();
       var context = this;
 
-      axios.put('/api/application/offers/1', {
+      var jobOfferData = {
         salary: this.refs.salary.value,
         signBonus: this.refs.signBonus.value,
         vacationDays: this.refs.vacationDays.value,
-        retireMatchPercent: this.refs.retireMatchPercent.value,
-      }).then(function(offers) {
-        this.props.getOffers();
+        retireMatchPercent: this.refs.retireMatchPercent.value
+      };
+
+      axios.put('/api/application/offers/'+ this.props.offerId, jobOfferData)
+      .then(function(offers) {
+        context.getOffer();
       });
+
+      // close Job Offer Form Upon Updating...
+      this.closeModal();
     }
+
+    // <div className="add-app-btn" onClick={this.openModal}>
+    //    <span>Update A Job Offer</span>
+    // </div>
 
   render() {
     return (
+
       <div className="add-app-manual">
+
         <div className="add-app-btn" onClick={this.openModal}>
-          <span>Edit Job Offer</span>
+          <span>Update A Job Offer</span>
         </div>
         <Modal
         isOpen={this.state.modalIsOpen}
@@ -82,9 +94,7 @@ export default class JobOfferForm extends React.Component {
               <input type='submit' value='Add' />
             </form>
           </div>
-
         </div>
-
         </Modal>
       </div>
     )

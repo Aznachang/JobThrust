@@ -66,6 +66,7 @@ export default class NoteContainer extends React.Component {
         return b.id - a.id;
       });
       context.setState({notes: notes});
+      console.log('getNotes setState: ', context.state.notes );
     });
   }
 
