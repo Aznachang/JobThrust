@@ -8,13 +8,9 @@ export default class JobOfferContainer extends React.Component {
     super(props);
     this.state = {
       jobOffers: []
-      // companyName: [],
-      // jobTitle: [],
-      // salary: [],
-      // signBonus: [],
-      // vacationDays: [],
-      // retireMatchPercent: [],
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.getOffers = this.getOffers.bind(this);
   }
 
   handleChange(event) {
@@ -23,11 +19,16 @@ export default class JobOfferContainer extends React.Component {
 
   // Get Offers
   getOffers() {
+
     var context = this;
     axios.get('/api/application/offers')
     .then(function(offers){
       console.log('Getting All Job Offers: ', offers.data);
-      context.setState({jobOffers: offers.data});
+      var jobOffers = offers.data.sort(function(a, b) {
+        return b.id - a.id;
+      });
+      context.setState({jobOffers: jobOffers});
+      console.log('jobOffers: ', context.state.jobOffers);
     });
     // e.preventDefault();
   }
@@ -37,11 +38,35 @@ export default class JobOfferContainer extends React.Component {
     this.getOffers();
   }
 
+  // <td><button onClick={context.props.openModal}>Offer</button></td>
+
   render() {
+    var context = this;
     return (
       <div>
-        <br/>
-        <JobOfferForm getOffers={this.getOffers} updateOffer = {this.updateOffer}/>
+      <br/>
+        <table>
+          <thead>
+            <tr className='application'>
+              <th>Company</th>
+              <th>Role</th>
+              <th>Update</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          {this.state.jobOffers.map((jobOffer, index) =>
+
+            <tr>
+              <td>{jobOffer.companyName}</td>
+              <td>{jobOffer.jobTitle}</td>
+
+              <JobOfferForm getOffer={this.getOffers} updateOffer = {this.updateOffer} offerId ={jobOffer.id}/>
+            </tr>
+            )}
+          </tbody>
+        </table>
+
       </div>
     )
   }
