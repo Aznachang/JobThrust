@@ -26,7 +26,7 @@ var Application = db.define('application', {
   jobId: Sequelize.INTEGER,
   userId: Sequelize.STRING,
   stageId: Sequelize.INTEGER,
-  title: Sequegilize.STRING,
+  title: Sequelize.STRING,
   company: Sequelize.STRING
 });
 
