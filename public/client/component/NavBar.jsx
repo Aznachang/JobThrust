@@ -30,6 +30,9 @@ class NavBar extends React.Component {
           <li>
             <Link to={'/offers'}>Job Offers</Link>
           </li>
+          <li>
+            <Link to={'/company'}>Companies</Link>
+          </li>
         </ul>
         <div className='logout-link'>
           <a href="/login" className="logout-btn" onClick={this.logOut}>Log Out</a>
