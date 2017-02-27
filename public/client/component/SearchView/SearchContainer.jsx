@@ -244,7 +244,7 @@ export default class SearchContainer extends React.Component {
     }
 
     return(
-      <div>
+      <div className='search-view'>
        <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}

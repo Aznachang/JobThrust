@@ -14,7 +14,7 @@ class NavBar extends React.Component {
   render() {
     return (
       <div className='nav-bar'>
-        <div className='app-name'>HireGuide</div>
+        <div className='app-name'>JobThrust</div>
         <ul className='nav-links'>
           <li>
             <Link to={'/manage'}>Manage</Link>

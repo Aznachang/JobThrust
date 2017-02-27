@@ -7,7 +7,8 @@ export default class SignUp extends React.Component {
   render() {
     return (
       <div className="login-container">
-        <p>Welcome to HireGuide!</p>
+        <p>Welcome to JobThrust!</p>
+        <br />
         <p>Login or register with:</p>
         <br />
         <div className="button-container">
