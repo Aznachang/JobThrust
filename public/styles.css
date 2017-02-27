@@ -152,10 +152,12 @@ textarea {
 }
 
 .recommend-container, .search-container {
-  border: 1px solid #b3b3b3;
   padding: 5px;
   margin: 10px 0;
-  border-radius: 5px;
+}
+
+.search-container {
+  border-top: 1px solid #b3b3b3;
 }
 
 .recommend-header {
