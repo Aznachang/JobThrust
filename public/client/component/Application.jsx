@@ -192,7 +192,7 @@ export default class Application extends React.Component {
             </div>
 
             <div className={this.state.modalSections['events']}>
-            <div className="add-event-help">Receive a calendar invite related to this job?  Add "APPID-{this.props.id}" to the invite description to sync it here.</div>
+            <div className="add-event-help">Receive a calendar invite related to this job?  Add "APPID-{this.props.id}" to the invite description to be able to see it here.</div>
               <div className="btn-container cal-event-buttons">
                 <div className="app-btn" onClick={this.toggleEventCreate}>CREATE</div>
                 <div className="app-btn" onClick={this.getEvents}>UPDATE</div>
