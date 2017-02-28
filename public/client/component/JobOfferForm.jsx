@@ -7,7 +7,7 @@ export default class JobOfferForm extends React.Component {
     super(props);
       this.state = {
         modalIsOpen: false,
-        user: ''
+        user: '',
       }
 
       this.openModal = this.openModal.bind(this);
@@ -55,17 +55,12 @@ export default class JobOfferForm extends React.Component {
       this.closeModal();
     }
 
-    // <div className="add-app-btn" onClick={this.openModal}>
-    //    <span>Update A Job Offer</span>
-    // </div>
-
+    // value = {this.props.jobOffers.salary}
   render() {
     return (
-
       <div className="add-app-manual">
-
         <div className="add-app-btn" onClick={this.openModal}>
-          <span>Update A Job Offer</span>
+          <span>Job Offer</span>
         </div>
         <Modal
         isOpen={this.state.modalIsOpen}
@@ -77,10 +72,39 @@ export default class JobOfferForm extends React.Component {
         >
 
         <div className="inner-container">
-          <div className='desc-header'>
-            Update Your Job Offer:
+          <h2>{this.props.jobOffers.companyName} - {this.props.jobOffers.jobTitle} </h2>
+
+            <div className='add-app-container'>
+              <div className='desc-header'>
+                <b> Detailed Job Offers Comparison: </b>
+              </div>
+              <table id='job-offer'>
+                <tbody>
+                    <tr>
+                      <td><b>Salary ($): </b></td>
+                      <td>{this.props.jobOffers.salary}</td>
+                    </tr>
+                    <tr>
+                      <td><b>Signing Bonus ($): </b></td>
+                      <td>{this.props.jobOffers.signBonus}</td>
+                    </tr>
+                    <tr>
+                      <td><b>Vacation Days: </b></td>
+                      <td>{this.props.jobOffers.vacationDays}</td>
+                    </tr>
+                    <tr>
+                      <td><b>401K Company Match %: </b></td>
+                      <td>{this.props.jobOffers.retireMatchPercent}</td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
+
           <div className='add-app-container'>
+            <div className='desc-header'>
+              <b> Update Your Job Offer: </b>
+            </div>
             <form id="add-app-form" onSubmit={this.submitJobOffer}>
               Salary<br />
               <input type='text' name='salary' ref='salary' placeholder='50000' /><br />
@@ -94,7 +118,6 @@ export default class JobOfferForm extends React.Component {
               <input type='submit' value='Add' />
             </form>
           </div>
-        </div>
         </Modal>
       </div>
     )

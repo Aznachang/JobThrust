@@ -7,10 +7,18 @@ export default class JobOfferContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      jobOffers: []
+      jobOffers: [],
+      checked: false
     };
+
+    this.handleChecked = this.handleChecked.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.getOffers = this.getOffers.bind(this);
+  }
+
+  // toggle CheckMark
+  handleChecked() {
+    this.setState({checked: !this.state.checked});
   }
 
   handleChange(event) {
@@ -38,30 +46,30 @@ export default class JobOfferContainer extends React.Component {
     this.getOffers();
   }
 
-  // <td><button onClick={context.props.openModal}>Offer</button></td>
-
   render() {
     var context = this;
+
     return (
       <div>
       <br/>
         <table>
           <thead>
             <tr className='application'>
-              <th>Company</th>
-              <th>Role</th>
-              <th>Update</th>
+              <th id ='compare-offer'>Compare</th>
+              <th className ='offer-equal'>Company</th>
+              <th className ='offer-equal'>Role</th>
+              <th id ='update-offer'>Update</th>
             </tr>
           </thead>
           <tbody>
 
           {this.state.jobOffers.map((jobOffer, index) =>
 
-            <tr>
-              <td>{jobOffer.companyName}</td>
-              <td>{jobOffer.jobTitle}</td>
-
-              <JobOfferForm getOffer={this.getOffers} updateOffer = {this.updateOffer} offerId ={jobOffer.id}/>
+            <tr className='application'>
+              <td><input type = 'checkbox' onChange={this.handleChecked} defaultChecked = {this.state.checked} /></td>
+              <td onClick={this.openModal}>{jobOffer.companyName}</td>
+              <td onClick={this.openModal}>{jobOffer.jobTitle}</td>
+              <JobOfferForm getOffer={this.getOffers} updateOffer = {this.updateOffer} offerId ={jobOffer.id} jobOffers = {jobOffer} isChecked={this.props.checked}/>
             </tr>
             )}
           </tbody>
