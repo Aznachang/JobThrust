@@ -584,6 +584,13 @@ input.st-input {
   margin-bottom: 5px;
 }
 
+/* ========== EVENTS ======== */
+
+.calendar-item {
+  border: 1px solid grey;
+  margin: 5px 0;
+}
+
 /* =========== LOGIN ========= */
 
 .login-container {

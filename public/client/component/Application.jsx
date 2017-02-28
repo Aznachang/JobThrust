@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
 import NoteContainer from './NoteContainer.jsx';
+import EventForm from './EventForm.jsx';
 // import JobOfferContianer from './JobOfferContianer.jsx';
 // import JobOfferForm from './JobOfferForm.jsx';
 
@@ -13,6 +14,8 @@ export default class Application extends React.Component {
     // this.nextStage = this.nextStage.bind(this);
     this.getJobInfo = this.getJobInfo.bind(this);
     this.toggle = this.toggle.bind(this);
+    this.getEvents = this.getEvents.bind(this);
+    this.postEvent = this.postEvent.bind(this);
     this.state = {
       modalIsOpen: false,
       selectedAppJob: {
@@ -25,8 +28,14 @@ export default class Application extends React.Component {
       modalSections: {
         'job-desc': 'job-desc hidden',
         'change-stage': 'change-stage hidden',
-        'notes': 'notes hidden'
-      }
+        'notes': 'notes hidden',
+        'events': 'events hidden'
+      },
+      calendarItems: [{
+        start: {dateTime: ''},
+        summary: ''
+      }],
+      addingEvent: false
     }
 
     this.openModal = this.openModal.bind(this);
@@ -54,6 +63,7 @@ export default class Application extends React.Component {
     this.setState({modalIsOpen: true});
     this.getJobInfo();
     console.log('THIS APPLICATION ID IS:', this.props.id);
+    this.getEvents();
   }
 
   afterOpenModal() {
@@ -66,7 +76,8 @@ export default class Application extends React.Component {
       modalSections: {
         'job-desc': 'job-desc hidden',
         'change-stage': 'change-stage hidden',
-        'notes': 'notes hidden'
+        'notes': 'notes hidden',
+        'events': 'events hidden'
       }
     });
     if (this.props.filtered !== null) {
@@ -94,6 +105,48 @@ export default class Application extends React.Component {
     this.setState(currentSections);
   }
 
+  getEvents() {
+    var context = this;
+    axios.post('/api/goog/cal/get', {id: context.props.id}).then(function(res) {
+      console.log('CAL DATA:', res.data.items);
+      console.log('Items are array?', Array.isArray(res.data.items));
+      context.setState({ calendarItems: res.data.items });
+      console.log('START', context.state.calendarItems[0].start);
+    });
+  }
+
+  postEvent(data) {
+    var context = this;
+
+    // var event = {
+    //   'summary': 'Hello dudes',
+    //   'location': '800 Howard St., San Francisco, CA 94103',
+    //   'description': 'A chance to hear more about Google\'s developer products.',
+    //   'start': {
+    //     'dateTime': '2017-02-28T09:00:00-07:00',
+    //     'timeZone': 'America/Los_Angeles',
+    //   },
+    //   'end': {
+    //     'dateTime': '2017-02-28T11:00:00-07:00',
+    //     'timeZone': 'America/Los_Angeles',
+    //   },
+    //   'attendees': [],
+    //   'reminders': {
+    //     'useDefault': true
+    //   },
+    //   'extendedProperties': {
+    //     'private': {
+    //       'applicationId': context.props.id
+    //     }
+    //   }
+    // };
+
+    axios.post('/api/goog/cal', data).then(function(res) {
+      console.log('Created event!');
+      context.getEvents();
+    });
+  }
+
 
 
   render() {
@@ -119,7 +172,7 @@ export default class Application extends React.Component {
             <div className="btn-container">
               <div className="app-btn" onClick={this.toggle.bind(null, 'job-desc')}>Job Description</div>
               <div className="app-btn" onClick={this.toggle.bind(null, 'notes')}>Notes</div>
-              <div className="app-btn">Events</div>
+              <div className="app-btn" onClick={this.toggle.bind(null, 'events')}>Events</div>
               <div className="app-btn" onClick={this.toggle.bind(null, 'change-stage')}>Change Stage</div>
             </div>
 
@@ -127,6 +180,17 @@ export default class Application extends React.Component {
               { this.state.selectedAppJob.fullDescription.map((chunk, index) =>
                 <span key={index}>{chunk}<br/></span>
               ) }
+            </div>
+
+            <div className={this.state.modalSections['events']}>
+              <button className="app-btn" onClick={this.postEvent}>ADD EVENT</button>
+              <EventForm appId={this.props.id} postEvent={this.postEvent} />
+              { this.state.calendarItems.map((item, index) =>
+                <div className='calendar-item' key={index}>
+                  <p>{item.summary}</p>
+                  <p>{item.start.dateTime}</p>
+                </div>
+              )}
             </div>
 
             <div className={this.state.modalSections['change-stage']}>

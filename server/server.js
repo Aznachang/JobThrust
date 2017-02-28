@@ -6,6 +6,7 @@ var routes = require('./routes');
 var db = require('./db/database');
 var passport = require('passport');
 var session = require('express-session');
+var calendar = require('./config/calendar');
 
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -27,7 +28,7 @@ app.use(bodyParser.json());
 app.use('/api/', routes);
 app.use(express.static(path.join(__dirname, '../public')));
 
-app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email', 'https://www.googleapis.com/auth/calendar'] }));
 
 // the callback after google has authenticated the user
 app.get('/auth/google/callback',
