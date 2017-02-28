@@ -104,7 +104,7 @@ export default class Application extends React.Component {
         }
       }
     }
-
+    this.setState({addingEvent: false});
     this.setState(currentSections);
   }
 

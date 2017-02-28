@@ -634,11 +634,17 @@ input.st-input {
 .add-event-form {
   border-bottom: 2px solid grey;
   padding-bottom: 8px;
+  font-size: 0.9em;
 }
 
 .add-event-form input[type=text] {
   padding: 4px;
   height: 25px;
+}
+
+.add-event-form input[type=submit] {
+  padding: 5px 4px;
+  margin-top: 5px;
 }
 
 input[type=text].small-input-hour {
