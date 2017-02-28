@@ -16,6 +16,7 @@ export default class Application extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.getEvents = this.getEvents.bind(this);
     this.postEvent = this.postEvent.bind(this);
+    this.addEvent = this.addEvent.bind(this);
     this.state = {
       modalIsOpen: false,
       selectedAppJob: {
@@ -107,7 +108,7 @@ export default class Application extends React.Component {
 
   getEvents() {
     var context = this;
-    axios.post('/api/goog/cal/get', {id: context.props.id}).then(function(res) {
+    axios.post('/api/goog/calget', {id: context.props.id}).then(function(res) {
       console.log('CAL DATA:', res.data.items);
       console.log('Items are array?', Array.isArray(res.data.items));
       context.setState({ calendarItems: res.data.items });
@@ -115,39 +116,20 @@ export default class Application extends React.Component {
     });
   }
 
+  addEvent() {
+    this.setState({addingEvent: true});
+  }
+
   postEvent(data) {
     var context = this;
-
-    // var event = {
-    //   'summary': 'Hello dudes',
-    //   'location': '800 Howard St., San Francisco, CA 94103',
-    //   'description': 'A chance to hear more about Google\'s developer products.',
-    //   'start': {
-    //     'dateTime': '2017-02-28T09:00:00-07:00',
-    //     'timeZone': 'America/Los_Angeles',
-    //   },
-    //   'end': {
-    //     'dateTime': '2017-02-28T11:00:00-07:00',
-    //     'timeZone': 'America/Los_Angeles',
-    //   },
-    //   'attendees': [],
-    //   'reminders': {
-    //     'useDefault': true
-    //   },
-    //   'extendedProperties': {
-    //     'private': {
-    //       'applicationId': context.props.id
-    //     }
-    //   }
-    // };
 
     axios.post('/api/goog/cal', data).then(function(res) {
       console.log('Created event!');
       context.getEvents();
+      context.setState({addingEvent: false});
+      console.log('ADDING EVENT STATE', this.state.addingEvent);
     });
   }
-
-
 
   render() {
     return (
@@ -167,7 +149,7 @@ export default class Application extends React.Component {
 
           <div className="inner-container">
 
-            <h2>{this.props.job}</h2>
+            <h2>{this.props.job} ({this.props.company})</h2>
             <div id="stage-name">Current Stage: {this.props.stage}</div>
             <div className="btn-container">
               <div className="app-btn" onClick={this.toggle.bind(null, 'job-desc')}>Job Description</div>
@@ -183,12 +165,17 @@ export default class Application extends React.Component {
             </div>
 
             <div className={this.state.modalSections['events']}>
-              <button className="app-btn" onClick={this.postEvent}>ADD EVENT</button>
-              <EventForm appId={this.props.id} postEvent={this.postEvent} />
+              <button className="app-btn" onClick={this.addEvent}>ADD EVENT</button>
+              <EventForm appId={this.props.id} postEvent={this.postEvent} addingEvent={this.state.addingEvent}/>
               { this.state.calendarItems.map((item, index) =>
                 <div className='calendar-item' key={index}>
-                  <p>{item.summary}</p>
-                  <p>{item.start.dateTime}</p>
+                  <p>Event: {item.summary}</p>
+                  <p>Start: {item.start.dateTime}</p>
+                  <p>Description: {item.description}</p>
+                  <p>
+                    Location: {item.location} (<a href={'https://www.google.com/maps/search/' + item.location} target='_blank'>Google Maps</a>)
+                  </p>
+                  <p><a href={item.htmlLink} target='_blank'>View/edit on Google Calendar</a></p>
                 </div>
               )}
             </div>

@@ -28,30 +28,52 @@ module.exports.getCalData = function(req, res) {
   console.log(now);
   console.log(typeof now);
 
-  return calendar.events.list({
+  var calData;
+
+  calendar.events.list({
     auth: module.exports.oauth2C,
     calendarId: 'primary',
-    maxResults: 10,
     timeMin: now,
     showDeleted: false,
     singleEvents: true,
     privateExtendedProperty: 'applicationId=' + req.body.id
   }, function(err, response) {
-    console.log('CAL DATA', response);
-    res.json(response);
+    console.log('CAL DATA 1', response);
+    calData = response.items;
+    calendar.events.list({
+      auth: module.exports.oauth2C,
+      calendarId: 'primary',
+      timeMin: now,
+      showDeleted: false,
+      singleEvents: true,
+      q: 'APPID-' + req.body.id
+    }, function(err, response) {
+      console.log('SECOND RESPONSE', response);
+      response.items.forEach(function(item) {
+        calData.push(item);
+      });
+
+      calData.sort(function(a, b) {
+        return new Date(a.start.dateTime) - new Date(b.start.dateTime);
+      });
+
+      res.json({items: calData});
+      
+    });
   });
 }
 
 module.exports.createEvent = function(req, res) {
-  calendar.events.insert({
-  auth: module.exports.oauth2C,
-  calendarId: 'primary',
-  resource: req.body,
-}, function(err, event) {
-  if (err) {
-    console.log('There was an error contacting the Calendar service: ' + err);
-    return;
-  }
-  console.log('Event created: %s', event.htmlLink);
-});
+    calendar.events.insert({
+    auth: module.exports.oauth2C,
+    calendarId: 'primary',
+    resource: req.body,
+  }, function(err, event) {
+    if (err) {
+      console.log('There was an error contacting the Calendar service: ' + err);
+      return;
+    }
+    console.log('Event created: %s', event.htmlLink);
+    res.sendStatus(200);
+  });
 };

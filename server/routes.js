@@ -20,7 +20,7 @@ router.route('/jobs/:jk').get(function(req, res) {
 });
 
 
-router.post('/goog/cal/get', cal.getCalData);
+router.post('/goog/calget', cal.getCalData);
 
 router.post('/goog/cal', cal.createEvent);
 

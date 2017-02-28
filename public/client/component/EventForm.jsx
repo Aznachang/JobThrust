@@ -45,38 +45,46 @@ export default class EventForm extends React.Component {
     console.log('Event data:', event);
 
     this.props.postEvent(event);
+    console.log('Event created');
+
+    this.refs.name.value = '';
 
   }
 
   render() {
-    return (
+    if (this.props.addingEvent) {
 
-      <form id='event-form' className='add-event-form' onSubmit={this.createEvent}>
-        <input type='text' ref='name' name='event-name' placeholder='Event Name' />
-        <input type='text' ref='location' name='event-location' placeholder='Location' />
-        <input type='text' ref='startMonth' name='event-month' placeholder='Month' />
-        <input type='text' ref='startDay' name='event-day' placeholder='Day' />
-        <input type='text' ref='startYear' name='event-year' placeholder='Year' />
-        <input type='text' ref='startHour' name='event-hour' placeholder='HR' />
-        <input type='text' ref='startMinutes' name='event-min' placeholder='MIN' />
-        <select ref='timeOfDay'>
-          <option value='AM'>AM</option>
-          <option value='PM'>PM</option>
-        </select>
-        <input type='text' ref='endMonth' name='end-month' placeholder='Month' />
-        <input type='text' ref='endDay' name='end-day' placeholder='Day' />
-        <input type='text' ref='endYear' name='end-year' placeholder='Year' />
-        <input type='text' ref='endHour' name='end-hour' placeholder='HR' />
-        <input type='text' ref='endMinutes' name='end-min' placeholder='MIN' />
-        <select ref='endTimeOfDay'>
-          <option value='AM'>AM</option>
-          <option value='PM'>PM</option>
-        </select>
-        <input type='text' name='event-description' ref='description' placeholder='Job description...'></input>
-        <input type='submit' value='Create' />
-      </form>
+      return (
 
-    )
+        <form id='event-form' className='add-event-form' onSubmit={this.createEvent}>
+          <input type='text' ref='name' name='event-name' placeholder='Event Name' />
+          <input type='text' ref='location' name='event-location' placeholder='Location' />
+          <input type='text' ref='startMonth' name='event-month' placeholder='Month' />
+          <input type='text' ref='startDay' name='event-day' placeholder='Day' />
+          <input type='text' ref='startYear' name='event-year' placeholder='Year' />
+          <input type='text' ref='startHour' name='event-hour' placeholder='HR' />
+          <input type='text' ref='startMinutes' name='event-min' placeholder='MIN' />
+          <select ref='timeOfDay'>
+            <option value='AM'>AM</option>
+            <option value='PM'>PM</option>
+          </select>
+          <input type='text' ref='endMonth' name='end-month' placeholder='Month' />
+          <input type='text' ref='endDay' name='end-day' placeholder='Day' />
+          <input type='text' ref='endYear' name='end-year' placeholder='Year' />
+          <input type='text' ref='endHour' name='end-hour' placeholder='HR' />
+          <input type='text' ref='endMinutes' name='end-min' placeholder='MIN' />
+          <select ref='endTimeOfDay'>
+            <option value='AM'>AM</option>
+            <option value='PM'>PM</option>
+          </select>
+          <input type='text' name='event-description' ref='description' placeholder='Event description...'></input>
+          <input type='submit' value='Create' />
+        </form>
+      )
+    } else {
+      return ( <div></div> )
+    }
+
   }
 
 }
