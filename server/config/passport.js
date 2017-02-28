@@ -1,8 +1,15 @@
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var configAuth = require('./auth');
+var google = require('googleapis');
+var plus = google.plus('v1');
+var calendar = google.calendar('v3');
+var OAuth2 = google.auth.OAuth2;
+var oauth2Client = new OAuth2(configAuth.googleAuth.clientID, configAuth.googleAuth.clientSecret, configAuth.googleAuth.callbackURL);
 
 var db = require('../db/database.js');
 
-var configAuth = require('./auth');
+var cal = require('./calendar');
+
 
 module.exports = function(passport) {
 
@@ -32,6 +39,9 @@ module.exports = function(passport) {
 
   },
   function(token, refreshToken, profile, done) {
+
+    cal.userTokens[profile.id] = token;
+    console.log('setting user token for', profile.id, 'as', token);
 
       // make the code asynchronous
       // User.findOne won't fire until we have all our data back from Google

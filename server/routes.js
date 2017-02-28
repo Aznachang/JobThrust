@@ -5,7 +5,7 @@ var axios = require('axios');
 var path = require('path');
 var table = require('./db/database');
 var rp = require('request-promise');
-
+var cal = require('./config/calendar');
 
 router.route('/jobs/:jk').get(function(req, res) {
   var url = "http://www.indeed.com/viewjob?jk=" + req.params.jk;
@@ -18,6 +18,11 @@ router.route('/jobs/:jk').get(function(req, res) {
     }
   })
 });
+
+
+router.post('/goog/calget', cal.getCalData);
+
+router.post('/goog/cal', cal.createEvent);
 
 
 router.post('/job', function(req, res) {

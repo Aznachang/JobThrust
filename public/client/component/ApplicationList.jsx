@@ -41,7 +41,7 @@ export default class ApplicationList extends React.Component {
             </thead>
             <tbody>
             { this.props.filteredJobs.map((app, i) =>
-              <Application key={i} filter={this.props.filter} filtered={this.props.filtered} sortList={this.props.sortList} stages={this.props.stages} company={app.company} created={app.createdAt} job={app.title} jobId={app.jobId} stage={this.props.stages[app.stageId]} id={app.id} changeStage={this.props.changeStage} />
+              <Application key={i} filter={this.props.filter} filtered={this.props.filtered} sortList={this.props.sortList} stages={this.props.stages} company={app.company} created={app.createdAt} job={app.title} company={app.company} jobId={app.jobId} stage={this.props.stages[app.stageId]} id={app.id} changeStage={this.props.changeStage} />
             ) }
             </tbody>
           </table>
