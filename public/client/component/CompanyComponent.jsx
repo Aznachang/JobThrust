@@ -144,6 +144,12 @@ export default class CompanyComponent extends React.Component {
                 Interview Questions<br />
                 <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewQuestion}></textarea><br />
                 <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalDescriptionA}></textarea><br />
+                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewQuestion}></textarea><br />
+                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalDescriptionA}></textarea><br />
+                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewQuestion}></textarea><br />
+                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalDescriptionA}></textarea><br />
+                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewQuestion}></textarea><br />
+                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalDescriptionA}></textarea><br />
                 <input type='submit' className='add-small' value='Submit Interview' />
               </form>
             </div>
