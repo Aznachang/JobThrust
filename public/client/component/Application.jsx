@@ -57,9 +57,7 @@ export default class Application extends React.Component {
   }
 
   afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    // this.refs.subtitle.style.color = '#f00';
-    // this.refs.testingthis.style = 'color: orange; font-weight: bold;';
+
   }
 
   closeModal() {

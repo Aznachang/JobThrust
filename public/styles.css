@@ -8,6 +8,10 @@ button {
   font-family: 'Raleway', sans-serif;
 }
 
+form {
+  text-align: center;
+}
+
 input {
   font-family: 'Raleway', sans-serif;
 }
@@ -90,6 +94,20 @@ textarea {
   display: block;
   padding-bottom: 3px;
 }*/
+
+/* ========== JOB OFFERS VIEW ========== */
+
+#compare-offer {
+  width: 10%;
+}
+
+.offer-equal {
+  width: 40%;
+}
+
+#update-offer {
+  width: 10%;
+}
 
 /* ========== NAV BAR ========== */
 
@@ -234,12 +252,12 @@ input[type=submit]:hover {
 
 .select {
   color: green;
-  background-color: rgba(51, 204, 51, 0.3); 
+  background-color: rgba(51, 204, 51, 0.3);
   border: 1px solid green;
 }
 
 .select:hover {
-   background-color: rgba(51, 204, 51, 0.5); 
+   background-color: rgba(51, 204, 51, 0.5);
 }
 
 .remove {
@@ -249,7 +267,7 @@ input[type=submit]:hover {
 }
 
 .remove:hover {
-   background-color: rgba(255, 0, 0, 0.5); 
+   background-color: rgba(255, 0, 0, 0.5);
 }
 
 .on-demand-desc {
@@ -267,7 +285,7 @@ input[type=submit]:hover {
 }
 
 .recommendation li:hover {
-  background-color: rgba(255, 153, 0, 0.4); 
+  background-color: rgba(255, 153, 0, 0.4);
 }
 
 ul.recommendation {
