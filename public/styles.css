@@ -588,7 +588,73 @@ input.st-input {
 
 .calendar-item {
   border: 1px solid grey;
-  margin: 5px 0;
+  border-radius: 5px;
+  margin: 10px 0;
+  font-size: 0.9em;
+}
+
+.calendar-item:hover {
+  box-shadow: 2px 2px 2px grey;
+}
+
+.cal-event-buttons {
+  margin-bottom: 5px;
+}
+
+.add-event-help {
+  color: grey;
+  font-size: 0.8em;
+  text-align: center;
+  margin-top: 8px;
+}
+
+.calendar-item p {
+  margin: 5px;
+}
+
+.event-description {
+  background-color: rgba(0, 153, 255, 0.25);
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+  padding: 4px 5px;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.event-date {
+  font-weight: bold;
+  border-bottom: 1px solid grey;
+  padding-bottom: 2px;
+}
+
+.event-form-element {
+  margin: 6px 0;
+}
+
+.add-event-form {
+  border-bottom: 2px solid grey;
+  padding-bottom: 8px;
+}
+
+.add-event-form input[type=text] {
+  padding: 4px;
+  height: 25px;
+}
+
+input[type=text].small-input-hour {
+  width: 60px;
+  margin-top: 4px;
+  margin-right: 4px;
+}
+
+input[type=text].small-input-min {
+  width: 60px;
+  margin-top: 4px;
+  margin-left: 4px;
+}
+
+select {
+  margin-bottom: 5px;
 }
 
 /* =========== LOGIN ========= */

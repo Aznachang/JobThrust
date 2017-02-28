@@ -16,7 +16,8 @@ export default class Application extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.getEvents = this.getEvents.bind(this);
     this.postEvent = this.postEvent.bind(this);
-    this.addEvent = this.addEvent.bind(this);
+    this.toggleEventCreate = this.toggleEventCreate.bind(this);
+    this.convertDate = this.convertDate.bind(this);
     this.state = {
       modalIsOpen: false,
       selectedAppJob: {
@@ -34,7 +35,8 @@ export default class Application extends React.Component {
       },
       calendarItems: [{
         start: {dateTime: ''},
-        summary: ''
+        summary: '',
+        description: []
       }],
       addingEvent: false
     }
@@ -109,15 +111,40 @@ export default class Application extends React.Component {
   getEvents() {
     var context = this;
     axios.post('/api/goog/calget', {id: context.props.id}).then(function(res) {
-      console.log('CAL DATA:', res.data.items);
-      console.log('Items are array?', Array.isArray(res.data.items));
+      res.data.items.forEach(function(item) {
+        item.start.dateTime = context.convertDate(item.start.dateTime);
+        item.description = item.description.split(/[\n\r]/g);
+      });
       context.setState({ calendarItems: res.data.items });
-      console.log('START', context.state.calendarItems[0].start);
+      console.log('CAL DATA', res.data.items);
     });
   }
 
-  addEvent() {
-    this.setState({addingEvent: true});
+  convertDate(date) {
+    // 2017-02-28T11:30:00-08:00
+    console.log('Converting', date);
+    var month = date.substring(5, 7);
+    var day = date.substring(8, 10);
+    var year = date.substring(0, 4);
+    var timeHour = date.substring(11, 13);
+    var timeMin = date.substring(14, 16);
+
+    var amPm = 'AM';
+
+    if (+timeHour > 11) {
+      amPm = 'PM';
+      timeHour = (+timeHour - 12).toString();
+    }
+
+    return month + '/' + day + '/' + year + ', ' + timeHour + ':' + timeMin + ' ' + amPm;
+  }
+
+  toggleEventCreate() {
+    if (!this.state.addingEvent) {
+      this.setState({addingEvent: true});
+    } else {
+      this.setState({addingEvent: false});
+    }
   }
 
   postEvent(data) {
@@ -165,19 +192,28 @@ export default class Application extends React.Component {
             </div>
 
             <div className={this.state.modalSections['events']}>
-              <button className="app-btn" onClick={this.addEvent}>ADD EVENT</button>
+            <div className="add-event-help">Receive a calendar invite related to this job?  Add "APPID-{this.props.id}" to the invite description to sync it here.</div>
+              <div className="btn-container cal-event-buttons">
+                <div className="app-btn" onClick={this.toggleEventCreate}>CREATE</div>
+                <div className="app-btn" onClick={this.getEvents}>UPDATE</div>
+              </div>
               <EventForm appId={this.props.id} postEvent={this.postEvent} addingEvent={this.state.addingEvent}/>
               { this.state.calendarItems.map((item, index) =>
                 <div className='calendar-item' key={index}>
+                  <p className='event-date'>{item.start.dateTime}</p>
                   <p>Event: {item.summary}</p>
-                  <p>Start: {item.start.dateTime}</p>
-                  <p>Description: {item.description}</p>
                   <p>
                     Location: {item.location} (<a href={'https://www.google.com/maps/search/' + item.location} target='_blank'>Google Maps</a>)
+                  </p>
+                  <p className="event-description">
+                  {item.description.map((line, i) =>
+                    <p key={i}>{line}</p>
+                  ) }
                   </p>
                   <p><a href={item.htmlLink} target='_blank'>View/edit on Google Calendar</a></p>
                 </div>
               )}
+
             </div>
 
             <div className={this.state.modalSections['change-stage']}>
