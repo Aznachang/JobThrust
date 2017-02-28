@@ -29,10 +29,10 @@
   border-left:2px red solid; 
   background-color:#eee;
   padding-bottom: 150px;
-  width: 1000px;
-  margin-top: 20px;
-  margin-right:100px;
-  margin-left:210px; 
+  width: 1300px;
+  margin-top: 40px;
+/*  margin-right:150px;
+*/  margin-left:65px; 
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   text-align: center;
 }
@@ -61,18 +61,18 @@
   display: none;
   border-left:2px red solid; 
   background-color: #eee;
-  width: 1000px;
+  width: 1300px;
   height: 100%;
   margin-top: 20px;
-  margin-right:100px;
-  margin-left: 210px; 
+/*  margin-right:100px;
+*/  margin-left: 65px; 
   text-align: center;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .comments{
   border-bottom:2px #2E8B57 solid; 
   padding-top: 15px;
-  width: 700px;
+  width: 1000px;
   margin-right: 80px;
   margin-left: 150px;  
 }

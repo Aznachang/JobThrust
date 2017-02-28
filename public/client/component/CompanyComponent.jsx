@@ -18,7 +18,8 @@ export default class CompanyComponent extends React.Component {
       discription: null,
       date: null,
       interviewProcess: null,
-      interviewQuestion: null
+      interviewQuestion: null,
+      renderData: null
     }
     this.getCompanyInfo = this.getCompanyInfo.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -31,6 +32,7 @@ export default class CompanyComponent extends React.Component {
     this.handleChangeForModalDate = this.handleChangeForModalDate.bind(this);
     this.handleChangeForModalInterviewProcess = this.handleChangeForModalInterviewProcess.bind(this);
     this.handleChangeForModalInterviewQuestion = this.handleChangeForModalInterviewQuestion.bind(this);
+    this.retrieveDataFromDB = this.retrieveDataFromDB.bind(this);
   }
 
   show(){
@@ -75,22 +77,56 @@ export default class CompanyComponent extends React.Component {
       modalIsOpen: false,
     });
   }
+  retrieveDataFromDB() {
+    var context = this;
+    $.ajax({
+      method:'GET',
+      url:'http://localhost:3000/api/interviewreview',
+      contentType: 'application/json',
+      success: function(data) {
+        console.log('-----3333333', data);
+        context.setState({
+          renderData: data[0]
+        })
+      },
+      error: function(err) {
+        console.log('You have an error', err)
+      }
+    })
+  }
+
   submitApp(event) {
     event.preventDefault();
-    console.log(this.state.date)
-    console.log(this.state.title)
-    console.log(this.state.description)
-
-    $('#comments').append('<h2>'+this.state.date + '</h2>');
-    $('#comments').append('<h4>'+this.state.title + '</h4>');
-    $('#comments').append('<h5>'+this.state.description + '</h5>');
-    $('#comments').append('<div class="comments"></div>');
+    //     $('#comments').append('<h2>'+this.state.date + '</h2>');
+    // $('#comments').append('<h4>'+this.state.title + '</h4>');
+    // $('#comments').append('<h5>'+this.state.description + '</h5>');
+    // $('#comments').append('<div class="comments"></div>');
+    var interviewCompany = {name: this.state.value, companyComments: [{jobTitle:this.state.title},{date:this.state.date},{interviewProcess:{descriptionOfinterview:this.state.interviewProcess, interviewProcess:this.state.description}}]};
+    var context = this;
+    $.ajax({
+      method:'POST',
+      url:'http://localhost:3000/api/interviewreview',
+      contentType: 'application/json',
+      data: JSON.stringify(interviewCompany),
+      success: function(data) {
+        context.retrieveDataFromDB();
+      },
+      error: function(err) {
+        console.log('You have an error', err)
+      }
+    })
 
     this.closeModal();
   }
+
   handleChangeForModalDescriptionA(event){
     this.setState({
       description: event.target.value
+    });
+  }
+  handleChangeForModalDate(event){
+    this.setState({
+      date: event.target.value
     });
   }
   handleChangeForModalTitle(event){
@@ -136,20 +172,14 @@ export default class CompanyComponent extends React.Component {
             <div className='add-app-container'>
               <form id="add-app-form" onSubmit={this.submitApp}>
                 Job Title<br />
-                <input type='text' name='title' ref='title' placeholder='i.e Frontend Developer..' onChange={this.handleChangeForModalTitle}/><br />
+                <input type='text' name='title' ref='title' placeholder='i.e Frontend Developer..' onChange={this.handleChangeForModalTitle} required/><br />
                 Date<br />
-                <input type='text' name='company' ref='company' placeholder='i.e 03/20/2017' onChange={this.handleChangeForModalDate}/><br />
+                <input type='text' name='company' ref='company' placeholder='i.e 03/20/2017' onChange={this.handleChangeForModalDate} required/><br />
                 Describe the Interview Process<br />
-                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewProcess}></textarea><br />
+                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewProcess}required></textarea><br />
                 Interview Questions<br />
-                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewQuestion}></textarea><br />
-                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalDescriptionA}></textarea><br />
-                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewQuestion}></textarea><br />
-                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalDescriptionA}></textarea><br />
-                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewQuestion}></textarea><br />
-                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalDescriptionA}></textarea><br />
-                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewQuestion}></textarea><br />
-                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalDescriptionA}></textarea><br />
+                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewQuestion}required></textarea><br />
+                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalDescriptionA} required></textarea><br />
                 <input type='submit' className='add-small' value='Submit Interview' />
               </form>
             </div>
