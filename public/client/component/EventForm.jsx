@@ -4,6 +4,7 @@ export default class EventForm extends React.Component {
   constructor(props) {
     super(props);
     this.createEvent = this.createEvent.bind(this);
+    this.handleChange = this.createEvent.bind(this);
   }
 
   createEvent(e) {
@@ -12,7 +13,7 @@ export default class EventForm extends React.Component {
 
     var calcHour = function(hour, tod) {
       if (tod === 'PM') {
-        return hour + 12;
+        return (+hour + 12).toString();
       } else {
         return hour;
       }
@@ -43,7 +44,7 @@ export default class EventForm extends React.Component {
 
     console.log('Event data:', event);
 
-    // this.props.postEvent(event);
+    this.props.postEvent(event);
 
   }
 
@@ -71,7 +72,7 @@ export default class EventForm extends React.Component {
           <option value='AM'>AM</option>
           <option value='PM'>PM</option>
         </select>
-        <textarea name='event-description' ref='descripton' form='event-form' placeholder='Description of the event...'></textarea>
+        <input type='text' name='event-description' ref='description' placeholder='Job description...'></input>
         <input type='submit' value='Create' />
       </form>
 
