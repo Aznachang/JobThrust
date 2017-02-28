@@ -13,7 +13,12 @@ export default class CompanyComponent extends React.Component {
       companyView: '',
       value: '',
       hidden: false,
-      modalIsOpen: false
+      modalIsOpen: false,
+      title: null,
+      discription: null,
+      date: null,
+      interviewProcess: null,
+      interviewQuestion: null
     }
     this.getCompanyInfo = this.getCompanyInfo.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -21,6 +26,11 @@ export default class CompanyComponent extends React.Component {
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.submitApp = this.submitApp.bind(this);
+    this.handleChangeForModalDescriptionA = this.handleChangeForModalDescriptionA.bind(this);
+    this.handleChangeForModalTitle = this.handleChangeForModalTitle.bind(this);
+    this.handleChangeForModalDate = this.handleChangeForModalDate.bind(this);
+    this.handleChangeForModalInterviewProcess = this.handleChangeForModalInterviewProcess.bind(this);
+    this.handleChangeForModalInterviewQuestion = this.handleChangeForModalInterviewQuestion.bind(this);
   }
 
   show(){
@@ -67,6 +77,36 @@ export default class CompanyComponent extends React.Component {
   }
   submitApp(event) {
     event.preventDefault();
+    console.log(this.state.date)
+    console.log(this.state.title)
+    console.log(this.state.description)
+
+    $('#comments').append('<h2>'+this.state.date + '</h2>');
+    $('#comments').append('<h4>'+this.state.title + '</h4>');
+    $('#comments').append('<h5>'+this.state.description + '</h5>');
+    $('#comments').append('<div class="comments"></div>');
+
+    this.closeModal();
+  }
+  handleChangeForModalDescriptionA(event){
+    this.setState({
+      description: event.target.value
+    });
+  }
+  handleChangeForModalTitle(event){
+    this.setState({
+      title: event.target.value
+    });
+  }
+  handleChangeForModalInterviewProcess(event){
+    this.setState({
+      interviewProcess: event.target.value
+    });
+  }
+  handleChangeForModalInterviewQuestion(event){
+    this.setState({
+      interviewQuestion: event.target.value
+    });
   }
   render() {
     var immg = null;
@@ -95,23 +135,26 @@ export default class CompanyComponent extends React.Component {
             </div>
             <div className='add-app-container'>
               <form id="add-app-form" onSubmit={this.submitApp}>
-                Enter Role applied for<br />
-                <input type='text' name='title' ref='title' placeholder='i.e Frontend Developer..' /><br />
+                Job Title<br />
+                <input type='text' name='title' ref='title' placeholder='i.e Frontend Developer..' onChange={this.handleChangeForModalTitle}/><br />
                 Date<br />
-                <input type='text' name='company' ref='company' placeholder='i.e 03/20/2017' /><br />
-                City<br />
-                <input type='text' name='city' ref='city' placeholder='City' /><br />
-                State<br />
-                <input type='text' name='state' placeholder='ST' ref='state' className="st-input" maxLength='2' /><br />
-                Comment<br />
-                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...'></textarea><br />
-                <input type='submit' className='add-small' value='Add' />
+                <input type='text' name='company' ref='company' placeholder='i.e 03/20/2017' onChange={this.handleChangeForModalDate}/><br />
+                Describe the Interview Process<br />
+                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewProcess}></textarea><br />
+                Interview Questions<br />
+                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewQuestion}></textarea><br />
+                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalDescriptionA}></textarea><br />
+                <input type='submit' className='add-small' value='Submit Interview' />
               </form>
             </div>
 
           </div>
 
         </Modal>
+        <div className="item animated fadeInDownBig  newDiv">
+          <div id="comments"></div>
+        </div>
+
         <div className="item animated fadeInDownBig  newDiv">
 
         <br /> <br />Work at Google? Share Your Experience<br /> <br />
