@@ -1,13 +1,13 @@
 import React from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
-
+// EACH Detailed Job Offer & Update Form
 export default class JobOfferForm extends React.Component {
   constructor(props) {
     super(props);
       this.state = {
         modalIsOpen: false,
-        user: '',
+        user: ''
       }
 
       this.openModal = this.openModal.bind(this);
@@ -48,18 +48,24 @@ export default class JobOfferForm extends React.Component {
 
       axios.put('/api/application/offers/'+ this.props.offerId, jobOfferData)
       .then(function(offers) {
-        context.getOffer();
+        context.props.getOffer();
       });
 
       // close Job Offer Form Upon Updating...
       this.closeModal();
     }
 
+  componentDidMount() {
+    var context = this;
+    context.props.getOffer();
+  }
+
     // value = {this.props.jobOffers.salary}
   render() {
+    var context = this;
     return (
       <div className="add-app-manual">
-        <div className="add-app-btn" onClick={this.openModal}>
+        <div className="add-joboffer-btn" onClick={this.openModal}>
           <span>Job Offer</span>
         </div>
         <Modal
@@ -107,13 +113,13 @@ export default class JobOfferForm extends React.Component {
             </div>
             <form id="add-app-form" onSubmit={this.submitJobOffer}>
               Salary<br />
-              <input type='text' name='salary' ref='salary' placeholder='50000' /><br />
+              <input type='text' name='salary' ref='salary' placeholder='50000' defaultValue={this.props.jobOffers.salary}/><br />
               Signing Bonus<br />
-              <input type='text' name='signBonus' ref='signBonus' placeholder='5000' /><br />
+              <input type='text' name='signBonus' ref='signBonus' placeholder='5000' defaultValue = {this.props.jobOffers.signBonus} /><br />
               Vacation Days<br />
-              <input type='text' name='vacationDays' ref='vacationDays' placeholder='14' /><br />
+              <input type='text' name='vacationDays' ref='vacationDays' placeholder='14' defaultValue = {this.props.jobOffers.vacationDays}/><br />
               401K Company Match %<br />
-              <input type='text' name='retireMatchPercent' ref='retireMatchPercent' placeholder='5' /><br />
+              <input type='text' name='retireMatchPercent' ref='retireMatchPercent' placeholder='5' defaultValue = {this.props.jobOffers.retireMatchPercent}/><br />
 
               <input type='submit' value='Add' />
             </form>

@@ -52,7 +52,7 @@ export default class AddAppManual extends React.Component {
     axios.post('/api/job', appData).then(function(res) {
       context.props.getJobs();
     });
-    
+
     this.closeModal();
   }
 
