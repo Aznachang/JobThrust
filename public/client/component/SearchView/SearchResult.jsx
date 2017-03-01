@@ -13,7 +13,7 @@ class SearchResult extends React.Component {
     var results = this.props.results;
     var resultsList = results.map((result, index) => {
       return (
-        <li key={index} className="search-result">
+        <li key={index} className="search-result" id={index}>
           <SearchResultIcons index={index} addJob={this.props.addJob} removeJob={this.props.removeJob} result={result} />
           <div  onClick={this.props.openModal.bind(null, result.jobkey, index)}>
             <h3>{result.jobtitle}</h3>

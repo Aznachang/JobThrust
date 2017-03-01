@@ -6,6 +6,8 @@ var path = require('path');
 var table = require('./db/database');
 var rp = require('request-promise');
 var cal = require('./config/calendar');
+var InterviewModel = require('./dbMongo/models.js');
+
 
 router.route('/jobs/:jk').get(function(req, res) {
   var url = "http://www.indeed.com/viewjob?jk=" + req.params.jk;
@@ -19,6 +21,25 @@ router.route('/jobs/:jk').get(function(req, res) {
   })
 });
 
+router.post('/interviewreview', function(req, res) {
+  InterviewModel.insertMany(req.body, function(err, data) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json('Data Was inserted successfully');
+    }
+  })
+});
+
+router.get('/interviewreview', function(req, res) {
+  InterviewModel.find({}, function(err, data) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(data);
+    }
+  })
+});
 
 router.post('/goog/calget', cal.getCalData);
 

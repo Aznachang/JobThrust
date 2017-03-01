@@ -4,25 +4,15 @@ mongoose.connect('mongodb://localhost/companyView');
 
 var mongoose = require('mongoose');
 
-var characterSchema = mongoose.Schema({
+var interviewSchema = mongoose.Schema({
   id: {
     type: Number,
     unique: true
-  },
+    },
   name: String,
-  gender: String,
-  culture: String,
-  born: String,
-  died: String,
-  titles: Array,
-  aliases: Array,
-  parent: Number,
-  children: Array,
-  allegiances: Array,
-  books: Array,
-  povBooks: Array,
-  tvSeries: Array,
-  playedBy: Array
+  companyComments: Array,
+  imgUrl: String
 });
 
-var CharacterModel = mongoose.model('Character', characterSchema);
+var InterviewModel = mongoose.model('Interview', interviewSchema);
+module.exports = InterviewModel;

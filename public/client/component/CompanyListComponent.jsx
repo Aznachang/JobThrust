@@ -5,12 +5,16 @@ export default class CompanyListComponent extends React.Component {
 	constructor(props) {
     console.log('props',props)
     super(props);
+    this.state = {
+      counter: true
+    }
+    this.appendDiv = this.appendDiv.bind(this);
   }
 
   textBox() {
     $(function() {
-      $('.companyInfo').append('<textarea value="save" class="textArea"></textarea>');
-      $('.companyInfo').append('<button class="saveme">save</button>');
+      $('#comments').append('<textarea value="save" class="textArea"></textarea>');
+      $('#comments').append('<button class="saveme">save</button>');
 
       $(document).on('click', '.saveme', function() { 
 
@@ -40,7 +44,13 @@ export default class CompanyListComponent extends React.Component {
 
   appendDiv() {
     $('.newDiv').css('display','block');
-    $('#stars').append("<span>&#9734</span><span>&#9734</span><span>&#9734</span><span>&#9734</span><span>&#9734</span>");
+    if (this.state['counter']) {
+      console.log('I came here')
+      $('#stars').append("<span>&#9734</span><span>&#9734</span><span>&#9734</span><span>&#9734</span><span>&#9734</span>");
+    }
+    this.setState({
+      counter: false
+    })
   }
   render() {
     if (this.props.companyInfo[0]) {
