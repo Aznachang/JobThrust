@@ -2,7 +2,9 @@ import React from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
 import EventForm from './EventForm.jsx';
+import EventList from './EventList.jsx';
 import NoteContainer from './NoteView/NoteContainer.jsx';
+import $ from 'jQuery';
 
 var appElement = document.getElementById('app');
 
@@ -102,6 +104,23 @@ export default class Application extends React.Component {
         }
       }
     }
+
+    // changes background color of selected button
+    var sectionButtons = {
+      'job-desc': 'desc-select',
+      'change-stage': 'stage-select',
+      'notes': 'notes-select',
+      'events': 'events-select'
+    }
+
+    for (var button in sectionButtons) {
+      if (button !== className) {
+        $('.' + sectionButtons[button]).removeClass('selected-btn');
+      }
+    }
+
+    $('.' + sectionButtons[className]).toggleClass('selected-btn');
+
     this.setState({addingEvent: false});
     this.setState(currentSections);
   }
@@ -115,7 +134,15 @@ export default class Application extends React.Component {
       });
       context.setState({ calendarItems: res.data.items });
       console.log('CAL DATA', res.data.items);
+      
+      // random gmail thread get test
+      axios.get('/api/mail/thread').then(function(res) {
+        console.log('Got the thread');
+        console.log(res.data);
+      });
+
     });
+
   }
 
   convertDate(date) {
@@ -177,10 +204,10 @@ export default class Application extends React.Component {
             <h2>{this.props.job} ({this.props.company})</h2>
             <div id="stage-name">Current Stage: {this.props.stage}</div>
             <div className="btn-container">
-              <div className="app-btn" onClick={this.toggle.bind(null, 'job-desc')}>Job Description</div>
-              <div className="app-btn" onClick={this.toggle.bind(null, 'notes')}>Notes</div>
-              <div className="app-btn" onClick={this.toggle.bind(null, 'events')}>Events</div>
-              <div className="app-btn" onClick={this.toggle.bind(null, 'change-stage')}>Change Stage</div>
+              <div className="app-btn desc-select" onClick={this.toggle.bind(null, 'job-desc')}>Job Description</div>
+              <div className="app-btn notes-select" onClick={this.toggle.bind(null, 'notes')}>Notes</div>
+              <div className="app-btn events-select" onClick={this.toggle.bind(null, 'events')}>Events</div>
+              <div className="app-btn stage-select" onClick={this.toggle.bind(null, 'change-stage')}>Change Stage</div>
             </div>
 
             <div className={this.state.modalSections['job-desc']}>
@@ -190,27 +217,13 @@ export default class Application extends React.Component {
             </div>
 
             <div className={this.state.modalSections['events']}>
-            <div className="add-event-help">Receive a calendar invite related to this job?  Add "APPID-{this.props.id}" to the invite description to be able to see it here.</div>
+              <div className="add-event-help">Receive a calendar invite related to this job?  Add "APPID-{this.props.id}" to the invite description to be able to see it here.</div>
               <div className="btn-container cal-event-buttons">
-                <div className="app-btn" onClick={this.toggleEventCreate}>CREATE</div>
-                <div className="app-btn" onClick={this.getEvents}>UPDATE</div>
+                <div className="app-btn" onClick={this.toggleEventCreate}>📅 Create</div>
+                <div className="app-btn" onClick={this.getEvents}>🗘 Refresh</div>
               </div>
               <EventForm appId={this.props.id} postEvent={this.postEvent} addingEvent={this.state.addingEvent}/>
-              { this.state.calendarItems.map((item, index) =>
-                <div className='calendar-item' key={index}>
-                  <p className='event-date'>{item.start.dateTime}</p>
-                  <p>Event: {item.summary}</p>
-                  <p>
-                    Location: {item.location} (<a href={'https://www.google.com/maps/search/' + item.location} target='_blank'>Google Maps</a>)
-                  </p>
-                  <p className="event-description">
-                  {item.description.map((line, i) =>
-                    <p key={i}>{line}</p>
-                  ) }
-                  </p>
-                  <p><a href={item.htmlLink} target='_blank'>View/edit on Google Calendar</a></p>
-                </div>
-              )}
+              <EventList calendarItems={this.state.calendarItems} />
 
             </div>
 

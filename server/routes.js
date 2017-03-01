@@ -45,6 +45,7 @@ router.post('/goog/calget', cal.getCalData);
 
 router.post('/goog/cal', cal.createEvent);
 
+router.get('/mail/thread/', cal.getThread);
 
 router.post('/job', function(req, res) {
   table.Job.findOrCreate({
@@ -116,6 +117,7 @@ router.get('/company', function(req, res) {
     console.log('There was an error with your request', err);
   })
 });
+
 
 router.get('/application', function(req, res) {
   table.Application.findAll({

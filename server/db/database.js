@@ -65,6 +65,13 @@ var Offer = db.define('offer', {
   applicationId: Sequelize.INTEGER
 });
 
+var PointOfContact = db.define('pointOfContact', {
+  name: Sequelize.STRING,
+  email: Sequelize.STRING,
+  phone: Sequelize.STRING,
+  applicationId: Sequelize.INTEGER
+});
+
 db.sync(/*{force: true}*/).then(function() {
   // Application.create({
   //   jobID: 2940525,
@@ -83,4 +90,5 @@ module.exports.Note = Note;
 module.exports.Search = Search;
 module.exports.Query = Query;
 module.exports.Offer = Offer;
+module.exports.PointOfContact = PointOfContact;
 module.exports.db = db;
