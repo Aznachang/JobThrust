@@ -207,7 +207,7 @@ export default class Application extends React.Component {
         <td className="job-title" onClick={this.openModal}>{this.props.job}</td>
         <td onClick={this.openModal}>{this.props.company}</td>
         <td className="stage" onClick={this.openModal}>{this.props.stage}</td>
-        <td onClick={this.openModal}>{this.props.created.slice(0,10)}</td>
+        <td onClick={this.openModal}>{this.convertDate(this.props.created).substring(0, 10)}</td>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
