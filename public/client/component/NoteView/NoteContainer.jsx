@@ -79,7 +79,7 @@ export default class NoteContainer extends React.Component {
     return(
       <div className='notes-container'>
         <textarea className='add-note' placeholder="Add new note..."></textarea>
-        <button onClick={this.add.bind(null, '')} className='button-info create'>Add</button> <br/>
+        <button onClick={this.add.bind(null, '')} className='button-info create'>Add</button>
         <div className ='noteBoard'>
           {this.state.notes.map((note, index) =>
             <Note key={index} index={index} updateNoteText={this.updateNote} deleteNoteText={this.removeNote} note={note.note} createdAt={note.createdAt} noteId={note.id} appId={note.applicationId}/>

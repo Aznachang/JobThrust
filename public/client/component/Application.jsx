@@ -222,11 +222,11 @@ export default class Application extends React.Component {
             <h2>{this.props.job} ({this.props.company})</h2>
             <div id="stage-name">Current Stage: {this.props.stage}</div>
             <div className="btn-container">
-              <div className="app-btn contact-select" onClick={this.toggle.bind(null, 'contact')}>Contact</div>
-              <div className="app-btn desc-select" onClick={this.toggle.bind(null, 'job-desc')}>Job Description</div>
-              <div className="app-btn notes-select" onClick={this.toggle.bind(null, 'notes')}>Notes</div>
-              <div className="app-btn events-select" onClick={this.toggle.bind(null, 'events')}>Events</div>
-              <div className="app-btn stage-select" onClick={this.toggle.bind(null, 'change-stage')}>Change Stage</div>
+              <div className="app-tab contact-select" onClick={this.toggle.bind(null, 'contact')}>Contact</div>
+              <div className="app-tab desc-select" onClick={this.toggle.bind(null, 'job-desc')}>Job Description</div>
+              <div className="app-tab notes-select" onClick={this.toggle.bind(null, 'notes')}>Notes</div>
+              <div className="app-tab events-select" onClick={this.toggle.bind(null, 'events')}>Events</div>
+              <div className="app-tab stage-select" onClick={this.toggle.bind(null, 'change-stage')}>Change Stage</div>
             </div>
 
             <div className={this.state.modalSections['contact']}>
@@ -242,8 +242,8 @@ export default class Application extends React.Component {
             <div className={this.state.modalSections['events']}>
               <div className="add-event-help">Receive a calendar invite related to this job?  Add "APPID-{this.props.id}" to the invite description to be able to see it here.</div>
               <div className="btn-container cal-event-buttons">
-                <div className="app-btn" onClick={this.toggleEventCreate}>📅 Create</div>
-                <div className="app-btn" onClick={this.getEvents}>🗘 Refresh</div>
+                <div className="app-btn cal-btn" onClick={this.toggleEventCreate}>📅 Create</div>
+                <div className="app-btn cal-btn" onClick={this.getEvents}>🗘 Refresh</div>
               </div>
               <EventForm appId={this.props.id} postEvent={this.postEvent} addingEvent={this.state.addingEvent}/>
               <EventList calendarItems={this.state.calendarItems} />
