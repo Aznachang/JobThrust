@@ -3,6 +3,7 @@ import $ from 'jQuery';
 import CompanyListComponent from './CompanyListComponent.jsx';
 import CompanySearch from './CompanySearch.jsx';
 import Modal from 'react-modal';
+import InterviewReviews from './InterviewReviews.jsx';
 
 
 export default class CompanyComponent extends React.Component {
@@ -40,6 +41,7 @@ export default class CompanyComponent extends React.Component {
   }
   getCompanyInfo(event) {
     event.preventDefault();
+    this.retrieveDataFromDB();
     var context = this;
     console.log('this is the state value' ,this.state.value)
     $.ajax({
@@ -77,16 +79,18 @@ export default class CompanyComponent extends React.Component {
       modalIsOpen: false,
     });
   }
+
   retrieveDataFromDB() {
     var context = this;
+    var name = this.state.value;
     $.ajax({
       method:'GET',
-      url:'http://localhost:3000/api/interviewreview',
+      url:'http://localhost:3000/api/interviewreview?name='+ name,
       contentType: 'application/json',
       success: function(data) {
         console.log('-----3333333', data);
         context.setState({
-          renderData: data[0]
+          renderData: data
         })
       },
       error: function(err) {
@@ -97,11 +101,8 @@ export default class CompanyComponent extends React.Component {
 
   submitApp(event) {
     event.preventDefault();
-    //     $('#comments').append('<h2>'+this.state.date + '</h2>');
-    // $('#comments').append('<h4>'+this.state.title + '</h4>');
-    // $('#comments').append('<h5>'+this.state.description + '</h5>');
-    // $('#comments').append('<div class="comments"></div>');
-    var interviewCompany = {name: this.state.value, companyComments: [{jobTitle:this.state.title},{date:this.state.date},{interviewProcess:{descriptionOfinterview:this.state.interviewProcess, interviewProcess:this.state.description}}]};
+
+    var interviewCompany = {name: this.state.value, imgUrl:this.state.companyInfo[0].squareLogo ,companyComments: [{jobTitle:this.state.title},{date:this.state.date},{interviewProcess:{descriptionOfinterview:this.state.interviewProcess, interviewProcess:this.state.description}}]};
     var context = this;
     $.ajax({
       method:'POST',
@@ -172,14 +173,14 @@ export default class CompanyComponent extends React.Component {
             <div className='add-app-container'>
               <form id="add-app-form" onSubmit={this.submitApp}>
                 Job Title<br />
-                <input type='text' name='title' ref='title' placeholder='i.e Frontend Developer..' onChange={this.handleChangeForModalTitle} required/><br />
+                <input type='text' name='title' className='jobTitle' placeholder='i.e Frontend Developer..' onChange={this.handleChangeForModalTitle} required/><br />
                 Date<br />
-                <input type='text' name='company' ref='company' placeholder='i.e 03/20/2017' onChange={this.handleChangeForModalDate} required/><br />
+                <input type='text' name='company' className='date' placeholder='i.e 03/20/2017' onChange={this.handleChangeForModalDate} required/><br />
                 Describe the Interview Process<br />
-                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewProcess}required></textarea><br />
+                <textarea name='description' form='add-app-form' className='interviewProcess' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewProcess}required></textarea><br />
                 Interview Questions<br />
-                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewQuestion}required></textarea><br />
-                <textarea name='description' form='add-app-form' ref='description' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalDescriptionA} required></textarea><br />
+                <textarea name='description' form='add-app-form' className='interviewQuestion' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewQuestion}required></textarea><br />
+                <textarea name='description' form='add-app-form' className='interviewAnswer' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalDescriptionA} required></textarea><br />
                 <input type='submit' className='add-small' value='Submit Interview' />
               </form>
             </div>
@@ -188,7 +189,7 @@ export default class CompanyComponent extends React.Component {
 
         </Modal>
         <div className="item animated fadeInDownBig  newDiv">
-          <div id="comments"></div>
+          {this.state.renderData !== null ? <InterviewReviews renderData={this.state.renderData} imgUrl={this.state.hidden? this.state.companyInfo[0].squareLogo : null}/>: null }
         </div>
 
         <div className="item animated fadeInDownBig  newDiv">

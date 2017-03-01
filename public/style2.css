@@ -27,7 +27,7 @@
 }
 .companyInfo {
   border-left:2px red solid; 
-  background-color:#eee;
+  background-color:rgba(256,256,256);
   padding-bottom: 150px;
   width: 1300px;
   margin-top: 40px;

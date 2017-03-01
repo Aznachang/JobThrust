@@ -35,10 +35,14 @@ router.post('/interviewreview', function(req, res) {
 });
 
 router.get('/interviewreview', function(req, res) {
-  InterviewModel.find({}, function(err, data) {
+  console.log(req.query);
+  InterviewModel.find({
+    name: req.query.name
+  }, function(err, data) {
     if (err) {
       res.json(err);
     } else {
+      console.log('--3-3--3--34', data)
       res.json(data);
     }
   })

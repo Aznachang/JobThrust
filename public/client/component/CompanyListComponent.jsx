@@ -13,8 +13,8 @@ export default class CompanyListComponent extends React.Component {
 
   textBox() {
     $(function() {
-      $('.companyInfo').append('<textarea value="save" class="textArea"></textarea>');
-      $('.companyInfo').append('<button class="saveme">save</button>');
+      $('#comments').append('<textarea value="save" class="textArea"></textarea>');
+      $('#comments').append('<button class="saveme">save</button>');
 
       $(document).on('click', '.saveme', function() { 
 
