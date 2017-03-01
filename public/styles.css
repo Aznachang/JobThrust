@@ -536,6 +536,13 @@ input.st-input {
   background-color: #42e8f4;
 }
 
+/* ========= CONTACT ======= */
+
+.poc-info:hover {
+  cursor: pointer;
+  background-color: #f2f2f2;
+}
+
 /* ========== NOTES ======== */
 
 .notes-container {

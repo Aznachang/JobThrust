@@ -31,7 +31,7 @@ export default class Application extends React.Component {
         key: ''
       },
       modalSections: {
-        'contact': 'contact',
+        'contact': 'contact hidden',
         'job-desc': 'job-desc hidden',
         'change-stage': 'change-stage hidden',
         'notes': 'notes hidden',
@@ -80,6 +80,7 @@ export default class Application extends React.Component {
   }
 
   afterOpenModal() {
+    this.toggle('contact');
 
   }
 
@@ -90,7 +91,8 @@ export default class Application extends React.Component {
         'job-desc': 'job-desc hidden',
         'change-stage': 'change-stage hidden',
         'notes': 'notes hidden',
-        'events': 'events hidden'
+        'events': 'events hidden',
+        'contact': 'contact hidden'
       }
     });
     if (this.props.filtered !== null) {
@@ -107,12 +109,7 @@ export default class Application extends React.Component {
       if (key !== className) {
         currentSections[key] = key + ' hidden';
       } else {
-        if (currentSections[key] === className) {
-          currentSections[key] = key + ' hidden';
-          currentSections['contact'] = 'contact';
-        } else {
-          currentSections[key] = key;
-        }
+        currentSections[key] = key;
       }
     }
 
@@ -121,16 +118,15 @@ export default class Application extends React.Component {
       'job-desc': 'desc-select',
       'change-stage': 'stage-select',
       'notes': 'notes-select',
-      'events': 'events-select'
+      'events': 'events-select',
+      'contact': 'contact-select'
     }
 
     for (var button in sectionButtons) {
-      if (button !== className) {
-        $('.' + sectionButtons[button]).removeClass('selected-btn');
-      }
+      $('.' + sectionButtons[button]).removeClass('selected-btn');
     }
 
-    $('.' + sectionButtons[className]).toggleClass('selected-btn');
+    $('.' + sectionButtons[className]).addClass('selected-btn');
 
     this.setState({addingEvent: false});
     this.setState(currentSections);
@@ -226,6 +222,7 @@ export default class Application extends React.Component {
             <h2>{this.props.job} ({this.props.company})</h2>
             <div id="stage-name">Current Stage: {this.props.stage}</div>
             <div className="btn-container">
+              <div className="app-btn contact-select" onClick={this.toggle.bind(null, 'contact')}>Contact</div>
               <div className="app-btn desc-select" onClick={this.toggle.bind(null, 'job-desc')}>Job Description</div>
               <div className="app-btn notes-select" onClick={this.toggle.bind(null, 'notes')}>Notes</div>
               <div className="app-btn events-select" onClick={this.toggle.bind(null, 'events')}>Events</div>
