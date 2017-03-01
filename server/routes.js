@@ -66,7 +66,14 @@ router.post('/job', function(req, res) {
         title: req.body.title,
         company: req.body.company
     }).then(function(app) {
-      res.sendStatus(200);
+      table.PointOfContact.create({
+        name: '',
+        email: '',
+        phone: ''
+      }).then(function(contact) {
+        res.sendStatus(200);
+
+      });
     });
   });
 });
@@ -200,6 +207,24 @@ router.post('/search', function(req, res) {
       userId: req.session.passport.user,
     })
   })
+})
+
+router.get('/contact/:appId', function(req, res) {
+  table.PointOfContact.findOrCreate({
+    where: {
+      applicationId: req.params.appId
+    },
+    defaults: {
+      name: '',
+      email: '',
+      phone: ''
+    }
+  }).spread(function(contactInfo, created) {
+    if (created) {
+      console.log('NO EXISTING CONTACT WAS FOUND FOR APP ' + req.params.appId + '.  CREATING.');
+    }
+    res.json(contactInfo);
+  });
 })
 
 router.route('/search/:id').get(function(req, res) {

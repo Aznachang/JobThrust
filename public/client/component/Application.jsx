@@ -4,6 +4,7 @@ import axios from 'axios';
 import EventForm from './EventForm.jsx';
 import EventList from './EventList.jsx';
 import NoteContainer from './NoteView/NoteContainer.jsx';
+import Contact from './Contact.jsx';
 import $ from 'jQuery';
 
 var appElement = document.getElementById('app');
@@ -18,6 +19,8 @@ export default class Application extends React.Component {
     this.postEvent = this.postEvent.bind(this);
     this.toggleEventCreate = this.toggleEventCreate.bind(this);
     this.convertDate = this.convertDate.bind(this);
+    this.getContact = this.getContact.bind(this);
+
     this.state = {
       modalIsOpen: false,
       selectedAppJob: {
@@ -28,6 +31,7 @@ export default class Application extends React.Component {
         key: ''
       },
       modalSections: {
+        'contact': 'contact',
         'job-desc': 'job-desc hidden',
         'change-stage': 'change-stage hidden',
         'notes': 'notes hidden',
@@ -38,7 +42,12 @@ export default class Application extends React.Component {
         summary: '',
         description: []
       }],
-      addingEvent: false
+      addingEvent: false,
+      contactInfo: {
+        name: null,
+        email: null,
+        phone: null
+      }
     }
 
     this.openModal = this.openModal.bind(this);
@@ -66,6 +75,7 @@ export default class Application extends React.Component {
     this.setState({modalIsOpen: true});
     this.getJobInfo();
     console.log('THIS APPLICATION ID IS:', this.props.id);
+    this.getContact();
     this.getEvents();
   }
 
@@ -99,6 +109,7 @@ export default class Application extends React.Component {
       } else {
         if (currentSections[key] === className) {
           currentSections[key] = key + ' hidden';
+          currentSections['contact'] = 'contact';
         } else {
           currentSections[key] = key;
         }
@@ -136,10 +147,10 @@ export default class Application extends React.Component {
       console.log('CAL DATA', res.data.items);
       
       // random gmail thread get test
-      axios.get('/api/mail/thread').then(function(res) {
-        console.log('Got the thread');
-        console.log(res.data);
-      });
+      // axios.get('/api/mail/thread').then(function(res) {
+      //   console.log('Got the thread');
+      //   console.log(res.data);
+      // });
 
     });
 
@@ -183,6 +194,17 @@ export default class Application extends React.Component {
     });
   }
 
+  getContact() {
+    console.log('Getting contact info!');
+    var context = this;
+    axios.get('/api/contact/' + context.props.id).then(function(res) {
+      context.setState({
+        contactInfo: res.data
+      });
+      console.log('Contact info is now set to:', context.state.contactInfo);
+    });
+  }
+
   render() {
     return (
       <tr className="application">
@@ -208,6 +230,10 @@ export default class Application extends React.Component {
               <div className="app-btn notes-select" onClick={this.toggle.bind(null, 'notes')}>Notes</div>
               <div className="app-btn events-select" onClick={this.toggle.bind(null, 'events')}>Events</div>
               <div className="app-btn stage-select" onClick={this.toggle.bind(null, 'change-stage')}>Change Stage</div>
+            </div>
+
+            <div className={this.state.modalSections['contact']}>
+              <Contact contactInfo={this.state.contactInfo} />
             </div>
 
             <div className={this.state.modalSections['job-desc']}>
