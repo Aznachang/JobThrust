@@ -6,7 +6,8 @@ var mongoose = require('mongoose');
 
 var interviewSchema = mongoose.Schema({
   id: {
-    type: Number
+    type: Number,
+    unique: true
     },
   name: String,
   companyComments: Array,

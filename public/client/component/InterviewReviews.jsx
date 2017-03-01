@@ -23,60 +23,100 @@ export default class InterviewReviews extends React.Component {
     this.handleChangeForModalInterviewProcess1 = this.handleChangeForModalInterviewProcess1.bind(this);
     this.handleChangeForModalInterviewQuestion1 = this.handleChangeForModalInterviewQuestion1.bind(this);
     this.editReview = this.editReview.bind(this);
+    this.sendUpdatedData = this.sendUpdatedData.bind(this);
+    this.arrayOfinputs = [];
+    this.importantId = '';
   }
   editReview() {
     var context = this;
     var $ele;
-    var arrayOfinputs;
     $(function() {
       $(document).on('click', '.editReview', function() { 
         $ele = this;
-        arrayOfinputs = [ 
+        console.log('ululul',typeof $(this).parent()[0].children[0].classList[0])
+        context.importantId = $(this).parent()[0].children[0].classList[0];
+        context.arrayOfinputs = [ 
           $(this).parent()[0].children[0].innerText, 
           $(this).parent()[0].children[1].innerText,
           $(this).parent()[0].children[2].innerText,
           $(this).parent()[0].children[3].innerText,
           $(this).parent()[0].children[4].innerText
         ]
-        context.openModal(arrayOfinputs);
+        context.openModal(context.arrayOfinputs);
       })
       $(document).on('submit', '.add-app-form1', function(event) { 
         event.preventDefault();
         if (!context.state.title1) {
-          var $liJobTitle = "<li>"+ arrayOfinputs[0] +"</li>";
+          var $liJobTitle = "<li>"+ context.arrayOfinputs[0] +"</li>";
+          context.setState({
+            title1: context.arrayOfinputs[0]
+          })
         } else {
           var $liJobTitle = "<li>"+ context.state.title1 +"</li>";
         }
          if (!context.state.date1) {
-          var $liJobDate = "<li>"+ arrayOfinputs[1] +"</li>";
+          var $liJobDate = "<li>"+ context.arrayOfinputs[1] +"</li>";
+          context.setState({
+            date1: context.arrayOfinputs[1]
+          })
         } else {
           var $liJobDate = "<li>"+ context.state.date1 +"</li>";
         }
         if (!context.state.interviewProcess1) {
-          var $liJobInterviewProcess = "<li>"+ arrayOfinputs[2] +"</li>";
+          var $liJobInterviewProcess = "<li>"+ context.arrayOfinputs[2] +"</li>";
+          context.setState({
+            interviewProcess1: context.arrayOfinputs[2]
+          })
         } else {
           var $liJobInterviewProcess = "<li>"+ context.state.interviewProcess1 +"</li>";
         }
          if (!context.state.interviewQuestion1) {
-          var $liJobInterviewQuestion = "<li>"+ arrayOfinputs[3] +"</li>";
+          var $liJobInterviewQuestion = "<li>"+ context.arrayOfinputs[3] +"</li>";
+          context.setState({
+            interviewQuestion1: context.arrayOfinputs[3]
+          })
         } else {
           var $liJobInterviewQuestion = "<li>"+ context.state.interviewQuestion1 +"</li>";
         }
         if(!context.state.discription1) {
-          var $liJobTitleInterviewQAnswer = "<li>"+ arrayOfinputs[4]+"</li>";
+          var $liJobTitleInterviewQAnswer = "<li>"+ context.arrayOfinputs[4]+"</li>";
+          context.setState({
+            discription1: context.arrayOfinputs[4]
+          })
         } else {
           var $liJobTitleInterviewQAnswer = "<li>"+ context.state.discription1 +"</li>";
         }
 
         var $button = "<button class='editReview'>Edit the Review</button>"
 
-        console.log('2fdsdfsadfsafdsa', $($ele).parent())
+        // console.log('2fdsdfsadfsafdsa', $($ele).parent())
         $($ele).parent().html($liJobTitle+$liJobDate+$liJobInterviewProcess+$liJobInterviewQuestion+$liJobTitleInterviewQAnswer+$button);
         context.closeModal();
+        console.log('lets see what is in you',context.arrayOfinputs)
+        var updatedData = {name: context.props.companyName, imgUrl:context.props.imgUrl ,companyComments: [{jobTitle:context.state.title1},{date:context.state.date1},{interviewProcess:{descriptionOfinterview:context.state.interviewProcess1, interviewQuestion:context.state.interviewQuestion1, interviewProcess:context.state.description1}}]};
+        var oldData = {name: context.props.companyName, imgUrl:context.props.imgUrl ,companyComments: [{jobTitle:context.arrayOfinputs[0]},{date:context.arrayOfinputs[1]},{interviewProcess:{descriptionOfinterview:context.arrayOfinputs[2],interviewQuestion: context.arrayOfinputs[3],interviewProcess:context.arrayOfinputs[4]}}]};
+        // console.log('ooooolld',oldData);
+        // console.log('neweeee', updatedData);
+        var dataToSend = [updatedData, context.importantId];
+        context.sendUpdatedData(dataToSend);
       })
     })
   }
-
+  sendUpdatedData(dataToSend){
+    var context = this;
+    $.ajax({
+      method: 'POST',
+      url:'http://localhost:3000/api/updateMongoDB',
+      contentType:'application/json',
+      data:JSON.stringify(dataToSend),
+      success: function(data) {
+        context.props.retrieveDataFromDB()
+      },
+      error: function(err) {
+        console.log('You have an error', err)
+      }
+    })
+  }
   openModal(text) {
     console.log(text)
     if (text) {
@@ -164,11 +204,11 @@ export default class InterviewReviews extends React.Component {
       {
         this.props.renderData.map((filed, index) =>
         <ul key={index} className="comments">
-          <li>{filed.companyComments[0].jobTitle}</li>
+          <li className={filed.id}>{filed.companyComments[0].jobTitle}</li>
           <li>{filed.companyComments[1].date}</li>
           <li>{filed.companyComments[2].interviewProcess.descriptionOfinterview}</li>
+          <li>{filed.companyComments[2].interviewProcess.interviewQuestion}</li>
           <li>{filed.companyComments[2].interviewProcess.interviewProcess}</li>
-          <li>{filed.companyComments[2].interviewProcess.descriptionOfinterview}</li>
           <button className="editReview">Edit the Review</button>
         </ul>
         )

@@ -88,7 +88,7 @@ export default class CompanyComponent extends React.Component {
       url:'http://localhost:3000/api/interviewreview?name='+ name,
       contentType: 'application/json',
       success: function(data) {
-        console.log('-----3333333', data);
+        // console.log('-----3333333', data[0]._id);
         context.setState({
           renderData: data
         })
@@ -102,7 +102,7 @@ export default class CompanyComponent extends React.Component {
   submitApp(event) {
     event.preventDefault();
 
-    var interviewCompany = {name: this.state.value, imgUrl:this.state.companyInfo[0].squareLogo ,companyComments: [{jobTitle:this.state.title},{date:this.state.date},{interviewProcess:{descriptionOfinterview:this.state.interviewProcess, interviewProcess:this.state.description}}]};
+    var interviewCompany = {id:Math.floor(Math.random()* 900000000), name: this.state.value, imgUrl:this.state.companyInfo[0].squareLogo ,companyComments: [{jobTitle:this.state.title},{date:this.state.date},{interviewProcess:{descriptionOfinterview:this.state.interviewProcess,interviewQuestion:this.state.interviewQuestion ,interviewProcess:this.state.description}}]};
     var context = this;
     $.ajax({
       method:'POST',
@@ -189,7 +189,7 @@ export default class CompanyComponent extends React.Component {
 
         </Modal>
         <div className="item animated fadeInDownBig  newDiv">
-          {this.state.renderData !== null ? <InterviewReviews renderData={this.state.renderData} imgUrl={this.state.hidden? this.state.companyInfo[0].squareLogo : null}/>: null }
+          {this.state.renderData !== null ? <InterviewReviews renderData={this.state.renderData} imgUrl={this.state.hidden? this.state.companyInfo[0].squareLogo : null} companyName={this.state.value} retrieveDataFromDB={this.retrieveDataFromDB}/>: null }
         </div>
 
         <div className="item animated fadeInDownBig  newDiv">

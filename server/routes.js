@@ -33,6 +33,31 @@ router.post('/interviewreview', function(req, res) {
     }
   })
 });
+router.post('/updateMongoDB', function(req, res) {
+  // console.log('here is my Body',req.body);
+  InterviewModel.findOne({id: Number(req.body[1])}, function(err, doc) {
+    console.log('This is the new Title', req.body[0].companyComments[0].jobTitle);
+    console.log('This is the Old title',doc.companyComments[0].jobTitle)
+    doc.name = req.body[0].name;
+    var companyInfo = [
+      {
+        "jobTitle" : req.body[0].companyComments[0].jobTitle
+      },
+      {
+        "date" : req.body[0].companyComments[1].date
+      },
+      {
+        "interviewProcess" : {
+          "interviewProcess" : req.body[0].companyComments[2].interviewProcess.interviewProcess,
+          "interviewQuestion" : req.body[0].companyComments[2].interviewProcess.interviewQuestion,
+          "descriptionOfinterview" : req.body[0].companyComments[2].interviewProcess.descriptionOfinterview
+        }
+      }
+  ];
+    doc.companyComments = companyInfo;
+    doc.save();
+  })
+});
 
 router.get('/interviewreview', function(req, res) {
   console.log(req.query);
@@ -42,7 +67,6 @@ router.get('/interviewreview', function(req, res) {
     if (err) {
       res.json(err);
     } else {
-      console.log('--3-3--3--34', data)
       res.json(data);
     }
   })
