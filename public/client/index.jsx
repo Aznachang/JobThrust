@@ -5,9 +5,9 @@ import App from './component/App.jsx';
 import LogIn from './component/LogIn.jsx';
 import ManageComponent from './component/manageComponent.jsx';
 import SearchContainer from './component/SearchView/SearchContainer.jsx';
-import Note from './component/NoteContainer.jsx';
+import Note from './component/NoteView/NoteContainer.jsx';
 import CompanyComponent from './component/CompanyComponent.jsx'
-import JobOfferContainer from './component/JobOfferContainer.jsx';
+import JobOfferContainer from './component/JobOfferView/JobOfferContainer.jsx';
 
 render((
     <Router history={browserHistory}>

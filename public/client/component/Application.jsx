@@ -1,10 +1,8 @@
 import React from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
-import NoteContainer from './NoteContainer.jsx';
 import EventForm from './EventForm.jsx';
-// import JobOfferContianer from './JobOfferContianer.jsx';
-// import JobOfferForm from './JobOfferForm.jsx';
+import NoteContainer from './NoteView/NoteContainer.jsx';
 
 var appElement = document.getElementById('app');
 

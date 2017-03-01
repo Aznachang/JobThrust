@@ -109,6 +109,39 @@ textarea {
   width: 10%;
 }
 
+.add-joboffer-btn {
+  padding: 5px 8px;
+  color: white;
+  background-color: limegreen;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.8em;
+  text-align: center;
+}
+
+/* ========== JOB OFFERS List ========== */
+
+#app-header {
+  width: 40%;
+}
+
+#salary-header {
+  width: 15%;
+}
+
+#signBonus-header {
+  width: 15%;
+}
+
+#vacation-header {
+  width: 15%;
+}
+
+#retire-header {
+  width: 15%;
+}
+
+
 /* ========== NAV BAR ========== */
 
 .nav-bar {
