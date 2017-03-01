@@ -41,25 +41,40 @@ export default class Contact extends React.Component {
     if (!this.state.editing) {
       return (
         <div>
+          <h3>Primary Contact Info</h3>
           <div className="poc-info" onClick={this.toggleEdit}>
-            <h3>Primary Contact Info</h3>
-            <div>Name: {this.props.contactInfo.name}</div>
-            <div>E-Mail: {this.props.contactInfo.email}</div>
-            <div>Phone: {this.props.contactInfo.phone}</div>
+            <table>
+              <tbody>
+                <tr>
+                  <td>Name:</td>
+                  <td>{this.props.contactInfo.name}</td>
+                </tr>
+                <tr>
+                  <td>E-Mail:</td>
+                  <td>{this.props.contactInfo.email}</td>
+                </tr>
+                <tr>
+                  <td>Phone:</td>
+                  <td>{this.props.contactInfo.phone}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       )
     } else {
       return (
         <div>
+          <h3>Primary Contact Info</h3>
           <div className="poc-info-edit">
-            <h3>Primary Contact Info</h3>
             <form name='edit-contact' onSubmit={this.submitChanges}>
             <div>Name: <input type='text' ref='contactName' name='contact-name' defaultValue={this.props.contactInfo.name} /></div>
             <div>E-Mail: <input type='text' ref='contactEmail' name='contact-email' defaultValue={this.props.contactInfo.email} /></div>
             <div>Phone: <input type='text' ref='contactPhone' name='contact-phone' defaultValue={this.props.contactInfo.phone} /></div>
-            <div className='app-btn' onClick={this.toggleEdit}>Cancel</div>
-            <input type='submit' value='Submit Changes' />
+            <div className='btn-container poc-btn-container'>
+              <div className='app-btn' onClick={this.toggleEdit}>Cancel</div>
+              <input type='submit' value='Submit Changes' />
+            </div>
             </form>
           </div>
         </div>

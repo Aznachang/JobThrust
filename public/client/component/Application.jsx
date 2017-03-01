@@ -223,9 +223,9 @@ export default class Application extends React.Component {
             <div id="stage-name">Current Stage: {this.props.stage}</div>
             <div className="btn-container">
               <div className="app-tab contact-select" onClick={this.toggle.bind(null, 'contact')}>Contact</div>
-              <div className="app-tab desc-select" onClick={this.toggle.bind(null, 'job-desc')}>Job Description</div>
-              <div className="app-tab notes-select" onClick={this.toggle.bind(null, 'notes')}>Notes</div>
               <div className="app-tab events-select" onClick={this.toggle.bind(null, 'events')}>Events</div>
+              <div className="app-tab notes-select" onClick={this.toggle.bind(null, 'notes')}>Notes</div>
+              <div className="app-tab desc-select" onClick={this.toggle.bind(null, 'job-desc')}>Job Description</div>
               <div className="app-tab stage-select" onClick={this.toggle.bind(null, 'change-stage')}>Change Stage</div>
             </div>
 
