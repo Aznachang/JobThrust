@@ -40,16 +40,24 @@ export default class EventForm extends React.Component {
       }
     }
 
+    var twoDigit = function(string) {
+      if (string.length < 2) {
+        string = '0' + string;
+      }
+
+      return string;
+    }
+
     var event = {
       'summary': this.refs.name.value,
       'location': this.refs.location.value,
       'description': this.refs.description.value,
       'start': {
-        'dateTime': this.refs.startYear.value + '-' + this.refs.startMonth.value + '-' + this.refs.startDay.value + 'T' + calcHour(this.refs.startHour.value, this.refs.timeOfDay.value) + ':' + this.refs.startMinutes.value + ':00-07:00',
+        'dateTime': this.refs.startYear.value + '-' + twoDigit(this.refs.startMonth.value) + '-' + twoDigit(this.refs.startDay.value) + 'T' + calcHour(this.refs.startHour.value, this.refs.timeOfDay.value) + ':' + this.refs.startMinutes.value + ':00-07:00',
         'timeZone': 'America/Los_Angeles',
       },
       'end': {
-        'dateTime': this.refs.endYear.value + '-' + this.refs.endMonth.value + '-' + this.refs.endDay.value + 'T' + calcHour(this.refs.endHour.value, this.refs.endTimeOfDay.value) + ':' + this.refs.endMinutes.value + ':00-07:00',
+        'dateTime': this.refs.endYear.value + '-' + twoDigit(this.refs.endMonth.value) + '-' + twoDigit(this.refs.endDay.value) + 'T' + calcHour(this.refs.endHour.value, this.refs.endTimeOfDay.value) + ':' + this.refs.endMinutes.value + ':00-07:00',
         'timeZone': 'America/Los_Angeles',
       },
       'attendees': [],

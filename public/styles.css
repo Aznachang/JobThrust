@@ -457,7 +457,7 @@ input.st-input {
   padding: 15px;
   margin-right: -50%;
   transform: translate(-50%, -50%);
-  width: 50%;
+  width: 65%;
   height: 90%;
   overflow: auto;
 }
@@ -503,8 +503,9 @@ input.st-input {
 .btn-container {
   display: flex;
   flex-direction: row;
-  margin-top: 15px;
-  justify-content: space-around;
+  margin-top: 5px;
+  justify-content: center;
+  border-bottom: 1px solid grey;
 }
 
 .app-btn, .stage-btn {
@@ -516,8 +517,21 @@ input.st-input {
   cursor: pointer;
 }
 
-.app-btn:nth-child(1) {
-  margin: 0;
+.app-tab {
+  background-color: #e6e6e6;
+  padding: 8px;
+  border-right: 1px solid grey;
+  text-align: center;
+  font-size: 0.9em;
+}
+
+.app-tab:hover {
+  background-color: #ccc;
+  cursor: pointer;
+}
+
+.app-tab:nth-child(5) {
+  border: none;
 }
 
 .app-btn:hover, .stage-btn:hover {
@@ -530,6 +544,44 @@ input.st-input {
 
 .hidden {
   display: none;
+}
+
+.selected-btn {
+  background-color: rgba(0, 153, 255, 0.4);;
+}
+
+/* ========= CONTACT ======= */
+
+.poc-info:hover {
+  cursor: pointer;
+  background-color: #f2f2f2;
+}
+
+.poc-info, .poc-info-edit {
+  font-size: 0.9em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.poc-info-edit input[type=text] {
+  height: 1.5em;
+}
+
+.poc-info {
+  padding-bottom: 5px;
+  border-bottom: 1px solid grey;
+}
+
+.poc-btn-container {
+  padding-bottom: 5px;
+}
+
+.poc-btn-container div, .poc-btn-container input[type=submit] {
+  padding: 4px 6px;
+  margin: 0 4px;
+  font-weight: bold;
+  border-radius: 3px;
 }
 
 /* ========== NOTES ======== */
@@ -624,6 +676,7 @@ input.st-input {
   border-radius: 5px;
   margin: 10px 0;
   font-size: 0.9em;
+  background-color: rgba(0, 153, 255, 0.25);
 }
 
 .calendar-item:hover {
@@ -632,6 +685,12 @@ input.st-input {
 
 .cal-event-buttons {
   margin-bottom: 5px;
+  border-bottom: none;
+}
+
+.cal-btn {
+  margin: 4px;
+  padding: 3px 6px 5px 6px;
 }
 
 .add-event-help {

@@ -45,6 +45,7 @@ router.post('/goog/calget', cal.getCalData);
 
 router.post('/goog/cal', cal.createEvent);
 
+router.get('/mail/thread/', cal.getThread);
 
 router.post('/job', function(req, res) {
   table.Job.findOrCreate({
@@ -65,7 +66,14 @@ router.post('/job', function(req, res) {
         title: req.body.title,
         company: req.body.company
     }).then(function(app) {
-      res.sendStatus(200);
+      table.PointOfContact.create({
+        name: '',
+        email: '',
+        phone: ''
+      }).then(function(contact) {
+        res.sendStatus(200);
+
+      });
     });
   });
 });
@@ -116,6 +124,7 @@ router.get('/company', function(req, res) {
     console.log('There was an error with your request', err);
   })
 });
+
 
 router.get('/application', function(req, res) {
   table.Application.findAll({
@@ -198,6 +207,38 @@ router.post('/search', function(req, res) {
       userId: req.session.passport.user,
     })
   })
+})
+
+router.get('/contact/:appId', function(req, res) {
+  table.PointOfContact.findOrCreate({
+    where: {
+      applicationId: req.params.appId
+    },
+    defaults: {
+      name: '',
+      email: '',
+      phone: ''
+    }
+  }).spread(function(contactInfo, created) {
+    if (created) {
+      console.log('NO EXISTING CONTACT WAS FOUND FOR APP ' + req.params.appId + '.  CREATING.');
+    }
+    res.json(contactInfo);
+  });
+})
+
+router.post('/contact/', function(req, res) {
+  table.PointOfContact.update(
+    {
+      name: req.body.name,
+      email: req.body.email,
+      phone: req.body.phone
+    },
+    {where: {applicationId: req.body.appId}}
+  ).then(function(contactInfo) {
+    res.send(200);
+    console.log('Contact info updated for app #', req.body.appId);
+  });
 })
 
 router.route('/search/:id').get(function(req, res) {

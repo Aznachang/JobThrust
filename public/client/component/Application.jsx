@@ -2,7 +2,10 @@ import React from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
 import EventForm from './EventForm.jsx';
+import EventList from './EventList.jsx';
 import NoteContainer from './NoteView/NoteContainer.jsx';
+import Contact from './Contact.jsx';
+import $ from 'jQuery';
 
 var appElement = document.getElementById('app');
 
@@ -16,6 +19,8 @@ export default class Application extends React.Component {
     this.postEvent = this.postEvent.bind(this);
     this.toggleEventCreate = this.toggleEventCreate.bind(this);
     this.convertDate = this.convertDate.bind(this);
+    this.getContact = this.getContact.bind(this);
+
     this.state = {
       modalIsOpen: false,
       selectedAppJob: {
@@ -26,6 +31,7 @@ export default class Application extends React.Component {
         key: ''
       },
       modalSections: {
+        'contact': 'contact hidden',
         'job-desc': 'job-desc hidden',
         'change-stage': 'change-stage hidden',
         'notes': 'notes hidden',
@@ -36,7 +42,12 @@ export default class Application extends React.Component {
         summary: '',
         description: []
       }],
-      addingEvent: false
+      addingEvent: false,
+      contactInfo: {
+        name: null,
+        email: null,
+        phone: null
+      }
     }
 
     this.openModal = this.openModal.bind(this);
@@ -64,10 +75,12 @@ export default class Application extends React.Component {
     this.setState({modalIsOpen: true});
     this.getJobInfo();
     console.log('THIS APPLICATION ID IS:', this.props.id);
+    this.getContact();
     this.getEvents();
   }
 
   afterOpenModal() {
+    this.toggle('contact');
 
   }
 
@@ -78,7 +91,8 @@ export default class Application extends React.Component {
         'job-desc': 'job-desc hidden',
         'change-stage': 'change-stage hidden',
         'notes': 'notes hidden',
-        'events': 'events hidden'
+        'events': 'events hidden',
+        'contact': 'contact hidden'
       }
     });
     if (this.props.filtered !== null) {
@@ -95,13 +109,25 @@ export default class Application extends React.Component {
       if (key !== className) {
         currentSections[key] = key + ' hidden';
       } else {
-        if (currentSections[key] === className) {
-          currentSections[key] = key + ' hidden';
-        } else {
-          currentSections[key] = key;
-        }
+        currentSections[key] = key;
       }
     }
+
+    // changes background color of selected button
+    var sectionButtons = {
+      'job-desc': 'desc-select',
+      'change-stage': 'stage-select',
+      'notes': 'notes-select',
+      'events': 'events-select',
+      'contact': 'contact-select'
+    }
+
+    for (var button in sectionButtons) {
+      $('.' + sectionButtons[button]).removeClass('selected-btn');
+    }
+
+    $('.' + sectionButtons[className]).addClass('selected-btn');
+
     this.setState({addingEvent: false});
     this.setState(currentSections);
   }
@@ -115,7 +141,15 @@ export default class Application extends React.Component {
       });
       context.setState({ calendarItems: res.data.items });
       console.log('CAL DATA', res.data.items);
+      
+      // random gmail thread get test
+      // axios.get('/api/mail/thread').then(function(res) {
+      //   console.log('Got the thread');
+      //   console.log(res.data);
+      // });
+
     });
+
   }
 
   convertDate(date) {
@@ -156,13 +190,24 @@ export default class Application extends React.Component {
     });
   }
 
+  getContact() {
+    console.log('Getting contact info!');
+    var context = this;
+    axios.get('/api/contact/' + context.props.id).then(function(res) {
+      context.setState({
+        contactInfo: res.data
+      });
+      console.log('Contact info is now set to:', context.state.contactInfo);
+    });
+  }
+
   render() {
     return (
       <tr className="application">
         <td className="job-title" onClick={this.openModal}>{this.props.job}</td>
         <td onClick={this.openModal}>{this.props.company}</td>
         <td className="stage" onClick={this.openModal}>{this.props.stage}</td>
-        <td onClick={this.openModal}>{this.props.created.slice(0,10)}</td>
+        <td onClick={this.openModal}>{this.convertDate(this.props.created).substring(0, 10)}</td>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
@@ -177,10 +222,15 @@ export default class Application extends React.Component {
             <h2>{this.props.job} ({this.props.company})</h2>
             <div id="stage-name">Current Stage: {this.props.stage}</div>
             <div className="btn-container">
-              <div className="app-btn" onClick={this.toggle.bind(null, 'job-desc')}>Job Description</div>
-              <div className="app-btn" onClick={this.toggle.bind(null, 'notes')}>Notes</div>
-              <div className="app-btn" onClick={this.toggle.bind(null, 'events')}>Events</div>
-              <div className="app-btn" onClick={this.toggle.bind(null, 'change-stage')}>Change Stage</div>
+              <div className="app-tab contact-select" onClick={this.toggle.bind(null, 'contact')}>Contact</div>
+              <div className="app-tab events-select" onClick={this.toggle.bind(null, 'events')}>Events</div>
+              <div className="app-tab notes-select" onClick={this.toggle.bind(null, 'notes')}>Notes</div>
+              <div className="app-tab desc-select" onClick={this.toggle.bind(null, 'job-desc')}>Job Description</div>
+              <div className="app-tab stage-select" onClick={this.toggle.bind(null, 'change-stage')}>Change Stage</div>
+            </div>
+
+            <div className={this.state.modalSections['contact']}>
+              <Contact appId={this.props.id} getContact={this.getContact} contactInfo={this.state.contactInfo} />
             </div>
 
             <div className={this.state.modalSections['job-desc']}>
@@ -190,27 +240,13 @@ export default class Application extends React.Component {
             </div>
 
             <div className={this.state.modalSections['events']}>
-            <div className="add-event-help">Receive a calendar invite related to this job?  Add "APPID-{this.props.id}" to the invite description to be able to see it here.</div>
+              <div className="add-event-help">Receive a calendar invite related to this job?  Add "APPID-{this.props.id}" to the invite description to be able to see it here.</div>
               <div className="btn-container cal-event-buttons">
-                <div className="app-btn" onClick={this.toggleEventCreate}>CREATE</div>
-                <div className="app-btn" onClick={this.getEvents}>UPDATE</div>
+                <div className="app-btn cal-btn" onClick={this.toggleEventCreate}>📅 Create</div>
+                <div className="app-btn cal-btn" onClick={this.getEvents}>🗘 Refresh</div>
               </div>
               <EventForm appId={this.props.id} postEvent={this.postEvent} addingEvent={this.state.addingEvent}/>
-              { this.state.calendarItems.map((item, index) =>
-                <div className='calendar-item' key={index}>
-                  <p className='event-date'>{item.start.dateTime}</p>
-                  <p>Event: {item.summary}</p>
-                  <p>
-                    Location: {item.location} (<a href={'https://www.google.com/maps/search/' + item.location} target='_blank'>Google Maps</a>)
-                  </p>
-                  <p className="event-description">
-                  {item.description.map((line, i) =>
-                    <p key={i}>{line}</p>
-                  ) }
-                  </p>
-                  <p><a href={item.htmlLink} target='_blank'>View/edit on Google Calendar</a></p>
-                </div>
-              )}
+              <EventList calendarItems={this.state.calendarItems} />
 
             </div>
 

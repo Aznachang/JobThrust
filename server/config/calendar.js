@@ -4,6 +4,10 @@ var OAuth2 = google.auth.OAuth2;
 var oauth2Client = new OAuth2(auth.googleAuth.clientID, auth.googleAuth.clientSecret, auth.googleAuth.callbackURL);
 var calendar = google.calendar('v3');
 var plus = google.plus('v1');
+var gmail = google.gmail('v1');
+var base64url = require('base64-url');
+
+// Calendar Things
 
 module.exports.oauth2C = oauth2Client;
 module.exports.getPlusData = function(req, res) {
@@ -77,3 +81,25 @@ module.exports.createEvent = function(req, res) {
     res.sendStatus(200);
   });
 };
+
+// GMail Things
+
+module.exports.getThread = function(req, res) {
+  module.exports.oauth2C.setCredentials({
+      access_token: module.exports.userTokens[req.session.passport.user],
+      refresh_token: undefined
+  });
+
+  gmail.users.messages.get({
+    userId: 'me',
+    auth: module.exports.oauth2C,
+    id: "15a8805c1c6bb461",
+    format: 'raw'
+  }, function(err, response) {
+    if (err) {
+      console.log('THREAD GET ERROR', err);
+    }
+    console.log('MAIL THREAD DATA', base64url.decode(response.raw));
+    res.json(base64url.decode(response.raw));
+  });
+}
