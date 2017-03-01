@@ -94,9 +94,6 @@ export default class InterviewReviews extends React.Component {
         context.closeModal();
         console.log('lets see what is in you',context.arrayOfinputs)
         var updatedData = {name: context.props.companyName, imgUrl:context.props.imgUrl ,companyComments: [{jobTitle:context.state.title1},{date:context.state.date1},{interviewProcess:{descriptionOfinterview:context.state.interviewProcess1, interviewQuestion:context.state.interviewQuestion1, interviewProcess:context.state.description1}}]};
-        var oldData = {name: context.props.companyName, imgUrl:context.props.imgUrl ,companyComments: [{jobTitle:context.arrayOfinputs[0]},{date:context.arrayOfinputs[1]},{interviewProcess:{descriptionOfinterview:context.arrayOfinputs[2],interviewQuestion: context.arrayOfinputs[3],interviewProcess:context.arrayOfinputs[4]}}]};
-        // console.log('ooooolld',oldData);
-        // console.log('neweeee', updatedData);
         var dataToSend = [updatedData, context.importantId];
         context.sendUpdatedData(dataToSend);
       })

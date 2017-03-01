@@ -30,9 +30,33 @@ router.post('/interviewreview', function(req, res) {
     }
   })
 });
+router.post('/updateMongoDB', function(req, res) {
+  InterviewModel.findOne({id:req.body[1]}, function(err, doc) {
+    doc.name = req.body[0].name;
+    var company = [
+      {
+        "jobTitle" : req.body[0].companyComments[0].jobTitle
+      },
+      {
+        "date" : req.body[0].companyComments[1].date
+      },
+      {
+        "interviewProcess" : {
+          "interviewProcess" : req.body[0].companyComments[2].interviewProcess.interviewProcess,
+          "interviewQuestion" : req.body[0].companyComments[2].interviewProcess.interviewQuestion,
+          "descriptionOfinterview" : req.body[0].companyComments[2].interviewProcess.descriptionOfinterview
+        }
+      }
+    ];
+    doc.companyComments = company;
+    doc.save();
+  })
+});
 
 router.get('/interviewreview', function(req, res) {
-  InterviewModel.find({}, function(err, data) {
+  InterviewModel.find({
+    name:req.query.name
+  }, function(err, data) {
     if (err) {
       res.json(err);
     } else {
