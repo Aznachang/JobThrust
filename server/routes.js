@@ -5,12 +5,9 @@ var axios = require('axios');
 var path = require('path');
 var table = require('./db/database');
 var rp = require('request-promise');
-<<<<<<< 147946b35d15eeff372e3ad68eb23e5c780e5911
 var cal = require('./config/calendar');
-=======
 var InterviewModel = require('./dbMongo/models.js');
 
->>>>>>> already set up the mongodb
 
 router.route('/jobs/:jk').get(function(req, res) {
   var url = "http://www.indeed.com/viewjob?jk=" + req.params.jk;
@@ -33,37 +30,9 @@ router.post('/interviewreview', function(req, res) {
     }
   })
 });
-router.post('/updateMongoDB', function(req, res) {
-  // console.log('here is my Body',req.body);
-  InterviewModel.findOne({id: Number(req.body[1])}, function(err, doc) {
-    console.log('This is the new Title', req.body[0].companyComments[0].jobTitle);
-    console.log('This is the Old title',doc.companyComments[0].jobTitle)
-    doc.name = req.body[0].name;
-    var companyInfo = [
-      {
-        "jobTitle" : req.body[0].companyComments[0].jobTitle
-      },
-      {
-        "date" : req.body[0].companyComments[1].date
-      },
-      {
-        "interviewProcess" : {
-          "interviewProcess" : req.body[0].companyComments[2].interviewProcess.interviewProcess,
-          "interviewQuestion" : req.body[0].companyComments[2].interviewProcess.interviewQuestion,
-          "descriptionOfinterview" : req.body[0].companyComments[2].interviewProcess.descriptionOfinterview
-        }
-      }
-  ];
-    doc.companyComments = companyInfo;
-    doc.save();
-  })
-});
 
 router.get('/interviewreview', function(req, res) {
-  console.log(req.query);
-  InterviewModel.find({
-    name: req.query.name
-  }, function(err, data) {
+  InterviewModel.find({}, function(err, data) {
     if (err) {
       res.json(err);
     } else {
