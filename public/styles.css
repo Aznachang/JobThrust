@@ -624,6 +624,7 @@ input.st-input {
   border-radius: 5px;
   margin: 10px 0;
   font-size: 0.9em;
+  background-color: rgba(0, 153, 255, 0.25);
 }
 
 .calendar-item:hover {

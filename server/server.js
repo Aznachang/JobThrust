@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 app.use('/api/', routes);
 app.use(express.static(path.join(__dirname, '../public')));
 
-app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email', 'https://www.googleapis.com/auth/calendar'] }));
+app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email', 'https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/gmail.modify'] }));
 
 // the callback after google has authenticated the user
 app.get('/auth/google/callback',
