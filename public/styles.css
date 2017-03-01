@@ -551,7 +551,8 @@ input.st-input {
 }
 
 .stage-btn {
-  margin-bottom: 5px;
+  margin-bottom: 3px;
+  border-radius: 0;
 }
 
 .hidden {
@@ -623,11 +624,11 @@ input.st-input {
 
 .noteContainer {
   border: 1px solid grey;
-  border-radius: 5px;
+  /*border-radius: 5px;*/
   margin-top: 10px;
   padding: 6px;
   width: 90%;
-  margin: 15px auto 0 auto;
+  margin: 8px auto 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -685,7 +686,6 @@ input.st-input {
 
 .calendar-item {
   border: 1px solid grey;
-  border-radius: 5px;
   margin: 10px 0;
   font-size: 0.9em;
   background-color: rgba(0, 153, 255, 0.25);
@@ -725,6 +725,12 @@ input.st-input {
   font-weight: bold;
 }
 
+textarea#description-text {
+  width: 70%;
+  background-color: white;
+  margin-top: 2px;
+}
+
 .event-date {
   font-weight: bold;
   border-bottom: 1px solid grey;
@@ -736,7 +742,7 @@ input.st-input {
 }
 
 .add-event-form {
-  border-bottom: 2px solid grey;
+  border-bottom: 1px solid grey;
   padding-bottom: 8px;
   font-size: 0.9em;
 }
@@ -749,6 +755,14 @@ input.st-input {
 .add-event-form input[type=submit] {
   padding: 5px 4px;
   margin-top: 5px;
+}
+
+.upper-event-form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-bottom: 8px;
 }
 
 input[type=text].small-input-hour {

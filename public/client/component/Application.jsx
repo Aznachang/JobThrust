@@ -258,7 +258,7 @@ export default class Application extends React.Component {
             </div>
 
             <div className={this.state.modalSections['notes']}>
-              <NoteContainer appId={this.props.id} />
+              <NoteContainer convertDate={this.convertDate} appId={this.props.id} />
             </div>
           </div>
 

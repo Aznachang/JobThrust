@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from 'jQuery';
 
 var months = [
   'January',
@@ -51,7 +52,7 @@ export default class EventForm extends React.Component {
     var event = {
       'summary': this.refs.name.value,
       'location': this.refs.location.value,
-      'description': this.refs.description.value,
+      'description': $('#description-text').val(),
       'start': {
         'dateTime': this.refs.startYear.value + '-' + twoDigit(this.refs.startMonth.value) + '-' + twoDigit(this.refs.startDay.value) + 'T' + calcHour(this.refs.startHour.value, this.refs.timeOfDay.value) + ':' + this.refs.startMinutes.value + ':00-07:00',
         'timeZone': 'America/Los_Angeles',
@@ -86,58 +87,66 @@ export default class EventForm extends React.Component {
       return (
 
         <form id='event-form' className='add-event-form' onSubmit={this.createEvent}>
-          <p>Event Name</p>
-          <input type='text' ref='name' name='event-name' placeholder='Event Name' />
-          <p>Location</p>
-          <input type='text' ref='location' name='event-location' placeholder='Location' />
-          <p>Start Date</p>
-          <select ref='startMonth'>
-            {months.map((month, i) =>
-              <option key={i} value={i + 1}>{month}</option>
-            )}
-          </select>
-          <select ref='startDay'>
-            {days.map((day, i) =>
-              <option key={i} value={day}>{day}</option>
-            )}
-          </select>
-          <select ref='startYear'>
-            {years.map((year, i) =>
-              <option key={i} value={year}>{year}</option>
-            )}
-          </select>
-          <p>Start Time</p>
-          <input type='text' className='small-input-hour' ref='startHour' name='event-hour' placeholder='HR' /><span>:</span>
-          <input type='text' className='small-input-min' ref='startMinutes' name='event-min' placeholder='MIN' />
-          <select ref='timeOfDay'>
-            <option value='AM'>AM</option>
-            <option value='PM'>PM</option>
-          </select>
-          <p>End Date</p>
-          <select ref='endMonth'>
-            {months.map((month, i) =>
-              <option key={i} value={i + 1}>{month}</option>
-            )}
-          </select>
-          <select ref='endDay'>
-            {days.map((day, i) =>
-              <option key={i} value={day}>{day}</option>
-            )}
-          </select>
-          <select ref='endYear'>
-            {years.map((year, i) =>
-              <option key={i} value={year}>{year}</option>
-            )}
-          </select>
-          <p>End Time</p>
-          <input type='text' className='small-input-hour' ref='endHour' name='event-end-hour' placeholder='HR' /><span>:</span>
-          <input type='text' className='small-input-min' ref='endMinutes' name='event-end-min' placeholder='MIN' />
-          <select ref='endTimeOfDay'>
-            <option value='AM'>AM</option>
-            <option value='PM'>PM</option>
-          </select>
+          <div className='upper-event-form'>
+            <div>
+              <p>Event Name</p>
+              <input type='text' ref='name' name='event-name' placeholder='Event Name' />
+              <p>Location</p>
+              <input type='text' ref='location' name='event-location' placeholder='Location' />
+            </div>
+            <div>
+              <p>Start Date</p>
+              <select ref='startMonth'>
+                {months.map((month, i) =>
+                  <option key={i} value={i + 1}>{month}</option>
+                )}
+              </select>
+              <select ref='startDay'>
+                {days.map((day, i) =>
+                  <option key={i} value={day}>{day}</option>
+                )}
+              </select>
+              <select ref='startYear'>
+                {years.map((year, i) =>
+                  <option key={i} value={year}>{year}</option>
+                )}
+              </select>
+              <p>Start Time</p>
+              <input type='text' className='small-input-hour' ref='startHour' name='event-hour' placeholder='HR' /><span>:</span>
+              <input type='text' className='small-input-min' ref='startMinutes' name='event-min' placeholder='MIN' />
+              <select ref='timeOfDay'>
+                <option value='AM'>AM</option>
+                <option value='PM'>PM</option>
+              </select>
+            </div>
+             <div>
+              <p>End Date</p>
+              <select ref='endMonth'>
+                {months.map((month, i) =>
+                  <option key={i} value={i + 1}>{month}</option>
+                )}
+              </select>
+              <select ref='endDay'>
+                {days.map((day, i) =>
+                  <option key={i} value={day}>{day}</option>
+                )}
+              </select>
+              <select ref='endYear'>
+                {years.map((year, i) =>
+                  <option key={i} value={year}>{year}</option>
+                )}
+              </select>
+              <p>End Time</p>
+              <input type='text' className='small-input-hour' ref='endHour' name='event-end-hour' placeholder='HR' /><span>:</span>
+              <input type='text' className='small-input-min' ref='endMinutes' name='event-end-min' placeholder='MIN' />
+              <select ref='endTimeOfDay'>
+                <option value='AM'>AM</option>
+                <option value='PM'>PM</option>
+              </select>
+            </div>
+          </div>
           <p>Description/Info</p>
-          <input type='text' name='event-description' ref='description' placeholder='Event description...'></input>
+          <textarea type='text' name='event-description' id='description-text' placeholder='Event description...'></textarea>
           <div>
             <input type='submit' value='Create' />
           </div>
