@@ -233,7 +233,7 @@ export default class Application extends React.Component {
             </div>
 
             <div className={this.state.modalSections['contact']}>
-              <Contact contactInfo={this.state.contactInfo} />
+              <Contact appId={this.props.id} getContact={this.getContact} contactInfo={this.state.contactInfo} />
             </div>
 
             <div className={this.state.modalSections['job-desc']}>

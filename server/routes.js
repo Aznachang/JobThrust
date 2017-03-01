@@ -227,6 +227,20 @@ router.get('/contact/:appId', function(req, res) {
   });
 })
 
+router.post('/contact/', function(req, res) {
+  table.PointOfContact.update(
+    {
+      name: req.body.name,
+      email: req.body.email,
+      phone: req.body.phone
+    },
+    {where: {applicationId: req.body.appId}}
+  ).then(function(contactInfo) {
+    res.send(200);
+    console.log('Contact info updated for app #', req.body.appId);
+  });
+})
+
 router.route('/search/:id').get(function(req, res) {
   console.log('search/:id', req.params.id)
   table.Search.findAll({
