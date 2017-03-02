@@ -610,7 +610,7 @@ input.st-input {
   margin-bottom: 15px;
 }
 
-.email-message {
+.email-message, .email-message-collapsed {
   border: 1px solid grey;
 }
 

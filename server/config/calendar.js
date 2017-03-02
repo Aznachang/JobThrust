@@ -187,7 +187,7 @@ var parseBase64 = function(code) {
   if (code) {
     return base64url.decode(code);
   } else {
-    return '';
+    return '[No message body.]';
   }
 }
 

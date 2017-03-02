@@ -1,4 +1,5 @@
 import React from 'react';
+import EmailItem from './EmailItem.jsx';
 
 export default class EmailThread extends React.Component {
   constructor(props) {
@@ -10,17 +11,7 @@ export default class EmailThread extends React.Component {
     return (
       <div className='email-thread'>
         {this.props.data.map((message, i) =>
-          <div key={i} className='email-message'>
-            <p>From: {message.from}</p>
-            <p>To: {message.to}</p>
-            <p>Sent: {message.sentAt}</p>
-            <p>Subject: {message.subject}</p>
-            <div className='email-message-body'>
-              {message.body.map((line, ind) =>
-                <p key={ind}>{line}</p>
-              )}
-            </div>
-          </div>
+          <EmailItem key={i} message={message} threadLength={this.props.data.length} itemNum={i} />
         )}
       </div>
     )
