@@ -14,5 +14,19 @@ var interviewSchema = mongoose.Schema({
   imgUrl: String
 });
 
+var employeeSchema = mongoose.Schema({
+  id: {
+    type: Number,
+    unique: true
+    },
+  name: String,
+  employeeComments: Array,
+  imgUrl: String
+});
+
+var EmployeeModel = mongoose.model('Employee', employeeSchema);
 var InterviewModel = mongoose.model('Interview', interviewSchema);
-module.exports = InterviewModel;
+
+module.exports.InterviewModel = InterviewModel;
+module.exports.EmployeeModel = EmployeeModel;
+

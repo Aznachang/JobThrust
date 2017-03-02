@@ -6,7 +6,7 @@ var path = require('path');
 var table = require('./db/database');
 var rp = require('request-promise');
 var cal = require('./config/calendar');
-var InterviewModel = require('./dbMongo/models.js');
+var Model = require('./dbMongo/models.js');
 
 
 router.route('/jobs/:jk').get(function(req, res) {
@@ -21,8 +21,9 @@ router.route('/jobs/:jk').get(function(req, res) {
   })
 });
 
-router.post('/interviewreview', function(req, res) {
-  InterviewModel.insertMany(req.body, function(err, data) {
+router.post('/employeeReviews', function(req, res) {
+  console.log('this is my employee review',req.body)
+  Model.EmployeeModel.insertMany(req.body, function(err, data) {
     if (err) {
       res.json(err);
     } else {
@@ -30,8 +31,31 @@ router.post('/interviewreview', function(req, res) {
     }
   })
 });
+
+router.post('/interviewreview', function(req, res) {
+  Model.InterviewModel.insertMany(req.body, function(err, data) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json('Data Was inserted successfully');
+    }
+  })
+});
+
+router.get('/employeeReviews', function(req, res) {
+  Model.EmployeeModel.find({
+    name:req.query.name
+  }, function(err, data) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(data);
+    }
+  })
+});
+
 router.post('/updateMongoDB', function(req, res) {
-  InterviewModel.findOne({id:req.body[1]}, function(err, doc) {
+  Model.InterviewModel.findOne({id:req.body[1]}, function(err, doc) {
     doc.name = req.body[0].name;
     var company = [
       {
@@ -54,7 +78,7 @@ router.post('/updateMongoDB', function(req, res) {
 });
 
 router.get('/interviewreview', function(req, res) {
-  InterviewModel.find({
+  Model.InterviewModel.find({
     name:req.query.name
   }, function(err, data) {
     if (err) {

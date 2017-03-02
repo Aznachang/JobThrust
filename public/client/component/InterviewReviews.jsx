@@ -12,7 +12,8 @@ export default class InterviewReviews extends React.Component {
       date1: null,
       interviewProcess1: null,
       interviewQuestion1: null,
-      title1: null
+      title1: null,
+      count: true
     }
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -30,7 +31,38 @@ export default class InterviewReviews extends React.Component {
   editReview() {
     var context = this;
     var $ele;
+    var counters = 1;
     $(function() {
+      $(document).on('click', '.rate', function() {
+        var $stars = $(this)[0].classList[0];
+        console.log('star that was selected', $(this)[0].classList)
+        if (Number($stars[$stars.length-1]) === 1 && counters === 1) {
+          console.log('11111')
+          $('.addStar').append("<span class='first1 rate'>&#9734</span>");
+          counters++;
+        } else if (Number($stars[$stars.length-1]) === 2 && counters === 1) {
+                    console.log('2222')
+
+          $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span>");
+          counters++;
+
+        } else if(Number($stars[$stars.length-1]) === 3 && counters === 1) {
+                    console.log('33333')
+
+          $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span>");
+          counters++;
+        } else if (Number($stars[$stars.length-1]) === 4 && counters === 1) {
+                    console.log('444444')
+
+          $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span><span class='four4 rate'>&#9734</span>");
+          counters++;
+        } else if (Number($stars[$stars.length-1]) === 5 && counters === 1) {
+                    console.log('555555')
+
+          $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span><span class='four4 rate'>&#9734</span><span class='five5 rate'>&#9734</span>");
+          counters++;
+        }
+      })
       $(document).on('click', '.editReview', function() { 
         $ele = this;
         console.log('ululul',typeof $(this).parent()[0].children[0].classList[0])
@@ -87,12 +119,11 @@ export default class InterviewReviews extends React.Component {
           var $liJobTitleInterviewQAnswer = "<li>"+ context.state.discription1 +"</li>";
         }
 
-        var $button = "<button class='editReview'>Edit the Review</button>"
+        var $button = "<button class='editReview'>Edit the Review</button>";
 
         // console.log('2fdsdfsadfsafdsa', $($ele).parent())
         $($ele).parent().html($liJobTitle+$liJobDate+$liJobInterviewProcess+$liJobInterviewQuestion+$liJobTitleInterviewQAnswer+$button);
         context.closeModal();
-        console.log('lets see what is in you',context.arrayOfinputs)
         var updatedData = {name: context.props.companyName, imgUrl:context.props.imgUrl ,companyComments: [{jobTitle:context.state.title1},{date:context.state.date1},{interviewProcess:{descriptionOfinterview:context.state.interviewProcess1, interviewQuestion:context.state.interviewQuestion1, interviewProcess:context.state.description1}}]};
         var dataToSend = [updatedData, context.importantId];
         context.sendUpdatedData(dataToSend);
@@ -200,13 +231,15 @@ export default class InterviewReviews extends React.Component {
         <img className="companyImg" src={this.props.imgUrl}/>
       {
         this.props.renderData.map((filed, index) =>
-        <ul key={index} className="comments">
+        <ul key={index} className="comments addStar">
           <li className={filed.id}>{filed.companyComments[0].jobTitle}</li>
           <li>{filed.companyComments[1].date}</li>
           <li>{filed.companyComments[2].interviewProcess.descriptionOfinterview}</li>
           <li>{filed.companyComments[2].interviewProcess.interviewQuestion}</li>
           <li>{filed.companyComments[2].interviewProcess.interviewProcess}</li>
           <button className="editReview">Edit the Review</button>
+          <img className="companyImg" src={this.props.imgUrl}/>
+
         </ul>
         )
       }

@@ -9,6 +9,7 @@ export default class CompanyListComponent extends React.Component {
       counter: true
     }
     this.appendDiv = this.appendDiv.bind(this);
+    this.appendingEmployee = this.appendingEmployee.bind(this);
   }
 
   textBox() {
@@ -51,6 +52,18 @@ export default class CompanyListComponent extends React.Component {
     this.setState({
       counter: false
     })
+    $('.employeeReview').css('display', 'none');
+  }
+  appendingEmployee() {
+    $('.newDiv').css('display','none');
+    if (this.state['counter']) {
+      console.log('I came here')
+      $('#stars').append("<span>&#9734</span><span>&#9734</span><span>&#9734</span><span>&#9734</span><span>&#9734</span>");
+    }
+    this.setState({
+      counter: false
+    })
+    $('.employeeReview').css('display', 'block');
   }
   render() {
     if (this.props.companyInfo[0]) {
@@ -68,7 +81,7 @@ export default class CompanyListComponent extends React.Component {
                 <br></br>
                 <br></br>
                 <div>
-                  <a href="#"><img className="employerReview" src="https://cdn3.iconfinder.com/data/icons/3d-printing-icon-set/512/Engineer.png"/></a><br/>
+                  <a href="#" onClick={this.appendingEmployee}><img className="employerReview" src="https://cdn3.iconfinder.com/data/icons/3d-printing-icon-set/512/Engineer.png"/></a><br/>
                   <p className="ptage">Interview Reviews</p> 
                 </div>
                 <div>
