@@ -1,25 +1,26 @@
 import React from 'react';
+import Modal from 'react-modal';
 import JobOfferForm from './JobOfferForm.jsx';
+import NoteContainer from '../NoteView/NoteContainer.jsx';
+import JobOfferCompare from './JobOfferCompare.jsx';
+import axios from 'axios';
+
 export default class JobOfferList extends React.Component {
 
   constructor(props) {
     super(props);
-    this.renderCompareOffers = this.renderCompareOffers.bind(this);
-  }
-
-  renderCompareOffers() {
-    return this.props.compareOffers();
-  }
-
-  componentDidMount(){
-    this.props.getOffer();
+    this.state = {
+      modalIsOpen: false,
+    }
   }
 
   render() {
+    // var context = this;
     return (
       <div id='JobOfferView'>
         <div id='Job-Offer'>
          <br/>
+         <h2 id='Job-Table'>Job Offers List</h2>
           <table>
            <thead>
              <tr className='application'>
@@ -30,21 +31,24 @@ export default class JobOfferList extends React.Component {
              </tr>
            </thead>
            <tbody>
-
            {this.props.jobOffers.map((jobOffer, index) =>
              <tr className='application'>
                <td><input key = {index}   type = 'checkbox' onChange={this.props.handleChecked} defaultChecked = {this.props.isChecked} value={jobOffer}/></td>
-               <td onClick={this.openModal}>{jobOffer.companyName}</td>
-               <td onClick={this.openModal}>{jobOffer.jobTitle}</td>
+               <td>{jobOffer.companyName}</td>
+               <td>{jobOffer.jobTitle}</td>
                <JobOfferForm key ={index} index={index} getOffer={this.props.getOffer} offerId ={jobOffer.id} jobOffers = {jobOffer} isChecked={this.props.isChecked}/>
              </tr>
              )}
            </tbody>
           </table>
         </div>
+
         <br/>
-       <div className='JobOffer'>
-          <table>
+
+        <div className="add-app-manual">
+          <div className='JobOffer'>
+            <h3 id='offer-breakdown'> Breakdown of Job Offers </h3>
+            <table>
               <thead>
                 <tr>
                   <th id='app-header'>Application</th>
@@ -52,23 +56,19 @@ export default class JobOfferList extends React.Component {
                   <th id='signBonus-header'>Signing Bonus</th>
                   <th id='vacation-header'>Vacation Days</th>
                   <th id='retire-header'> 401K Match</th>
+                  <th id='benefits'>Notes</th>
                 </tr>
               </thead>
               <tbody>
               {this.props.jobOffers.map((jobOffer, index) =>
-                <tr>
-                  <td>{jobOffer.companyName} - {jobOffer.jobTitle}</td>
-                  <td>${jobOffer.salary}</td>
-                  <td>${jobOffer.signBonus}</td>
-                  <td>{jobOffer.vacationDays}</td>
-                  <td>{jobOffer.retireMatchPercent}%</td>
-                </tr>
+                <JobOfferCompare jobOffer = {jobOffer}/>
                 )}
               </tbody>
-          </table>
+            </table>
+          </div>
         </div>
+
       </div>
     )
   }
 };
-

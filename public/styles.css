@@ -121,12 +121,20 @@ textarea {
 
 /* ========== JOB OFFERS List ========== */
 
+#offer-breakdown{
+  text-align: center;
+}
+
+#Job-Table {
+  text-align: center;
+}
+
 #app-header {
   width: 40%;
 }
 
 #salary-header {
-  width: 15%;
+  width: 17%;
 }
 
 #signBonus-header {
@@ -134,11 +142,15 @@ textarea {
 }
 
 #vacation-header {
-  width: 15%;
+  width: 10%;
 }
 
 #retire-header {
-  width: 15%;
+  width: 11%;
+}
+
+#benefits {
+  width: 7%;
 }
 
 
