@@ -90,16 +90,104 @@ module.exports.getThread = function(req, res) {
       refresh_token: undefined
   });
 
-  gmail.users.messages.get({
+  gmail.users.threads.list({
     userId: 'me',
     auth: module.exports.oauth2C,
-    id: "15a8805c1c6bb461",
-    format: 'raw'
-  }, function(err, response) {
-    if (err) {
-      console.log('THREAD GET ERROR', err);
+    q: 'from:' + req.body.email
+  }, function(err, threadsRes) {
+
+    console.log('THE THREADS:', threadsRes);
+
+    var currentThread = 0;
+
+    var threads = [];
+
+    console.log('just above inner function');
+    var getThreadEmails = function(index) {
+      if (!threadsRes.threads[index]) {
+        res.json({'threads': threads});
+        return;
+      }
+
+      console.log('Getting emails from thread:', threadsRes.threads[index]);
+      gmail.users.threads.get({
+        userId: 'me',
+        auth: module.exports.oauth2C,
+        id: threadsRes.threads[index].id,
+        format: 'full'
+      }, function(err, response) {
+        if (err) {
+          console.log('THREAD GET ERROR', err);
+        }
+
+        // threads[index] = response;  
+
+        var messageArray = [];
+
+        response.messages.forEach(function(message, i) {
+          if (i === 0) {
+            if (message.payload.headers.length > 11) { // if the initial message came from someone else
+              messageArray.push({
+                'from': message.payload.headers[14].value,
+                'to': message.payload.headers[18].value,
+                'sentAt': message.payload.headers[15].value,
+                'subject': message.payload.headers[17].value,
+                'body': parseBase64(message.payload.parts[0].body.data).split(/[\r]/g)
+              });
+            } else { // if the initial message in the thread was sent by me
+              messageArray.push({
+                'from': message.payload.headers[6].value,
+                'to': message.payload.headers[7].value,
+                'sentAt': message.payload.headers[2].value,
+                'subject': message.payload.headers[5].value,
+                'body': parseBase64(message.payload.parts[0].body.data).split(/[\r]/g)
+              });
+            }
+          } else {
+            if (message.payload.headers.length > 11) {
+              messageArray.push({
+                'from': message.payload.headers[16].value,
+                'to': message.payload.headers[20].value,
+                'inReplyTo': message.payload.headers[14].value,
+                'sentAt': message.payload.headers[17].value,
+                'subject': message.payload.headers[19].value,
+                'body': parseBase64(message.payload.parts[0].body.data).split(/[\r]/g)
+              });
+            } else {
+              messageArray.push({
+                'from': message.payload.headers[8].value,
+                'to': message.payload.headers[9].value,
+                'inReplyTo': message.payload.headers[2].value,
+                'sentAt': message.payload.headers[4].value,
+                'subject': message.payload.headers[7].value,
+                'body': parseBase64(message.payload.parts[0].body.data).split(/[\r]/g)
+              });
+            }
+          }
+        });
+
+        threads.unshift(messageArray);
+
+        currentThread++;
+
+        return getThreadEmails(currentThread);
+
+      });
+
+      
     }
-    console.log('MAIL THREAD DATA', base64url.decode(response.raw));
-    res.json(base64url.decode(response.raw));
+    console.log('Running getThreadEmails!');
+    getThreadEmails(currentThread);
+
   });
+
 }
+
+var parseBase64 = function(code) {
+  if (code) {
+    return base64url.decode(code);
+  } else {
+    return '';
+  }
+}
+

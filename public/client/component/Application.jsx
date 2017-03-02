@@ -5,6 +5,7 @@ import EventForm from './EventForm.jsx';
 import EventList from './EventList.jsx';
 import NoteContainer from './NoteView/NoteContainer.jsx';
 import Contact from './Contact.jsx';
+import EmailList from './EmailList.jsx';
 import $ from 'jQuery';
 
 var appElement = document.getElementById('app');
@@ -47,7 +48,8 @@ export default class Application extends React.Component {
         name: null,
         email: null,
         phone: null
-      }
+      },
+      emailData: []
     }
 
     this.openModal = this.openModal.bind(this);
@@ -141,13 +143,6 @@ export default class Application extends React.Component {
       });
       context.setState({ calendarItems: res.data.items });
       console.log('CAL DATA', res.data.items);
-      
-      // random gmail thread get test
-      // axios.get('/api/mail/thread').then(function(res) {
-      //   console.log('Got the thread');
-      //   console.log(res.data);
-      // });
-
     });
 
   }
@@ -198,6 +193,14 @@ export default class Application extends React.Component {
         contactInfo: res.data
       });
       console.log('Contact info is now set to:', context.state.contactInfo);
+
+      // Once contact info in place, get emails
+      axios.post('/api/mail/thread', {email: context.state.contactInfo.email}).then(function(res) {
+        console.log('Got the thread', res);
+        context.setState({emailData: res.data.threads});
+        console.log('State email data is now:', context.state.emailData);
+      });
+
     });
   }
 
@@ -231,6 +234,7 @@ export default class Application extends React.Component {
 
             <div className={this.state.modalSections['contact']}>
               <Contact appId={this.props.id} getContact={this.getContact} contactInfo={this.state.contactInfo} />
+              <EmailList emailData={this.state.emailData} />
             </div>
 
             <div className={this.state.modalSections['job-desc']}>
@@ -245,7 +249,7 @@ export default class Application extends React.Component {
                 <div className="app-btn cal-btn" onClick={this.toggleEventCreate}>📅 Create</div>
                 <div className="app-btn cal-btn" onClick={this.getEvents}>🗘 Refresh</div>
               </div>
-              <EventForm appId={this.props.id} postEvent={this.postEvent} addingEvent={this.state.addingEvent}/>
+              <EventForm appId={this.props.id} job={this.props.job} company={this.props.company} postEvent={this.postEvent} addingEvent={this.state.addingEvent}/>
               <EventList calendarItems={this.state.calendarItems} />
 
             </div>

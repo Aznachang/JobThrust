@@ -45,7 +45,7 @@ router.post('/goog/calget', cal.getCalData);
 
 router.post('/goog/cal', cal.createEvent);
 
-router.get('/mail/thread/', cal.getThread);
+router.post('/mail/thread/', cal.getThread);
 
 router.post('/job', function(req, res) {
   table.Job.findOrCreate({

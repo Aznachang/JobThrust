@@ -50,7 +50,7 @@ export default class EventForm extends React.Component {
     }
 
     var event = {
-      'summary': this.refs.name.value,
+      'summary': '[JobThrust] ' + this.refs.name.value,
       'location': this.refs.location.value,
       'description': $('#description-text').val(),
       'start': {
