@@ -60,7 +60,6 @@ export default class JobOfferForm extends React.Component {
     context.props.getOffer();
   }
 
-    // value = {this.props.jobOffers.salary}
   render() {
     var context = this;
     return (

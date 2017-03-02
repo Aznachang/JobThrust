@@ -46,37 +46,6 @@ export default class JobOfferContainer extends React.Component {
     // e.preventDefault();
   }
 
-  renderOfferCompare() {
-    console.log('renderOfferCompare!');
-    console.log(this.state.jobOffers);
-    return (
-      <div className='JobOffer'>
-        <table>
-            <thead>
-              <tr>
-                <th>Application</th>
-                <th>Salary</th>
-                <th>Signing Bonus</th>
-                <th>Vacation Days</th>
-                <th> 401K Company Match</th>
-              </tr>
-            </thead>
-            <tbody>
-            {this.state.jobOffers.map((jobOffer, index) =>
-              <tr>
-                <td>{jobOffer.companyName} - {jobOffer.jobTitle}</td>
-                <td>${jobOffer.salary}</td>
-                <td>${jobOffer.signBonus}</td>
-                <td>{jobOffer.vacationDays}</td>
-                <td>{jobOffer.retireMatchPercent}%</td>
-              </tr>
-              )}
-            </tbody>
-        </table>
-      </div>
-    )
-  }
-
   componentDidMount() {
     // Get Existing Job Offers Upon First Load
     this.getOffers();
@@ -85,7 +54,7 @@ export default class JobOfferContainer extends React.Component {
   render() {
     return (
       <div>
-        <JobOfferList getOffer={this.getOffers} handleChecked = {this.handleChecked} isChecked={this.handleChecked} compareOffers= {this.renderOfferCompare} jobOffers = {this.state.jobOffers}/>
+        <JobOfferList getOffer={this.getOffers} handleChecked = {this.handleChecked} isChecked={this.handleChecked} jobOffers = {this.state.jobOffers} />
 
       </div>
     )

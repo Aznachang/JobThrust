@@ -136,6 +136,7 @@ router.get('/application', function(req, res) {
   })
 });
 
+
 /******
 ***      Routes for Notes with Specific Job Application
 *******/
@@ -172,6 +173,7 @@ router.post('/application/notes', function(req, res) {
       })
       // update existing note
     } else {
+      console.log('req.body.id for Notes: ', req.body.id);
       table.Note.update(
       {note: req.body.note},
         {where: {
@@ -262,6 +264,7 @@ router.get('/query', function(req, res) {
     res.json(query);
   })
 })
+
 
 /******
 ***      Routes for JOB OFFERS with Specific Job Application

@@ -44,7 +44,6 @@ var Note = db.define('note', {
   applicationId: Sequelize.INTEGER
 });
 
-
 var Search = db.define('search', {
   query: {type: Sequelize.STRING, unique: true}
 })

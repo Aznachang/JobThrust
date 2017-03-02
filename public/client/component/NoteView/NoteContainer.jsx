@@ -21,7 +21,7 @@ export default class NoteContainer extends React.Component {
   add() {
     var context = this;
 
-    if ($('add-note').val() !== '') {
+    if ($('.add-note').val() !== '') {
       axios.post('/api/application/notes', {
         note:$('.add-note').val(),
         applicationId: context.props.appId
