@@ -115,6 +115,7 @@ export default class CompanyComponent extends React.Component {
   getCompanyInfo(event) {
     event.preventDefault();
     this.retrieveDataFromDB();
+    this.getEmployeeInfo();
     var context = this;
     console.log('this is the state value' ,this.state.value)
     $.ajax({
@@ -305,11 +306,11 @@ export default class CompanyComponent extends React.Component {
             <div className='add-app-container'>
               <form id="add-app-form" onSubmit={this.employeeReviewForm}>
                 Review Title<br />
-                <input type='text' name='title' className='ReviewTitle' onChange={this.handleChangeForModalReviewTitle} required/><br />
+                <input type='text' name='title' onChange={this.handleChangeForModalReviewTitle} required/><br />
                 Pros<br />
-                <input type='text' name='Pros' className='Pros' onChange={this.handleChangeForModalPros} required/><br />
+                <input type='text' name='Pros' onChange={this.handleChangeForModalPros} required/><br />
                 Cons<br />
-                <textarea name='description' form='add-app-form' className='Cons' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalCons}required></textarea><br />
+                <textarea name='description' form='add-app-form' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalCons}required></textarea><br />
                 <div className="ratingStar">
                   <p>Overall Rating</p>
                 </div>
@@ -325,6 +326,7 @@ export default class CompanyComponent extends React.Component {
         </div>
 
         <div className="item animated fadeInDownBig  employeeReview">
+         {this.state.renderEmployeeData !== null ? <EmployeeReview renderEmployeeData={this.state.renderEmployeeData}/> : null}
         </div>
 
         <div className="item animated fadeInDownBig  employeeReview">
