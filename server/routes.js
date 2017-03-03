@@ -22,7 +22,7 @@ router.route('/jobs/:jk').get(function(req, res) {
 });
 
 router.post('/employeeReviews', function(req, res) {
-  console.log('this is my employee review',req.body)
+  console.log('this is my employee review',req.body.userInfo)
   Model.EmployeeModel.insertMany(req.body, function(err, data) {
     if (err) {
       res.json(err);
@@ -51,6 +51,16 @@ router.get('/employeeReviews', function(req, res) {
     } else {
       res.json(data);
     }
+  })
+});
+
+router.post('/updateHelpfulButton', function(req, res) {
+  Model.EmployeeModel.findOne({id:req.body[1]}, function(err, doc) {
+    doc.helpfulButtonScore = req.body[0];
+    doc.userInfo.push(req.body[2]);
+    doc.singleUl = req.body[3]
+    doc.save();
+    res.send('');
   })
 });
 

@@ -54,15 +54,17 @@ export default class CompanyComponent extends React.Component {
     this.getEmployeeInfo = this.getEmployeeInfo.bind(this);
     var context = this;
     var counter = 0;
-    $(function() {
-      $(document).on('click', '.helpfulPoints', function() {
-        console.log('className', $(this).val());
-        var $buttonValue = 'helpful(' + (Number($(this).val().match(/[0-9]/g)[0]) + 1) +')';
-        // var newButton = '<button class="helpfulPoints" value=' + $buttonValue+'>'+$buttonValue+'</button>';
-        $(this).val($buttonValue);
-        $(this).removeClass($(this)[0].classList[0]);
-     })
-    })
+    // $(function() {
+    //   $(document).on('click', '.helpfulPoints', function() {
+    //     console.log('className', $(this).val());
+    //     var $buttonValue = 'helpful(' + (Number($(this).val().match(/[0-9]/g)[0]) + 1) +')';
+    //     // var newButton = '<button class="helpfulPoints" value=' + $buttonValue+'>'+$buttonValue+'</button>';
+    //     console.log('this should be my button', $(this).val());
+
+    //     $(this).val($buttonValue);
+    //     $(this).removeClass($(this)[0].classList[0]);
+    //  })
+    // })
   }
 
   handleChangeForModalCons(event) {
@@ -88,7 +90,7 @@ export default class CompanyComponent extends React.Component {
   employeeReviewForm(event) {
     var context = this;
     event.preventDefault();
-    var employee = {id:Math.floor(Math.random()* 900000000), name: this.state.value, employeeComments: [{reviewTitle: this.state.reviewTitle}, {consReview:this.state.consReview},{prosReview:this.state.prosReview}], imgUrl:this.state.companyInfo[0].squareLogo}
+    var employee = {id:Math.floor(Math.random()* 900000000), name: this.state.value, employeeComments: [{reviewTitle: this.state.reviewTitle}, {consReview:this.state.consReview},{prosReview:this.state.prosReview}], imgUrl:this.state.companyInfo[0].squareLogo, helpfulButtonScore:'helpful(0)', userInfo:[], singleUl:''}
     $.ajax({
       method: 'POST',
       url:'http://localhost:3000/api/employeeReviews',

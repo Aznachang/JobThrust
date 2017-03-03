@@ -21,7 +21,10 @@ var employeeSchema = mongoose.Schema({
     },
   name: String,
   employeeComments: Array,
-  imgUrl: String
+  imgUrl: String,
+  helpfulButtonScore: String,
+  userInfo: Array,
+  singleUl: String
 });
 
 var EmployeeModel = mongoose.model('Employee', employeeSchema);

@@ -12,6 +12,7 @@ export default class EmployeeReview extends React.Component {
       editConsReview: null,
       eidtProsReview: null
     }
+
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -25,6 +26,116 @@ export default class EmployeeReview extends React.Component {
     this.arrayOfinputs = [];
     this.idForUpdateDB = '';
     this.$ele = null;
+    this.helpfulCheckpoint = {};
+    // this.setState({helpfulCheckpoint:this.helpfulCheckpoint[this.props.userId] = true})
+
+    var context = this;
+
+    $(function() {
+      $(document).on('click', '.helpfulPoints', function() {
+        var result = false;
+        // console.log('className', context.props);
+        // console.log('this is my props',$(this).parent()[0].children[0].classList[0])
+
+        for (var i = 0; i < context.props.renderEmployeeData.length; i++ ) {
+          // if (context.props.renderEmployeeData[i].singleUl.length === 0) {
+            // console.log('I dont who am I', $(this).parent()[0].children[0].classList[0])
+            // console.log('This is the second console', context.props.renderEmployeeData[i].singleUl)
+
+            if (context.props.renderEmployeeData[i].singleUl === $(this).parent()[0].children[0].classList[0]) {
+              var hasSameUlEle = true;
+              // console.log('I arrived here')
+              // if (context.props.renderEmployeeData[i].userInfo[0][context.props.userId] !== true) {
+              //   console.log('I came to the inner if')
+
+              //   // context.helpfulCheckpoint[context.props.userId] = true;
+              //   // console.log('this object for users info', context.helpfulCheckpoint)
+              //   // context.setState({helpfulCheckpoint:context.helpfulCheckpoint[context.props.userId] = false})
+              //   var $buttonValue = 'helpful(' + (Number($(this).val().match(/[0-9]/g)[0]) + 1) +')';
+
+              //   $(this).val($buttonValue);
+              //   // console.log('this should be my button', $(this).parent()[0].children[0].classList[0]);
+
+              //   $(this).removeClass($(this)[0].classList[0]);
+              //   var buttonData = [$(this).val(), $(this).parent()[0].children[0].classList[0], [context.helpfulCheckpoint], $(this).parent()[0].children[0].classList[0] ]
+
+              //   $.ajax({
+              //       method: 'POST',
+              //       url: 'http://localhost:3000/api/updateHelpfulButton',
+              //       contentType:'application/json',
+              //       data: JSON.stringify(buttonData),
+              //       success: function(data) {
+
+              //       }, 
+              //       error: function(err) {
+              //       console.log('You have an error', err);
+              //     } 
+              //   })
+              // } else {
+
+                alert('You already clicked');
+                break;
+
+            } else {
+
+                context.helpfulCheckpoint[context.props.userId] = true;
+                console.log('I came to the last else')
+                console.log('this object for users info', context.helpfulCheckpoint)
+                // context.setState({helpfulCheckpoint:context.helpfulCheckpoint[context.props.userId] = false})
+                var $buttonValue = 'helpful(' + (Number($(this).val().match(/[0-9]/g)[0]) + 1) +')';
+
+                $(this).val($buttonValue);
+                // console.log('this should be my button', $(this).parent()[0].children[0].classList[0]);
+
+                $(this).removeClass($(this)[0].classList[0]);
+                var buttonData = [$(this).val(), $(this).parent()[0].children[0].classList[0], context.helpfulCheckpoint, $(this).parent()[0].children[0].classList[0] ]
+
+                $.ajax({
+                    method: 'POST',
+                    url: 'http://localhost:3000/api/updateHelpfulButton',
+                    contentType:'application/json',
+                    data: JSON.stringify(buttonData),
+                    success: function(data) {
+
+                    }, 
+                    error: function(err) {
+                    console.log('You have an error', err);
+                  } 
+                })
+            }
+        }
+
+      // if (context.props.renderEmployeeData[0].userInfo.length === 0 || !context.props.renderEmployeeData[0].userInfo[0][context.props.userId] || result) {
+       //    context.helpfulCheckpoint[context.props.userId] = true;
+       //    console.log('this object for users info', context.helpfulCheckpoint)
+       // // context.setState({helpfulCheckpoint:context.helpfulCheckpoint[context.props.userId] = false})
+       //  var $buttonValue = 'helpful(' + (Number($(this).val().match(/[0-9]/g)[0]) + 1) +')';
+
+       //  $(this).val($buttonValue);
+       //  // console.log('this should be my button', $(this).parent()[0].children[0].classList[0]);
+
+       //  $(this).removeClass($(this)[0].classList[0]);
+       //  var buttonData = [$(this).val(), $(this).parent()[0].children[0].classList[0], [context.helpfulCheckpoint], $(this).parent()[0].children[0].classList[0] ]
+
+       //  $.ajax({
+       //      method: 'POST',
+       //      url: 'http://localhost:3000/api/updateHelpfulButton',
+       //      contentType:'application/json',
+       //      data: JSON.stringify(buttonData),
+       //      success: function(data) {
+
+       //      }, 
+       //      error: function(err) {
+       //      console.log('You have an error', err);
+       //    } 
+       //  })
+        // } else {
+        //     alert('Sorry, you can only vote once for this review');
+
+        // }
+
+     })
+    })
   }
   openModal(array) {
     this.setState({modalIsOpen: true});
@@ -183,7 +294,7 @@ export default class EmployeeReview extends React.Component {
           <li>{filed.employeeComments[1].consReview}</li>
           <li>{filed.employeeComments[2].prosReview}</li>
           <button className="editEmployeeReview" >Edit the Review</button>
-          <input type="button" className={`helpfulPoints ${index}`} value="Helpful(0)"/>
+          <input type="button" className={`helpfulPoints ${index}`} value={`${filed.helpfulButtonScore}`}/>
 
         </ul>
         
