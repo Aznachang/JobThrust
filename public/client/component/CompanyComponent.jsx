@@ -26,7 +26,9 @@ export default class CompanyComponent extends React.Component {
       renderEmployeeData: null,
       consReview: null,
       prosReview: null,
-      reviewTitle: null
+      reviewTitle: null,
+      userId: '',
+      helpfulPoints: 0
     }
     this.getCompanyInfo = this.getCompanyInfo.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -50,6 +52,22 @@ export default class CompanyComponent extends React.Component {
     this.handleChangeForModalCons = this.handleChangeForModalCons.bind(this);
     this.employeeReviewForm = this.employeeReviewForm.bind(this);
     this.getEmployeeInfo = this.getEmployeeInfo.bind(this);
+    var context = this;
+    var counter = 0;
+    $(function() {
+      $(document).on('click', '.helpfulPoints', function() {
+        console.log('className', $(this).val());
+        var $buttonValue = 'helpful(' + (Number($(this).val().match(/[0-9]/g)[0]) + 1) +')';
+        $(this).val($buttonValue);
+        // if ($(this)[0].classList[1]) {
+
+        //   $(this).removeClass($(this)[0].classList[1])
+        //   context.setState({
+        //     helpfulPoints: context.state.helpfulPoints + 1
+        //   })
+        // }
+     })
+    })
   }
 
   handleChangeForModalCons(event) {
@@ -124,10 +142,11 @@ export default class CompanyComponent extends React.Component {
       url:'http://localhost:3000/api/company?company='+ this.state.value,
       contentType: 'application/json',
       success: function(data) {
-        console.log('This glassdoor info', data)
+        console.log('User IDIDIDIDIDDD', typeof data[2])
         context.setState({
           companyInfo: data[0],
-          companyView: data[1]
+          companyView: data[1],
+          userId: data[2]
         })
        context.show();
       },
@@ -327,7 +346,7 @@ export default class CompanyComponent extends React.Component {
         </div>
 
         <div className="item animated fadeInDownBig  employeeReview">
-         {this.state.renderEmployeeData !== null ? <EmployeeReview renderEmployeeData={this.state.renderEmployeeData}/> : null}
+         {this.state.renderEmployeeData !== null ? <EmployeeReview helpfulPoints={this.state.helpfulPoints} userId={this.state.userId}renderEmployeeData={this.state.renderEmployeeData}/> : null}
         </div>
 
         <div className="item animated fadeInDownBig  employeeReview">

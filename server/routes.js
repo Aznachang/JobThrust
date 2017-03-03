@@ -185,7 +185,7 @@ router.get('/company', function(req, res) {
         var jobSummary = $('#mw-content-text').find('p').text() // A plain DOM element.
         // console.log(jobSummary)
         var index = jobSummary.match(/[.]/)['index'];
-        res.json([respond.response.employers,jobSummary.slice(0,index+1)])
+        res.json([respond.response.employers, jobSummary.slice(0,index+1), req.session.passport.user])
       }
     })
   }).catch(function(err) {

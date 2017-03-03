@@ -25,8 +25,6 @@ export default class EmployeeReview extends React.Component {
     this.arrayOfinputs = [];
     this.idForUpdateDB = '';
     this.$ele = null;
-
-
   }
   openModal(array) {
     this.setState({modalIsOpen: true});
@@ -180,11 +178,13 @@ export default class EmployeeReview extends React.Component {
         </Modal>
         {
         this.props.renderEmployeeData.map((filed, index) =>
-        <ul key={index} className="comments addStar">
+        <ul key={index} className={`comments addStar ${index}`}>
           <li className={filed.id}>{filed.employeeComments[0].reviewTitle}</li>
           <li>{filed.employeeComments[1].consReview}</li>
           <li>{filed.employeeComments[2].prosReview}</li>
           <button className="editEmployeeReview" >Edit the Review</button>
+          <input type="button" value="helpful(0)" className={`helpfulPoints ${index}`}/>
+
         </ul>
         
         )
