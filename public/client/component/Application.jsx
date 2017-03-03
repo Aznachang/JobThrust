@@ -188,6 +188,7 @@ export default class Application extends React.Component {
   sendMessage() {
     axios.get('/api/mail/send').then(function(res) {
       console.log('Sent successfully!');
+      console.log(res.data);
     });
   }
 
