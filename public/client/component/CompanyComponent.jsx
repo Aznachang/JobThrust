@@ -75,7 +75,7 @@ export default class CompanyComponent extends React.Component {
   employeeReviewForm(event) {
     var context = this;
     event.preventDefault();
-    var employee = {id:Math.floor(Math.random()* 900000000), name: this.state.value, employeeComments: [{consReview:this.state.consReview},{prosReview:this.state.prosReview},{reviewTitle: this.state.reviewTitle}], imgUrl:this.state.companyInfo[0].squareLogo}
+    var employee = {id:Math.floor(Math.random()* 900000000), name: this.state.value, employeeComments: [{reviewTitle: this.state.reviewTitle}, {consReview:this.state.consReview},{prosReview:this.state.prosReview}], imgUrl:this.state.companyInfo[0].squareLogo}
     $.ajax({
       method: 'POST',
       url:'http://localhost:3000/api/employeeReviews',
@@ -105,6 +105,7 @@ export default class CompanyComponent extends React.Component {
         context.setState({
           renderEmployeeData: data
         })
+        console.log('is the state updated?', context.state.renderEmployeeData);
       },
       error: function(err) {
         console.log('You have an error', err)
@@ -326,7 +327,7 @@ export default class CompanyComponent extends React.Component {
         </div>
 
         <div className="item animated fadeInDownBig  employeeReview">
-         {this.state.renderEmployeeData !== null ? <EmployeeReview getEmployeeInfo={this.getEmployeeInfo} renderEmployeeData={this.state.renderEmployeeData}/> : null}
+         {this.state.renderEmployeeData !== null ? <EmployeeReview renderEmployeeData={this.state.renderEmployeeData}/> : null}
         </div>
 
         <div className="item animated fadeInDownBig  employeeReview">

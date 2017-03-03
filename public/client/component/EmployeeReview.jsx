@@ -23,7 +23,7 @@ export default class EmployeeReview extends React.Component {
     this.sendUpdatedEmployeeData = this.sendUpdatedEmployeeData.bind(this);
 
     this.arrayOfinputs = [];
-    this.importantId = '';
+    this.idForUpdateDB = '';
     this.$ele = null;
 
 
@@ -50,32 +50,37 @@ export default class EmployeeReview extends React.Component {
     console.log('my array of inputs', this.arrayOfinputs)
     if (!this.state.editReviewTitle) {
       var $editReviewTitle = '<li>' + this.arrayOfinputs[0] + '</li>';
+      var reviewTitle = {reviewTitle:this.arrayOfinputs[0]};
 
       this.setState({
         editReviewTitle: this.arrayOfinputs[0]
       })
     } else {
       var $editReviewTitle = '<li>' + this.state.editReviewTitle + '</li>';
+      var reviewTitle = {reviewTitle: this.state.editReviewTitle}
     }
 
     if (!this.state.eidtProsReview) {
       var $eidtProsReview = '<li>' + this.arrayOfinputs[1] + '</li>';
+      var prosReview = {prosReview: this.arrayOfinputs[1]};
 
       this.setState({
         eidtProsReview: this.arrayOfinputs[1]
       })
     } else {
       var $eidtProsReview = '<li>' + this.state.eidtProsReview + '</li>';
+      var prosReview = {prosReview: this.state.eidtProsReview};
     }
 
     if(!this.state.editConsReview) {
       var $editConsReview = '<li>' + this.arrayOfinputs[2] + '</li>';
-
+      var consReview = {consReview: this.arrayOfinputs[2]};
       this.setState({
         editConsReview: this.arrayOfinputs[2]
       })
     } else {
       var $editConsReview = '<li>' + this.state.editConsReview + '</li>';
+      var consReview = {consReview: this.state.editConsReview}
     }
 
 
@@ -83,19 +88,18 @@ export default class EmployeeReview extends React.Component {
 
     $(this.$ele).parent().html($editReviewTitle+$eidtProsReview+$editConsReview+$button);
     this.closeModal();
-    var updatedEmployeeData = [{consReview: this.state.editConsReview},{prosReview: this.state.editProsReview},{reviewTitle:this.state.editReviewTitle}]
-    this.sendUpdatedEmployeeData(updatedEmployeeData)
+    var updatedEmployeeData = [reviewTitle, consReview, prosReview]
+    this.sendUpdatedEmployeeData([updatedEmployeeData, this.idForUpdateDB]);
   }
 
   sendUpdatedEmployeeData(data) {
     var context = this;
     $.ajax({
       method: 'POST',
-      url: 'http://localhost:3000/api/',
+      url: 'http://localhost:3000/api/updateEmployeeReview',
       contentType:'application/json',
       data: JSON.stringify(data),
       success: function(data) {
-        context.props.getEmployeeInfo();
       }, 
       error: function(err) {
         console.log('You have an error', err);
@@ -126,10 +130,9 @@ export default class EmployeeReview extends React.Component {
     var context = this;
     $(function() {
       $(document).on('click', '.editEmployeeReview', function() { 
+        context.idForUpdateDB = $(this).parent()[0].children[0].classList[0];
         context.$ele = this;
-        console.log('ululul',typeof $(this).parent()[0].children[0].classList[0])
-        context.importantId = $(this).parent()[0].children[0].classList[0];
-
+        console.log('Check if the className is correct', $(this).parent()[0].children[0].classList[0])
 
         context.arrayOfinputs = [ 
           $(this).parent()[0].children[0].innerText, 
@@ -178,9 +181,9 @@ export default class EmployeeReview extends React.Component {
         {
         this.props.renderEmployeeData.map((filed, index) =>
         <ul key={index} className="comments addStar">
-          <li className={filed.id}>{filed.employeeComments[0].consReview}</li>
-          <li>{filed.employeeComments[1].prosReview}</li>
-          <li>{filed.employeeComments[2].reviewTitle}</li>
+          <li className={filed.id}>{filed.employeeComments[0].reviewTitle}</li>
+          <li>{filed.employeeComments[1].consReview}</li>
+          <li>{filed.employeeComments[2].prosReview}</li>
           <button className="editEmployeeReview" >Edit the Review</button>
         </ul>
         
