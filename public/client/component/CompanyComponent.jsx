@@ -58,14 +58,9 @@ export default class CompanyComponent extends React.Component {
       $(document).on('click', '.helpfulPoints', function() {
         console.log('className', $(this).val());
         var $buttonValue = 'helpful(' + (Number($(this).val().match(/[0-9]/g)[0]) + 1) +')';
+        // var newButton = '<button class="helpfulPoints" value=' + $buttonValue+'>'+$buttonValue+'</button>';
         $(this).val($buttonValue);
-        // if ($(this)[0].classList[1]) {
-
-        //   $(this).removeClass($(this)[0].classList[1])
-        //   context.setState({
-        //     helpfulPoints: context.state.helpfulPoints + 1
-        //   })
-        // }
+        $(this).removeClass($(this)[0].classList[0]);
      })
     })
   }

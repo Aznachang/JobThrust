@@ -183,7 +183,7 @@ export default class EmployeeReview extends React.Component {
           <li>{filed.employeeComments[1].consReview}</li>
           <li>{filed.employeeComments[2].prosReview}</li>
           <button className="editEmployeeReview" >Edit the Review</button>
-          <input type="button" value="helpful(0)" className={`helpfulPoints ${index}`}/>
+          <input type="button" className={`helpfulPoints ${index}`} value="Helpful(0)"/>
 
         </ul>
         
