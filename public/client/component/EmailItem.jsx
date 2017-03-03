@@ -4,6 +4,8 @@ export default class EmailItem extends React.Component {
   constructor(props) {
     super(props);
 
+    this.toggleCollapsed = this.toggleCollapsed.bind(this);
+
   }
 
   componentWillMount() {
@@ -17,10 +19,18 @@ export default class EmailItem extends React.Component {
     
   }
 
+  toggleCollapsed() {
+    if (!this.state.collapsed) {
+      this.setState({collapsed: true});
+    } else {
+      this.setState({collapsed: false});
+    }
+  }
+
   render() {
     if (this.state.collapsed === false) {
       return (
-        <div className='email-message' onClick={this.setState.bind(this, {collapsed: true})}>
+        <div className='email-message' onClick={this.toggleCollapsed}>
           <p>From: {this.props.message.from}</p>
           <p>To: {this.props.message.to}</p>
           <p>Sent: {this.props.message.sentAt}</p>
@@ -35,7 +45,7 @@ export default class EmailItem extends React.Component {
 
     } else {
       return (
-        <div className='email-message-collapsed' onClick={this.setState.bind(this, {collapsed: false})}>
+        <div className='email-message-collapsed' onClick={this.toggleCollapsed}>
           <p>Subject: {this.props.message.subject}</p>
         </div>
       )   

@@ -7,13 +7,20 @@ export default class EmailList extends React.Component {
   }
 
   render() {
+    if (this.props.emailData) {
+      return (
+        <div className='email-list'>
+          {this.props.emailData.map((thread, i) =>
+            <EmailThread data={thread} key={i} />
+          )}
+        </div>
+      )
+      
+    } else {
+      return (
+        <div></div>
+      )
+    }
 
-    return (
-      <div className='email-list'>
-        {this.props.emailData.map((thread, i) =>
-          <EmailThread data={thread} key={i} />
-        )}
-      </div>
-    )
   }
 }

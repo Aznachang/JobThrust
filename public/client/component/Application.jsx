@@ -185,6 +185,12 @@ export default class Application extends React.Component {
     });
   }
 
+  sendMessage() {
+    axios.get('/api/mail/send').then(function(res) {
+      console.log('Sent successfully!');
+    });
+  }
+
   getContact() {
     console.log('Getting contact info!');
     var context = this;
@@ -201,6 +207,11 @@ export default class Application extends React.Component {
         console.log('State email data is now:', context.state.emailData);
       });
 
+    });
+
+    // REPLY FROM ME TEST
+    axios.get('/api/mail/getmsg').then(function(res) {
+      console.log('individual msg data for a reply', res.data);
     });
   }
 
@@ -222,7 +233,7 @@ export default class Application extends React.Component {
 
           <div className="inner-container">
 
-            <h2>{this.props.job} ({this.props.company})</h2>
+            <h2 onClick={this.sendMessage}>{this.props.job} ({this.props.company})</h2>
             <div id="stage-name">Current Stage: {this.props.stage}</div>
             <div className="btn-container">
               <div className="app-tab contact-select" onClick={this.toggle.bind(null, 'contact')}>Contact</div>

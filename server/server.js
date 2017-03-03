@@ -25,7 +25,20 @@ app.use(cookieParser());
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use('/api/', routes);
+
+function isLoggedIn (req, res, next) {
+  if (req.url !== '/login') {
+    if (req.session.passport) {
+      next();
+    } else {
+      res.redirect('/login');
+    }
+  } else {
+    next();
+  }
+}
+
+app.use('/api/', isLoggedIn, routes);
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email', 'https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/gmail.modify'] }));
@@ -46,17 +59,6 @@ app.get('/auth/logout', function(req, res) {
   res.end();
 });
 
-function isLoggedIn (req, res, next) {
-  if (req.url !== '/login') {
-    if (req.session.passport) {
-      next();
-    } else {
-      res.redirect('/login');
-    }
-  } else {
-    next();
-  }
-}
 
 // Ensures that front end routing applies
 app.get('*', isLoggedIn, function (request, response){

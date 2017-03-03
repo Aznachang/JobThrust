@@ -47,6 +47,10 @@ router.post('/goog/cal', cal.createEvent);
 
 router.post('/mail/thread/', cal.getThread);
 
+router.get('/mail/getmsg', cal.getMessage);
+
+router.get('/mail/send', cal.postMessage);
+
 router.post('/job', function(req, res) {
   table.Job.findOrCreate({
     where: {
@@ -238,7 +242,7 @@ router.post('/contact/', function(req, res) {
     },
     {where: {applicationId: req.body.appId}}
   ).then(function(contactInfo) {
-    res.send(200);
+    res.sendStatus(200);
     console.log('Contact info updated for app #', req.body.appId);
   });
 })
