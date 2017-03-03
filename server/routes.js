@@ -77,6 +77,29 @@ router.post('/updateMongoDB', function(req, res) {
   })
 });
 
+router.post('/updateMongoDB', function(req, res) {
+  Model.InterviewModel.findOne({id:req.body[1]}, function(err, doc) {
+    doc.name = req.body[0].name;
+    var company = [
+      {
+        "jobTitle" : req.body[0].companyComments[0].jobTitle
+      },
+      {
+        "date" : req.body[0].companyComments[1].date
+      },
+      {
+        "interviewProcess" : {
+          "interviewProcess" : req.body[0].companyComments[2].interviewProcess.interviewProcess,
+          "interviewQuestion" : req.body[0].companyComments[2].interviewProcess.interviewQuestion,
+          "descriptionOfinterview" : req.body[0].companyComments[2].interviewProcess.descriptionOfinterview
+        }
+      }
+    ];
+    doc.companyComments = company;
+    doc.save();
+  })
+});
+
 router.get('/interviewreview', function(req, res) {
   Model.InterviewModel.find({
     name:req.query.name

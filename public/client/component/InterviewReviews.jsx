@@ -65,7 +65,6 @@ export default class InterviewReviews extends React.Component {
       })
       $(document).on('click', '.editReview', function() { 
         $ele = this;
-        console.log('ululul',typeof $(this).parent()[0].children[0].classList[0])
         context.importantId = $(this).parent()[0].children[0].classList[0];
         context.arrayOfinputs = [ 
           $(this).parent()[0].children[0].innerText, 

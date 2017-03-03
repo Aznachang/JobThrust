@@ -20,6 +20,7 @@ export default class EmployeeReview extends React.Component {
     this.editHandleChangeForModalPros = this.editHandleChangeForModalPros.bind(this);
     this.editHandleChangeForModalCons = this.editHandleChangeForModalCons.bind(this);
     this.editEmployeeInfo = this.editEmployeeInfo.bind(this);
+    this.sendUpdatedEmployeeData = this.sendUpdatedEmployeeData.bind(this);
 
     this.arrayOfinputs = [];
     this.importantId = '';
@@ -43,29 +44,65 @@ export default class EmployeeReview extends React.Component {
       modalIsOpen: false,
     });
   }
+
   editEmployeeReviewForm(event) {
     event.preventDefault();
+    console.log('my array of inputs', this.arrayOfinputs)
     if (!this.state.editReviewTitle) {
+      var $editReviewTitle = '<li>' + this.arrayOfinputs[0] + '</li>';
+
       this.setState({
         editReviewTitle: this.arrayOfinputs[0]
       })
-    } else if (!this.state.eidtProsReview) {
+    } else {
+      var $editReviewTitle = '<li>' + this.state.editReviewTitle + '</li>';
+    }
+
+    if (!this.state.eidtProsReview) {
+      var $eidtProsReview = '<li>' + this.arrayOfinputs[1] + '</li>';
+
       this.setState({
         eidtProsReview: this.arrayOfinputs[1]
       })
-    } else if(!this.state.editConsReview) {
+    } else {
+      var $eidtProsReview = '<li>' + this.state.eidtProsReview + '</li>';
+    }
+
+    if(!this.state.editConsReview) {
+      var $editConsReview = '<li>' + this.arrayOfinputs[2] + '</li>';
+
       this.setState({
         editConsReview: this.arrayOfinputs[2]
       })
+    } else {
+      var $editConsReview = '<li>' + this.state.editConsReview + '</li>';
     }
-    var $editReviewTitle = '<li>' + this.state.editReviewTitle + '</li>';
-    var $eidtProsReview = '<li>' + this.state.eidtProsReview + '</li>';
-    var $editConsReview = '<li>' + this.state.editConsReview + '</li>';
-    var $button = '<button className="editEmployeeReview" >Edit the Review</button>';
+
+
+    var $button = '<button class="editEmployeeReview" >Edit the Review</button>';
 
     $(this.$ele).parent().html($editReviewTitle+$eidtProsReview+$editConsReview+$button);
     this.closeModal();
+    var updatedEmployeeData = [{consReview: this.state.editConsReview},{prosReview: this.state.editProsReview},{reviewTitle:this.state.editReviewTitle}]
+    this.sendUpdatedEmployeeData(updatedEmployeeData)
   }
+
+  sendUpdatedEmployeeData(data) {
+    var context = this;
+    $.ajax({
+      method: 'POST',
+      url: 'http://localhost:3000/api/',
+      contentType:'application/json',
+      data: JSON.stringify(data),
+      success: function(data) {
+        context.props.getEmployeeInfo();
+      }, 
+      error: function(err) {
+        console.log('You have an error', err);
+      } 
+    })
+  }
+
   editHandleChangeForModalReviewTitle(event) {
     this.setState({
       editReviewTitle: event.target.value
@@ -92,9 +129,6 @@ export default class EmployeeReview extends React.Component {
         context.$ele = this;
         console.log('ululul',typeof $(this).parent()[0].children[0].classList[0])
         context.importantId = $(this).parent()[0].children[0].classList[0];
-        console.log('here is the our first element', $(this).parent()[0].children[0].innerText)
-        console.log('here is the our second element', $(this).parent()[0].children[1].innerText)
-        console.log('here is the our third element', $(this).parent()[0].children[2].innerText)
 
 
         context.arrayOfinputs = [ 
