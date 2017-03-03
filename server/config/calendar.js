@@ -127,7 +127,7 @@ module.exports.getThread = function(req, res) {
           });
         }
 
-        threadsUtil.sortThreads(pulledThreads);
+        threadsUtil.sortThreads(threadIds);
 
         var currentThread = 0;
 
@@ -141,11 +141,11 @@ module.exports.getThread = function(req, res) {
 
 
 
-          console.log('Getting emails from thread:', pulledThreads[index]);
+          console.log('Getting emails from thread:', threadIds[index]);
           gmail.users.threads.get({
             userId: 'me',
             auth: module.exports.oauth2C,
-            id: pulledThreads[index].id,
+            id: threadIds[index],
             format: 'full'
           }, function(err, response) {
             if (err) {

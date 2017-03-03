@@ -23,15 +23,17 @@ var compareTwoLesser = function(a, b) {
 }
 
 var threadSort = function(array) {
-  return array.sort(function(first, second) {
+  var result = array.sort(function(first, second) {
     if (compareTwoGreater(first, second) === first) {
-      return -1;
-    } else if (compareTwoGreater(first, second) === second) {
       return 1;
+    } else if (compareTwoGreater(first, second) === second) {
+      return -1;
     } else {
       return 0;
     }
   });
+  console.log('SORTED RESULT:', result);
+  return result;
 };
 
 module.exports = {
