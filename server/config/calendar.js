@@ -244,3 +244,7 @@ module.exports.getMessage = function(req, res) {
     res.json(parseBase64(response.raw));
   })
 }
+
+var parseBase64 = function(string) {
+  return base64url.decode(string);
+}

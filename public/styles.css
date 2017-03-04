@@ -622,7 +622,6 @@ input.st-input {
 
 .email-message, .email-message-collapsed {
   border: 1px solid grey;
-  border-radius: 5px;
   margin: 2.5px 0;
 }
 
