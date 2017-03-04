@@ -7,8 +7,31 @@ var table = require('./db/database');
 var rp = require('request-promise');
 var cal = require('./config/calendar');
 var Model = require('./dbMongo/models.js');
+var multer = require('multer');
+// var storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, '../public/uploads');
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, file.fieldname + '-' + Date.now());
+//   }
+// })
+// var upload = multer({ storage: storage });
+var uploading = multer({
+  dest: path.join(__dirname ,'../public/uploads'),
+})
 
+/******************* Upload Files starts********************/
+router.post('/upload', uploading.any(), function(req, res) {
+  console.log('that is the path way for uploads', path.join(__dirname,'../public/uploads/'))
+  console.log('this is my upload', req.files);
+  res.send(req.files);
+});
 
+// router.get('/upload',function(req, res) {
+//   res.render('index', {title: 'Express'})
+// });
+/******************* Upload Files ends********************/
 router.route('/jobs/:jk').get(function(req, res) {
   var url = "http://www.indeed.com/viewjob?jk=" + req.params.jk;
   request(url, function(error, response, html) {
@@ -240,7 +263,6 @@ router.get('/company', function(req, res) {
 
   rp(basicUrl+endpoints+req.query.company).then(function(respond) {
 
-    respond = JSON.parse(respond)
     var url = 'https://en.wikipedia.org/wiki/';
     request(url+req.query.company, function(error, response, html) {
       if(!error) {
@@ -250,7 +272,8 @@ router.get('/company', function(req, res) {
         // console.log(jobSummary)
         var result = jobSummary.split('.');
         console.log(result[2])
-        res.json([respond.response.employers,result[0] +'.'+ result[1] +'.'+ result[2]+'.' + result[3]+'.' + result[4]+'.' , req.session.passport.user])
+        var dataTobeSent = result[0] +'.'+ result[1] +'.'+ result[2]+'.' + result[3]+'.' + result[4]+'.' + result[5]+'.'+ result[6]+'.';
+        res.json([respond.response.employers,dataTobeSent, req.session.passport.user])
       }
     })
   }).catch(function(err) {

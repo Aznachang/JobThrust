@@ -9,6 +9,7 @@ import Note from './component/NoteView/NoteContainer.jsx';
 import CompanyComponent from './component/companyView/CompanyComponent.jsx'
 import JobOfferContainer from './component/JobOfferView/JobOfferContainer.jsx';
 import ArchiveJobsComponent from './component/ArchiveJobs/ArchiveJobsComponent.jsx';
+import UploadComponent from './component/UploadFile/UploadComponent.jsx';
 
 render((
     <Router history={browserHistory}>
@@ -18,7 +19,8 @@ render((
           <Route path="/search" component={SearchContainer}/>
           <Route path= "/notes" component={Note} />
           <Route path= "/company" component={CompanyComponent} />
-          <Route path = "/offers" component={JobOfferContainer} />
+          <Route path = "/offers" component ={JobOfferContainer}/>
+          <Route path = "/upload" component ={UploadComponent}/>
         </Route>
         <Route path="/" component={LogIn} />
         <Route path="/login" component={LogIn} />
