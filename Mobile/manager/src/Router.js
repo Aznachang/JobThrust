@@ -26,6 +26,8 @@ const RouterComponent = () => {
           />
 
           <Scene
+            // onLeft={() => Actions.applications()}
+            // leftTitle="Back"
             key="applicationCreate"
             component={ApplicationCreate}
             title="Create Application"
