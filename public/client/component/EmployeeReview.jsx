@@ -239,7 +239,7 @@ export default class EmployeeReview extends React.Component {
         </Modal>
         {
         this.props.renderEmployeeData.map((filed, index) =>
-        <ul key={index} className={`comments addStar ${index}`}>
+        <ul key={index} className={`comments ${index}`}>
           <li className={filed.id}>{filed.employeeComments[0].reviewTitle}</li>
           <li>{filed.employeeComments[1].consReview}</li>
           <li>{filed.employeeComments[2].prosReview}</li>

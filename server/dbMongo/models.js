@@ -14,7 +14,8 @@ var interviewSchema = mongoose.Schema({
   imgUrl: String,
   helpfulButtonScore: String,
   userInfo: Array,
-  singleUl: String
+  singleUl: String,
+  countOfReviews: String
 
 });
 

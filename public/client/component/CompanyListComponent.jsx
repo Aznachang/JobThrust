@@ -47,7 +47,7 @@ export default class CompanyListComponent extends React.Component {
     $('.newDiv').css('display','block');
     if (this.state['counter']) {
       console.log('I came here')
-      $('#stars').append("<span>&#9734</span><span>&#9734</span><span>&#9734</span><span>&#9734</span><span>&#9734</span>");
+      // $('#stars').append("<span>&#9734</span><span>&#9734</span><span>&#9734</span><span>&#9734</span><span>&#9734</span>");
     }
     this.setState({
       counter: false
@@ -58,7 +58,7 @@ export default class CompanyListComponent extends React.Component {
     $('.newDiv').css('display','none');
     if (this.state['counter']) {
       console.log('I came here')
-      $('#stars').append("<span>&#9734</span><span>&#9734</span><span>&#9734</span><span>&#9734</span><span>&#9734</span>");
+      // $('#stars').append("<span>&#9734</span><span>&#9734</span><span>&#9734</span><span>&#9734</span><span>&#9734</span>");
     }
     this.setState({
       counter: false

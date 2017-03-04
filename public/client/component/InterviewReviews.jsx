@@ -28,6 +28,7 @@ export default class InterviewReviews extends React.Component {
     this.arrayOfinputs = [];
     this.importantId = '';
     this.helpfulCheckpoint = {};
+    this.produceStars = this.produceStars.bind(this);
     // this.setState({helpfulCheckpoint:this.helpfulCheckpoint[this.props.userId] = true})
 
     var context = this;
@@ -93,36 +94,36 @@ export default class InterviewReviews extends React.Component {
     var $ele;
     var counters = 1;
     $(function() {
-      $(document).on('click', '.rate', function() {
-        var $stars = $(this)[0].classList[0];
-        console.log('star that was selected', $(this)[0].classList)
-        if (Number($stars[$stars.length-1]) === 1 && counters === 1) {
-          console.log('11111')
-          $('.addStar').append("<span class='first1 rate'>&#9734</span>");
-          counters++;
-        } else if (Number($stars[$stars.length-1]) === 2 && counters === 1) {
-                    console.log('2222')
+      // $(document).on('click', '.rate', function() {
+      //   var $stars = $(this)[0].classList[0];
+      //   console.log('star that was selected', $(this)[0].classList)
+      //   if (Number($stars[$stars.length-1]) === 1 && counters === 1) {
+      //     console.log('11111')
+      //     $('.addStar').append("<span class='first1 rate'>&#9734</span>");
+      //     counters++;
+      //   } else if (Number($stars[$stars.length-1]) === 2 && counters === 1) {
+      //               console.log('2222')
 
-          $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span>");
-          counters++;
+      //     $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span>");
+      //     counters++;
 
-        } else if(Number($stars[$stars.length-1]) === 3 && counters === 1) {
-                    console.log('33333')
+      //   } else if(Number($stars[$stars.length-1]) === 3 && counters === 1) {
+      //               console.log('33333')
 
-          $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span>");
-          counters++;
-        } else if (Number($stars[$stars.length-1]) === 4 && counters === 1) {
-                    console.log('444444')
+      //     $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span>");
+      //     counters++;
+      //   } else if (Number($stars[$stars.length-1]) === 4 && counters === 1) {
+      //               console.log('444444')
 
-          $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span><span class='four4 rate'>&#9734</span>");
-          counters++;
-        } else if (Number($stars[$stars.length-1]) === 5 && counters === 1) {
-                    console.log('555555')
+      //     $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span><span class='four4 rate'>&#9734</span>");
+      //     counters++;
+      //   } else if (Number($stars[$stars.length-1]) === 5 && counters === 1) {
+      //               console.log('555555')
 
-          $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span><span class='four4 rate'>&#9734</span><span class='five5 rate'>&#9734</span>");
-          counters++;
-        }
-      })
+      //     $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span><span class='four4 rate'>&#9734</span><span class='five5 rate'>&#9734</span>");
+      //     counters++;
+      //   }
+      // })
       $(document).on('click', '.editReview', function() { 
         $ele = this;
         context.importantId = $(this).parent()[0].children[0].classList[0];
@@ -251,7 +252,13 @@ export default class InterviewReviews extends React.Component {
       interviewQuestion1: event.target.value
     });
   }
-
+  produceStars(num) {
+    var array = [];
+    for (var i = 0; i < Number(num); i++) {
+      array.push(i);
+    }
+    return array;
+  }
   render() {
     this.editReview()
     return(
@@ -288,7 +295,6 @@ export default class InterviewReviews extends React.Component {
           </div>
 
         </Modal>
-        <img className="companyImg" src={this.props.imgUrl}/>
       {
         this.props.renderData.map((filed, index) =>
         <ul key={index} className={`comments addStar ${index}`}>
@@ -297,6 +303,11 @@ export default class InterviewReviews extends React.Component {
           <li>{filed.companyComments[2].interviewProcess.descriptionOfinterview}</li>
           <li>{filed.companyComments[2].interviewProcess.interviewQuestion}</li>
           <li>{filed.companyComments[2].interviewProcess.interviewProcess}</li>
+          <li>{
+            this.produceStars(filed.countOfReviews).map((ele, indx) =>
+              <img key={indx} className="roundstar" src='./roundstar1.png' />
+            )
+          }</li>
           <button className="editReview">Edit the Review</button>
           <img className="companyImg" src={this.props.imgUrl}/>
           <input type="button" className={`helpfulPointsForInterview ${index}`} value={`${filed.helpfulButtonScore}`}/>

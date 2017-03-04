@@ -30,6 +30,7 @@ export default class CompanyComponent extends React.Component {
       userId: '',
       helpfulPoints: 0
     }
+    this.countOfReviews = 0
     this.getCompanyInfo = this.getCompanyInfo.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.openModal = this.openModal.bind(this);
@@ -52,6 +53,9 @@ export default class CompanyComponent extends React.Component {
     this.handleChangeForModalCons = this.handleChangeForModalCons.bind(this);
     this.employeeReviewForm = this.employeeReviewForm.bind(this);
     this.getEmployeeInfo = this.getEmployeeInfo.bind(this);
+    this.addStars = this.addStars.bind(this);
+    this.starNumber = 0;
+    this.$element;
     var context = this;
     var counter = 0;
     // $(function() {
@@ -66,7 +70,50 @@ export default class CompanyComponent extends React.Component {
     //  })
     // })
   }
+  addStars() {
+    var context = this;
+    $(function() {
 
+      $(document).on('click', '.rate', function() {
+        context.$element = $(this)[0].classList[0];
+        var $stars = $(this)[0].classList[0];
+        console.log('star that was selected', $(this)[0].classList)
+        if (Number($stars[$stars.length-1]) === 1 ) {
+          context.starNumber = $stars[$stars.length-1];
+          console.log('11111')
+          // $('.addStar').append("<span class='first1 rate'>&#9734</span>");
+          $(this).remove($(this)[0].classList[0]);
+
+        } else if (Number($stars[$stars.length-1]) === 2) {
+                    console.log('2222')
+          context.starNumber = $stars[$stars.length-1];
+
+          // $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span>");
+          $(this).remove($(this)[0].classList[0]);
+
+        } else if(Number($stars[$stars.length-1]) === 3) {
+                    console.log('33333')
+          context.starNumber = $stars[$stars.length-1];
+
+          // $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span>");
+          $(this).remove($(this)[0].classList[0]);
+        } else if (Number($stars[$stars.length-1]) === 4) {
+                    console.log('444444')
+          context.starNumber = $stars[$stars.length-1];
+
+          // $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span><span class='four4 rate'>&#9734</span>");
+          $(this).remove($(this)[0].classList[0]);
+          counters++;
+        } else if (Number($stars[$stars.length-1]) === 5) {
+                    console.log('555555')
+          context.starNumber = $stars[$stars.length-1];
+
+          // $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span><span class='four4 rate'>&#9734</span><span class='five5 rate'>&#9734</span>");
+          $(this).remove($(this)[0].classList[0]);
+        }
+      })
+    })
+  }
   handleChangeForModalCons(event) {
     this.setState({
 
@@ -203,10 +250,16 @@ export default class CompanyComponent extends React.Component {
       url:'http://localhost:3000/api/interviewreview?name='+ name,
       contentType: 'application/json',
       success: function(data) {
-        // console.log('-----3333333', data[0]._id);
+        // console.log('-----3333333', data);
+        context.countOfReviews = data.length-1;
+
         context.setState({
           renderData: data
         })
+        // $(function() {
+          // console.log('this is the future ele',$(('.'+ (data.length-1)))[0].classList[2])
+          // console.log('this is the future ele', '.'+data.length)
+        // })
       },
       error: function(err) {
         console.log('You have an error', err)
@@ -216,8 +269,7 @@ export default class CompanyComponent extends React.Component {
 
   submitApp(event) {
     event.preventDefault();
-
-    var interviewCompany = {id:Math.floor(Math.random()* 900000000), name: this.state.value, imgUrl:this.state.companyInfo[0].squareLogo ,helpfulButtonScore:'helpful(0)',singleUl:'',companyComments: [{jobTitle:this.state.title},{date:this.state.date},{interviewProcess:{descriptionOfinterview:this.state.interviewProcess,interviewQuestion:this.state.interviewQuestion ,interviewProcess:this.state.description}}]};
+    var interviewCompany = {id:Math.floor(Math.random()* 900000000), name: this.state.value, imgUrl:this.state.companyInfo[0].squareLogo,countOfReviews: this.starNumber ,helpfulButtonScore:'helpful(0)',singleUl:'',companyComments: [{jobTitle:this.state.title},{date:this.state.date},{interviewProcess:{descriptionOfinterview:this.state.interviewProcess,interviewQuestion:this.state.interviewQuestion ,interviewProcess:this.state.description}}]};
     var context = this;
     $.ajax({
       method:'POST',
@@ -261,6 +313,18 @@ export default class CompanyComponent extends React.Component {
     });
   }
   render() {
+    // $(function() {
+
+    // if ($(('.'+ (this.countOfReviews)))[0]) {
+    //   console.log('it was so --------- true')
+    //   if (this.countOfReviews === Number($(('.'+ (this.countOfReviews)))[0].classList[2])) {
+    //           console.log('it was so more more true --------- true')
+
+    //     $('.'+ (this.countOfReviews))[0].append("<span>&#9734</span>")
+    //   }
+    // }
+    // })
+    this.addStars()
     var immg = null;
     if (this.state.hidden) {
       immg = <img className="companyImg" src={this.state.companyInfo[0].squareLogo }/>
@@ -295,6 +359,7 @@ export default class CompanyComponent extends React.Component {
                 <textarea name='description' form='add-app-form' className='interviewProcess' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewProcess}required></textarea><br />
                 Interview Questions<br />
                 <textarea name='description' form='add-app-form' className='interviewQuestion' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewQuestion}required></textarea><br />
+                Question-Answer:
                 <textarea name='description' form='add-app-form' className='interviewAnswer' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalDescriptionA} required></textarea><br />
                 <div className="ratingStar">
                   <p>Overall Rating</p>

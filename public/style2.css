@@ -1,6 +1,11 @@
 #app {
 /*	background-color:#eee;
 */}
+
+.roundstar {
+  width: 20px;
+  height: 20px;
+}
 .innerText {
   padding: 50px;
 }
