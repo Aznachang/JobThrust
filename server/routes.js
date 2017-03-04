@@ -22,7 +22,6 @@ router.route('/jobs/:jk').get(function(req, res) {
 });
 
 router.post('/employeeReviews', function(req, res) {
-  console.log('this is my employee review',req.body.userInfo)
   Model.EmployeeModel.insertMany(req.body, function(err, data) {
     if (err) {
       res.json(err);
@@ -38,6 +37,19 @@ router.post('/interviewreview', function(req, res) {
       res.json(err);
     } else {
       res.json('Data Was inserted successfully');
+    }
+  })
+});
+
+router.get('/buttonsInfo', function(req, res) {
+  console.log('sdafdasf333333-----', req.query.name)
+  Model.EmployeeModel.find({
+    id:Number(req.query.name)
+  }, function(err, data) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(data);
     }
   })
 });
@@ -60,7 +72,7 @@ router.post('/updateHelpfulButton', function(req, res) {
     doc.userInfo.push(req.body[2]);
     doc.singleUl = req.body[3]
     doc.save();
-    res.send('');
+    res.json('');
   })
 });
 
