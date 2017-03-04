@@ -1,15 +1,3 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// var Recommend = (props) => (
-//   <div>
-//     <h3></h3>
-//     <ul>
-//     </ul>
-//   </div>
-// )
-
-// export default Recommend;
-
 import React from 'react';
 import {Router, Route, browserHistory, Link} from 'react-router';
 import SearchResultIcons from './SearchResultIcons.jsx';
@@ -17,7 +5,7 @@ import SearchResultIcons from './SearchResultIcons.jsx';
 
 class SearchRecommendations extends React.Component {
   constructor(props){
-    super(props) 
+    super(props)
   }
 
   render() {
@@ -45,7 +33,7 @@ class SearchRecommendations extends React.Component {
         <div className='recommend-header'>Jobs You Might Be Interested In</div>
         <ul className="recommendation">{recommendationsList}</ul>
       </div>
-    )  
+    )
   }
 }
 

@@ -27,7 +27,8 @@ export default class ManageComponent extends React.Component {
         3: 'stage-box',
         4: 'stage-box',
         5: 'stage-box'
-      }
+      },
+      ascending: true
     }
     this.getJobs = this.getJobs.bind(this);
     this.changeStage = this.changeStage.bind(this);
@@ -152,15 +153,23 @@ export default class ManageComponent extends React.Component {
   }
 
   sort(value) {
+    var context = this;
     console.log("this.state.jobs", this.state.jobs[0][value], typeof this.state.jobs[0][value])
     if(this.state.filteredJobs.length && typeof this.state.filteredJobs[0][value] === 'string') {
       console.log('#filtered: ', value)
       console.log(this.state.filteredJobs.sort(function(a, b) {
         var A = a[value].toUpperCase();
         var B = b[value].toUpperCase();
-        if (A < B) { return -1; }
-        if (A > B) { return 1; }
-        return 0;
+
+        if (context.state.ascending) {
+          if (A < B) { return -1; }
+          if (A > B) { return 1; }
+          return 0;
+        } else {
+           if (A < B) {return 1;}
+           if( A > B) {return -1;}
+           return 0;
+         }
       }))
     }
     if(typeof this.state.jobs[0][value] === 'string') {
@@ -168,9 +177,16 @@ export default class ManageComponent extends React.Component {
       console.log(this.state.jobs.sort(function(a, b) {
         var A = a[value].toUpperCase();
         var B = b[value].toUpperCase();
-        if (A < B) { return -1; }
-        if (A > B) { return 1; }
-        return 0;
+
+        if (context.state.ascending) {
+          if (A < B) { return -1; }
+          if (A > B) { return 1; }
+          return 0;
+         } else {
+           if (A < B) {return 1;}
+           if( A > B) {return -1;}
+           return 0;
+         }
       }))
     }
     if(this.state.filteredJobs.length && typeof this.state.filteredJobs[0][value] === 'number') {
@@ -187,7 +203,8 @@ export default class ManageComponent extends React.Component {
     }
     this.setState({
       //filteredJobs: this.state.filteredJobs,
-      jobs: this.state.jobs
+      jobs: this.state.jobs,
+      ascending: !this.state.ascending
     })
   }
 

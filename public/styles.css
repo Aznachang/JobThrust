@@ -95,18 +95,32 @@ textarea {
   padding-bottom: 3px;
 }*/
 
+/* ========== PAGINATION ========== */
+
+#page-numbers {
+  list-style: none;
+  display: flex;
+}
+
+#page-numbers > li {
+  margin-right: 0.3em;
+  color: blue;
+  user-select: none;
+  cursor: pointer;
+}
+
 /* ========== JOB OFFERS VIEW ========== */
 
-#compare-offer {
+/*#compare-offer {
   width: 10%;
-}
+}*/
 
 .offer-equal {
   width: 40%;
 }
 
 #update-offer {
-  width: 10%;
+  width: 20%;
 }
 
 .add-joboffer-btn {
@@ -153,7 +167,6 @@ textarea {
   width: 7%;
 }
 
-
 /* ========== NAV BAR ========== */
 
 .nav-bar {
@@ -183,6 +196,7 @@ textarea {
 }
 
 
+
 .nav-bar li, div.logout-link {
   display: inline-block;
   margin: 0 20px 0 20px;
@@ -199,7 +213,6 @@ textarea {
 .logout-btn {
   cursor: pointer;
 }
-
 
 /* ========== SEARCH ========== */
 

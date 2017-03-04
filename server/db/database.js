@@ -27,7 +27,9 @@ var Application = db.define('application', {
   userId: Sequelize.STRING,
   stageId: Sequelize.INTEGER,
   title: Sequelize.STRING,
-  company: Sequelize.STRING
+  company: Sequelize.STRING,
+  active: {type: Sequelize.BOOLEAN, defaultValue: true},
+  activeReason: Sequelize.STRING
 });
 
 var Company = db.define('company', {
@@ -61,6 +63,8 @@ var Offer = db.define('offer', {
   signBonus: {type:Sequelize.INTEGER, allowNull: true},
   vacationDays: {type:Sequelize.INTEGER, allowNull: true},
   retireMatchPercent: {type:Sequelize.INTEGER, allowNull: true},
+  active: {type: Sequelize.BOOLEAN, defaultValue: true},
+  activeReason: {type: Sequelize.STRING, allowNull: true},
   applicationId: Sequelize.INTEGER
 });
 

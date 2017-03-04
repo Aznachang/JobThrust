@@ -1,7 +1,6 @@
 import React from 'react';
 import {Router, Route, browserHistory, Link} from 'react-router';
 import axios from 'axios';
-//import ReactDOM from 'react-dom';
 
 class SearchResultIcons extends React.Component {
   constructor(props){
@@ -16,7 +15,7 @@ class SearchResultIcons extends React.Component {
           <button className="result-btn remove" onClick={this.props.removeJob.bind(null, this.props.index)} >✘</button>
         </div>
       </div>
-    )  
+    )
   }
 }
 

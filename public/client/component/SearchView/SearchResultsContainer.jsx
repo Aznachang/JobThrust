@@ -14,7 +14,7 @@ class SearchResultContainer extends React.Component {
         <div className="search-results-header">Search Results</div>
         <SearchResult openModal={this.props.openModal} info={this.props.info} results={this.props.results} addJob={this.props.addJob} removeJob={this.props.removeJob} />
       </div>
-    )  
+    )
   }
 }
 

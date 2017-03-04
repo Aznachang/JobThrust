@@ -19,7 +19,9 @@ export default class SearchContainer extends React.Component {
       modalInfo: [],
       modalTitle: '',
       modalCompany: '',
-      modalLoc: ''
+      modalLoc: '',
+      currentPage: 1,
+      resultsPerPage: 10
     }
 
     this.openModal = this.openModal.bind(this);
@@ -35,7 +37,7 @@ export default class SearchContainer extends React.Component {
     this.addRecommendation = this.addRecommendation.bind(this);
     this.removeRecommendation = this.removeRecommendation.bind(this);
   };
-  
+
 
   openModal(jobkey, index) {
     this.setState({
@@ -64,7 +66,7 @@ export default class SearchContainer extends React.Component {
       publisher: '5024495540845813', // TODO: HIDE THIS!!!
       l: context.state.location,
       q: context.state.search,
-      limit: 25,
+      limit: 1000,
       format: 'json',
       v: '2'
     }, function(json){
@@ -98,32 +100,10 @@ export default class SearchContainer extends React.Component {
             })
           })
         })
-        
+
       }
     })
   }
-
-  //VIEW A RECOMMENDATION
-  // getJobs(event) {
-  //   event.preventDefault();
-  //   var context = this;
-  //   //JSONP request to bypass CORS HEADERS
-  //   $.getJSON("http://api.indeed.com/ads/apisearch?callback=?", {
-  //     publisher: '5024495540845813', // TODO: HIDE THIS!!!
-  //     l: context.state.location,
-  //     q: context.state.search,
-  //     limit: 25,
-  //     format: 'json',
-  //     v: '2'
-  //   }, function(json){
-  //     context.setState({
-  //       results: json.results,
-  //       recommendations: [],
-  //       info: {}
-  //     });
-  //     context.addSearch();
-  //   });
-  // }
 
   // ADD SEARCH AND QUERY TO DB
   addSearch() {
@@ -155,7 +135,7 @@ export default class SearchContainer extends React.Component {
       })
     })
   }
-  
+
   // REMOVE INDIVIDUAL JOB COMPONENT FROM VIEW (NOT DB)
   removeJob(jobIndex) {
     $('.remove').click(function() {
@@ -169,7 +149,7 @@ export default class SearchContainer extends React.Component {
     context.setState({
       results: context.state.results,
       info: {}
-    })  
+    })
   }
 
 
@@ -206,7 +186,7 @@ export default class SearchContainer extends React.Component {
       })
     })
   }
-  
+
   // REMOVE INDIVIDUAL JOB COMPONENT FROM VIEW (NOT DB)
   removeRecommendation(jobIndex) {
     var context = this;
@@ -214,20 +194,8 @@ export default class SearchContainer extends React.Component {
     context.setState({
       recommendations: context.state.recommendations,
       info: {}
-    })  
+    })
   }
-
-
-  // SCRAPE INFO FROM INDEED JOB AND SET IT AS STATE TO DISPLAY
-  // getInfo(jobkey, index) {
-  //   var context = this;
-  //   $.get("/api/jobs/" + jobkey)
-  //   .done(function(response) {
-  //     context.setState({
-  //       info: {[index]: response}
-  //     })
-  //   })
-  // }
 
   /********************/
 
@@ -236,13 +204,12 @@ export default class SearchContainer extends React.Component {
     this.setState({[event.target.name]: event.target.value})
   }
 
-
-
   componentWillMount() {
     this.getRecommendations();
   }
 
   render() {
+
     var resultHeaderShow = function() {
       if (this.state.results.length !== 0) {
         return (<SearchResultsContainer info={this.state.info} openModal={this.openModal} results={this.state.results} addJob={this.addJob} getInfo={this.getInfo} removeJob={this.removeJob} />)
@@ -259,7 +226,7 @@ export default class SearchContainer extends React.Component {
           className="modal-content"
           overlayClassName="modal-overlay"
         >
-          
+
           <div className="desc-header">
             <div>{this.state.modalTitle}</div>
             <div>{this.state.modalCompany} ({this.state.modalLoc})</div>
