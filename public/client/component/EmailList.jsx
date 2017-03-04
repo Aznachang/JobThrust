@@ -23,7 +23,7 @@ export default class EmailList extends React.Component {
             <div className="app-btn cal-btn" onClick={this.props.getContact}>🗘 Refresh</div>
           </div>
           <div className='email-list'>
-            <h3>E-Mail Threads</h3>
+            <h3>Active E-Mail Threads</h3>
             {this.props.emailData.map((thread, i) =>
               <EmailThread data={thread} key={i} />
             )}
