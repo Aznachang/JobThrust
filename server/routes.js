@@ -68,8 +68,16 @@ router.get('/employeeReviews', function(req, res) {
 
 router.post('/updateHelpfulButton', function(req, res) {
   Model.EmployeeModel.findOne({id:req.body[1]}, function(err, doc) {
+    for (var i = 0; i < doc.userInfo.length; i++) {
+      console.log(JSON.strigify(doc.userInfo[i]) === JSON.strigify(req.body[2]))
+      if (JSON.strigify(doc.userInfo[i]) !== JSON.strigify(req.body[2])) {
+        doc.userInfo.push(req.body[2]);
+      }
+    }
+    if (doc.userInfo.length === 0) {
+      doc.userInfo.push(req.body[2]);
+    }
     doc.helpfulButtonScore = req.body[0];
-    doc.userInfo.push(req.body[2]);
     doc.singleUl = req.body[3]
     doc.save();
     res.json('');

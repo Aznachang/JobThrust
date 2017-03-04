@@ -62,7 +62,6 @@ export default class EmployeeReview extends React.Component {
 
                 $(secondContext).removeClass($(secondContext)[0].classList[0]);
                 var buttonData = [$(secondContext).val(), $(secondContext).parent()[0].children[0].classList[0], context.helpfulCheckpoint, $(secondContext).parent()[0].children[0].classList[0] ]
-                // console.log('I am console logging the updated button', buttonData)
                 $.ajax({
                     method: 'POST',
                     url: 'http://localhost:3000/api/updateHelpfulButton',
