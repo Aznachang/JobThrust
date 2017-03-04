@@ -217,7 +217,7 @@ export default class CompanyComponent extends React.Component {
   submitApp(event) {
     event.preventDefault();
 
-    var interviewCompany = {id:Math.floor(Math.random()* 900000000), name: this.state.value, imgUrl:this.state.companyInfo[0].squareLogo ,companyComments: [{jobTitle:this.state.title},{date:this.state.date},{interviewProcess:{descriptionOfinterview:this.state.interviewProcess,interviewQuestion:this.state.interviewQuestion ,interviewProcess:this.state.description}}]};
+    var interviewCompany = {id:Math.floor(Math.random()* 900000000), name: this.state.value, imgUrl:this.state.companyInfo[0].squareLogo ,helpfulButtonScore:'helpful(0)',companyComments: [{jobTitle:this.state.title},{date:this.state.date},{interviewProcess:{descriptionOfinterview:this.state.interviewProcess,interviewQuestion:this.state.interviewQuestion ,interviewProcess:this.state.description}}]};
     var context = this;
     $.ajax({
       method:'POST',

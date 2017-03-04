@@ -27,6 +27,66 @@ export default class InterviewReviews extends React.Component {
     this.sendUpdatedData = this.sendUpdatedData.bind(this);
     this.arrayOfinputs = [];
     this.importantId = '';
+    this.helpfulCheckpoint = {};
+    // this.setState({helpfulCheckpoint:this.helpfulCheckpoint[this.props.userId] = true})
+
+    var context = this;
+
+    $(function() {
+      $(document).on('click', '.helpfulPoints', function() {
+        var secondContext = this;
+        var id = $(this).parent()[0].children[0].classList[0];
+        $.ajax({
+            method: 'GET',
+            url: 'http://localhost:3000/api/buttonsInfo?name='+ id,
+            contentType:'application/json',
+            success: function(data) {
+              console.log('hers is a single data ', data);
+              var existUser = false;
+              // console.log(data[0].length)
+              for (var i = 0; i < data[0].userInfo.length; i++) {
+                // console.log('result ',data[0][i].context.props.userId === context.props.userId)
+                if (data[0].userInfo[i][context.props.userId] === context.props.userId) {
+                  existUser = true;
+                }
+              }
+              console.log('existUser should be true', existUser);
+              if (existUser === false) {
+                console.log('I came to create a new click')
+
+                context.helpfulCheckpoint[context.props.userId] = context.props.userId;
+                // console.log('I am console logging the helpfulCheckpoint', context.helpfulCheckpoint)
+
+                var $buttonValue = 'helpful(' + (Number($(secondContext).val().match(/[0-9]/g)[0]) + 1) +')';
+
+                $(secondContext).val($buttonValue);
+
+                $(secondContext).removeClass($(secondContext)[0].classList[0]);
+                var buttonData = [$(secondContext).val(), $(secondContext).parent()[0].children[0].classList[0], context.helpfulCheckpoint, $(secondContext).parent()[0].children[0].classList[0] ]
+                $.ajax({
+                    method: 'POST',
+                    url: 'http://localhost:3000/api/updateHelpfulButton',
+                    contentType:'application/json',
+                    data: JSON.stringify(buttonData),
+                    success: function(data) {
+
+                    }, 
+                    error: function(err) {
+                    console.log('You have an error', err);
+                  } 
+                })
+              
+              } else if (existUser === true) {
+
+                alert('You already clicked me dude');
+              }
+            }, 
+            error: function(err) {
+            console.log('You have an error', err);
+          } 
+        })
+     })
+    })
   }
   editReview() {
     var context = this;
@@ -217,8 +277,9 @@ export default class InterviewReviews extends React.Component {
                 <input type='text' name='company' className='date' placeholder='i.e 03/20/2017' onChange={this.handleChangeForModalDate1} required/><br />
                 Describe the Interview Process<br />
                 <textarea name='description' form='add-app-form1' className='interviewProcess' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewProcess1}required></textarea><br />
-                Interview Questions<br />
+                Interview Question<br />
                 <textarea name='description' form='add-app-form1' className='interviewQuestion' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewQuestion1}required></textarea><br />
+                Question-Answer:
                 <textarea name='description' form='add-app-form1' className='interviewAnswer' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalDescriptionA1} required></textarea><br />
                 <input type='submit' className='add-small' value='Save Changes' />
               </form>
@@ -230,7 +291,7 @@ export default class InterviewReviews extends React.Component {
         <img className="companyImg" src={this.props.imgUrl}/>
       {
         this.props.renderData.map((filed, index) =>
-        <ul key={index} className="comments addStar">
+        <ul key={index} className={`comments addStar ${index}`}>
           <li className={filed.id}>{filed.companyComments[0].jobTitle}</li>
           <li>{filed.companyComments[1].date}</li>
           <li>{filed.companyComments[2].interviewProcess.descriptionOfinterview}</li>
@@ -238,7 +299,7 @@ export default class InterviewReviews extends React.Component {
           <li>{filed.companyComments[2].interviewProcess.interviewProcess}</li>
           <button className="editReview">Edit the Review</button>
           <img className="companyImg" src={this.props.imgUrl}/>
-
+          <input type="button" className={`helpfulPointsForInterview ${index}`} value={`${filed.helpfulButtonScore}`}/>
         </ul>
         )
       }

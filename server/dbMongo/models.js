@@ -11,7 +11,11 @@ var interviewSchema = mongoose.Schema({
     },
   name: String,
   companyComments: Array,
-  imgUrl: String
+  imgUrl: String,
+  helpfulButtonScore: String,
+  userInfo: Array,
+  singleUl: String
+
 });
 
 var employeeSchema = mongoose.Schema({
