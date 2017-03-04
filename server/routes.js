@@ -6,7 +6,7 @@ var path = require('path');
 var table = require('./db/database');
 var rp = require('request-promise');
 var cal = require('./config/calendar');
-var InterviewModel = require('./dbMongo/models.js');
+var Model = require('./dbMongo/models.js');
 
 
 router.route('/jobs/:jk').get(function(req, res) {
@@ -21,8 +21,10 @@ router.route('/jobs/:jk').get(function(req, res) {
   })
 });
 
-router.post('/interviewreview', function(req, res) {
-  InterviewModel.insertMany(req.body, function(err, data) {
+/******************* Compnay component ********************/
+
+router.post('/employeeReviews', function(req, res) {
+  Model.EmployeeModel.insertMany(req.body, function(err, data) {
     if (err) {
       res.json(err);
     } else {
@@ -31,8 +33,21 @@ router.post('/interviewreview', function(req, res) {
   })
 });
 
-router.get('/interviewreview', function(req, res) {
-  InterviewModel.find({}, function(err, data) {
+router.post('/interviewreview', function(req, res) {
+  Model.InterviewModel.insertMany(req.body, function(err, data) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json('Data Was inserted successfully');
+    }
+  })
+});
+
+router.get('/buttonsInfoForInterview', function(req, res) {
+  console.log('sdafdasf333333-----', req.query.name)
+  Model.InterviewModel.find({
+    id:Number(req.query.name)
+  }, function(err, data) {
     if (err) {
       res.json(err);
     } else {
@@ -41,6 +56,112 @@ router.get('/interviewreview', function(req, res) {
   })
 });
 
+router.get('/buttonsInfo', function(req, res) {
+  console.log('sdafdasf333333-----', req.query.name)
+  Model.EmployeeModel.find({
+    id:Number(req.query.name)
+  }, function(err, data) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(data);
+    }
+  })
+});
+
+router.get('/employeeReviews', function(req, res) {
+  Model.EmployeeModel.find({
+    name:req.query.name
+  }, function(err, data) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(data);
+    }
+  })
+});
+
+router.post('/updateHelpfulButtonForInterview', function(req, res) {
+  Model.InterviewModel.findOne({id:req.body[1]}, function(err, doc) {
+    for (var i = 0; i < doc.userInfo.length; i++) {
+      console.log(JSON.strigify(doc.userInfo[i]) === JSON.strigify(req.body[2]))
+      if (JSON.strigify(doc.userInfo[i]) !== JSON.strigify(req.body[2])) {
+        doc.userInfo.push(req.body[2]);
+      }
+    }
+    if (doc.userInfo.length === 0) {
+      doc.userInfo.push(req.body[2]);
+    }
+    doc.helpfulButtonScore = req.body[0];
+    doc.singleUl = req.body[3]
+    doc.save();
+    res.json('');
+  })
+});
+
+router.post('/updateHelpfulButton', function(req, res) {
+  Model.EmployeeModel.findOne({id:req.body[1]}, function(err, doc) {
+    for (var i = 0; i < doc.userInfo.length; i++) {
+      console.log(JSON.strigify(doc.userInfo[i]) === JSON.strigify(req.body[2]))
+      if (JSON.strigify(doc.userInfo[i]) !== JSON.strigify(req.body[2])) {
+        doc.userInfo.push(req.body[2]);
+      }
+    }
+    if (doc.userInfo.length === 0) {
+      doc.userInfo.push(req.body[2]);
+    }
+    doc.helpfulButtonScore = req.body[0];
+    doc.singleUl = req.body[3]
+    doc.save();
+    res.json('');
+  })
+});
+
+router.post('/updateEmployeeReview', function(req, res) {
+  Model.EmployeeModel.findOne({id:req.body[1]}, function(err, doc) {
+    doc.employeeComments = req.body[0];
+    doc.save();
+    res.send('');
+  })
+});
+
+router.post('/updateMongoDB', function(req, res) {
+  Model.InterviewModel.findOne({id:req.body[1]}, function(err, doc) {
+    doc.name = req.body[0].name;
+    var company = [
+      {
+        "jobTitle" : req.body[0].companyComments[0].jobTitle
+      },
+      {
+        "date" : req.body[0].companyComments[1].date
+      },
+      {
+        "interviewProcess" : {
+          "interviewProcess" : req.body[0].companyComments[2].interviewProcess.interviewProcess,
+          "interviewQuestion" : req.body[0].companyComments[2].interviewProcess.interviewQuestion,
+          "descriptionOfinterview" : req.body[0].companyComments[2].interviewProcess.descriptionOfinterview
+        }
+      }
+    ];
+    doc.companyComments = company;
+    doc.save();
+    res.send('');
+  })
+});
+
+router.get('/interviewreview', function(req, res) {
+  Model.InterviewModel.find({
+    name:req.query.name
+  }, function(err, data) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(data);
+    }
+  })
+});
+
+/******************* Compnay component ********************/
 router.post('/goog/calget', cal.getCalData);
 
 router.post('/goog/cal', cal.createEvent);
@@ -128,7 +249,7 @@ router.get('/company', function(req, res) {
         var jobSummary = $('#mw-content-text').find('p').text() // A plain DOM element.
         // console.log(jobSummary)
         var index = jobSummary.match(/[.]/)['index'];
-        res.json([respond.response.employers,jobSummary.slice(0,index+1)])
+        res.json([respond.response.employers, jobSummary.slice(0,index+1), req.session.passport.user])
       }
     })
   }).catch(function(err) {

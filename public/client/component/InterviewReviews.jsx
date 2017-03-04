@@ -12,7 +12,8 @@ export default class InterviewReviews extends React.Component {
       date1: null,
       interviewProcess1: null,
       interviewQuestion1: null,
-      title1: null
+      title1: null,
+      count: true
     }
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -26,6 +27,67 @@ export default class InterviewReviews extends React.Component {
     this.sendUpdatedData = this.sendUpdatedData.bind(this);
     this.arrayOfinputs = [];
     this.importantId = '';
+    this.helpfulCheckpoint = {};
+    this.produceStars = this.produceStars.bind(this);
+    // this.setState({helpfulCheckpoint:this.helpfulCheckpoint[this.props.userId] = true})
+
+    var context = this;
+
+    $(function() {
+      $(document).on('click', '.helpfulPointsForInterview', function() {
+        var secondContext = this;
+        var id = $(this).parent()[0].children[0].classList[0];
+        $.ajax({
+            method: 'GET',
+            url: 'http://localhost:3000/api/buttonsInfoForInterview?name='+ id,
+            contentType:'application/json',
+            success: function(data) {
+              console.log('hers is a single data ', data);
+              var existUser = false;
+              // console.log(data[0].length)
+              for (var i = 0; i < data[0].userInfo.length; i++) {
+                // console.log('result ',data[0][i].context.props.userId === context.props.userId)
+                if (data[0].userInfo[i][context.props.userId] === context.props.userId) {
+                  existUser = true;
+                }
+              }
+              console.log('existUser should be true', existUser);
+              if (existUser === false) {
+                console.log('I came to create a new click')
+
+                context.helpfulCheckpoint[context.props.userId] = context.props.userId;
+                // console.log('I am console logging the helpfulCheckpoint', context.helpfulCheckpoint)
+
+                var $buttonValue = 'helpful(' + (Number($(secondContext).val().match(/[0-9]/g)[0]) + 1) +')';
+
+                $(secondContext).val($buttonValue);
+
+                $(secondContext).removeClass($(secondContext)[0].classList[0]);
+                var buttonData = [$(secondContext).val(), $(secondContext).parent()[0].children[0].classList[0], context.helpfulCheckpoint, $(secondContext).parent()[0].children[0].classList[0] ]
+                $.ajax({
+                    method: 'POST',
+                    url: 'http://localhost:3000/api/updateHelpfulButtonForInterview',
+                    contentType:'application/json',
+                    data: JSON.stringify(buttonData),
+                    success: function(data) {
+
+                    }, 
+                    error: function(err) {
+                    console.log('You have an error', err);
+                  } 
+                })
+              
+              } else if (existUser === true) {
+
+                alert('You already clicked me dude');
+              }
+            }, 
+            error: function(err) {
+            console.log('You have an error', err);
+          } 
+        })
+     })
+    })
   }
   editReview() {
     var context = this;
@@ -33,7 +95,6 @@ export default class InterviewReviews extends React.Component {
     $(function() {
       $(document).on('click', '.editReview', function() { 
         $ele = this;
-        console.log('ululul',typeof $(this).parent()[0].children[0].classList[0])
         context.importantId = $(this).parent()[0].children[0].classList[0];
         context.arrayOfinputs = [ 
           $(this).parent()[0].children[0].innerText, 
@@ -87,16 +148,12 @@ export default class InterviewReviews extends React.Component {
           var $liJobTitleInterviewQAnswer = "<li>"+ context.state.discription1 +"</li>";
         }
 
-        var $button = "<button class='editReview'>Edit the Review</button>"
+        var $button = "<button class='editReview'>Edit the Review</button>";
 
         // console.log('2fdsdfsadfsafdsa', $($ele).parent())
         $($ele).parent().html($liJobTitle+$liJobDate+$liJobInterviewProcess+$liJobInterviewQuestion+$liJobTitleInterviewQAnswer+$button);
         context.closeModal();
-        console.log('lets see what is in you',context.arrayOfinputs)
         var updatedData = {name: context.props.companyName, imgUrl:context.props.imgUrl ,companyComments: [{jobTitle:context.state.title1},{date:context.state.date1},{interviewProcess:{descriptionOfinterview:context.state.interviewProcess1, interviewQuestion:context.state.interviewQuestion1, interviewProcess:context.state.description1}}]};
-        var oldData = {name: context.props.companyName, imgUrl:context.props.imgUrl ,companyComments: [{jobTitle:context.arrayOfinputs[0]},{date:context.arrayOfinputs[1]},{interviewProcess:{descriptionOfinterview:context.arrayOfinputs[2],interviewQuestion: context.arrayOfinputs[3],interviewProcess:context.arrayOfinputs[4]}}]};
-        // console.log('ooooolld',oldData);
-        // console.log('neweeee', updatedData);
         var dataToSend = [updatedData, context.importantId];
         context.sendUpdatedData(dataToSend);
       })
@@ -164,7 +221,13 @@ export default class InterviewReviews extends React.Component {
       interviewQuestion1: event.target.value
     });
   }
-
+  produceStars(num) {
+    var array = [];
+    for (var i = 0; i < Number(num); i++) {
+      array.push(i);
+    }
+    return array;
+  }
   render() {
     this.editReview()
     return(
@@ -190,8 +253,9 @@ export default class InterviewReviews extends React.Component {
                 <input type='text' name='company' className='date' placeholder='i.e 03/20/2017' onChange={this.handleChangeForModalDate1} required/><br />
                 Describe the Interview Process<br />
                 <textarea name='description' form='add-app-form1' className='interviewProcess' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewProcess1}required></textarea><br />
-                Interview Questions<br />
+                Interview Question<br />
                 <textarea name='description' form='add-app-form1' className='interviewQuestion' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewQuestion1}required></textarea><br />
+                Question-Answer:
                 <textarea name='description' form='add-app-form1' className='interviewAnswer' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalDescriptionA1} required></textarea><br />
                 <input type='submit' className='add-small' value='Save Changes' />
               </form>
@@ -200,16 +264,22 @@ export default class InterviewReviews extends React.Component {
           </div>
 
         </Modal>
-        <img className="companyImg" src={this.props.imgUrl}/>
       {
         this.props.renderData.map((filed, index) =>
-        <ul key={index} className="comments">
+        <ul key={index} className={`comments addStar ${index}`}>
           <li className={filed.id}>{filed.companyComments[0].jobTitle}</li>
           <li>{filed.companyComments[1].date}</li>
           <li>{filed.companyComments[2].interviewProcess.descriptionOfinterview}</li>
           <li>{filed.companyComments[2].interviewProcess.interviewQuestion}</li>
           <li>{filed.companyComments[2].interviewProcess.interviewProcess}</li>
+          <li>{
+            this.produceStars(filed.countOfReviews).map((ele, indx) =>
+              <img key={indx} className="roundstar" src='./roundstar1.png' />
+            )
+          }</li>
           <button className="editReview">Edit the Review</button>
+          <img className="companyImg" src={this.props.imgUrl}/>
+          <input type="button" className={`helpfulPointsForInterview ${index}`} value={`${filed.helpfulButtonScore}`}/>
         </ul>
         )
       }

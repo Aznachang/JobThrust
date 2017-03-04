@@ -1,6 +1,11 @@
 #app {
 /*	background-color:#eee;
 */}
+
+.roundstar {
+  width: 20px;
+  height: 20px;
+}
 .innerText {
   padding: 50px;
 }
@@ -14,6 +19,19 @@
   position: absolute;
 }
 #stars > span:hover ~ span:before {
+  content: '';
+}
+
+.ratingStar  > span {
+  display: inline-block;
+  font-size: 30px;
+  color: #2384a7;
+}
+.ratingStar:hover > span:before {
+  content: '\2605';
+  position: absolute;
+}
+.ratingStar > span:hover ~ span:before {
   content: '';
 }
 .ptage{
@@ -62,6 +80,18 @@
   border-left:2px red solid; 
   background-color: #eee;
   width: 1300px;
+  height: 100%;
+  margin-top: 20px;
+/*  margin-right:100px;
+*/  margin-left: 65px; 
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.employeeReview {
+  display: none;
+  border-left:2px red solid; 
+  background-color: #eee;
+  width: 80%;
   height: 100%;
   margin-top: 20px;
 /*  margin-right:100px;
