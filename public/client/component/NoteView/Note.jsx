@@ -25,7 +25,7 @@ class Note extends React.Component {
     return (
     <div className='noteContainer' onClick={this.edit}>
       <div className='note-top'>
-        <div className='note-created'>{this.props.createdAt.substring(0, 10)}</div>
+        <div className='note-created'>{this.props.convertDate(this.props.createdAt)}</div>
         <button className='remove-btn' onClick={context.remove}>x</button>
       </div>
       <div className='noteText'>{this.props.note}</div>

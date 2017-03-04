@@ -45,7 +45,9 @@ router.post('/goog/calget', cal.getCalData);
 
 router.post('/goog/cal', cal.createEvent);
 
-router.get('/mail/thread/', cal.getThread);
+router.post('/mail/thread/', cal.getThread);
+
+router.get('/mail/getmsg', cal.getMessage);
 
 router.post('/job', function(req, res) {
   table.Job.findOrCreate({
@@ -100,6 +102,16 @@ router.post('/application/stagechange', function(req, res) {
 router.get('/user', function(req, res) {
   res.send(req.session.passport.user);
 });
+
+router.get('/userdata', function(req, res) {
+  table.User.findOne({
+    where: {
+      id: req.session.passport.user
+    }
+  }).then(function(data) {
+    res.json(data);
+  });
+})
 
 router.get('/company', function(req, res) {
 
@@ -238,7 +250,7 @@ router.post('/contact/', function(req, res) {
     },
     {where: {applicationId: req.body.appId}}
   ).then(function(contactInfo) {
-    res.send(200);
+    res.sendStatus(200);
     console.log('Contact info updated for app #', req.body.appId);
   });
 })

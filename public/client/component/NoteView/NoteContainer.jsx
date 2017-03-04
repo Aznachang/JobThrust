@@ -82,7 +82,7 @@ export default class NoteContainer extends React.Component {
         <button onClick={this.add.bind(null, '')} className='button-info create'>Add</button>
         <div className ='noteBoard'>
           {this.state.notes.map((note, index) =>
-            <Note key={index} index={index} updateNoteText={this.updateNote} deleteNoteText={this.removeNote} note={note.note} createdAt={note.createdAt} noteId={note.id} appId={note.applicationId}/>
+            <Note key={index} convertDate={this.props.convertDate} index={index} updateNoteText={this.updateNote} deleteNoteText={this.removeNote} note={note.note} createdAt={note.createdAt} noteId={note.id} appId={note.applicationId}/>
           )}
           <br/>
         </div>
