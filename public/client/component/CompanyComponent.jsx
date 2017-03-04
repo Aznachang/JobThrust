@@ -30,7 +30,6 @@ export default class CompanyComponent extends React.Component {
       userId: '',
       helpfulPoints: 0
     }
-    this.countOfReviews = 0
     this.getCompanyInfo = this.getCompanyInfo.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.openModal = this.openModal.bind(this);
@@ -54,21 +53,11 @@ export default class CompanyComponent extends React.Component {
     this.employeeReviewForm = this.employeeReviewForm.bind(this);
     this.getEmployeeInfo = this.getEmployeeInfo.bind(this);
     this.addStars = this.addStars.bind(this);
+    this.addStarsForEmployee = this.addStarsForEmployee.bind(this);
     this.starNumber = 0;
+    this.starNumberForemployee = 0;
     this.$element;
     var context = this;
-    var counter = 0;
-    // $(function() {
-    //   $(document).on('click', '.helpfulPoints', function() {
-    //     console.log('className', $(this).val());
-    //     var $buttonValue = 'helpful(' + (Number($(this).val().match(/[0-9]/g)[0]) + 1) +')';
-    //     // var newButton = '<button class="helpfulPoints" value=' + $buttonValue+'>'+$buttonValue+'</button>';
-    //     console.log('this should be my button', $(this).val());
-
-    //     $(this).val($buttonValue);
-    //     $(this).removeClass($(this)[0].classList[0]);
-    //  })
-    // })
   }
   addStars() {
     var context = this;
@@ -103,10 +92,52 @@ export default class CompanyComponent extends React.Component {
 
           // $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span><span class='four4 rate'>&#9734</span>");
           $(this).remove($(this)[0].classList[0]);
-          counters++;
         } else if (Number($stars[$stars.length-1]) === 5) {
                     console.log('555555')
           context.starNumber = $stars[$stars.length-1];
+
+          // $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span><span class='four4 rate'>&#9734</span><span class='five5 rate'>&#9734</span>");
+          $(this).remove($(this)[0].classList[0]);
+        }
+      })
+    })
+  }
+  addStarsForEmployee() {
+    var context = this;
+    $(function() {
+
+      $(document).on('click', '.rateForEmployee', function() {
+        context.$element = $(this)[0].classList[0];
+        var $stars = $(this)[0].classList[0];
+        console.log('star that was selected', $(this)[0].classList)
+        if (Number($stars[$stars.length-1]) === 1 ) {
+          context.starNumberForemployee = $stars[$stars.length-1];
+          console.log('11111')
+          // $('.addStar').append("<span class='first1 rate'>&#9734</span>");
+          $(this).remove($(this)[0].classList[0]);
+
+        } else if (Number($stars[$stars.length-1]) === 2) {
+                    console.log('2222')
+          context.starNumberForemployee = $stars[$stars.length-1];
+
+          // $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span>");
+          $(this).remove($(this)[0].classList[0]);
+
+        } else if(Number($stars[$stars.length-1]) === 3) {
+                    console.log('33333')
+          context.starNumberForemployee = $stars[$stars.length-1];
+
+          // $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span>");
+          $(this).remove($(this)[0].classList[0]);
+        } else if (Number($stars[$stars.length-1]) === 4) {
+                    console.log('444444')
+          context.starNumberForemployee = $stars[$stars.length-1];
+
+          // $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span><span class='four4 rate'>&#9734</span>");
+          $(this).remove($(this)[0].classList[0]);
+        } else if (Number($stars[$stars.length-1]) === 5) {
+                    console.log('555555')
+          context.starNumberForemployee = $stars[$stars.length-1];
 
           // $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span><span class='four4 rate'>&#9734</span><span class='five5 rate'>&#9734</span>");
           $(this).remove($(this)[0].classList[0]);
@@ -137,7 +168,7 @@ export default class CompanyComponent extends React.Component {
   employeeReviewForm(event) {
     var context = this;
     event.preventDefault();
-    var employee = {id:Math.floor(Math.random()* 900000000), name: this.state.value, employeeComments: [{reviewTitle: this.state.reviewTitle}, {consReview:this.state.consReview},{prosReview:this.state.prosReview}], imgUrl:this.state.companyInfo[0].squareLogo, helpfulButtonScore:'helpful(0)', userInfo:[], singleUl:''}
+    var employee = {id:Math.floor(Math.random()* 900000000), name: this.state.value, countOfReviews: this.starNumberForemployee ,employeeComments: [{reviewTitle: this.state.reviewTitle}, {consReview:this.state.consReview},{prosReview:this.state.prosReview}], imgUrl:this.state.companyInfo[0].squareLogo, helpfulButtonScore:'helpful(0)', userInfo:[], singleUl:''}
     $.ajax({
       method: 'POST',
       url:'http://localhost:3000/api/employeeReviews',
@@ -228,7 +259,7 @@ export default class CompanyComponent extends React.Component {
     this.setState({modalOpen: true});
     $(function() {
 
-      $('.ratingStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span><span class='four4 rate'>&#9734</span><span class='five5 rate'>&#9734</span>");
+      $('.ratingStar').append("<span class='first1 rateForEmployee'>&#9734</span><span class='two2 rateForEmployee'>&#9734</span><span class='three3 rateForEmployee'>&#9734</span><span class='four4 rateForEmployee'>&#9734</span><span class='five5 rateForEmployee'>&#9734</span>");
     })
   }
   afterOpenTheModal() {
@@ -250,16 +281,10 @@ export default class CompanyComponent extends React.Component {
       url:'http://localhost:3000/api/interviewreview?name='+ name,
       contentType: 'application/json',
       success: function(data) {
-        // console.log('-----3333333', data);
-        context.countOfReviews = data.length-1;
 
         context.setState({
           renderData: data
         })
-        // $(function() {
-          // console.log('this is the future ele',$(('.'+ (data.length-1)))[0].classList[2])
-          // console.log('this is the future ele', '.'+data.length)
-        // })
       },
       error: function(err) {
         console.log('You have an error', err)
@@ -313,18 +338,8 @@ export default class CompanyComponent extends React.Component {
     });
   }
   render() {
-    // $(function() {
-
-    // if ($(('.'+ (this.countOfReviews)))[0]) {
-    //   console.log('it was so --------- true')
-    //   if (this.countOfReviews === Number($(('.'+ (this.countOfReviews)))[0].classList[2])) {
-    //           console.log('it was so more more true --------- true')
-
-    //     $('.'+ (this.countOfReviews))[0].append("<span>&#9734</span>")
-    //   }
-    // }
-    // })
-    this.addStars()
+    this.addStars();
+    this.addStarsForEmployee();
     var immg = null;
     if (this.state.hidden) {
       immg = <img className="companyImg" src={this.state.companyInfo[0].squareLogo }/>
@@ -383,7 +398,7 @@ export default class CompanyComponent extends React.Component {
 
           <div className="inner-container">
             <div className='desc-header'>
-              Add an Interview Review Below:
+              Employee Review Below:
             </div>
             <div className='add-app-container'>
               <form id="add-app-form" onSubmit={this.employeeReviewForm}>

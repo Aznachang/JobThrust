@@ -92,38 +92,7 @@ export default class InterviewReviews extends React.Component {
   editReview() {
     var context = this;
     var $ele;
-    var counters = 1;
     $(function() {
-      // $(document).on('click', '.rate', function() {
-      //   var $stars = $(this)[0].classList[0];
-      //   console.log('star that was selected', $(this)[0].classList)
-      //   if (Number($stars[$stars.length-1]) === 1 && counters === 1) {
-      //     console.log('11111')
-      //     $('.addStar').append("<span class='first1 rate'>&#9734</span>");
-      //     counters++;
-      //   } else if (Number($stars[$stars.length-1]) === 2 && counters === 1) {
-      //               console.log('2222')
-
-      //     $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span>");
-      //     counters++;
-
-      //   } else if(Number($stars[$stars.length-1]) === 3 && counters === 1) {
-      //               console.log('33333')
-
-      //     $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span>");
-      //     counters++;
-      //   } else if (Number($stars[$stars.length-1]) === 4 && counters === 1) {
-      //               console.log('444444')
-
-      //     $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span><span class='four4 rate'>&#9734</span>");
-      //     counters++;
-      //   } else if (Number($stars[$stars.length-1]) === 5 && counters === 1) {
-      //               console.log('555555')
-
-      //     $('.addStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span><span class='four4 rate'>&#9734</span><span class='five5 rate'>&#9734</span>");
-      //     counters++;
-      //   }
-      // })
       $(document).on('click', '.editReview', function() { 
         $ele = this;
         context.importantId = $(this).parent()[0].children[0].classList[0];

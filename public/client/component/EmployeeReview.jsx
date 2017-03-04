@@ -22,6 +22,7 @@ export default class EmployeeReview extends React.Component {
     this.editHandleChangeForModalCons = this.editHandleChangeForModalCons.bind(this);
     this.editEmployeeInfo = this.editEmployeeInfo.bind(this);
     this.sendUpdatedEmployeeData = this.sendUpdatedEmployeeData.bind(this);
+    this.produceStarsForEmployee = this.produceStarsForEmployee.bind(this);
 
     this.arrayOfinputs = [];
     this.idForUpdateDB = '';
@@ -202,6 +203,13 @@ export default class EmployeeReview extends React.Component {
       })
     })
   }
+  produceStarsForEmployee(num) {
+    var array = [];
+    for (var i = 0; i < Number(num); i++) {
+      array.push(i);
+    }
+    return array;
+  }
   render() {
     this.editEmployeeInfo();
     return (
@@ -243,6 +251,11 @@ export default class EmployeeReview extends React.Component {
           <li className={filed.id}>{filed.employeeComments[0].reviewTitle}</li>
           <li>{filed.employeeComments[1].consReview}</li>
           <li>{filed.employeeComments[2].prosReview}</li>
+          <li>{
+            this.produceStarsForEmployee(filed.countOfReviews).map((ele, indx) =>
+              <img key={indx} className="roundstar" src='./roundstar1.png' />
+            )
+          }</li>
           <button className="editEmployeeReview" >Edit the Review</button>
           <input type="button" className={`helpfulPoints ${index}`} value={`${filed.helpfulButtonScore}`}/>
 
