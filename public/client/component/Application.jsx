@@ -246,7 +246,7 @@ export default class Application extends React.Component {
 
             <div className={this.state.modalSections['contact']}>
               <Contact appId={this.props.id} getContact={this.getContact} contactInfo={this.state.contactInfo} />
-              <EmailList emailData={this.state.emailData} />
+              <EmailList emailData={this.state.emailData} getContact={this.getContact} contactEmail={this.state.contactInfo.email}/>
             </div>
 
             <div className={this.state.modalSections['job-desc']}>

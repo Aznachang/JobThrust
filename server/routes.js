@@ -49,8 +49,6 @@ router.post('/mail/thread/', cal.getThread);
 
 router.get('/mail/getmsg', cal.getMessage);
 
-router.get('/mail/send', cal.postMessage);
-
 router.post('/job', function(req, res) {
   table.Job.findOrCreate({
     where: {
@@ -104,6 +102,16 @@ router.post('/application/stagechange', function(req, res) {
 router.get('/user', function(req, res) {
   res.send(req.session.passport.user);
 });
+
+router.get('/userdata', function(req, res) {
+  table.User.findOne({
+    where: {
+      id: req.session.passport.user
+    }
+  }).then(function(data) {
+    res.json(data);
+  });
+})
 
 router.get('/company', function(req, res) {
 

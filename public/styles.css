@@ -512,7 +512,7 @@ input.st-input {
   font-weight: bold;
 }
 
-.btn-container {
+.btn-container, .mail-btn-container {
   display: flex;
   flex-direction: row;
   margin-top: 5px;
@@ -599,24 +599,55 @@ input.st-input {
 
 /* ========= EMAILS ========= */
 
+.email-list {
+  /*margin-top: 10px;*/
+}
+
 .email-list p {
   margin-bottom: 10px;
-  font-size: 0.9em;
+  font-size: 0.8em;
+}
+
+.email-list h3 {
+  text-align: center;
+  padding: 5px 0;
 }
 
 .email-thread {
-  border: 2px solid grey;
-  padding: 5px;
+  border: 1px solid grey;
+  padding: 0 2.5px;
   margin-bottom: 15px;
+  background-color: rgba(0, 153, 255, 0.3);
 }
 
 .email-message, .email-message-collapsed {
   border: 1px solid grey;
+  border-radius: 5px;
+  margin: 2.5px 0;
+}
+
+.email-message {
+  background-color: white;
+}
+
+.email-message-collapsed {
+  background-color: #d9d9d9;
+}
+
+.email-message:hover, .email-message-collapsed:hover {
+  background-color: #e6e6e6;
+  cursor: pointer;
 }
 
 .email-message-body {
   margin: 5px;
-  border: 1px solid rgba(0, 153, 255, 0.5);;
+  border: 1px solid rgba(0, 153, 255, 0.5);
+  background-color: rgba(0, 153, 255, 0.25);
+  border-radius: 5px;
+}
+
+.mail-btn-container {
+  padding-bottom: 4px;
 }
 
 /* ========== NOTES ======== */

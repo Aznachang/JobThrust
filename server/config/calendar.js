@@ -6,8 +6,6 @@ var calendar = google.calendar('v3');
 var plus = google.plus('v1');
 var gmail = google.gmail('v1');
 var base64url = require('base64-url');
-var createBody = require('./createEmailBody.js');
-var btoa = require('btoa');
 var threadsUtil = require('../utils/threads.js');
 
 // Calendar Things
@@ -100,6 +98,8 @@ module.exports.getThread = function(req, res) {
 
   if (req.body.email) {
 
+    console.log('Checking FROM threads');
+
     gmail.users.threads.list({
       userId: 'me',
       auth: module.exports.oauth2C,
@@ -114,15 +114,18 @@ module.exports.getThread = function(req, res) {
         return threadObj.id;
       });
 
+      console.log('Checking for TO ONLY threads');
+
       gmail.users.threads.list({
         userId: 'me',
         auth: module.exports.oauth2C,
-        q: 'to:' + req.body.email
+        q: 'to:' + req.body.email + ' from:jfbriggs106@gmail.com'
       }, function(err, threadsRes) {
         if (threadsRes.threads) {
           threadsRes.threads.forEach(function(threadObj) {
             if (!threadIds.includes(threadObj.id)) {
               pulledThreads.push(threadObj);
+              threadIds.push(threadObj.id);
             }
           });
         }
@@ -134,7 +137,7 @@ module.exports.getThread = function(req, res) {
         var threads = [];
 
         var getThreadEmails = function(index) {
-          if (!pulledThreads[currentThread]) {
+          if (!threadIds[currentThread]) {
             res.json({'threads': threads});
             return;
           }
@@ -159,45 +162,41 @@ module.exports.getThread = function(req, res) {
             console.log('messages!!!!', response.messages);
 
             response.messages.forEach(function(message, i) {
-              if (i === 0) {
-                if (message.payload.headers.length > 11) { // if the initial message came from someone else
-                  messageArray.push({
-                    'from': message.payload.headers[14].value,
-                    'to': message.payload.headers[18].value,
-                    'sentAt': message.payload.headers[15].value,
-                    'subject': message.payload.headers[17].value,
-                    'body': parseBase64(message.payload.parts[0].body.data).split(/[\r]/g)
-                  });
-                } else { // if the initial message in the thread was sent by me
-                  messageArray.push({
-                    'from': message.payload.headers[6].value,
-                    'to': message.payload.headers[7].value,
-                    'sentAt': message.payload.headers[2].value,
-                    'subject': message.payload.headers[5].value,
-                    'body': parseBase64(message.payload.parts[0].body.data).split(/[\r]/g)
-                  });
-                }
-              } else {
-                if (message.payload.headers.length > 11) {
-                  messageArray.push({
-                    'from': message.payload.headers[16].value,
-                    'to': message.payload.headers[20].value,
-                    'inReplyTo': message.payload.headers[14].value,
-                    'sentAt': message.payload.headers[17].value,
-                    'subject': message.payload.headers[19].value,
-                    'body': parseBase64(message.payload.parts[0].body.data).split(/[\r]/g)
-                  });
-                } else {
-                  messageArray.push({
-                    'from': message.payload.headers[8].value,
-                    'to': message.payload.headers[9].value,
-                    'inReplyTo': message.payload.headers[2].value,
-                    'sentAt': message.payload.headers[4].value,
-                    'subject': message.payload.headers[7].value,
-                    'body': parseBase64(message.payload.parts[0].body.data).split(/[\r]/g)
-                  });
+              if (message.payload.headers.length === 12) {
+                for (var i = 0; i < message.payload.headers.length; i++) {
+                  console.log('Header ' + i + ': ' + message.payload.headers[i].name, message.payload.headers[i].value );
                 }
               }
+              console.log(i, message.payload.headers.length);
+
+              // Edits body text location based on whether there's an attachment or not
+              var msgComponents = {
+                'From': 'none',
+                'To': 'none',
+                'Subject': 'none',
+                'Date': 'none',
+                bodyData: null
+              }
+
+              if (message.payload.parts[0].parts) {
+                msgComponents.bodyData = parseBase64(message.payload.parts[0].parts[0].body.data).split(/[\r]/g);
+              } else {
+                msgComponents.bodyData = parseBase64(message.payload.parts[0].body.data).split(/[\r]/g);
+              }
+
+              message.payload.headers.forEach(function(header) {
+                if (msgComponents[header.name]) {
+                  msgComponents[header.name] = header.value;
+                }
+              });
+              messageArray.push({
+                'from': msgComponents.From,
+                'to': msgComponents.To,
+                'sentAt': msgComponents.Date,
+                'subject': msgComponents.Subject,
+                'body': msgComponents.bodyData
+              });
+
             });
 
             threads.unshift(messageArray);
@@ -245,108 +244,3 @@ module.exports.getMessage = function(req, res) {
     res.json(parseBase64(response.raw));
   })
 }
-
-// var body = createBody({
-//   headers: {
-//     To: 'scott.mendall@gmail.com',
-//     From: 'jfbriggs106@gmail.com',
-//     Subject: 'This was rad, brother.'
-//   },
-//   textHtml: 'Thanks for last time, <b>buddy.</b>',
-//   textPlain: 'Thanks for last time, *buddy.*',
-//   // threadId: '1536195a8ad6a354',
-//   attachments: [
-//     // {
-//     //   type: 'image/jpeg',
-//     //   name: 'dog.jpg',
-//     //   data: dogBase64
-//     // },
-//     // {
-//     //   type: 'image/png',
-//     //   data: catBase64
-//     // }
-//   ]
-// })//.replace(/\+/g, '-').replace(/\//g, '_');
-
-// var msgRaw = [
-//   'Content-Type: multipart/related; boundary="foo_bar_baz"\n',
-//   '--foo_bar_baz\n',
-//   'Content-Type: application/json; charset=UTF-8]\n',
-//   '{\n',
-//   '  "threadId: "15a91a6d97637c0a"\n',
-//   '}\n',
-//   '--foo_bar_baz\n',
-//   'Content-Type: message/rfc822\n',
-//   'Content-Type: multipart/mixed; boundary="foo_bar"\n',
-//   'In-Reply-To: <CANQQNRU9ex6DEq_vrpQ9xVYzBiHgEVqxU9RpFiWO=5YAFSgAbg@mail.gmail.com>\n',
-//   'References: <CAC7Hkj7U3Aniu35piTKs01GmMaEDF4Bq2j8Af4b-+0Kag0kfeA@mail.gmail.com> <CANQQNRU9ex6DEq_vrpQ9xVYzBiHgEVqxU9RpFiWO=5YAFSgAbg@mail.gmail.com>\n',
-//   'From: James Briggs <jfbriggs106@gmail.com>\n',
-//   'To: Scott Mendall <scott.mendall@gmail.com>\n',
-//   'Subject: Re: Yo bro\n',
-//   '--foo_bar\n',
-//   'Content-Type: text/html; charset="UTF-8"\n',
-//   'MIME-Version: 1.0\n',
-//   'Content-Transfer-Encoding: 7bit\n',
-//   '<div dir="ltr">Hey man, just testing this</divxx>\n',
-//   '--foo_bar--\n',
-//   '--foo_bar_baz--'
-// ].join('');
-
-var simpleMsg = 'To: scott.mendall@gmail.com\r\nSubject: Hey there friend\r\nJust testing this';
-
-var parseBase64 = function(code) {
-  if (code) {
-    return base64url.decode(code);
-  } else {
-    return '[No message body.]';
-  }
-}
-
-function makeBody() {
-    var str = ["Content-Type: text/plain; charset=\"UTF-8\"\n",
-        "MIME-Version: 1.0\n",
-        "Content-Transfer-Encoding: 7bit\n",
-        "In-Reply-To: <CANQQNRU9ex6DEq_vrpQ9xVYzBiHgEVqxU9RpFiWO=5YAFSgAbg@mail.gmail.com>\n",
-        // "References: <CAC7Hkj7U3Aniu35piTKs01GmMaEDF4Bq2j8Af4b-+0Kag0kfeA@mail.gmail.com> <CANQQNRU9ex6DEq_vrpQ9xVYzBiHgEVqxU9RpFiWO=5YAFSgAbg@mail.gmail.com>\n",
-        "to: Scott Mendall <scott.mendall@gmail.com>\n",
-        "from: James Briggs <jfbriggs106@gmail.com>\n",
-        "subject: Lets do some cool things\n\n",
-        "Hey bud, whats going on with you today?"
-    ].join('');
-
-    var encodedMail = new Buffer(str).toString("base64").replace(/\+/g, '-').replace(/\//g, '_');
-    return encodedMail;
-}
-
-
-var messageRaw = makeBody();
-// var rawm = makeBody('Scott Mendall <scott.mendall@gmail.com>', 'James Briggs <jfbriggs106@gmail.com>', 'test subject BRO', 'test message');
-
-// var encodedMail = new Buffer(msgRaw).toString("base64").replace(/\+/g, '-').replace(/\//g, '_');
-console.log(messageRaw);
-
-module.exports.postMessage = function(req, res) {
-  module.exports.oauth2C.setCredentials({
-      access_token: module.exports.userTokens[req.session.passport.user],
-      refresh_token: undefined
-  });
-
-  gmail.users.messages.send({
-    userId: 'me',
-    auth: module.exports.oauth2C,
-    // threadId: '15a91a6d97637c0a',
-    resource: {
-      raw: messageRaw
-    }
-
-  }, function(err, response) {
-    if (err) {
-      console.log(err);
-      res.sendStatus(404);
-    }
-    console.log(response);
-    res.json(response);
-  })
-}
-
-
