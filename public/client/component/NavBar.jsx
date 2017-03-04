@@ -18,7 +18,7 @@ class NavBar extends React.Component {
           <div className='app-logo'>
             <img src='../favicon.ico' />
           </div>
-          <div>JobThrust</div>
+          <div><Link to={'/manage'}>JobThrust</Link></div>
         </div>
         <ul className='nav-links'>
           <li>

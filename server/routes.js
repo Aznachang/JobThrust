@@ -458,7 +458,8 @@ router.put('/application/offers/:offerId', function(req, res) {
       signBonus: req.body.signBonus,
       vacationDays: req.body.vacationDays,
       retireMatchPercent: req.body.retireMatchPercent,
-      // applicationId: req.body.applicationId
+      active: req.body.active,
+      activeReason: req.body.activeReason
     },{
       where: {
         id: req.params.offerId,

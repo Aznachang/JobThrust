@@ -1,5 +1,6 @@
 import React from 'react';
 import JobOfferList from './JobOfferList.jsx';
+import JobOfferSearchFilter from './JobOfferSearchFilter.jsx';
 import Modal from 'react-modal';
 import axios from 'axios';
 
@@ -8,40 +9,60 @@ export default class JobOfferContainer extends React.Component {
     super(props);
     this.state = {
       jobOffers: [],
+      archivedJobOffers: [],
+      filterText: ''
     };
 
-    this.handleChecked = this.handleChecked.bind(this);
-    this.addCheckedOffers = this.addCheckedOffers.bind(this);
     this.getOffers = this.getOffers.bind(this);
+    this.handleUserOfferSearch = this.handleUserOfferSearch.bind(this);
   }
 
-  // toggle CheckMark
-  handleChecked() {
+  // Filter Job Offer Text - Event Handler
+  handleUserOfferSearch(filterText) {
+    this.setState({filterText: filterText});
+  };
+
+  // Get Archived Job Offers
+  getArchivedJobOffers() {
     var context = this;
 
-    this.setState({checked: !this.state.checked});
-    if (this.state.checked) {
-      context.addCheckedOffers();
-    }
+    axios.get('/api/application/offers')
+    .then(function(archivedOffers){
+      // get list of [archivedJobOffers]
+      var archivedJobOffers = archivedOffers.data
+        .filter(archivedOffer => {
+          // insert conditional statement
+          return archivedOffer.active === false;
+        });
+
+      console.log('Archived Job Offers: ', archivedJobOffers);
+
+      var sortedArchivedJobOffers = archivedJobOffers.sort(function(a, b) {
+        return b.id - a.id;
+      });
+
+      context.setState({archivedJobOffers: sortedArchivedJobOffers});
+      // console.log('jobOffers: ', context.state.archivedJobOffers);
+    });
   }
 
-  addCheckedOffers() {
-    var context = this;
-
-  }
-
-  // Get Offers
+  // Get Job Offers
   getOffers() {
-
     var context = this;
+
     axios.get('/api/application/offers')
     .then(function(offers){
       console.log('Getting All Job Offers: ', offers.data);
-      var jobOffers = offers.data.sort(function(a, b) {
+      var jobOffers = offers.data.filter(offer => {
+        return offer.active === true;
+      });
+
+      var sortedJobOffers = jobOffers.sort(function(a, b) {
         return b.id - a.id;
       });
-      context.setState({jobOffers: jobOffers});
-      console.log('jobOffers: ', context.state.jobOffers);
+
+      context.setState({jobOffers: sortedJobOffers});
+      // console.log('getOffers - Job Offers: ', context.state.jobOffers);
     });
     // e.preventDefault();
   }
@@ -49,13 +70,15 @@ export default class JobOfferContainer extends React.Component {
   componentDidMount() {
     // Get Existing Job Offers Upon First Load
     this.getOffers();
+    // Get Archived Job Offers
+    this.getArchivedJobOffers();
   }
 
   render() {
     return (
       <div>
-        <JobOfferList getOffer={this.getOffers} handleChecked = {this.handleChecked} isChecked={this.handleChecked} jobOffers = {this.state.jobOffers} />
-
+        <JobOfferSearchFilter filterText={this.state.filterText} onUserInput={this.handleUserOfferSearch}/>
+        <JobOfferList getOffer={this.getOffers} getArchivedJobOffers = {this.getArchivedJobOffers} jobOffers = {this.state.jobOffers} archivedOffers={this.state.archivedJobOffers} filterText={this.state.filterText}/>
       </div>
     )
   }
