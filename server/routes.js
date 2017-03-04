@@ -41,6 +41,19 @@ router.post('/interviewreview', function(req, res) {
   })
 });
 
+router.get('/buttonsInfoForInterview', function(req, res) {
+  console.log('sdafdasf333333-----', req.query.name)
+  Model.InterviewModel.find({
+    id:Number(req.query.name)
+  }, function(err, data) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(data);
+    }
+  })
+});
+
 router.get('/buttonsInfo', function(req, res) {
   console.log('sdafdasf333333-----', req.query.name)
   Model.EmployeeModel.find({
@@ -63,6 +76,24 @@ router.get('/employeeReviews', function(req, res) {
     } else {
       res.json(data);
     }
+  })
+});
+
+router.post('/updateHelpfulButtonForInterview', function(req, res) {
+  Model.InterviewModel.findOne({id:req.body[1]}, function(err, doc) {
+    for (var i = 0; i < doc.userInfo.length; i++) {
+      console.log(JSON.strigify(doc.userInfo[i]) === JSON.strigify(req.body[2]))
+      if (JSON.strigify(doc.userInfo[i]) !== JSON.strigify(req.body[2])) {
+        doc.userInfo.push(req.body[2]);
+      }
+    }
+    if (doc.userInfo.length === 0) {
+      doc.userInfo.push(req.body[2]);
+    }
+    doc.helpfulButtonScore = req.body[0];
+    doc.singleUl = req.body[3]
+    doc.save();
+    res.json('');
   })
 });
 

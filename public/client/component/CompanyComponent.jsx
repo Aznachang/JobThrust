@@ -217,7 +217,7 @@ export default class CompanyComponent extends React.Component {
   submitApp(event) {
     event.preventDefault();
 
-    var interviewCompany = {id:Math.floor(Math.random()* 900000000), name: this.state.value, imgUrl:this.state.companyInfo[0].squareLogo ,helpfulButtonScore:'helpful(0)',companyComments: [{jobTitle:this.state.title},{date:this.state.date},{interviewProcess:{descriptionOfinterview:this.state.interviewProcess,interviewQuestion:this.state.interviewQuestion ,interviewProcess:this.state.description}}]};
+    var interviewCompany = {id:Math.floor(Math.random()* 900000000), name: this.state.value, imgUrl:this.state.companyInfo[0].squareLogo ,helpfulButtonScore:'helpful(0)',singleUl:'',companyComments: [{jobTitle:this.state.title},{date:this.state.date},{interviewProcess:{descriptionOfinterview:this.state.interviewProcess,interviewQuestion:this.state.interviewQuestion ,interviewProcess:this.state.description}}]};
     var context = this;
     $.ajax({
       method:'POST',
@@ -339,11 +339,11 @@ export default class CompanyComponent extends React.Component {
 
         </Modal>
         <div className="item animated fadeInDownBig  newDiv">
-          {this.state.renderData !== null ? <InterviewReviews renderData={this.state.renderData} imgUrl={this.state.hidden? this.state.companyInfo[0].squareLogo : null} companyName={this.state.value} retrieveDataFromDB={this.retrieveDataFromDB}/>: null }
+          {this.state.renderData !== null ? <InterviewReviews userId={this.state.userId} renderData={this.state.renderData} imgUrl={this.state.hidden? this.state.companyInfo[0].squareLogo : null} companyName={this.state.value} retrieveDataFromDB={this.retrieveDataFromDB}/>: null }
         </div>
 
         <div className="item animated fadeInDownBig  employeeReview">
-         {this.state.renderEmployeeData !== null ? <EmployeeReview helpfulPoints={this.state.helpfulPoints} userId={this.state.userId}renderEmployeeData={this.state.renderEmployeeData}/> : null}
+         {this.state.renderEmployeeData !== null ? <EmployeeReview helpfulPoints={this.state.helpfulPoints} userId={this.state.userId} renderEmployeeData={this.state.renderEmployeeData}/> : null}
         </div>
 
         <div className="item animated fadeInDownBig  employeeReview">
