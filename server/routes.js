@@ -21,6 +21,8 @@ router.route('/jobs/:jk').get(function(req, res) {
   })
 });
 
+/******************* Compnay component ********************/
+
 router.post('/employeeReviews', function(req, res) {
   Model.EmployeeModel.insertMany(req.body, function(err, data) {
     if (err) {
@@ -159,6 +161,7 @@ router.get('/interviewreview', function(req, res) {
   })
 });
 
+/******************* Compnay component ********************/
 router.post('/goog/calget', cal.getCalData);
 
 router.post('/goog/cal', cal.createEvent);
