@@ -41,7 +41,7 @@ function isLoggedIn (req, res, next) {
 app.use('/api/', isLoggedIn, routes);
 app.use(express.static(path.join(__dirname, '../public')));
 
-app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email', 'https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/gmail.modify', 'https://www.googleapis.com/auth/gmail.send'] }));
+app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email', 'https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/gmail.readonly'] }));
 
 // the callback after google has authenticated the user
 app.get('/auth/google/callback',
