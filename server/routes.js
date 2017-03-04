@@ -239,6 +239,7 @@ router.get('/company', function(req, res) {
   var endpoints = 't.p=126535&t.k=jzi4LSmsrF5&userip=199.87.82.66&useragent=&format=json&v=1&action=employers&q=';
 
   rp(basicUrl+endpoints+req.query.company).then(function(respond) {
+
     respond = JSON.parse(respond)
     var url = 'https://en.wikipedia.org/wiki/';
     request(url+req.query.company, function(error, response, html) {
@@ -247,8 +248,9 @@ router.get('/company', function(req, res) {
         // console.log($('.infobox').text());
         var jobSummary = $('#mw-content-text').find('p').text() // A plain DOM element.
         // console.log(jobSummary)
-        var index = jobSummary.match(/[.]/)['index'];
-        res.json([respond.response.employers, jobSummary.slice(0,index+1), req.session.passport.user])
+        var result = jobSummary.split('.');
+        console.log(result[2])
+        res.json([respond.response.employers,result[0] +'.'+ result[1] +'.'+ result[2]+'.' + result[3]+'.' + result[4]+'.' , req.session.passport.user])
       }
     })
   }).catch(function(err) {
