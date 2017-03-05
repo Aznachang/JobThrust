@@ -1,7 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
 import JobOfferForm from './JobOfferForm.jsx';
-import NoteContainer from '../NoteView/NoteContainer.jsx';
 import JobOfferCompare from './JobOfferCompare.jsx';
 import ArchivedJobOffer from './ArchivedJobOffer.jsx';
 import axios from 'axios';
@@ -54,7 +53,7 @@ export default class JobOfferList extends React.Component {
         return jobOffer.companyName.toLowerCase().indexOf(this.props.filterText.toLowerCase()) >= 0
     }).map(jobOffer => {
       return (
-        <JobOfferCompare jobOffer = {jobOffer}/>
+        <JobOfferCompare convertDate={this.props.convertDate} jobOffer = {jobOffer}/>
       )
     });
     /** CHECK FOR ARCHIVED JOB OFFERS **/

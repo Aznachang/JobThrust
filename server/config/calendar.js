@@ -67,7 +67,7 @@ module.exports.getCalData = function(req, res) {
       });
 
       res.json({items: calData});
-      
+
     });
   });
 }
@@ -155,7 +155,7 @@ module.exports.getThread = function(req, res) {
               console.log('THREAD GET ERROR', err);
             }
 
-            // threads[index] = response;  
+            // threads[index] = response;
 
             var messageArray = [];
 
@@ -207,7 +207,7 @@ module.exports.getThread = function(req, res) {
 
           });
 
-          
+
         }
         console.log('Running getThreadEmails!');
 
@@ -219,7 +219,7 @@ module.exports.getThread = function(req, res) {
       });
 
     });
-    
+
   } else {
     res.json({'threads': []});
   }
@@ -240,8 +240,9 @@ module.exports.getMessage = function(req, res) {
     if (err) {
       console.log(err);
       res.sendStatus(404);
+    } else {
+      res.json(parseBase64(response.raw));
     }
-    res.json(parseBase64(response.raw));
   })
 }
 

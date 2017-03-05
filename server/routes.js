@@ -192,7 +192,8 @@ router.post('/job', function(req, res) {
       table.PointOfContact.create({
         name: '',
         email: '',
-        phone: ''
+        phone: '',
+        applicationId: app.id
       }).then(function(contact) {
         res.sendStatus(200);
 

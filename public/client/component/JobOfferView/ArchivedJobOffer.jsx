@@ -29,12 +29,6 @@ export default class ArchivedJobOffer extends React.Component {
     });
   }
 
-  // componentDidMount() {
-  //   var context = this;
-  //   context.props.getOffer();
-  //   context.props.getArchivedOffers();
-  // }
-
   render() {
     return (
       <tr>

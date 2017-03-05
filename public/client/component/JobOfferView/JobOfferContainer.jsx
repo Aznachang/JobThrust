@@ -15,12 +15,37 @@ export default class JobOfferContainer extends React.Component {
 
     this.getOffers = this.getOffers.bind(this);
     this.handleUserOfferSearch = this.handleUserOfferSearch.bind(this);
+    this.getArchivedJobOffers = this.getArchivedJobOffers.bind(this);
   }
 
   // Filter Job Offer Text - Event Handler
   handleUserOfferSearch(filterText) {
     this.setState({filterText: filterText});
   };
+
+  convertDate(date) {
+    // 2017-02-28T11:30:00-08:00
+    console.log('Converting', date);
+    var month = date.substring(5, 7);
+    var day = date.substring(8, 10);
+    var year = date.substring(0, 4);
+    var timeHour = date.substring(11, 13);
+    var timeMin = date.substring(14, 16);
+
+    var amPm = 'AM';
+
+    if (+timeHour > 11) {
+      amPm = 'PM';
+      timeHour = (+timeHour - 12).toString();
+    }
+
+    // Make Sure it is '12' and not '00'
+    if (timeHour === '00') {
+      timeHour = '12';
+    }
+
+    return month + '/' + day + '/' + year + ', ' + timeHour + ':' + timeMin + ' ' + amPm;
+  }
 
   // Get Archived Job Offers
   getArchivedJobOffers() {
@@ -42,7 +67,7 @@ export default class JobOfferContainer extends React.Component {
       });
 
       context.setState({archivedJobOffers: sortedArchivedJobOffers});
-      // console.log('jobOffers: ', context.state.archivedJobOffers);
+      console.log('jobOffers: ', context.state.archivedJobOffers);
     });
   }
 
@@ -78,7 +103,7 @@ export default class JobOfferContainer extends React.Component {
     return (
       <div>
         <JobOfferSearchFilter filterText={this.state.filterText} onUserInput={this.handleUserOfferSearch}/>
-        <JobOfferList getOffer={this.getOffers} getArchivedJobOffers = {this.getArchivedJobOffers} jobOffers = {this.state.jobOffers} archivedOffers={this.state.archivedJobOffers} filterText={this.state.filterText}/>
+        <JobOfferList convertDate={this.convertDate} getOffer={this.getOffers} getArchivedJobOffers = {this.getArchivedJobOffers} jobOffers = {this.state.jobOffers} archivedOffers={this.state.archivedJobOffers} filterText={this.state.filterText}/>
       </div>
     )
   }
