@@ -30,10 +30,10 @@ export default class UploadComponent extends React.Component {
 
   render() {
     return (
-      <form action="/api/upload" method="POST" encType="multipart/form-data">
+      <form action="/api/upload" method="post" encType="multipart/form-data">
         Select an image to upload:
-        <input type="file" name="image"/> 
-        <input type="submit" value="Upload Image"/>
+        <input type="file" name="fileUpload" className="form-control"/> 
+        <button type="submit"> upload files</button>
       </form>
     )
   }

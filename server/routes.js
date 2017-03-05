@@ -8,24 +8,39 @@ var rp = require('request-promise');
 var cal = require('./config/calendar');
 var Model = require('./dbMongo/models.js');
 var multer = require('multer');
-// var storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, '../public/uploads');
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, file.fieldname + '-' + Date.now());
-//   }
-// })
-// var upload = multer({ storage: storage });
-var uploading = multer({
-  dest: path.join(__dirname ,'../public/uploads'),
-})
+var AWS= require('aws-sdk');
 
-/******************* Upload Files starts********************/
-router.post('/upload', uploading.any(), function(req, res) {
-  console.log('that is the path way for uploads', path.join(__dirname,'../public/uploads/'))
-  console.log('this is my upload', req.files);
-  res.send(req.files);
+var fs = require('fs');
+
+var S3FS = require('s3fs');
+
+var s3fsImpl = new S3FS('ahmedzoghayyer92',{
+    accessKeyId:'AKIAIQ5IYO2XWIF3LKVA',
+    secretAccessKey:'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'
+});
+
+// Create our bucket if it doesn't exist
+s3fsImpl.create();
+
+var multiparty = require('connect-multiparty'),
+    multipartyMiddleware = multiparty();
+
+router.use(multipartyMiddleware);
+
+router.post('/upload',function(req,res){
+
+    console.log(JSON.stringify(req.files));
+    var file = req.files;
+    // console.log("file",JSON.stringify(file))
+    // console.log("original name:- "+file.fileUpload.originalFilename);
+    // console.log("Path:- ",file.fileUpload.path);
+    var stream = fs.createReadStream(file.fileUpload.path);
+   return s3fsImpl.writeFile(file.fileUpload.originalFilename, stream, {"ContentType":"image/png"}).then(function(){
+        fs.unlink(file.fileUpload.path, function(err){
+            console.error(err);
+        })
+        console.log("Sucessfully uploaded to Amazon S3 server");
+    });
 });
 
 // router.get('/upload',function(req, res) {
@@ -260,8 +275,9 @@ router.get('/company', function(req, res) {
 
   var basicUrl = 'http://api.glassdoor.com/api/api.htm?';
   var endpoints = 't.p=126535&t.k=jzi4LSmsrF5&userip=199.87.82.66&useragent=&format=json&v=1&action=employers&q=';
-
   rp(basicUrl+endpoints+req.query.company).then(function(respond) {
+
+    respond = JSON.parse(respond);
 
     var url = 'https://en.wikipedia.org/wiki/';
     request(url+req.query.company, function(error, response, html) {
