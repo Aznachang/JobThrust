@@ -14,6 +14,7 @@ export default class JobOfferCompare extends React.Component {
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    // this.convertDate = this.convertDate.bind(this);
   }
 
   openModal() {
@@ -57,7 +58,7 @@ export default class JobOfferCompare extends React.Component {
             <div className='desc-header'>
               <b> Additional Benefits and Notes</b>
             </div>
-              <NoteContainer appId={this.props.jobOffer.applicationId}/>
+              <NoteContainer convertDate={this.props.convertDate} appId={this.props.jobOffer.applicationId}/>
             </div>
           </div>
         </Modal>

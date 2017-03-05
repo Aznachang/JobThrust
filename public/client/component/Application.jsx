@@ -163,6 +163,11 @@ export default class Application extends React.Component {
       timeHour = (+timeHour - 12).toString();
     }
 
+    // Make Sure it is '12' and not '00'
+    if (timeHour === '00') {
+      timeHour = '12';
+    }
+
     return month + '/' + day + '/' + year + ', ' + timeHour + ':' + timeMin + ' ' + amPm;
   }
 
