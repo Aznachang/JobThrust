@@ -1,11 +1,11 @@
 import React from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
-import EventForm from './EventForm.jsx';
-import EventList from './EventList.jsx';
-import NoteContainer from './NoteView/NoteContainer.jsx';
-import Contact from './Contact.jsx';
-import EmailList from './EmailList.jsx';
+import EventForm from '../EventForm.jsx';
+import EventList from '../EventList.jsx';
+import NoteContainer from '../NoteView/NoteContainer.jsx';
+import Contact from '../Contact.jsx';
+import EmailList from '../EmailList.jsx';
 import $ from 'jQuery';
 
 var appElement = document.getElementById('app');
@@ -36,8 +36,7 @@ export default class Application extends React.Component {
         'job-desc': 'job-desc hidden',
         'change-stage': 'change-stage hidden',
         'notes': 'notes hidden',
-        'events': 'events hidden',
-        'archives': 'archives hidden'
+        'events': 'events hidden'
       },
       calendarItems: [{
         start: {dateTime: ''},
@@ -96,7 +95,6 @@ export default class Application extends React.Component {
         'notes': 'notes hidden',
         'events': 'events hidden',
         'contact': 'contact hidden',
-        'archives': 'archives hidden'
       }
     });
     if (this.props.filtered !== null) {
@@ -124,7 +122,6 @@ export default class Application extends React.Component {
       'notes': 'notes-select',
       'events': 'events-select',
       'contact': 'contact-select',
-      'archives': 'archives-select'
     }
 
     for (var button in sectionButtons) {
@@ -224,26 +221,6 @@ export default class Application extends React.Component {
     });
   }
 
-  //UPDATE A JOB OFFER
-  archiveOneJob(e) {
-    e.preventDefault();
-    var context = this;
-
-    var archiveJobData = {
-      active: false,
-      activeReason: $( "#archive-offer option:selected" ).text()
-    };
-
-    axios.put('/api/application/offers/'+ this.props.offerId, archiveJobData)
-    .then(function(offers) {
-      // context.props.get();
-      // context.props.getArchivedJobOffers();
-    });
-
-    // close Job Offer Form Upon Updating...
-    this.closeModal();
-  }
-
   render() {
     return (
       <tr className="application">
@@ -251,7 +228,6 @@ export default class Application extends React.Component {
         <td onClick={this.openModal}>{this.props.company}</td>
         <td className="stage" onClick={this.openModal}>{this.props.stage}</td>
         <td onClick={this.openModal}>{this.convertDate(this.props.created).substring(0, 10)}</td>
-        <td onClick={this.openModal}>📂</td>
 
         <Modal
           isOpen={this.state.modalIsOpen}
@@ -270,8 +246,6 @@ export default class Application extends React.Component {
               <div className="app-tab events-select" onClick={this.toggle.bind(null, 'events')}>Events</div>
               <div className="app-tab notes-select" onClick={this.toggle.bind(null, 'notes')}>Notes</div>
               <div className="app-tab desc-select" onClick={this.toggle.bind(null, 'job-desc')}>Job Description</div>
-              <div className="app-tab stage-select" onClick={this.toggle.bind(null, 'change-stage')}>Change Stage</div>
-              <div className="app-tab archives-select" onClick={this.toggle.bind(null, 'change-stage')}>Archives</div>
             </div>
 
             <div className={this.state.modalSections['contact']}>
@@ -296,29 +270,8 @@ export default class Application extends React.Component {
 
             </div>
 
-            <div className={this.state.modalSections['change-stage']}>
-              <div className="stage-choice-header">Select stage to switch to:</div>
-              { this.props.stages.map((stage, index) =>
-                <div key={index} className="stage-btn" onClick={this.nextStage.bind(this, index)}>{stage}</div>
-              ) }
-            </div>
-
             <div className={this.state.modalSections['notes']}>
               <NoteContainer convertDate={this.convertDate} appId={this.props.id} />
-            </div>
-
-            <div className={this.state.modalSections['archives']}>
-                  <h3> Archive This Job </h3>
-                <form id="add-app-form" onSubmit={this.archiveOneJob}>
-                  <b>Reason: </b>
-                  <select id ='archive-offer'>
-                    <option value="rejected">Lost Interest</option>
-                     <option value="cancelled">Cancelled</option>
-                    <option value="not interested">Rejected</option>
-                  </select>
-                  <br/><br/>
-                  <input type='submit' value='OK' />
-                </form>
             </div>
 
           </div>

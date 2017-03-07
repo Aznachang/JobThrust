@@ -86,15 +86,9 @@ export default class JobOfferForm extends React.Component {
   }
 
   render() {
-    var context = this;
-    // context.props.getArchivedJobOffers();
     return (
       <div className="add-app-manual">
-        <td className="add-joboffer-btn" onClick={this.openModal}>
-          <div>
-            Job Offer
-          </div>
-        </td>
+        <td onClick={this.openModal}>📂</td>
         <Modal
         isOpen={this.state.modalIsOpen}
         onAfterOpen={this.afterOpenModal}
@@ -159,13 +153,14 @@ export default class JobOfferForm extends React.Component {
             <form id="add-app-form" onSubmit={this.submitArchiveJob}>
               <b>Reason: </b>
               <select id ='archive-offer'>
-                <option value="not interested">Not Interested</option>
-                <option value="rejected">Rejected</option>
+                <option value="rejected">Declined Offer</option>
+                <option value="not interested">Rescinded Offer</option>
               </select>
               <br/><br/>
               <input type='submit' value='OK' />
             </form>
           </div>
+
         </Modal>
       </div>
     )

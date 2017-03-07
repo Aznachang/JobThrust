@@ -37,13 +37,8 @@ export default class ArchivedJobOffer extends React.Component {
         <td>${this.props.archivedOffers.signBonus}</td>
         <td>{this.props.archivedOffers.vacationDays}</td>
         <td>{this.props.archivedOffers.retireMatchPercent}%</td>
-        <td>
-          <div className="add-joboffer-btn" onClick={this.openModal}>
-            <div>
-              <span onClick={this.openModal}>View</span>
-            </div>
-          </div>
-        </td>
+        <td onClick={this.openModal}>📔</td>
+
         <Modal
         isOpen={this.state.modalIsOpen}
         onAfterOpen={this.afterOpenModal}
@@ -57,7 +52,7 @@ export default class ArchivedJobOffer extends React.Component {
             <div className='desc-header'>
               <b> Additional Benefits and Notes</b>
             </div>
-              <NoteContainer appId={this.props.archivedOffers.applicationId}/>
+              <NoteContainer convertDate={this.props.convertDate} appId={this.props.archivedOffers.applicationId}/>
             </div>
           </div>
         </Modal>

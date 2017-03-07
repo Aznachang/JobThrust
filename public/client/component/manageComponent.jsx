@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 import StageList from './StagesComponent.jsx';
 import ApplicationList from './ApplicationList.jsx';
 import AddAppManual from './AddAppManual.jsx';
@@ -41,7 +42,7 @@ export default class ManageComponent extends React.Component {
 
   getJobs() {
     var context = this;
-    console.log(context);
+
     $.ajax({
       url: '/api/application',
       method: 'GET',
@@ -50,19 +51,33 @@ export default class ManageComponent extends React.Component {
         data.sort(function(a, b) {
           return b.stageId - a.stageId;
         });
-        context.setState({
-          jobs: data
-        });
-        console.log('State jobs data:', context.state.jobs);
+        var active = [];
+        // var archived = [];
 
+        data.forEach(function(job){
+          console.log('Inside forEach Data - job!');
+          if (job.active === true) {
+            active.push(job);
+
+            context.setState({
+              jobs: active,
+              // archivedJobs: archived
+            });
+
+            // context.setState({
+            //   jobs: active,
+            // });
+          } // end of 'if'
+        });
+
+        console.log('State jobs data:', context.state.jobs);
+        console.log('Archived Jobs data: ', context.state.archivedJobs);
         context.getStageCounts();
 
         console.log('Counts for stages:', context.state.stageCounts);
       }
     })
   }
-
-
 
   getStageCounts() {
     var jobData = this.state.jobs;
@@ -80,7 +95,6 @@ export default class ManageComponent extends React.Component {
     });
 
     this.setState({stageCounts: stageValues});
-
   }
 
   //id - applicationId
@@ -218,13 +232,15 @@ export default class ManageComponent extends React.Component {
 
   }
 
-
   render() {
     var stages = ['Interested', 'Applied', 'Phone Screen','On-Site', 'Decision', 'Offered']
     return (
       <div>
         <StageList boxClasses={this.state.boxClasses} filter={this.filter} filtered={this.state.filtered} stageCounts={this.state.stageCounts} stages={stages}/>
         <AddAppManual getJobs={this.getJobs} />
+        <div>
+          <Link to={'/archived'}>View Archived Jobs</Link>
+        </div>
         <ApplicationList sort={this.sort} filter={this.filter} filtered={this.state.filtered} filteredJobs={this.state.filteredJobs} jobInfo={this.state.jobs} sortList={this.sortListByStage} stages={stages} selectedAppJob={this.state.selectedAppJob} changeStage={this.changeStage} />
       </div>
     )

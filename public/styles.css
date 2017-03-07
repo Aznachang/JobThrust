@@ -37,7 +37,7 @@ table {
 }
 
 th {
-  width: 32%;
+  width: 27%;
 }
 
 th:hover {
@@ -413,6 +413,10 @@ th.th-created {
 
 th.th-stage {
   width: 21%;
+}
+
+th.th-archive {
+  width: 10%;
 }
 
 .application:hover {
