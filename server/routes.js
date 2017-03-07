@@ -29,24 +29,22 @@ var multiparty = require('connect-multiparty'),
 router.use(multipartyMiddleware);
 
 router.post('/upload',function(req,res){
-
-    console.log(JSON.stringify(req.files));
     var file = req.files;
-    // console.log("file",JSON.stringify(file))
-    // console.log("original name:- "+file.fileUpload.originalFilename);
-    // console.log("Path:- ",file.fileUpload.path);
-    var stream = fs.createReadStream(file.fileUpload.path);
+ 
+   var stream = fs.createReadStream(file.fileUpload.path);
    return s3fsImpl.writeFile(file.fileUpload.originalFilename, stream).then(function(data){
         fs.unlink(file.fileUpload.path, function(err){
             console.error(err);
             var fsImplStyles = s3fsImpl.getPath(file.fileUpload.originalFilename);
-            console.log('This is the path for the image in s3 amazon Web', data);
-            var uploadObj = {id: Math.floor(Math.random() * 100000), imgeUrl: file.fileUpload.originalFilename}
+
+            console.log('This is the path for the image in s3 amazon Web', fsImplStyles);
+            var createS3Url = 'https://s3.amazonaws.com/' + fsImplStyles
+            var uploadObj = {id: Math.floor(Math.random() * 100000), imgeUrl: createS3Url}
             Model.UploadFiles.insertMany(uploadObj, function(err, data) {
               if (err) {
                 res.json(err);
               } else {
-                res.json('saved')
+                res.json('Hi')
               }
             })
         })
@@ -55,21 +53,6 @@ router.post('/upload',function(req,res){
    console.log('this should be the url from s3',result)
 });
 
-router.post('/upload',function(req,res){
-
-    var file = req.files;
-    var stream = fs.createReadStream(file.fileUpload.path);
-   return s3fsImpl.writeFile(file.fileUpload.originalFilename, stream, 'public-read').then(function(data){
-        fs.unlink(file.fileUpload.path, function(err){
-            console.error(err);
-            res.send('Sucessfully uploaded to Amazon S3 server')
-        })
-    });
-});
-
-// router.get('/upload',function(req, res) {
-//   res.render('index', {title: 'Express'})
-// });
 /******************* Upload Files ends********************/
 router.route('/jobs/:jk').get(function(req, res) {
   var url = "http://www.indeed.com/viewjob?jk=" + req.params.jk;
