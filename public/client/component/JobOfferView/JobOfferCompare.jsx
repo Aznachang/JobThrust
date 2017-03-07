@@ -14,7 +14,6 @@ export default class JobOfferCompare extends React.Component {
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    // this.convertDate = this.convertDate.bind(this);
   }
 
   openModal() {
@@ -38,13 +37,7 @@ export default class JobOfferCompare extends React.Component {
         <td>${this.props.jobOffer.signBonus}</td>
         <td>{this.props.jobOffer.vacationDays}</td>
         <td>{this.props.jobOffer.retireMatchPercent}%</td>
-        <td>
-          <div className="add-joboffer-btn" onClick={this.openModal}>
-            <div>
-              <span onClick={this.openModal}>Add More</span>
-            </div>
-          </div>
-        </td>
+        <td onClick={this.openModal}>📔</td>
         <Modal
         isOpen={this.state.modalIsOpen}
         onAfterOpen={this.afterOpenModal}

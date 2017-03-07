@@ -42,7 +42,7 @@ export default class JobOfferList extends React.Component {
           return archivedOffer.companyName.toLowerCase().indexOf(this.props.filterText.toLowerCase()) >= 0
       }).map(archivedOffer => {
         return (
-          <ArchivedJobOffer archivedOffers = {archivedOffer} />
+          <ArchivedJobOffer convertDate={this.props.convertDate} archivedOffers = {archivedOffer} />
         )
       });
 

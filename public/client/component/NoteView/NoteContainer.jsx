@@ -1,6 +1,6 @@
 import React from 'react';
 import { Router, Route, browserHistory, Link } from 'react-router';
-import axios from 'axios'
+import axios from 'axios';
 import Note from './Note.jsx';
 import $ from 'jQuery';
 
