@@ -14,9 +14,10 @@ var fs = require('fs');
 
 var S3FS = require('s3fs');
 
-var s3fsImpl = new S3FS('ahmedzoghayyer92',{
+var s3fsImpl = new S3FS('uploadImages92',{
     accessKeyId:'AKIAIQ5IYO2XWIF3LKVA',
-    secretAccessKey:'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'
+    secretAccessKey:'1FLRpbFiyOWM8YXIJgp5uIV6Bq0kRnxPqaIagy7D',
+    ACL: 'public-read'
 });
 
 // Create our bucket if it doesn't exist
@@ -35,11 +36,34 @@ router.post('/upload',function(req,res){
     // console.log("original name:- "+file.fileUpload.originalFilename);
     // console.log("Path:- ",file.fileUpload.path);
     var stream = fs.createReadStream(file.fileUpload.path);
-   return s3fsImpl.writeFile(file.fileUpload.originalFilename, stream, {"ContentType":"image/png"}).then(function(){
+   return s3fsImpl.writeFile(file.fileUpload.originalFilename, stream).then(function(data){
         fs.unlink(file.fileUpload.path, function(err){
             console.error(err);
+            var fsImplStyles = s3fsImpl.getPath(file.fileUpload.originalFilename);
+            console.log('This is the path for the image in s3 amazon Web', data);
+            var uploadObj = {id: Math.floor(Math.random() * 100000), imgeUrl: file.fileUpload.originalFilename}
+            Model.UploadFiles.insertMany(uploadObj, function(err, data) {
+              if (err) {
+                res.json(err);
+              } else {
+                res.json('saved')
+              }
+            })
         })
         console.log("Sucessfully uploaded to Amazon S3 server");
+    });
+   console.log('this should be the url from s3',result)
+});
+
+router.post('/upload',function(req,res){
+
+    var file = req.files;
+    var stream = fs.createReadStream(file.fileUpload.path);
+   return s3fsImpl.writeFile(file.fileUpload.originalFilename, stream, 'public-read').then(function(data){
+        fs.unlink(file.fileUpload.path, function(err){
+            console.error(err);
+            res.send('Sucessfully uploaded to Amazon S3 server')
+        })
     });
 });
 
