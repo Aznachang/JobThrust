@@ -38,7 +38,7 @@ export default class EmployeeReview extends React.Component {
         var id = $(this).parent()[0].children[0].classList[0];
         $.ajax({
             method: 'GET',
-            url: 'http://localhost:3000/api/buttonsInfo?name='+ id,
+            url: '/api/buttonsInfo?name='+ id,
             contentType:'application/json',
             success: function(data) {
               console.log('hers is a single data ', data);
@@ -65,7 +65,7 @@ export default class EmployeeReview extends React.Component {
                 var buttonData = [$(secondContext).val(), $(secondContext).parent()[0].children[0].classList[0], context.helpfulCheckpoint, $(secondContext).parent()[0].children[0].classList[0] ]
                 $.ajax({
                     method: 'POST',
-                    url: 'http://localhost:3000/api/updateHelpfulButton',
+                    url: '/api/updateHelpfulButton',
                     contentType:'application/json',
                     data: JSON.stringify(buttonData),
                     success: function(data) {
@@ -156,7 +156,7 @@ export default class EmployeeReview extends React.Component {
     var context = this;
     $.ajax({
       method: 'POST',
-      url: 'http://localhost:3000/api/updateEmployeeReview',
+      url: '/api/updateEmployeeReview',
       contentType:'application/json',
       data: JSON.stringify(data),
       success: function(data) {
