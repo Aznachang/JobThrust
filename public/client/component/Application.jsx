@@ -13,7 +13,6 @@ var appElement = document.getElementById('app');
 export default class Application extends React.Component {
   constructor(props) {
     super(props);
-    // this.nextStage = this.nextStage.bind(this);
     this.getJobInfo = this.getJobInfo.bind(this);
     this.toggle = this.toggle.bind(this);
     this.getEvents = this.getEvents.bind(this);
@@ -21,6 +20,7 @@ export default class Application extends React.Component {
     this.toggleEventCreate = this.toggleEventCreate.bind(this);
     this.convertDate = this.convertDate.bind(this);
     this.getContact = this.getContact.bind(this);
+    this.archiveOneJob = this.archiveOneJob.bind(this)
 
     this.state = {
       modalIsOpen: false,
@@ -219,26 +219,25 @@ export default class Application extends React.Component {
     });
   }
 
-  //UPDATE A JOB OFFER
+  // ARCHIVE A SPECIFIC JOB RECORD
   archiveOneJob(e) {
-    console.log('APP ID - APPLICATION: ', this.props.id)
     e.preventDefault();
     var context = this;
 
     var archiveJobData = {
-      // appId: context.props.id,
       active: false,
-      activeReason: $( "#archive-offer option:selected" ).text()
+      activeReason: $("#job-offer option:selected").text()
     };
 
-    axios.post('/api/application/' + this.props.id, archiveJobData)
+    console.log('archiveJOBDATA is: ', archiveJobData);
+    console.log('APP ID - APPLICATION: ', context.props.id);
+
+    axios.put('/api/application/' + context.props.id, archiveJobData)
     .then(function(offers) {
-      // context.props.get();
-      // context.props.getArchivedJobOffers();
       console.log('Archived Job Application!');
+      context.props.getJobs();
     });
 
-    // close Job Offer Form Upon Updating...
     this.closeModal();
   }
 
@@ -249,8 +248,6 @@ export default class Application extends React.Component {
         <td onClick={this.openModal}>{this.props.company}</td>
         <td className="stage" onClick={this.openModal}>{this.props.stage}</td>
         <td onClick={this.openModal}>{this.convertDate(this.props.created).substring(0, 10)}</td>
-        <td onClick={this.openModal}>📂</td>
-
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
@@ -309,7 +306,7 @@ export default class Application extends React.Component {
                   <h3> Archive This Job </h3>
                 <form id="add-app-form" onSubmit={this.archiveOneJob}>
                   <b>Reason: </b>
-                  <select id ='archive-offer'>
+                  <select id ='job-offer'>
                     <option value="rejected">Lost Interest</option>
                      <option value="cancelled">Cancelled</option>
                     <option value="not interested">Rejected</option>

@@ -9,7 +9,6 @@ class SearchRecommendations extends React.Component {
   }
 
   render() {
-    console.log('SearchResults in recommendations: ', this.props.recommendations);
     var recommendations = this.props.recommendations;
     var recommendationsList = recommendations.map((result, index) => {
       var infoWindow = null;

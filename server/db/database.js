@@ -32,15 +32,6 @@ var Application = db.define('application', {
   activeReason: Sequelize.STRING
 });
 
-var Company = db.define('company', {
-  name: Sequelize.STRING,
-  size: {type: Sequelize.STRING, allowNull: true}
-});
-
-var Stage = db.define('stage', {
-  name: Sequelize.STRING
-});
-
 var Note = db.define('note', {
   note: Sequelize.TEXT,
   applicationId: Sequelize.INTEGER
@@ -88,7 +79,6 @@ db.sync(/*{force: true}*/).then(function() {
 module.exports.User = User;
 module.exports.Job = Job;
 module.exports.Application = Application;
-module.exports.Stage = Stage;
 module.exports.Note = Note;
 module.exports.Search = Search;
 module.exports.Query = Query;

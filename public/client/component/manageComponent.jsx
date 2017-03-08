@@ -37,7 +37,6 @@ export default class ManageComponent extends React.Component {
     this.sortListByStage = this.sortListByStage.bind(this);
     this.filter = this.filter.bind(this);
     this.sort = this.sort.bind(this);
-    this.getJobs();
   }
 
   getJobs() {
@@ -52,7 +51,6 @@ export default class ManageComponent extends React.Component {
           return b.stageId - a.stageId;
         });
         var active = [];
-        // var archived = [];
 
         data.forEach(function(job){
           console.log('Inside forEach Data - job!');
@@ -61,20 +59,11 @@ export default class ManageComponent extends React.Component {
 
             context.setState({
               jobs: active,
-              // archivedJobs: archived
             });
-
-            // context.setState({
-            //   jobs: active,
-            // });
-          } // end of 'if'
+          }
         });
 
-        console.log('State jobs data:', context.state.jobs);
-        console.log('Archived Jobs data: ', context.state.archivedJobs);
         context.getStageCounts();
-
-        console.log('Counts for stages:', context.state.stageCounts);
       }
     })
   }
@@ -130,7 +119,6 @@ export default class ManageComponent extends React.Component {
         console.log('StageID changed:', jobsCurrent[i]);
 
         // Re-sort jobsCurrent by stageID
-
         this.setState({jobs: jobsCurrent});
         this.getStageCounts();
 
@@ -231,6 +219,10 @@ export default class ManageComponent extends React.Component {
 
   }
 
+  componentDidMount() {
+    this.getJobs();
+  }
+
   render() {
     var stages = ['Interested', 'Applied', 'Phone Screen','On-Site', 'Decision', 'Offered']
     return (
@@ -240,7 +232,7 @@ export default class ManageComponent extends React.Component {
         <div>
           <Link to={'/archived'}>View Archived Jobs</Link>
         </div>
-        <ApplicationList sort={this.sort} filter={this.filter} filtered={this.state.filtered} filteredJobs={this.state.filteredJobs} jobInfo={this.state.jobs} sortList={this.sortListByStage} stages={stages} selectedAppJob={this.state.selectedAppJob} changeStage={this.changeStage} />
+        <ApplicationList sort={this.sort} filter={this.filter} filtered={this.state.filtered} filteredJobs={this.state.filteredJobs} jobInfo={this.state.jobs} sortList={this.sortListByStage} stages={stages} selectedAppJob={this.state.selectedAppJob} changeStage={this.changeStage} getJobs={this.getJobs} />
       </div>
     )
   }

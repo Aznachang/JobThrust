@@ -26,11 +26,7 @@ export default class JobOfferList extends React.Component {
     }).map(jobOffer => {
       console.log('THIS OFFERs APP ID IS: ', jobOffer.applicationId);
       return (
-        <tr className='application'>
-         <td>{jobOffer.companyName}</td>
-         <td>{jobOffer.jobTitle}</td>
-         <JobOfferForm key ={jobOffer.id} index={jobOffer.id} getOffer={this.props.getOffer} offerId ={jobOffer.id} getArchivedJobOffers={this.props.getArchivedJobOffers} jobOffers = {jobOffer} appId={jobOffer.applicationId} />
-       </tr>
+       <JobOfferForm key ={jobOffer.id} index={jobOffer.id} getOffer={this.props.getOffer} offerId ={jobOffer.id} getArchivedJobOffers={this.props.getArchivedJobOffers} jobOffers = {jobOffer} appId={jobOffer.applicationId} />
       )
     });
 
