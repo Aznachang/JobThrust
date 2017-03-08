@@ -161,7 +161,7 @@ export default class CompanyComponent extends React.Component {
     var employee = {id:Math.floor(Math.random()* 900000000), name: this.state.value, countOfReviews: this.starNumberForemployee ,employeeComments: [{reviewTitle: this.state.reviewTitle}, {consReview:this.state.consReview},{prosReview:this.state.prosReview}], imgUrl:this.state.companyInfo[0].squareLogo, helpfulButtonScore:'helpful(0)', userInfo:[], singleUl:''}
     $.ajax({
       method: 'POST',
-      url:'http://localhost:3000/api/employeeReviews',
+      url:'/api/employeeReviews',
       contentType:'application/json',
       data: JSON.stringify(employee),
       success: function(data) {
@@ -181,7 +181,7 @@ export default class CompanyComponent extends React.Component {
     var name = this.state.value;
     $.ajax({
       method:'GET',
-      url:'http://localhost:3000/api/employeeReviews?name='+ name,
+      url:'/api/employeeReviews?name='+ name,
       contentType: 'application/json',
       success: function(data) {
         console.log('employee----data', data);
@@ -204,7 +204,7 @@ export default class CompanyComponent extends React.Component {
     console.log('this is the state value' ,this.state.value)
     $.ajax({
       method:'GET',
-      url:'http://localhost:3000/api/company?company='+ this.state.value,
+      url:'/api/company?company='+ this.state.value,
       contentType: 'application/json',
       success: function(data) {
         console.log('User IDIDIDIDIDDD', typeof data[2])
@@ -268,7 +268,7 @@ export default class CompanyComponent extends React.Component {
     var name = this.state.value;
     $.ajax({
       method:'GET',
-      url:'http://localhost:3000/api/interviewreview?name='+ name,
+      url:'/api/interviewreview?name='+ name,
       contentType: 'application/json',
       success: function(data) {
 
@@ -288,7 +288,7 @@ export default class CompanyComponent extends React.Component {
     var context = this;
     $.ajax({
       method:'POST',
-      url:'http://localhost:3000/api/interviewreview',
+      url:'/api/interviewreview',
       contentType: 'application/json',
       data: JSON.stringify(interviewCompany),
       success: function(data) {

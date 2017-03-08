@@ -33,9 +33,22 @@ var employeeSchema = mongoose.Schema({
   countOfReviews: String
 });
 
+var uploadFiles = mongoose.Schema({
+  id: {
+    type: Number,
+    unique: true
+    },
+    name: String,
+  userId: Number,
+  imgeUrl: String
+});
+
+var UploadFiles = mongoose.model('Upload', uploadFiles);
+
 var EmployeeModel = mongoose.model('Employee', employeeSchema);
 var InterviewModel = mongoose.model('Interview', interviewSchema);
 
+module.exports.UploadFiles = UploadFiles;
 module.exports.InterviewModel = InterviewModel;
 module.exports.EmployeeModel = EmployeeModel;
 

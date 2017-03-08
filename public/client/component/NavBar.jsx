@@ -33,6 +33,9 @@ class NavBar extends React.Component {
           <li>
             <Link to={'/company'}>Companies</Link>
           </li>
+            <li>
+            <Link to={'/upload'}>Upload File</Link>
+          </li>
         </ul>
         <div className='logout-link'>
           <a href="/login" className="logout-btn" onClick={this.logOut}>Log Out</a>

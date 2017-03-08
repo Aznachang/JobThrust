@@ -7,8 +7,91 @@ var table = require('./db/database');
 var rp = require('request-promise');
 var cal = require('./config/calendar');
 var Model = require('./dbMongo/models.js');
+var multer = require('multer');
+var AWS= require('aws-sdk');
 
+var fs = require('fs');
 
+var S3FS = require('s3fs');
+
+var s3fsImpl = new S3FS('uploadImages92',{
+    accessKeyId:'AKIAIQ5IYO2XWIF3LKVA',
+    secretAccessKey:'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',
+    ACL: 'public-read'
+});
+
+// Create our bucket if it doesn't exist
+s3fsImpl.create();
+
+var multiparty = require('connect-multiparty'),
+    multipartyMiddleware = multiparty();
+
+router.use(multipartyMiddleware);
+router.get('/upload',function(req, res) {
+  Model.UploadFiles.find({
+    userId: req.session.passport.user
+  } ,function(err, data) {
+    if (!err) {
+      // console.log('This what was in DB', data);
+      res.json(data);
+    }
+  })
+})
+router.post('/upload',function(req, res) {
+    var file = req.files;
+ console.log('this is the files name',file.fileUpload.originalFilename)
+  console.log('this is the files name',file.fileUpload.path)
+
+   var stream = fs.createReadStream(file.fileUpload.path);
+
+   var name = file.fileUpload.originalFilename.slice(0, file.fileUpload.originalFilename.length-4).replace(/[^a-zA-Z]/g,'');
+   console.log('This is final name', name)
+
+   if (file.fileUpload.originalFilename.split('.')[1] === 'pdf' || file.fileUpload.originalFilename.split('.')[1] === 'PDF') {
+
+     return s3fsImpl.writeFile(name, stream, {"ContentType":"application/pdf"}).then(function(data) {
+          fs.unlink(file.fileUpload.path, function(err){
+              console.error(err);
+              var fsImplStyles = s3fsImpl.getPath(file.fileUpload.originalFilename);
+
+              console.log('This is the path for the image in s3 amazon Web', fsImplStyles);
+
+              var createS3Url = 'https://s3.amazonaws.com/uploadImages92/' + name;
+              var uploadObj = {id: Math.floor(Math.random() * 100000), imgeUrl: createS3Url, userId: req.session.passport.user, name:file.fileUpload.originalFilename}
+              Model.UploadFiles.insertMany(uploadObj, function(err, data) {
+                if (err) {
+                  res.json(err);
+                } else {
+                  res.json('Hi');
+                }
+              })
+          })
+          console.log("Sucessfully uploaded to Amazon S3 server");
+      });
+   } else if (file.fileUpload.originalFilename.split('.')[1] === 'png' || file.fileUpload.originalFilename.split('.')[1] === 'jpg') {
+         return s3fsImpl.writeFile(name, stream, {"ContentType":"image/png"}).then(function(data) {
+          fs.unlink(file.fileUpload.path, function(err){
+              console.error(err);
+              var fsImplStyles = s3fsImpl.getPath(file.fileUpload.originalFilename);
+
+              console.log('This is the path for the image in s3 amazon Web', fsImplStyles);
+
+              var createS3Url = 'https://s3.amazonaws.com/uploadImages92/' + name
+              var uploadObj = {id: Math.floor(Math.random() * 100000), imgeUrl: createS3Url, userId: req.session.passport.user, name:file.fileUpload.originalFilename}
+              Model.UploadFiles.insertMany(uploadObj, function(err, data) {
+                if (err) {
+                  res.json(err);
+                } else {
+                  res.json('Hi');
+                }
+              })
+          })
+          console.log("Sucessfully uploaded to Amazon S3 server");
+      });
+   }
+});
+
+/******************* Upload Files ends********************/
 router.route('/jobs/:jk').get(function(req, res) {
   var url = "http://www.indeed.com/viewjob?jk=" + req.params.jk;
   request(url, function(error, response, html) {
@@ -237,9 +320,10 @@ router.get('/company', function(req, res) {
 
   var basicUrl = 'http://api.glassdoor.com/api/api.htm?';
   var endpoints = 't.p=126535&t.k=jzi4LSmsrF5&userip=199.87.82.66&useragent=&format=json&v=1&action=employers&q=';
-
   rp(basicUrl+endpoints+req.query.company).then(function(respond) {
-    respond = JSON.parse(respond)
+
+    respond = JSON.parse(respond);
+
     var url = 'https://en.wikipedia.org/wiki/';
     request(url+req.query.company, function(error, response, html) {
       if(!error) {
@@ -247,8 +331,10 @@ router.get('/company', function(req, res) {
         // console.log($('.infobox').text());
         var jobSummary = $('#mw-content-text').find('p').text() // A plain DOM element.
         // console.log(jobSummary)
-        var index = jobSummary.match(/[.]/)['index'];
-        res.json([respond.response.employers, jobSummary.slice(0,index+1), req.session.passport.user])
+        var result = jobSummary.split('.');
+        console.log(result[2])
+        var dataTobeSent = result[0] +'.'+ result[1] +'.'+ result[2]+'.' + result[3]+'.' + result[4]+'.' + result[5]+'.'+ result[6]+'.';
+        res.json([respond.response.employers,dataTobeSent, req.session.passport.user])
       }
     })
   }).catch(function(err) {

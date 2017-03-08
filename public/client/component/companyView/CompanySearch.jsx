@@ -10,7 +10,7 @@ export default class CompanySearch extends React.Component {
   render() {
     return (
        <form className="job-search-form" onSubmit={this.props.getCompanyInfo}>
-         <input type="text" name="search" placeholder="Company Name.." onChange={this.props.handleChange}/>
+         <input type="text" name="search" placeholder="Company Name.." onChange={this.props.handleChange} required/>
          <input type="submit" value="Find" />
         </form>
     )
