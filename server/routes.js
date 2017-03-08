@@ -27,8 +27,17 @@ var multiparty = require('connect-multiparty'),
     multipartyMiddleware = multiparty();
 
 router.use(multipartyMiddleware);
-
-router.post('/upload',function(req,res){
+router.get('/upload',function(req, res) {
+  Model.UploadFiles.find({
+    userId: req.session.passport.user
+  } ,function(err, data) {
+    if (!err) {
+      console.log('This what was in DB', data);
+      res.json(data);
+    }
+  })
+})
+router.post('/upload',function(req, res) {
     var file = req.files;
  
    var stream = fs.createReadStream(file.fileUpload.path);
@@ -39,12 +48,12 @@ router.post('/upload',function(req,res){
 
             console.log('This is the path for the image in s3 amazon Web', fsImplStyles);
             var createS3Url = 'https://s3.amazonaws.com/' + fsImplStyles
-            var uploadObj = {id: Math.floor(Math.random() * 100000), imgeUrl: createS3Url}
+            var uploadObj = {id: Math.floor(Math.random() * 100000), imgeUrl: createS3Url, userId: req.session.passport.user}
             Model.UploadFiles.insertMany(uploadObj, function(err, data) {
               if (err) {
                 res.json(err);
               } else {
-                res.json('Hi')
+                res.json('Hi');
               }
             })
         })

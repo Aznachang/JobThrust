@@ -1,7 +1,19 @@
 #app {
 /*	background-color:#eee;
 */}
-
+.singleFile {
+  width: 100px;
+  height:100px; 
+}
+.uploadFiles {
+  width: 200px;
+  height: 200px; 
+}
+#upload_target {
+  width:0;
+  height:0;
+  border:0px solid #fff;
+}
 .roundstar {
   width: 20px;
   height: 20px;
