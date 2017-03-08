@@ -243,7 +243,6 @@ export default class CompanyComponent extends React.Component {
     this.setState({modalIsOpen: true});
     $(function() {
       $('.ratingStar').append('<span class="rating"><span class="five5 rate star"></span><span class="four4 rate star "></span><span class="three3 rate star"></span><span class="two2 rate star filled"></span><span class=" first1 rate star filled"></span></span>');
-      // $('.ratingStar').append('<span class="rating"><span class="star"></span><span class="star "></span><span class="star"></span><span class="star filled"></span><span class="star filled"></span></span>');
 
       // $('.ratingStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span><span class='four4 rate'>&#9734</span><span class='five5 rate'>&#9734</span>");
     })
@@ -284,7 +283,7 @@ export default class CompanyComponent extends React.Component {
     var name = this.state.value;
     $.ajax({
       method:'GET',
-      url:'/api/interviewreview?name='+ name,
+      url:'http://localhost:3000/api/interviewreview?name='+ name,
       contentType: 'application/json',
       success: function(data) {
 

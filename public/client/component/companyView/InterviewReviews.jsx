@@ -1,6 +1,7 @@
 import React from 'react';
 import $ from 'jQuery';
 import Modal from 'react-modal';
+import axios from 'axios';
 
 
 export default class InterviewReviews extends React.Component {
@@ -29,6 +30,8 @@ export default class InterviewReviews extends React.Component {
     this.importantId = '';
     this.helpfulCheckpoint = {};
     this.produceStars = this.produceStars.bind(this);
+    this.editStarsForInterview = this.editStarsForInterview.bind(this);
+    this.eidtStarCount = 0;
     // this.setState({helpfulCheckpoint:this.helpfulCheckpoint[this.props.userId] = true})
 
     var context = this;
@@ -89,6 +92,46 @@ export default class InterviewReviews extends React.Component {
      })
     })
   }
+
+  editStarsForInterview() {
+    var context = this;
+    $(function() {
+
+      $(document).on('click', '.Editrate', function() {
+        context.$element = $(this)[0].classList[0];
+        var $stars = $(this)[0].classList[0];
+        console.log('star that was selected', $(this)[0].classList)
+        if (Number($stars[$stars.length-1]) === 1 ) {
+          context.eidtStarCount  = $stars[$stars.length-1];
+          console.log('11111')
+          // $('.rateForEmployee').attr('content','\2605');
+          $(this).remove($(this)[0].classList[0]);
+
+        } else if (Number($stars[$stars.length-1]) === 2) {
+                    console.log('2222')
+          context.eidtStarCount  = $stars[$stars.length-1];
+
+          $(this).remove($(this)[0].classList[0]);
+
+        } else if(Number($stars[$stars.length-1]) === 3) {
+                    console.log('33333')
+          context.eidtStarCount  = $stars[$stars.length-1];
+
+          $(this).remove($(this)[0].classList[0]);
+        } else if (Number($stars[$stars.length-1]) === 4) {
+                    console.log('444444')
+          context.eidtStarCount  = $stars[$stars.length-1];
+
+          $(this).remove($(this)[0].classList[0]);
+        } else if (Number($stars[$stars.length-1]) === 5) {
+                    console.log('555555')
+          context.eidtStarCount  = $stars[$stars.length-1];
+
+          $(this).remove($(this)[0].classList[0]);
+        }
+      })
+    })
+  }
   editReview() {
     var context = this;
     var $ele;
@@ -96,17 +139,20 @@ export default class InterviewReviews extends React.Component {
       $(document).on('click', '.editReview', function() { 
         $ele = this;
         context.importantId = $(this).parent()[0].children[0].classList[0];
+        console.log('Those are the children of the edit', $(this).parent()[0].children)
         context.arrayOfinputs = [ 
           $(this).parent()[0].children[0].innerText, 
           $(this).parent()[0].children[1].innerText,
           $(this).parent()[0].children[2].innerText,
           $(this).parent()[0].children[3].innerText,
-          $(this).parent()[0].children[4].innerText
+          $(this).parent()[0].children[4].innerText,
+          $(this).parent()[0].children[5]
         ]
         context.openModal(context.arrayOfinputs);
       })
       $(document).on('submit', '.add-app-form1', function(event) { 
         event.preventDefault();
+
         if (!context.state.title1) {
           var $liJobTitle = "<li>"+ context.arrayOfinputs[0] +"</li>";
           context.setState({
@@ -150,10 +196,42 @@ export default class InterviewReviews extends React.Component {
 
         var $button = "<button class='editReview'>Edit the Review</button>";
 
-        // console.log('2fdsdfsadfsafdsa', $($ele).parent())
-        $($ele).parent().html($liJobTitle+$liJobDate+$liJobInterviewProcess+$liJobInterviewQuestion+$liJobTitleInterviewQAnswer+$button);
+
+
+        if (Number(context.eidtStarCount) === 0) {
+            var editCountStar = context.arrayOfinputs[5].children.length;
+            if (editCountStar === 1) {
+              var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" />';
+            } else if (editCountStar === 2) {
+              var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+            } else if (editCountStar === 3) {
+              var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+            } else if (editCountStar === 4) {
+              var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+            } else if (editCountStar === 5) {
+              var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+            }
+        } else {
+          var editCountStar = Number(context.eidtStarCount);
+            if (editCountStar === 1) {
+              var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" />';
+            } else if (editCountStar === 2) {
+              var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+            } else if (editCountStar === 3) {
+              var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+            } else if (editCountStar === 4) {
+              var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+            } else if (editCountStar === 5) {
+              var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+            }
+        }
+
+        var $editStarElementList = '<li>'+ $editStarElement + '</li>';
+        console.log('new star ratings', editCountStar)
+        $($ele).parent().html($liJobTitle+$liJobDate+$liJobInterviewProcess+$liJobInterviewQuestion+$liJobTitleInterviewQAnswer+ $editStarElementList + $button);
         context.closeModal();
-        var updatedData = {name: context.props.companyName, imgUrl:context.props.imgUrl ,companyComments: [{jobTitle:context.state.title1},{date:context.state.date1},{interviewProcess:{descriptionOfinterview:context.state.interviewProcess1, interviewQuestion:context.state.interviewQuestion1, interviewProcess:context.state.description1}}]};
+        console.log('This is the name of the company', context.props.companyName)
+        var updatedData = {name: context.props.companyName, imgUrl:context.props.imgUrl ,countOfReviews: editCountStar, companyComments: [{jobTitle:context.state.title1},{date:context.state.date1},{interviewProcess:{descriptionOfinterview:context.state.interviewProcess1, interviewQuestion:context.state.interviewQuestion1, interviewProcess:context.state.description1}}]};
         var dataToSend = [updatedData, context.importantId];
         context.sendUpdatedData(dataToSend);
       })
@@ -161,18 +239,27 @@ export default class InterviewReviews extends React.Component {
   }
   sendUpdatedData(dataToSend){
     var context = this;
-    $.ajax({
-      method: 'POST',
-      url:'/api/updateMongoDB',
-      contentType:'application/json',
-      data:JSON.stringify(dataToSend),
-      success: function(data) {
-        context.props.retrieveDataFromDB()
-      },
-      error: function(err) {
-        console.log('You have an error', err)
-      }
+
+    axios.post('/api/updateMongoDB',dataToSend)
+    .then(function (response) {
+      context.props.retrieveDataFromDB()
+      console.log(response);
     })
+    .catch(function (error) {
+      console.log(error);
+    });
+    // $.ajax({
+    //   method: 'POST',
+    //   url:'http://localhost:3000/api/updateMongoDB',
+    //   contentType:'application/json',
+    //   data:JSON.stringify(dataToSend),
+    //   success: function(data) {
+    //     context.props.retrieveDataFromDB()
+    //   },
+    //   error: function(err) {
+    //     console.log('You have an error', err)
+    //   }
+    // })
   }
   openModal(text) {
     console.log(text)
@@ -228,8 +315,11 @@ export default class InterviewReviews extends React.Component {
     }
     return array;
   }
+  componentDidMount() {
+    this.editReview();
+    this.editStarsForInterview();
+  }
   render() {
-    this.editReview()
     return(
       <div id="comments"> 
        <Modal
@@ -243,7 +333,7 @@ export default class InterviewReviews extends React.Component {
 
           <div className="inner-container">
             <div className='desc-header'>
-              Add an Interview Review Below:
+              Edit Interview Review Below:
             </div>
             <div className='add-app-container'>
               <form className="add-app-form1">
@@ -256,7 +346,11 @@ export default class InterviewReviews extends React.Component {
                 Interview Question<br />
                 <textarea name='description' form='add-app-form1' className='interviewQuestion' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewQuestion1}required></textarea><br />
                 Question-Answer:
-                <textarea name='description' form='add-app-form1' className='interviewAnswer' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalDescriptionA1} required></textarea><br />
+                <textarea name='description' form='add-app-form1' className='interviewAnswer' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalDescriptionA1} required></textarea><br /><br/><br/>
+                 <div className="editRatingStar">
+                  <p>Overall Rating</p>
+                  <span className="rating"><span className="five5 Editrate star"></span><span className="four4 Editrate star "></span><span className="three3 Editrate star"></span><span className="two2 Editrate star filled"></span><span className=" first1 Editrate star filled"></span></span>
+                </div>
                 <input type='submit' className='add-small' value='Save Changes' />
               </form>
             </div>
@@ -272,9 +366,9 @@ export default class InterviewReviews extends React.Component {
           <li>{filed.companyComments[2].interviewProcess.descriptionOfinterview}</li>
           <li>{filed.companyComments[2].interviewProcess.interviewQuestion}</li>
           <li>{filed.companyComments[2].interviewProcess.interviewProcess}</li>
-          <li>{
+          <li className="changeStarRating">{
             this.produceStars(filed.countOfReviews).map((ele, indx) =>
-              <img key={indx} className="roundstar" src='./roundstar1.png' />
+              <img key={indx} className="roundstar" src='roundstar1.png' />
             )
           }</li>
           <button className="editReview">Edit the Review</button>

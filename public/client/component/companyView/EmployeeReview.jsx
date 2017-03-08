@@ -210,8 +210,10 @@ export default class EmployeeReview extends React.Component {
     }
     return array;
   }
-  render() {
+  componentDidMount() {
     this.editEmployeeInfo();
+  }
+  render() {
     return (
       <div>
       <Modal
@@ -225,7 +227,7 @@ export default class EmployeeReview extends React.Component {
 
           <div className="inner-container">
             <div className='desc-header'>
-              Edit an Interview Review Below:
+              Edit Employee Review Below:
             </div>
             <div className='add-app-container'>
               <form id="add-app-form" onSubmit={this.editEmployeeReviewForm}>
@@ -235,8 +237,9 @@ export default class EmployeeReview extends React.Component {
                 <input type='text' name='Pros' className='pros' onChange={this.editHandleChangeForModalPros} required/><br />
                 Cons<br />
                 <textarea name='description' form='add-app-form' className='cons' placeholder='Enter a Comment ...' onChange={this.editHandleChangeForModalCons}required></textarea><br />
-                <div className="ratingStar">
+                  <div className="editRatingStar">
                   <p>Overall Rating</p>
+                  <span className="rating"><span className="five5 rate star"></span><span className="four4 rate star "></span><span className="three3 rate star"></span><span className="two2 rate star filled"></span><span className=" first1 rate star filled"></span></span>
                 </div>
                 <input type='submit' className='add-small' value='Submit Review' />
               </form>

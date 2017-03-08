@@ -210,8 +210,12 @@ router.post('/updateEmployeeReview', function(req, res) {
 });
 
 router.post('/updateMongoDB', function(req, res) {
+  console.log('This is the --44--4-4-4-',req.body )
+
   Model.InterviewModel.findOne({id:req.body[1]}, function(err, doc) {
+    console.log('This is the --3-3-3-3-3-',req.body[0] )
     doc.name = req.body[0].name;
+    doc.countOfReviews = req.body[0].countOfReviews;
     var company = [
       {
         "jobTitle" : req.body[0].companyComments[0].jobTitle
