@@ -6,6 +6,7 @@ var path = require('path');
 var table = require('./db/database');
 var rp = require('request-promise');
 var cal = require('./config/calendar');
+var extSearch = require('./config/extSearch');
 var Model = require('./dbMongo/models.js');
 var multer = require('multer');
 var AWS= require('aws-sdk');
@@ -244,12 +245,20 @@ router.get('/interviewreview', function(req, res) {
   })
 });
 
-/******************* Google Calender ********************/
+// === GOOGLE API ROUTES ===
 router.post('/goog/calget', cal.getCalData);
 
 router.post('/goog/cal', cal.createEvent);
 
 router.post('/mail/thread/', cal.getThread);
+// ====
+
+// ==== BACKGROUND SEARCH ROUTS ===
+
+router.get('/extsearch/:email/', extSearch.getSearches);
+
+// ====
+
 
 router.post('/job', function(req, res) {
   table.Job.findOrCreate({
