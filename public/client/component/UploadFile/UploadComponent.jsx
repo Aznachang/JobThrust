@@ -44,7 +44,7 @@ export default class UploadComponent extends React.Component {
       }
     })
   }
-componentWillUpdate() {
+componentDidMount() {
   this.getUploadedData();
 }
   render() {
