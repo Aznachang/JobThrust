@@ -40,9 +40,13 @@ router.get('/upload',function(req, res) {
 router.post('/upload',function(req, res) {
     var file = req.files;
  console.log('this is the files name',file.fileUpload.originalFilename)
+  console.log('this is the files name',file.fileUpload.path)
+
    var stream = fs.createReadStream(file.fileUpload.path);
 
-   var name = file.fileUpload.originalFilename.slice(0, file.fileUpload.originalFilename.length-4);
+   var name = file.fileUpload.originalFilename.slice(0, file.fileUpload.originalFilename.length-4).replace(/[^a-zA-Z]/g,'');
+   console.log('This is final name', name)
+
    if (file.fileUpload.originalFilename.split('.')[1] === 'pdf' || file.fileUpload.originalFilename.split('.')[1] === 'PDF') {
 
      return s3fsImpl.writeFile(name, stream, {"ContentType":"application/pdf"}).then(function(data) {
@@ -52,7 +56,7 @@ router.post('/upload',function(req, res) {
 
               console.log('This is the path for the image in s3 amazon Web', fsImplStyles);
 
-              var createS3Url = 'https://s3.amazonaws.com/' + fsImplStyles.split('.')[0];
+              var createS3Url = 'https://s3.amazonaws.com/uploadImages92/' + name;
               var uploadObj = {id: Math.floor(Math.random() * 100000), imgeUrl: createS3Url, userId: req.session.passport.user, name:file.fileUpload.originalFilename}
               Model.UploadFiles.insertMany(uploadObj, function(err, data) {
                 if (err) {

@@ -1,9 +1,15 @@
 #app {
 /*	background-color:#eee;
 */}
+.innercontainer{
+  width: 100%;
+  height: 500px;
+  margin-right: 100px; 
+  margin-left: 150px; 
+}
 .singleFile {
-  width: 500px;
-  height:500px; 
+  width: 650px;
+  height:700px; 
 }
 .uploadFiles {
   width: 200px;
