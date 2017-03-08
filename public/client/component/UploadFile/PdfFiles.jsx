@@ -10,8 +10,9 @@ export default class PdfFiles extends React.Component {
       <div className="uploadFiles">
         {
           this.props.displayFiles.map((file, indx)  =>
-           <a key={indx} href={`${file.imgeUrl}`} className="singleFile"> Download PDF File</a>
-          )
+          <iframe key={indx} src={`${file.imgeUrl}`} title="your_title" className="singleFile" frameBorder="0" scrolling="auto" target="Message">
+          </iframe>
+         )
         }
       </div>
     )

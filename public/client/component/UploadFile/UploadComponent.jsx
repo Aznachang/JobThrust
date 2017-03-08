@@ -28,7 +28,7 @@ export default class UploadComponent extends React.Component {
 
         if (data !== null) {
           data.forEach(function(file) {
-            var lastChars = file.imgeUrl.slice(file.imgeUrl.length-3);
+            var lastChars = file.name.split('.')[1]
             console.log('Ending url ', lastChars);
             if (lastChars === 'pdf') {
               pdfFiles.push(file);
@@ -44,7 +44,9 @@ export default class UploadComponent extends React.Component {
       }
     })
   }
-
+componentDidMount() {
+  this.getUploadedData();
+}
   render() {
     return (
       <div> 
@@ -52,9 +54,6 @@ export default class UploadComponent extends React.Component {
           Select an image to upload:
           <input type="file" name="fileUpload" className="form-control"/>
           <input type="submit" name="submitBtn" value="Upload" />
-           {
-            this.getUploadedData()
-           }
         </form>
         <iframe id="upload_target" name="upload_target" src="#"></iframe>
         <div>

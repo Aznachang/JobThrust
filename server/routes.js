@@ -32,34 +32,59 @@ router.get('/upload',function(req, res) {
     userId: req.session.passport.user
   } ,function(err, data) {
     if (!err) {
-      console.log('This what was in DB', data);
+      // console.log('This what was in DB', data);
       res.json(data);
     }
   })
 })
 router.post('/upload',function(req, res) {
     var file = req.files;
- 
+ console.log('this is the files name',file.fileUpload.originalFilename)
    var stream = fs.createReadStream(file.fileUpload.path);
-   return s3fsImpl.writeFile(file.fileUpload.originalFilename, stream).then(function(data){
-        fs.unlink(file.fileUpload.path, function(err){
-            console.error(err);
-            var fsImplStyles = s3fsImpl.getPath(file.fileUpload.originalFilename);
 
-            console.log('This is the path for the image in s3 amazon Web', fsImplStyles);
-            var createS3Url = 'https://s3.amazonaws.com/' + fsImplStyles
-            var uploadObj = {id: Math.floor(Math.random() * 100000), imgeUrl: createS3Url, userId: req.session.passport.user, name:file.fileUpload.originalFilename}
-            Model.UploadFiles.insertMany(uploadObj, function(err, data) {
-              if (err) {
-                res.json(err);
-              } else {
-                res.json('Hi');
-              }
-            })
-        })
-        console.log("Sucessfully uploaded to Amazon S3 server");
-    });
-   console.log('this should be the url from s3',result)
+   var name = file.fileUpload.originalFilename.slice(0, file.fileUpload.originalFilename.length-4);
+   if (file.fileUpload.originalFilename.split('.')[1] === 'pdf' || file.fileUpload.originalFilename.split('.')[1] === 'PDF') {
+
+     return s3fsImpl.writeFile(name, stream, {"ContentType":"application/pdf"}).then(function(data) {
+          fs.unlink(file.fileUpload.path, function(err){
+              console.error(err);
+              var fsImplStyles = s3fsImpl.getPath(file.fileUpload.originalFilename);
+
+              console.log('This is the path for the image in s3 amazon Web', fsImplStyles);
+
+              var createS3Url = 'https://s3.amazonaws.com/' + fsImplStyles.split('.')[0];
+              var uploadObj = {id: Math.floor(Math.random() * 100000), imgeUrl: createS3Url, userId: req.session.passport.user, name:file.fileUpload.originalFilename}
+              Model.UploadFiles.insertMany(uploadObj, function(err, data) {
+                if (err) {
+                  res.json(err);
+                } else {
+                  res.json('Hi');
+                }
+              })
+          })
+          console.log("Sucessfully uploaded to Amazon S3 server");
+      });
+   } else if (file.fileUpload.originalFilename.split('.')[1] === 'png' || file.fileUpload.originalFilename.split('.')[1] === 'jpg') {
+         return s3fsImpl.writeFile(name, stream, {"ContentType":"image/png"}).then(function(data) {
+          fs.unlink(file.fileUpload.path, function(err){
+              console.error(err);
+              var fsImplStyles = s3fsImpl.getPath(file.fileUpload.originalFilename);
+
+              console.log('This is the path for the image in s3 amazon Web', fsImplStyles);
+
+              var createS3Url = 'https://s3.amazonaws.com/' + fsImplStyles.split('.')[0];
+              var uploadObj = {id: Math.floor(Math.random() * 100000), imgeUrl: createS3Url, userId: req.session.passport.user, name:file.fileUpload.originalFilename}
+              Model.UploadFiles.insertMany(uploadObj, function(err, data) {
+                if (err) {
+                  res.json(err);
+                } else {
+                  res.json('Hi');
+                }
+              })
+          })
+          console.log("Sucessfully uploaded to Amazon S3 server");
+      });
+   }
 });
 
 /******************* Upload Files ends********************/
