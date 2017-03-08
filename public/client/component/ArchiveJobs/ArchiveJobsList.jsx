@@ -38,7 +38,6 @@ export default class ArchiveJobsList extends React.Component {
                 <th onClick={this.props.sort.bind(null, 'company')}>Company</th>
                 <th className='th-stage' onClick={this.props.sort.bind(null, 'stageId')}>Current Stage</th>
                 <th className='th-created' onClick={this.props.sort.bind(null, 'createdAt')}>Created</th>
-                <th className='th-archive'>Archive</th>
               </tr>
             </thead>
             <tbody>

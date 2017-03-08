@@ -225,27 +225,6 @@ module.exports.getThread = function(req, res) {
   }
 }
 
-module.exports.getMessage = function(req, res) {
-  module.exports.oauth2C.setCredentials({
-      access_token: module.exports.userTokens[req.session.passport.user],
-      refresh_token: undefined
-  });
-
-  gmail.users.messages.get({
-    userId: 'me',
-    auth: module.exports.oauth2C,
-    id: '15a91a7046a708bc',
-    format: 'raw'
-  }, function(err, response) {
-    if (err) {
-      console.log(err);
-      res.sendStatus(404);
-    } else {
-      res.json(parseBase64(response.raw));
-    }
-  })
-}
-
 var parseBase64 = function(string) {
   return base64url.decode(string);
 }

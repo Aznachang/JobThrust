@@ -21,7 +21,7 @@ router.route('/jobs/:jk').get(function(req, res) {
   })
 });
 
-/******************* Compnay component ********************/
+/******************* Company component ********************/
 
 router.post('/employeeReviews', function(req, res) {
   Model.EmployeeModel.insertMany(req.body, function(err, data) {
@@ -161,14 +161,12 @@ router.get('/interviewreview', function(req, res) {
   })
 });
 
-/******************* Compnay component ********************/
+/******************* Google Calender ********************/
 router.post('/goog/calget', cal.getCalData);
 
 router.post('/goog/cal', cal.createEvent);
 
 router.post('/mail/thread/', cal.getThread);
-
-router.get('/mail/getmsg', cal.getMessage);
 
 router.post('/job', function(req, res) {
   table.Job.findOrCreate({
@@ -269,7 +267,6 @@ router.get('/application', function(req, res) {
     res.json(respond);
   })
 });
-
 
 /******
 ***      Routes for Notes with Specific Job Application
@@ -399,7 +396,6 @@ router.get('/query', function(req, res) {
   })
 })
 
-
 /******
 ***      Routes for JOB OFFERS with Specific Job Application
 *******/
@@ -427,21 +423,36 @@ router.post('/application/offers', function(req, res) {
   })
   .then(function(job){
     console.log('Job Record Found is: ', job);
-    res.sendStatus('200');
+    res.sendStatus(200);
 
     table.Offer.create({
       userId: req.session.passport.user,
       companyName: job.company,
       jobTitle: job.title,
       applicationId: req.body.applicationId
-    }).then(function(offerCreated){
-      res.sendStatus('200');
-    });
+    }).then(function(offerCreated) {
+        res.sendStatus(200);
+      });
   });
 });
 
-// 'UPDATE' a 'JOB OFFER' - /api/application/offers/1
-router.put('/application/offers/:offerId', function(req, res) {
+// 'UPDATE' JOB APPLICATION VIEW --> ARCHIVE
+router.put('/application/:appId', function(req, res) {
+
+  table.Application.update({
+    active: false,
+    activeReason: req.body.activeReason
+  },{
+    where: {
+      id: req.params.appId,
+      userId: req.session.passport.user
+    }
+  }).then(function(updatedOffer) {
+     res.sendStatus(200);
+  });
+});
+
+router.put('/application/:appId/offer/:offerId', function(req, res) {
   console.log('POST A JOB OFFER: ', req.body);
   // See if this offer exists and is the CORRECT USER
   table.Offer.findOne({
@@ -454,11 +465,6 @@ router.put('/application/offers/:offerId', function(req, res) {
     // res.sendStatus('200');
       // 'POST' Auto-Populates the 'companyName', 'jobTitle', 'applicationId'
     table.Offer.update({
-      // Database Field: req.body.frontEnd
-      salary: req.body.salary,
-      signBonus: req.body.signBonus,
-      vacationDays: req.body.vacationDays,
-      retireMatchPercent: req.body.retireMatchPercent,
       active: req.body.active,
       activeReason: req.body.activeReason
     },{
@@ -467,10 +473,49 @@ router.put('/application/offers/:offerId', function(req, res) {
         userId: req.session.passport.user
       }
     })
-    .then(function(updatedOffer){
-      console.log('Updated the Offer: ', updatedOffer);
-      res.sendStatus('200');
+    .then(function(archivedOffer){
+      console.log('Updated the Offer: ', archivedOffer);
+
+      if (req.body.active === false) {
+
+        table.Application.update(
+         {
+           active: false,
+           activeReason: req.body.activeReason
+         },
+         {
+           where: {
+           id: req.params.appId
+         }
+        }).then(function(thing) {
+          res.sendStatus(200);
+        })
+      } else {
+        res.sendStatus(200);
+      }
     });
+  });
+});
+
+// 'UPDATE' a 'JOB OFFER' - /api/application/offers/1
+router.put('/application/offers/:offerId', function(req, res) {
+  console.log('POST A JOB OFFER: ', req.body);
+  // See if this offer exists and is the CORRECT USER
+  table.Offer.update({
+    // Database Field: req.body.frontEnd
+    salary: req.body.salary,
+    signBonus: req.body.signBonus,
+    vacationDays: req.body.vacationDays,
+    retireMatchPercent: req.body.retireMatchPercent,
+  },{
+    where: {
+      id: req.params.offerId,
+      userId: req.session.passport.user
+    }
+  })
+  .then(function(updatedOffer){
+    console.log('Updated the Offer: ', updatedOffer);
+    res.sendStatus('200');
   });
 });
 
@@ -482,7 +527,7 @@ router.delete('/application/offers/:offerId', function(req, res){
     }
   }).then(function(deletedOffer){
     // SEND AN 'OK' to removeNote() - JobOfferContainer
-    res.sendStatus('200');
+    res.sendStatus(200);
   });
 });
 
