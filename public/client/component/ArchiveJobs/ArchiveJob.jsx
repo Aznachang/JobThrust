@@ -13,7 +13,7 @@ var appElement = document.getElementById('app');
 export default class Application extends React.Component {
   constructor(props) {
     super(props);
-    // this.nextStage = this.nextStage.bind(this);
+
     this.getJobInfo = this.getJobInfo.bind(this);
     this.toggle = this.toggle.bind(this);
     this.getEvents = this.getEvents.bind(this);
@@ -34,7 +34,6 @@ export default class Application extends React.Component {
       modalSections: {
         'contact': 'contact hidden',
         'job-desc': 'job-desc hidden',
-        'change-stage': 'change-stage hidden',
         'notes': 'notes hidden',
         'events': 'events hidden'
       },
@@ -91,7 +90,6 @@ export default class Application extends React.Component {
       modalIsOpen: false,
       modalSections: {
         'job-desc': 'job-desc hidden',
-        'change-stage': 'change-stage hidden',
         'notes': 'notes hidden',
         'events': 'events hidden',
         'contact': 'contact hidden',
@@ -213,11 +211,6 @@ export default class Application extends React.Component {
         console.log('State email data is now:', context.state.emailData);
       });
 
-    });
-
-    // REPLY FROM ME TEST
-    axios.get('/api/mail/getmsg').then(function(res) {
-      console.log('individual msg data for a reply', res.data);
     });
   }
 

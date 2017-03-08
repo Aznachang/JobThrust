@@ -216,7 +216,6 @@ export default class ManageComponent extends React.Component {
       }))
     }
     this.setState({
-      //filteredJobs: this.state.filteredJobs,
       jobs: this.state.jobs,
       ascending: !this.state.ascending
     })

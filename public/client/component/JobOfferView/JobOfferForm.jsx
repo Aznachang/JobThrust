@@ -9,7 +9,7 @@ export default class JobOfferForm extends React.Component {
     super(props);
       this.state = {
         modalIsOpen: false,
-        user: ''
+        user: '',
       }
 
       this.openModal = this.openModal.bind(this);
@@ -64,16 +64,20 @@ export default class JobOfferForm extends React.Component {
     e.preventDefault();
     var context = this;
 
+    // console.log('TRYING TO ARCHIVE JOB: ', this.props.jobOffers.applicationId);
+
     var archiveOfferData = {
       active: false,
       activeReason: $( "#archive-offer option:selected" ).text()
     };
 
-    axios.put('/api/application/offers/'+ this.props.offerId, archiveOfferData)
-    .then(function(offers) {
+    console.log('JobOfferForm - archiveOfferData: ', archiveOfferData);
+
+    axios.put('/api/application/' + context.props.jobOffers.applicationId + '/offer/' + context.props.offerId, archiveOfferData)
+    .then(function(jobOffer) {
       context.props.getOffer();
       context.props.getArchivedJobOffers();
-    });
+    })
 
     // close Job Offer Form Upon Updating...
     this.closeModal();
