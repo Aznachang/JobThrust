@@ -58,18 +58,31 @@ export default class CompanyComponent extends React.Component {
     this.starNumberForemployee = 0;
     this.$element;
     var context = this;
+    $(function() {
+      $(document).on('click', '.rating span.star', function() {
+
+        var total=$(this).parent().children().length;
+        var clickedIndex=$(this).index();
+        $('.rating span.star').removeClass('filled');
+        for(var i=clickedIndex;i<total;i++) {
+          $('.rating span.star').eq(i).addClass('filled');
+        }
+
+      });
+    })
   }
   addStars() {
     var context = this;
     $(function() {
 
       $(document).on('click', '.rate', function() {
+        var contextClick = this;
         context.$element = $(this)[0].classList[0];
         var $stars = $(this)[0].classList[0];
-        console.log('star that was selected', $(this)[0].classList)
+        console.log('star that was selected', $stars)
         if (Number($stars[$stars.length-1]) === 1 ) {
           context.starNumber = $stars[$stars.length-1];
-          console.log('11111')
+          console.log($stars[$stars.length-1])
           $(this).remove($(this)[0].classList[0]);
 
         } else if (Number($stars[$stars.length-1]) === 2) {
@@ -108,6 +121,7 @@ export default class CompanyComponent extends React.Component {
         if (Number($stars[$stars.length-1]) === 1 ) {
           context.starNumberForemployee = $stars[$stars.length-1];
           console.log('11111')
+          // $('.rateForEmployee').attr('content','\2605');
           $(this).remove($(this)[0].classList[0]);
 
         } else if (Number($stars[$stars.length-1]) === 2) {
@@ -228,8 +242,10 @@ export default class CompanyComponent extends React.Component {
   openModal() {
     this.setState({modalIsOpen: true});
     $(function() {
+      $('.ratingStar').append('<span class="rating"><span class="five5 rate star"></span><span class="four4 rate star "></span><span class="three3 rate star"></span><span class="two2 rate star filled"></span><span class=" first1 rate star filled"></span></span>');
+      // $('.ratingStar').append('<span class="rating"><span class="star"></span><span class="star "></span><span class="star"></span><span class="star filled"></span><span class="star filled"></span></span>');
 
-      $('.ratingStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span><span class='four4 rate'>&#9734</span><span class='five5 rate'>&#9734</span>");
+      // $('.ratingStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span><span class='four4 rate'>&#9734</span><span class='five5 rate'>&#9734</span>");
     })
   }
   afterOpenModal() {
@@ -249,7 +265,7 @@ export default class CompanyComponent extends React.Component {
     this.setState({modalOpen: true});
     $(function() {
 
-      $('.ratingStar').append("<span class='first1 rateForEmployee'>&#9734</span><span class='two2 rateForEmployee'>&#9734</span><span class='three3 rateForEmployee'>&#9734</span><span class='four4 rateForEmployee'>&#9734</span><span class='five5 rateForEmployee'>&#9734</span>");
+      $('.ratingStar').append('<span class="rating"><span class="five5 rateForEmployee star"></span><span class="four4 rateForEmployee star "></span><span class="three3 rateForEmployee star"></span><span class="two2 rateForEmployee star filled"></span><span class=" first1 rateForEmployee star filled"></span></span>');
     })
   }
   afterOpenTheModal() {
