@@ -38,6 +38,7 @@ var uploadFiles = mongoose.Schema({
     type: Number,
     unique: true
     },
+    name: String,
   userId: Number,
   imgeUrl: String
 });

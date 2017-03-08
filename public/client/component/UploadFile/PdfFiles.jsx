@@ -1,7 +1,7 @@
 import React from 'react';
 import $ from 'jQuery';
 
-export default class FilesLists extends React.Component {
+export default class PdfFiles extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -10,7 +10,7 @@ export default class FilesLists extends React.Component {
       <div className="uploadFiles">
         {
           this.props.displayFiles.map((file, indx)  =>
-           <img key={indx} src={`${file.imgeUrl}`} className="singleFile"/> 
+           <a key={indx} href={`${file.imgeUrl}`} className="singleFile"> Download PDF File</a>
           )
         }
       </div>

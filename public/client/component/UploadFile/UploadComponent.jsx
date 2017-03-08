@@ -3,11 +3,14 @@ import $ from 'jQuery';
 import getFormData from 'get-form-data';
 // import Dropzone from './index.jsx';
 import FilesLists from './FilesLists.jsx';
+import PdfFiles from './PdfFiles.jsx';
+
 export default class UploadComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      filesData : null
+      filesDataPdf : null,
+      filesDataImg: null
     }
 
     this.getUploadedData = this.getUploadedData.bind(this); 
@@ -20,10 +23,24 @@ export default class UploadComponent extends React.Component {
       url: 'http://localhost:3000/api/upload',
       success: function(data) {
         console.log('This is the uploaded data', data);
+        var pdfFiles = [];
+        var imagesFiles = [];
 
-        context.setState({
-          filesData: data
-        })
+        if (data !== null) {
+          data.forEach(function(file) {
+            var lastChars = file.imgeUrl.slice(file.imgeUrl.length-3);
+            console.log('Ending url ', lastChars);
+            if (lastChars === 'pdf') {
+              pdfFiles.push(file);
+            } else {
+              imagesFiles.push(file);
+            }
+          })
+          context.setState({
+            filesDataPdf: pdfFiles,
+            filesDataImg: imagesFiles
+          })
+        }
       }
     })
   }
@@ -40,23 +57,19 @@ export default class UploadComponent extends React.Component {
            }
         </form>
         <iframe id="upload_target" name="upload_target" src="#"></iframe>
-        {
+        <div>
 
-          (this.state.filesData !== null) ? <FilesLists displayFiles={this.state.filesData}/> : null
-        }
+          {
+            (this.state.filesDataImg !== null) ? <FilesLists displayFiles={this.state.filesDataImg}/> : null
+          }
+        </div>
+        <div>
+          
+          {
+            (this.state.filesDataPdf !== null) ? <PdfFiles displayFiles={this.state.filesDataPdf}/> : null
+          }
+        </div>
       </div>
     )
   }
-
-  // uploadFile(files) {
-  //   console.log('Uploaded files are finally here', files[0])
-  // }
-  // render() {
-  //   return (
-  //     <div> 
-  //      Upload Files
-  //       <Dropzone onDrop={this.getUploadedData}/>
-  //     </div>
-  //   )
-  // }
 }
