@@ -47,13 +47,13 @@ export default class ManageComponent extends React.Component {
       method: 'GET',
       contentType: 'application/json',
       success: function(data) {
+        var active = [];
+
         data.sort(function(a, b) {
           return b.stageId - a.stageId;
         });
-        var active = [];
 
-        data.forEach(function(job){
-          console.log('Inside forEach Data - job!');
+        data.forEach(function(job) {
           if (job.active === true) {
             active.push(job);
 
@@ -62,7 +62,6 @@ export default class ManageComponent extends React.Component {
             });
           }
         });
-
         context.getStageCounts();
       }
     })
@@ -219,7 +218,7 @@ export default class ManageComponent extends React.Component {
 
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.getJobs();
   }
 
@@ -229,9 +228,12 @@ export default class ManageComponent extends React.Component {
       <div>
         <StageList boxClasses={this.state.boxClasses} filter={this.filter} filtered={this.state.filtered} stageCounts={this.state.stageCounts} stages={stages}/>
         <AddAppManual getJobs={this.getJobs} />
-        <div>
-          <Link to={'/archived'}>View Archived Jobs</Link>
+        <div className="add-app-manual">
+          <div className="add-app-btn" id='archived-btn'>
+            <Link to={'/archived'}>VIEW ARCHIVED JOBS</Link>
+          </div>
         </div>
+        <br/>
         <ApplicationList sort={this.sort} filter={this.filter} filtered={this.state.filtered} filteredJobs={this.state.filteredJobs} jobInfo={this.state.jobs} sortList={this.sortListByStage} stages={stages} selectedAppJob={this.state.selectedAppJob} changeStage={this.changeStage} getJobs={this.getJobs} />
       </div>
     )

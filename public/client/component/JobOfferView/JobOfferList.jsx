@@ -18,13 +18,36 @@ export default class JobOfferList extends React.Component {
     const offerList = this.props.jobOffers;
     const archivedOfferList = this.props.archivedOffers;
 
+    var noOffers;
+    var oldOffers;
+    var Offers = this.props.jobOffers.length;
+    var deadOffers = this.props.archivedOffers.length;
+
+    // Show This Message - No Job Offers
+    if (Offers === 0) {
+      noOffers = <tr className='noJobs'>
+        <td colSpan='6'>No Record of Job Offers Yet</td>
+      </tr>
+    } else {
+      noOffers = <tr></tr>
+    }
+
+    // Show This Message - No Archived Job Offers
+    if (deadOffers === 0) {
+      oldOffers = <tr className='noJobs'>
+        <td colSpan='6'>No Record of Archived Job Offers Yet</td>
+      </tr>
+    } else {
+      oldOffers = <tr></tr>
+    }
+
     /**** Get List of Filtered Job Offers - 1st Table ****/
     const filterJobOffers = offerList
       .filter(jobOffer => {
         //return only jobOffers whose 'companyName' matches with 'user serach input text'
         return jobOffer.companyName.toLowerCase().indexOf(this.props.filterText.toLowerCase()) >= 0
     }).map(jobOffer => {
-      console.log('THIS OFFERs APP ID IS: ', jobOffer.applicationId);
+      // console.log('THIS OFFERs APP ID IS: ', jobOffer.applicationId);
       return (
        <JobOfferForm key ={jobOffer.id} index={jobOffer.id} getOffer={this.props.getOffer} offerId ={jobOffer.id} getArchivedJobOffers={this.props.getArchivedJobOffers} jobOffers = {jobOffer} appId={jobOffer.applicationId} />
       )
@@ -48,7 +71,7 @@ export default class JobOfferList extends React.Component {
         return jobOffer.companyName.toLowerCase().indexOf(this.props.filterText.toLowerCase()) >= 0
     }).map(jobOffer => {
       return (
-        <JobOfferCompare convertDate={this.props.convertDate} jobOffer = {jobOffer}/>
+        <JobOfferCompare convertDate={this.props.convertDate} jobOffer = {jobOffer} />
       )
     });
     /** CHECK FOR ARCHIVED JOB OFFERS **/
@@ -67,6 +90,7 @@ export default class JobOfferList extends React.Component {
              </thead>
              <tbody>
               {filterJobOffers}
+              {noOffers}
              </tbody>
             </table>
           </div>
@@ -88,6 +112,7 @@ export default class JobOfferList extends React.Component {
               </thead>
               <tbody>
                 {filterDetailedJobOffers}
+                {noOffers}
               </tbody>
             </table>
           </div>
@@ -109,6 +134,7 @@ export default class JobOfferList extends React.Component {
               </thead>
               <tbody>
                 {filteredArchivedJobOffers}
+                {oldOffers}
               </tbody>
             </table>
           </div>

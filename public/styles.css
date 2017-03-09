@@ -26,6 +26,10 @@ a {
   text-decoration: none;
 }
 
+a:visited {
+    color: white;
+}
+
 h3, p {
   margin: 3px;
 }
@@ -94,6 +98,13 @@ textarea {
   display: block;
   padding-bottom: 3px;
 }*/
+
+/* ========== DEFAULT NO JOBS ========== */
+.noJobs {
+  text-align: center;
+  font-weight: 600;
+  color: #E41B17;
+}
 
 /* ========== PAGINATION ========== */
 
@@ -428,15 +439,27 @@ th.th-archive {
   margin: 4px auto 2px auto;
 }
 
+.add-app-btn:visited {
+    color: white;
+}
+
 .add-app-btn {
   padding: 5px 8px;
   color: white;
-  background-color: #007FFF;
+  background-color: rebeccapurple;
   /*border-radius: 4px;*/
   cursor: pointer;
   font-weight: bold;
   font-size: 0.8em;
   text-align: center;
+}
+
+#archived-btn {
+  background-color: green;
+}
+
+#archived-btn:hover{
+  background-color: #006BB3;
 }
 
 .add-app-btn:hover {

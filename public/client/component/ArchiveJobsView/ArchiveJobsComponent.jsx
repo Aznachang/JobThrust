@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 import ArchivedStages from './ArchivedStages.jsx';
 import ArchiveJobsList from './ArchiveJobsList.jsx';
 import $ from 'jQuery';
@@ -189,6 +190,12 @@ export default class ArchiveJobsComponent extends React.Component {
     return (
       <div>
         <ArchivedStages boxClasses={this.state.boxClasses} filter={this.filter} filtered={this.state.filtered} stageCounts={this.state.stageCounts} stages={stages}/>
+        <div className="add-app-manual">
+          <div className="add-app-btn" id='archived-btn'>
+            <Link to={'/manage'}>Go Back</Link>
+          </div>
+        </div>
+        <br/>
         <ArchiveJobsList sort={this.sort} filter={this.filter} filtered={this.state.filtered} filteredArchiveJobs={this.state.filteredArchivedJobs} archivedInfo={this.state.archivedJobs} sortList={this.sortListByStage} stages={stages} selectedAppJob={this.state.selectedAppJob} />
       </div>
     )

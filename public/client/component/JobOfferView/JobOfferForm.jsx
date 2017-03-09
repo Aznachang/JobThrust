@@ -76,12 +76,6 @@ export default class JobOfferForm extends React.Component {
     this.closeModal();
   }
 
-  componentDidMount() {
-    var context = this;
-    context.props.getOffer();
-    context.props.getArchivedJobOffers();
-  }
-
   render() {
     return (
       <tr>
