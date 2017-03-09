@@ -229,9 +229,6 @@ export default class Application extends React.Component {
       activeReason: $("#job-offer option:selected").text()
     };
 
-    console.log('archiveJOBDATA is: ', archiveJobData);
-    console.log('APP ID - APPLICATION: ', context.props.id);
-
     axios.put('/api/application/' + context.props.id, archiveJobData)
     .then(function(offers) {
       console.log('Archived Job Application!');

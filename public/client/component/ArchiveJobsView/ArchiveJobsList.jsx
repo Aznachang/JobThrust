@@ -7,8 +7,19 @@ export default class ArchiveJobsList extends React.Component {
   }
 
   render() {
+    var noArchivedOffers;
+    var noArchived = this.props.archivedInfo.length;
+
+    // Show This Messsage - No Archived Job Offers
+    if (noArchived === 0) {
+      noArchivedOffers = <tr className='noJobs'>
+        <td colSpan='6'>No Record of Archived Job Offers Yet</td>
+      </tr>
+    } else {
+      noArchivedOffers = <tr></tr>
+    }
+
     if (this.props.filtered === null) {
-      console.log('jobInfo: ', this.props.jobInfo);
       return (
         <div id="AppList">
           <table>
@@ -24,6 +35,7 @@ export default class ArchiveJobsList extends React.Component {
             { this.props.archivedInfo.map((app, i) =>
               <ArchiveJob key={i} filter={this.props.filter} filtered={this.props.filtered} sortList={this.props.sortList} stages={this.props.stages} company={app.company} created={app.createdAt} job={app.title} jobId={app.jobId} stage={this.props.stages[app.stageId]} id={app.id} changeStage={this.props.changeStage} />
             ) }
+            {noArchivedOffers}
             </tbody>
           </table>
         </div>
@@ -44,6 +56,7 @@ export default class ArchiveJobsList extends React.Component {
             { this.props.filteredArchiveJobs.map((app, i) =>
               <ArchiveJob key={i} filter={this.props.filter} filtered={this.props.filtered} sortList={this.props.sortList} stages={this.props.stages} company={app.company} created={app.createdAt} job={app.title} company={app.company} jobId={app.jobId} stage={this.props.stages[app.stageId]} id={app.id} changeStage={this.props.changeStage} />
             ) }
+            {noArchivedOffers}
             </tbody>
           </table>
         </div>

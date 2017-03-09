@@ -87,7 +87,6 @@ export default class JobOfferContainer extends React.Component {
       });
 
       context.setState({jobOffers: sortedJobOffers});
-      // console.log('getOffers - Job Offers: ', context.state.jobOffers);
     });
     // e.preventDefault();
   }
