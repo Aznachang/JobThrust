@@ -281,7 +281,7 @@ export default class CompanyComponent extends React.Component {
     var name = this.state.value;
     $.ajax({
       method:'GET',
-      url:'http://localhost:3000/api/interviewreview?name='+ name,
+      url:'/api/interviewreview?name='+ name,
       contentType: 'application/json',
       success: function(data) {
 
