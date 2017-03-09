@@ -280,26 +280,34 @@ export default class InterviewReviews extends React.Component {
     });
   }
   handleChangeForModalDate1(event) {
-    var checkDate = event.target.value.replace(/[' ']/g, '');
-    console.log('These are the dates vaules', event.target.value);
-    if (checkDate.match(/\//g) === null) {
+
+    if (this.props.validateDate(event.target.value.replace(/[' ']/g, ''))) {
+      console.log('I came to the true regx function')
+      this.dateChecker = true;
+    } else {
+      console.log('I came to the false regx function')
       this.dateChecker = false;
     }
+    // var checkDate = event.target.value.replace(/[' ']/g, '');
+    // console.log('These are the dates vaules', event.target.value);
+    // if (checkDate.match(/\//g) === null) {
+    //   this.dateChecker = false;
+    // }
 
-    if (checkDate.match(/\//g) !== null) {
-      console.log('I came to the after match method')
-      var checkDateNumbers = checkDate.split('/');
+    // if (checkDate.match(/\//g) !== null) {
+    //   console.log('I came to the after match method')
+    //   var checkDateNumbers = checkDate.split('/');
 
-      console.log('Lets see what is in you',checkDateNumbers )
+    //   console.log('Lets see what is in you',checkDateNumbers )
 
-      if (checkDateNumbers[0].length !== 2 || checkDateNumbers[1].length !== 2 || checkDateNumbers[2].length !== 4) {
-        console.log('I came to the after after match method')
-        this.dateChecker = false;
-      } else {
-        console.log('Finally I came to the true')
-        this.dateChecker = true;
-      }
-    } 
+    //   if (checkDateNumbers[0].length !== 2 || checkDateNumbers[1].length !== 2 || checkDateNumbers[2].length !== 4) {
+    //     console.log('I came to the after after match method')
+    //     this.dateChecker = false;
+    //   } else {
+    //     console.log('Finally I came to the true')
+    //     this.dateChecker = true;
+    //   }
+    // } 
     this.setState({
       date1: event.target.value
     });

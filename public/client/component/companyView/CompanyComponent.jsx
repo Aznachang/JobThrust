@@ -52,6 +52,7 @@ export default class CompanyComponent extends React.Component {
     this.getEmployeeInfo = this.getEmployeeInfo.bind(this);
     this.addStars = this.addStars.bind(this);
     this.addStarsForEmployee = this.addStarsForEmployee.bind(this);
+    this.validateDate = this.validateDate.bind(this);
     this.starNumber = 0;
     this.starNumberForemployee = 0;
     this.$element;
@@ -321,26 +322,36 @@ export default class CompanyComponent extends React.Component {
       alert('Please insert a vaild Date i.e MM/DD/YYYY');
     }
   }
-
+  validateDate(testdate) {
+    var date_regex = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
+    return date_regex.test(testdate);
+  }
   handleChangeForModalDate(event) {
-    var checkDate = event.target.value.replace(/[' ']/g, '');
-    if (checkDate.match(/\//g) === null) {
+    // var checkDate = event.target.value.replace(/[' ']/g, '');
+    // if (checkDate.match(/\//g) === null) {
+    //   this.dateChecker = false;
+    // }
+
+    // if (checkDate.match(/\//g) !== null) {
+    //   console.log('I came to the after match method')
+    //   var checkDateNumbers = checkDate.split('/');
+
+    //   console.log('Lets see what is in you',checkDateNumbers )
+
+    //   if (checkDateNumbers[0].length === 2 && checkDateNumbers[1].length === 2 && checkDateNumbers[2].length === 4) {
+    //     console.log('I came to the after after match method')
+    //     this.dateChecker = true;
+    //   } else {
+    //     this.dateChecker = false;
+    //   }
+    // } 
+    if (this.validateDate(event.target.value.replace(/[' ']/g, ''))) {
+
+      this.dateChecker = true;
+
+    } else {
       this.dateChecker = false;
     }
-
-    if (checkDate.match(/\//g) !== null) {
-      console.log('I came to the after match method')
-      var checkDateNumbers = checkDate.split('/');
-
-      console.log('Lets see what is in you',checkDateNumbers )
-
-      if (checkDateNumbers[0].length === 2 && checkDateNumbers[1].length === 2 && checkDateNumbers[2].length === 4) {
-        console.log('I came to the after after match method')
-        this.dateChecker = true;
-      } else {
-        this.dateChecker = false;
-      }
-    } 
     this.setState({
       date: event.target.value
     });
@@ -440,7 +451,7 @@ export default class CompanyComponent extends React.Component {
 
         </Modal>
         <div className="item animated fadeInDownBig  newDiv">
-          {this.state.renderData !== null ? <InterviewReviews userId={this.state.userId} renderData={this.state.renderData} imgUrl={this.state.hidden? this.state.companyInfo[0].squareLogo : null} companyName={this.state.value} retrieveDataFromDB={this.retrieveDataFromDB}/>: null }
+          {this.state.renderData !== null ? <InterviewReviews validateDate={this.validateDate} userId={this.state.userId} renderData={this.state.renderData} imgUrl={this.state.hidden? this.state.companyInfo[0].squareLogo : null} companyName={this.state.value} retrieveDataFromDB={this.retrieveDataFromDB}/>: null }
         </div>
 
         <div className="item animated fadeInDownBig  employeeReview">
