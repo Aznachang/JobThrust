@@ -68,16 +68,13 @@ export default class Application extends React.Component {
     });
   }
 
-  // TO BE APPLIED SOMEHOW - FULLY FUNCTIONING, JUST NOT ATTACHED TO ANYTHING
   nextStage(stageId) {
-    console.log('Attempting to change stages using ID:', this.props.id);
     this.props.changeStage(this.props.id, stageId);
   }
 
   openModal() {
     this.setState({modalIsOpen: true});
     this.getJobInfo();
-    console.log('THIS APPLICATION ID IS:', this.props.id);
     this.getContact();
     this.getEvents();
   }
@@ -145,14 +142,12 @@ export default class Application extends React.Component {
         item.description = item.description.split(/[\n\r]/g);
       });
       context.setState({ calendarItems: res.data.items });
-      console.log('CAL DATA', res.data.items);
     });
 
   }
 
   convertDate(date) {
     // 2017-02-28T11:30:00-08:00
-    console.log('Converting', date);
     var month = date.substring(5, 7);
     var day = date.substring(8, 10);
     var year = date.substring(0, 4);
@@ -189,14 +184,12 @@ export default class Application extends React.Component {
       console.log('Created event!');
       context.getEvents();
       context.setState({addingEvent: false});
-      console.log('ADDING EVENT STATE', this.state.addingEvent);
     });
   }
 
   sendMessage() {
     axios.get('/api/mail/send').then(function(res) {
       console.log('Sent successfully!');
-      console.log(res.data);
     });
   }
 
@@ -211,9 +204,7 @@ export default class Application extends React.Component {
 
       // Once contact info in place, get emails
       axios.post('/api/mail/thread', {email: context.state.contactInfo.email}).then(function(res) {
-        console.log('Got the thread', res);
         context.setState({emailData: res.data.threads});
-        console.log('State email data is now:', context.state.emailData);
       });
 
     });
@@ -221,6 +212,7 @@ export default class Application extends React.Component {
 
   // ARCHIVE A SPECIFIC JOB RECORD
   archiveOneJob(e) {
+
     e.preventDefault();
     var context = this;
 
