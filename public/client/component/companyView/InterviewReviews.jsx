@@ -9,7 +9,6 @@ export default class InterviewReviews extends React.Component {
     super(props);
     this.state = {
       modalIsOpen: false,
-      discription1: null,
       date1: null,
       interviewProcess1: null,
       interviewQuestion1: null,
@@ -19,7 +18,6 @@ export default class InterviewReviews extends React.Component {
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
-    this.handleChangeForModalDescriptionA1 = this.handleChangeForModalDescriptionA1.bind(this);
     this.handleChangeForModalTitle1 = this.handleChangeForModalTitle1.bind(this);
     this.handleChangeForModalDate1 = this.handleChangeForModalDate1.bind(this);
     this.handleChangeForModalInterviewProcess1 = this.handleChangeForModalInterviewProcess1.bind(this);
@@ -146,20 +144,22 @@ export default class InterviewReviews extends React.Component {
           $(this).parent()[0].children[2].innerText,
           $(this).parent()[0].children[3].innerText,
           $(this).parent()[0].children[4].innerText,
-          $(this).parent()[0].children[5]
+          $(this).parent()[0].children[5],
+          $(this).parent()[0].children[8]
         ]
         context.openModal(context.arrayOfinputs);
       })
-      $(document).on('submit', '.add-app-form1', function(event) { 
+      $(document).on('submit', '#editInterivew', function(event) { 
+        console.log('You have submitted your request------')
         event.preventDefault();
 
         if (!context.state.title1) {
-          var $liJobTitle = "<li>"+ context.arrayOfinputs[0] +"</li>";
+          var $liJobTitle = "<li class="+context.importantId+">"+ context.arrayOfinputs[0] +"</li>";
           context.setState({
             title1: context.arrayOfinputs[0]
           })
         } else {
-          var $liJobTitle = "<li>"+ context.state.title1 +"</li>";
+          var $liJobTitle = "<li class="+context.importantId+">"+ context.state.title1 +"</li>";
         }
          if (!context.state.date1) {
           var $liJobDate = "<li>"+ context.arrayOfinputs[1] +"</li>";
@@ -185,21 +185,21 @@ export default class InterviewReviews extends React.Component {
         } else {
           var $liJobInterviewQuestion = "<li>"+ context.state.interviewQuestion1 +"</li>";
         }
-        if(!context.state.discription1) {
-          var $liJobTitleInterviewQAnswer = "<li>"+ context.arrayOfinputs[4]+"</li>";
-          context.setState({
-            discription1: context.arrayOfinputs[4]
-          })
-        } else {
-          var $liJobTitleInterviewQAnswer = "<li>"+ context.state.discription1 +"</li>";
-        }
+        // if(!context.state.discription1) {
+        //   var $liJobTitleInterviewQAnswer = "<li>"+ context.arrayOfinputs[4]+"</li>";
+        //   context.setState({
+        //     discription1: context.arrayOfinputs[4]
+        //   })
+        // } else {
+        //   var = "<li>"+ context.state.discription1 +"</li>";
+        // }
 
         var $button = "<button class='editReview'>Edit the Review</button>";
 
 
 
         if (Number(context.eidtStarCount) === 0) {
-            var editCountStar = context.arrayOfinputs[5].children.length;
+            var editCountStar = context.arrayOfinputs[4].children.length;
             if (editCountStar === 1) {
               var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" />';
             } else if (editCountStar === 2) {
@@ -225,13 +225,13 @@ export default class InterviewReviews extends React.Component {
               var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
             }
         }
-
+        // var helpfulButton = '<input type="button" value='+context.arrayOfinputs[8] +'class="helpfulPointsForInterview"/>';
         var $editStarElementList = '<li>'+ $editStarElement + '</li>';
         console.log('new star ratings', editCountStar)
-        $($ele).parent().html($liJobTitle+$liJobDate+$liJobInterviewProcess+$liJobInterviewQuestion+$liJobTitleInterviewQAnswer+ $editStarElementList + $button);
+        $($ele).parent().html($liJobTitle+$liJobDate+$liJobInterviewProcess+$liJobInterviewQuestion+ $editStarElementList + $button);
         context.closeModal();
         console.log('This is the name of the company', context.props.companyName)
-        var updatedData = {name: context.props.companyName, imgUrl:context.props.imgUrl ,countOfReviews: editCountStar, companyComments: [{jobTitle:context.state.title1},{date:context.state.date1},{interviewProcess:{descriptionOfinterview:context.state.interviewProcess1, interviewQuestion:context.state.interviewQuestion1, interviewProcess:context.state.description1}}]};
+        var updatedData = {name: context.props.companyName, imgUrl:context.props.imgUrl ,countOfReviews: editCountStar, companyComments: [{jobTitle:context.state.title1},{date:context.state.date1},{interviewProcess:{descriptionOfinterview:context.state.interviewProcess1, interviewQuestion:context.state.interviewQuestion1}}]};
         var dataToSend = [updatedData, context.importantId];
         context.sendUpdatedData(dataToSend);
       })
@@ -283,11 +283,6 @@ export default class InterviewReviews extends React.Component {
       modalIsOpen: false,
     });
   }
-  handleChangeForModalDescriptionA1(event){
-    this.setState({
-      discription1: event.target.value
-    });
-  }
   handleChangeForModalDate1(event){
     this.setState({
       date1: event.target.value
@@ -336,7 +331,7 @@ export default class InterviewReviews extends React.Component {
               Edit Interview Review Below:
             </div>
             <div className='add-app-container'>
-              <form className="add-app-form1">
+              <form className="add-app-form1" id="editInterivew">
                 Job Title<br />
                 <input type='text' name='title' className='jobTitle' placeholder='i.e Frontend Developer..' onChange={this.handleChangeForModalTitle1} required/><br />
                 Date<br />
@@ -345,8 +340,6 @@ export default class InterviewReviews extends React.Component {
                 <textarea name='description' form='add-app-form1' className='interviewProcess' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewProcess1}required></textarea><br />
                 Interview Question<br />
                 <textarea name='description' form='add-app-form1' className='interviewQuestion' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewQuestion1}required></textarea><br />
-                Question-Answer:
-                <textarea name='description' form='add-app-form1' className='interviewAnswer' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalDescriptionA1} required></textarea><br /><br/><br/>
                  <div className="editRatingStar">
                   <p>Overall Rating</p>
                   <span className="rating"><span className="five5 Editrate star"></span><span className="four4 Editrate star "></span><span className="three3 Editrate star"></span><span className="two2 Editrate star filled"></span><span className=" first1 Editrate star filled"></span></span>

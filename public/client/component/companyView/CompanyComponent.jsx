@@ -18,7 +18,6 @@ export default class CompanyComponent extends React.Component {
       modalIsOpen: false,
       modalOpen: false,
       title: null,
-      discription: null,
       date: null,
       interviewProcess: null,
       interviewQuestion: null,
@@ -36,7 +35,6 @@ export default class CompanyComponent extends React.Component {
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.submitApp = this.submitApp.bind(this);
-    this.handleChangeForModalDescriptionA = this.handleChangeForModalDescriptionA.bind(this);
     this.handleChangeForModalTitle = this.handleChangeForModalTitle.bind(this);
     this.handleChangeForModalDate = this.handleChangeForModalDate.bind(this);
     this.handleChangeForModalInterviewProcess = this.handleChangeForModalInterviewProcess.bind(this);
@@ -299,7 +297,7 @@ export default class CompanyComponent extends React.Component {
 
   submitApp(event) {
     event.preventDefault();
-    var interviewCompany = {id:Math.floor(Math.random()* 900000000), name: this.state.value, imgUrl:this.state.companyInfo[0].squareLogo,countOfReviews: this.starNumber ,helpfulButtonScore:'helpful(0)',singleUl:'',companyComments: [{jobTitle:this.state.title},{date:this.state.date},{interviewProcess:{descriptionOfinterview:this.state.interviewProcess,interviewQuestion:this.state.interviewQuestion ,interviewProcess:this.state.description}}]};
+    var interviewCompany = {id:Math.floor(Math.random()* 900000000), name: this.state.value, imgUrl:this.state.companyInfo[0].squareLogo,countOfReviews: this.starNumber ,helpfulButtonScore:'helpful(0)',singleUl:'',companyComments: [{jobTitle:this.state.title},{date:this.state.date},{interviewProcess:{descriptionOfinterview:this.state.interviewProcess,interviewQuestion:this.state.interviewQuestion }}]};
     var context = this;
     $.ajax({
       method:'POST',
@@ -317,11 +315,6 @@ export default class CompanyComponent extends React.Component {
     this.closeModal();
   }
 
-  handleChangeForModalDescriptionA(event){
-    this.setState({
-      description: event.target.value
-    });
-  }
   handleChangeForModalDate(event){
     this.setState({
       date: event.target.value
@@ -379,8 +372,6 @@ export default class CompanyComponent extends React.Component {
                 <textarea name='description' form='add-app-form' className='interviewProcess' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewProcess}required></textarea><br />
                 Interview Questions<br />
                 <textarea name='description' form='add-app-form' className='interviewQuestion' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewQuestion}required></textarea><br />
-                Question-Answer:
-                <textarea name='description' form='add-app-form' className='interviewAnswer' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalDescriptionA} required></textarea><br />
                 <div className="ratingStar">
                   <p>Overall Rating</p>
                 </div>

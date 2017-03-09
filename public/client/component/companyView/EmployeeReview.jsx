@@ -109,14 +109,14 @@ export default class EmployeeReview extends React.Component {
     event.preventDefault();
     console.log('my array of inputs', this.arrayOfinputs)
     if (!this.state.editReviewTitle) {
-      var $editReviewTitle = '<li>' + this.arrayOfinputs[0] + '</li>';
+      var $editReviewTitle = '<li class='+ this.idForUpdateDB+'>' + this.arrayOfinputs[0] + '</li>';
       var reviewTitle = {reviewTitle:this.arrayOfinputs[0]};
 
       this.setState({
         editReviewTitle: this.arrayOfinputs[0]
       })
     } else {
-      var $editReviewTitle = '<li>' + this.state.editReviewTitle + '</li>';
+      var $editReviewTitle = '<li class='+ this.idForUpdateDB +'>' + this.state.editReviewTitle + '</li>';
       var reviewTitle = {reviewTitle: this.state.editReviewTitle}
     }
 
@@ -197,7 +197,7 @@ export default class EmployeeReview extends React.Component {
         context.arrayOfinputs = [ 
           $(this).parent()[0].children[0].innerText, 
           $(this).parent()[0].children[1].innerText,
-          $(this).parent()[0].children[2].innerText,
+          $(this).parent()[0].children[2].innerText
         ]
         context.openModal(context.arrayOfinputs);
       })
