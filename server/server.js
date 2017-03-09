@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 
 function isLoggedIn (req, res, next) {
   if (req.url !== '/login') {
-    if (req.session.passport) {
+    if (req.session.passport || req.headers['job-thrust-native']) {
       next();
     } else {
       res.redirect('/login');
