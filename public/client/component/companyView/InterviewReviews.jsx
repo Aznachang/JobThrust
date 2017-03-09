@@ -30,7 +30,7 @@ export default class InterviewReviews extends React.Component {
     this.produceStars = this.produceStars.bind(this);
     this.editStarsForInterview = this.editStarsForInterview.bind(this);
     this.eidtStarCount = 0;
-    this.dateChecker = false;
+    this.dateChecker = true;
     // this.setState({helpfulCheckpoint:this.helpfulCheckpoint[this.props.userId] = true})
 
     var context = this;
@@ -230,7 +230,6 @@ export default class InterviewReviews extends React.Component {
         var updatedData = {name: context.props.companyName, imgUrl:context.props.imgUrl ,countOfReviews: editCountStar, companyComments: [{jobTitle:context.state.title1},{date:context.state.date1},{interviewProcess:{descriptionOfinterview:context.state.interviewProcess1, interviewQuestion:context.state.interviewQuestion1}}]};
         var dataToSend = [updatedData, context.importantId];
         context.sendUpdatedData(dataToSend);
-        context.dateChecker = false;
       }
       })
     })
@@ -281,7 +280,8 @@ export default class InterviewReviews extends React.Component {
     });
   }
   handleChangeForModalDate1(event) {
-    var checkDate = event.target.value;
+    var checkDate = event.target.value.replace(/[' ']/g, '');
+    console.log('These are the dates vaules', event.target.value);
     if (checkDate.match(/\//g) === null) {
       this.dateChecker = false;
     }
@@ -292,11 +292,12 @@ export default class InterviewReviews extends React.Component {
 
       console.log('Lets see what is in you',checkDateNumbers )
 
-      if (checkDateNumbers[0].length === 2 && checkDateNumbers[1].length === 2 && checkDateNumbers[2].length === 4) {
+      if (checkDateNumbers[0].length !== 2 || checkDateNumbers[1].length !== 2 || checkDateNumbers[2].length !== 4) {
         console.log('I came to the after after match method')
-        this.dateChecker = true;
-      } else {
         this.dateChecker = false;
+      } else {
+        console.log('Finally I came to the true')
+        this.dateChecker = true;
       }
     } 
     this.setState({

@@ -323,7 +323,7 @@ export default class CompanyComponent extends React.Component {
   }
 
   handleChangeForModalDate(event) {
-    var checkDate = event.target.value;
+    var checkDate = event.target.value.replace(/[' ']/g, '');
     if (checkDate.match(/\//g) === null) {
       this.dateChecker = false;
     }
