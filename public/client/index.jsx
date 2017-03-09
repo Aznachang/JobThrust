@@ -8,7 +8,7 @@ import SearchContainer from './component/SearchView/SearchContainer.jsx';
 import Note from './component/NoteView/NoteContainer.jsx';
 import CompanyComponent from './component/companyView/CompanyComponent.jsx'
 import JobOfferContainer from './component/JobOfferView/JobOfferContainer.jsx';
-import ArchiveJobsComponent from './component/ArchiveJobs/ArchiveJobsComponent.jsx';
+import ArchiveJobsComponent from './component/ArchiveJobsView/ArchiveJobsComponent.jsx';
 import UploadComponent from './component/UploadFile/UploadComponent.jsx';
 
 render((

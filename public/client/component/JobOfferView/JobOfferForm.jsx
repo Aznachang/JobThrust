@@ -55,7 +55,6 @@ export default class JobOfferForm extends React.Component {
       context.props.getArchivedJobOffers();
     });
 
-    // close Job Offer Form Upon Updating...
     this.closeModal();
   }
 
@@ -63,15 +62,10 @@ export default class JobOfferForm extends React.Component {
   submitArchiveJob(e) {
     e.preventDefault();
     var context = this;
-
-    // console.log('TRYING TO ARCHIVE JOB: ', this.props.jobOffers.applicationId);
-
     var archiveOfferData = {
       active: false,
-      activeReason: $( "#archive-offer option:selected" ).text()
+      activeReason: $("#archive-offer option:selected").text()
     };
-
-    console.log('JobOfferForm - archiveOfferData: ', archiveOfferData);
 
     axios.put('/api/application/' + context.props.jobOffers.applicationId + '/offer/' + context.props.offerId, archiveOfferData)
     .then(function(jobOffer) {
@@ -79,7 +73,6 @@ export default class JobOfferForm extends React.Component {
       context.props.getArchivedJobOffers();
     })
 
-    // close Job Offer Form Upon Updating...
     this.closeModal();
   }
 
@@ -91,8 +84,10 @@ export default class JobOfferForm extends React.Component {
 
   render() {
     return (
-      <div className="add-app-manual">
-        <td onClick={this.openModal}>📂</td>
+      <tr>
+       <td>{this.props.jobOffers.companyName}</td>
+       <td>{this.props.jobOffers.jobTitle}</td>
+       <td onClick={this.openModal}>📂</td>
         <Modal
         isOpen={this.state.modalIsOpen}
         onAfterOpen={this.afterOpenModal}
@@ -166,7 +161,7 @@ export default class JobOfferForm extends React.Component {
           </div>
 
         </Modal>
-      </div>
+      </tr>
     )
   }
 }

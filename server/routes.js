@@ -343,7 +343,7 @@ router.get('/company', function(req, res) {
   })
 });
 
-
+// 'GET' - ALL JOB APPS to a SPECIFIC GOOGLE USER
 router.get('/application', function(req, res) {
   table.Application.findAll({
   where: {
@@ -522,7 +522,7 @@ router.post('/application/offers', function(req, res) {
   });
 });
 
-// 'UPDATE' JOB APPLICATION VIEW --> ARCHIVE
+// 'UPDATE' A JOB RECORD FROM JOB APPLICATION VIEW --> ARCHIVE
 router.put('/application/:appId', function(req, res) {
 
   table.Application.update({
@@ -533,62 +533,51 @@ router.put('/application/:appId', function(req, res) {
       id: req.params.appId,
       userId: req.session.passport.user
     }
-  }).then(function(updatedOffer) {
-     res.sendStatus(200);
+  })
+  .then(function(archiveJob) {
+    console.log('Successfully Archived this job record!');
+    res.sendStatus(200);
   });
 });
 
+// 'UPDATE' Specific Job Offer --> 'ARCHIVE'
 router.put('/application/:appId/offer/:offerId', function(req, res) {
-  console.log('POST A JOB OFFER: ', req.body);
-  // See if this offer exists and is the CORRECT USER
-  table.Offer.findOne({
+  // console.log('POST A JOB OFFER: ', req.body);
+  table.Offer.update({
+    active: req.body.active,
+    activeReason: req.body.activeReason
+  },{
     where: {
       id: req.params.offerId,
       userId: req.session.passport.user
     }
-  }).then(function(offer){
-    console.log('Updating Offer...')
-    // res.sendStatus('200');
-      // 'POST' Auto-Populates the 'companyName', 'jobTitle', 'applicationId'
-    table.Offer.update({
-      active: req.body.active,
-      activeReason: req.body.activeReason
-    },{
-      where: {
-        id: req.params.offerId,
-        userId: req.session.passport.user
-      }
-    })
-    .then(function(archivedOffer){
-      console.log('Updated the Offer: ', archivedOffer);
+  })
+  .then(function(archivedOffer){
+    if (req.body.active === false) {
 
-      if (req.body.active === false) {
-
-        table.Application.update(
-         {
-           active: false,
-           activeReason: req.body.activeReason
-         },
-         {
-           where: {
-           id: req.params.appId
-         }
-        }).then(function(thing) {
-          res.sendStatus(200);
-        })
-      } else {
+      table.Application.update(
+       {
+         active: false,
+         activeReason: req.body.activeReason
+       },
+       {
+         where: {
+         id: req.params.appId
+       }
+      }).then(function(thing) {
         res.sendStatus(200);
-      }
-    });
+      })
+    } else {
+      res.sendStatus(200);
+    }
   });
 });
 
-// 'UPDATE' a 'JOB OFFER' - /api/application/offers/1
+// 'UPDATE' a 'JOB OFFER' CONTRACT DETAILS
 router.put('/application/offers/:offerId', function(req, res) {
-  console.log('POST A JOB OFFER: ', req.body);
+  // console.log('POST A JOB OFFER: ', req.body);
   // See if this offer exists and is the CORRECT USER
   table.Offer.update({
-    // Database Field: req.body.frontEnd
     salary: req.body.salary,
     signBonus: req.body.signBonus,
     vacationDays: req.body.vacationDays,
@@ -600,12 +589,12 @@ router.put('/application/offers/:offerId', function(req, res) {
     }
   })
   .then(function(updatedOffer){
-    console.log('Updated the Offer: ', updatedOffer);
+    // console.log('Updated the Offer: ', updatedOffer);
     res.sendStatus('200');
   });
 });
 
-// DELETE a 'JOB OFFER' (Maybe Need this????)
+// DELETE a 'JOB OFFER'
 router.delete('/application/offers/:offerId', function(req, res){
   table.Offer.destroy({
     where: {

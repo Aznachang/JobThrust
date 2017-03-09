@@ -19,12 +19,11 @@ export default class ApplicationList extends React.Component {
                 <th onClick={this.props.sort.bind(null, 'company')}>Company</th>
                 <th className='th-stage' onClick={this.props.sort.bind(null, 'stageId')}>Current Stage</th>
                 <th className='th-created' onClick={this.props.sort.bind(null, 'createdAt')}>Created</th>
-                <th className='th-archive'>Archive</th>
               </tr>
             </thead>
             <tbody>
             { this.props.jobInfo.map((app, i) =>
-              <Application key={i} filter={this.props.filter} filtered={this.props.filtered} sortList={this.props.sortList} stages={this.props.stages} company={app.company} created={app.createdAt} job={app.title} jobId={app.jobId} stage={this.props.stages[app.stageId]} id={app.id} changeStage={this.props.changeStage} />
+              <Application key={i} filter={this.props.filter} filtered={this.props.filtered} sortList={this.props.sortList} stages={this.props.stages} company={app.company} created={app.createdAt} job={app.title} jobId={app.jobId} stage={this.props.stages[app.stageId]} id={app.id} changeStage={this.props.changeStage} getJobs={this.props.getJobs} />
             ) }
             </tbody>
           </table>

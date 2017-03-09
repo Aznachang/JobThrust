@@ -54,7 +54,6 @@ class Note extends React.Component {
     var val = this.refs.newText.value;
     console.log('New note: ', val);
     this.props.updateNoteText(val, this.props.noteId);
-    // exit out of editing mode!
     this.setState({editing: false});
   }
 

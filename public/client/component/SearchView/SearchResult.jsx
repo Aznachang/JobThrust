@@ -20,8 +20,6 @@ class SearchResult extends React.Component {
   }
 
   render() {
-
-    console.log('SearchResults in Result: ', this.props.results);
     const results = this.props.results;
     const context = this;
 
@@ -29,10 +27,6 @@ class SearchResult extends React.Component {
     const indexOfLastResultPage = this.state.currentPage * this.state.resultsPerPage;
     const indexOfFirstResultPage = indexOfLastResultPage - this.state.resultsPerPage;
     const currentJobResults = results.slice(indexOfFirstResultPage, indexOfLastResultPage);
-
-    console.log('LastResultPage: ', indexOfLastResultPage);
-    console.log('FirstResultPage: ', indexOfFirstResultPage);
-    console.log('currentJobResults: ', currentJobResults);
 
     /** display page Numbers **/
     const pageNumbers = [];
