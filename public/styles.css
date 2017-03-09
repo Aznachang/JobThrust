@@ -107,7 +107,7 @@ textarea {
 .noJobs {
   text-align: center;
   font-weight: 600;
-  color: #E41B17;
+  /*color: #E41B17;*/
 }
 
 /* ========== PAGINATION ========== */
@@ -521,7 +521,7 @@ th.th-archive {
 .add-app-btn {
   padding: 5px 8px;
   color: white;
-  background-color: rebeccapurple;
+  background-color: #007FFF;
   /*border-radius: 4px;*/
   cursor: pointer;
   font-weight: bold;
@@ -951,7 +951,11 @@ select {
 /* =========== LOGIN ========= */
 
 .login-container {
-  height: 300px;
+  /*background-image: url("http://hd-wall-papers.com/images/wallpapers/wallpaper-stars/wallpaper-stars-15.jpg");
+  background-size: contain;
+  color: white;*/
+  height: 100%;
+  width: 100%;
   margin: auto;
   position: absolute;
   font-weight: bold;
@@ -959,7 +963,10 @@ select {
   bottom: 0;
   left: 0;
   right: 0;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .login-container p {
@@ -968,6 +975,7 @@ select {
 
 .login-container img {
   margin-bottom: 8px;
+  height: 100px;
 }
 
 .button-container {
@@ -982,6 +990,7 @@ select {
   align-items: center;
   justify-content: center;
   border-radius: 5px;
+  font-size: 1.4em;
 }
 
 .google-button:hover {

@@ -60,7 +60,7 @@ export default class InterviewReviews extends React.Component {
                 context.helpfulCheckpoint[context.props.userId] = context.props.userId;
                 // console.log('I am console logging the helpfulCheckpoint', context.helpfulCheckpoint)
 
-                var $buttonValue = 'helpful(' + (Number($(secondContext).val().match(/[0-9]/g)[0]) + 1) +')';
+                var $buttonValue = 'Helpful (' + (Number($(secondContext).val().match(/[0-9]/g)[0]) + 1) +')';
 
                 $(secondContext).val($buttonValue);
 
@@ -358,17 +358,19 @@ export default class InterviewReviews extends React.Component {
       {
         this.props.renderData.map((filed, index) => 
         <div key={index} className={`comments addStar ${index}`}>
-         <p className={filed.id}>Job Title: {filed.companyComments[0].jobTitle}</p>
-         <p>Date: {filed.companyComments[1].date}</p>
-         <p>Description of Interview: {filed.companyComments[2].interviewProcess.descriptionOfinterview}</p>
-         <p>Interview Question: {filed.companyComments[2].interviewProcess.interviewQuestion}</p>
-          <p className="changeStarRating">{
-            this.produceStars(filed.countOfReviews).map((ele, indx) =>
-              <img key={indx} className="roundstar" src='roundstar1.png' />
-            )
-          }</p>
-          <button className="editReview">Edit the Review</button>
-          <img className="companyImg" src={this.props.imgUrl}/>
+          <div>
+            <span><strong>Overall Rating: </strong></span>
+            <span className="changeStarRating">{
+              this.produceStars(filed.countOfReviews).map((ele, indx) =>
+                <img key={indx} className="roundstar" src='roundstar1.png' />
+              )
+            }</span>
+         </div>
+         <div className={filed.id + ' review-item'}><strong>Job Interviewed For:</strong> {filed.companyComments[0].jobTitle}</div>
+         <div className='review-item'><strong>Date of Interview:</strong> {filed.companyComments[1].date}</div>
+         <div className='review-item'><strong>Description of Interview:</strong><div className='review-sub'>{filed.companyComments[2].interviewProcess.descriptionOfinterview}</div></div>
+         <div className='review-item'><strong>Interview Questions:</strong><div className='review-sub'>{filed.companyComments[2].interviewProcess.interviewQuestion}</div></div>
+          <button className="editReview">Edit</button>
           <input type="button" className={`helpfulPointsForInterview ${index}`} value={`${filed.helpfulButtonScore}`}/>
         </div>
         )

@@ -59,7 +59,7 @@ export default class EmployeeReview extends React.Component {
                 context.helpfulCheckpoint[context.props.userId] = context.props.userId;
                 // console.log('I am console logging the helpfulCheckpoint', context.helpfulCheckpoint)
 
-                var $buttonValue = 'helpful(' + (Number($(secondContext).val().match(/[0-9]/g)[0]) + 1) +')';
+                var $buttonValue = 'Helpful (' + (Number($(secondContext).val().match(/[0-9]/g)[0]) + 1) +')';
 
                 $(secondContext).val($buttonValue);
 
@@ -329,23 +329,30 @@ export default class EmployeeReview extends React.Component {
         </Modal>
         {
         this.props.renderEmployeeData.map((filed, index) =>
-        <ul key={index} className={`comments ${index}`}>
-         <strong>{`Review Title:`}</strong>
-         <li className={filed.id}>{filed.employeeComments[0].reviewTitle}</li>
-         <strong>{`Cons:`}</strong>
-          <li>{filed.employeeComments[1].consReview}</li>
-          <strong>{`Pros:`}</strong>
-          <li>{filed.employeeComments[2].prosReview}</li>
-          <li>{
-            this.produceStarsForEmployee(filed.countOfReviews).map((ele, indx) =>
-              <img key={indx} className="roundstar" src='./roundstar1.png' />
-            )
-          }</li>
-          <img className="companyImg" src={filed.imgUrl}/>
-          <button className="editEmployeeReview" >Edit the Review</button>
+        <div key={index} className={`comments ${index}`}>
+          <div>
+            <span><strong>Overall Rating: </strong></span>
+            <span>{
+              this.produceStarsForEmployee(filed.countOfReviews).map((ele, indx) =>
+                <img key={indx} className="roundstar" src='./roundstar1.png' />
+              )
+            }</span>
+          </div>
+         <div className={filed.id + ' review-item'}>
+           <strong>{`Title:`}</strong>
+           {filed.employeeComments[0].reviewTitle}
+         </div>
+          <div className='review-item'> 
+            <strong>{`Pros:`}</strong>
+            <div className='review-sub'>{filed.employeeComments[2].prosReview}</div>
+          </div>
+          <div className='review-item'><strong>{`Cons:`}</strong>
+            <div className='review-sub'>{filed.employeeComments[1].consReview}</div>
+          </div>
+          <button className="editEmployeeReview" >Edit</button>
           <input type="button" className={`helpfulPoints ${index}`} value={`${filed.helpfulButtonScore}`}/>
 
-        </ul>
+        </div>
         
         )
       }

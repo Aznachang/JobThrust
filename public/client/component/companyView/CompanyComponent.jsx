@@ -12,7 +12,6 @@ export default class CompanyComponent extends React.Component {
     super(props);
     this.state = {
       companyInfo: [],
-      companyView: '',
       value: '',
       hidden: false,
       modalIsOpen: false,
@@ -234,8 +233,7 @@ export default class CompanyComponent extends React.Component {
         console.log('User IDIDIDIDIDDD', typeof data[2])
         context.setState({
           companyInfo: data[0],
-          companyView: data[1],
-          userId: data[2]
+          userId: data[1]
         })
        context.show();
       },
@@ -365,15 +363,11 @@ export default class CompanyComponent extends React.Component {
   render() {
     this.addStars();
     this.addStarsForEmployee();
-    var immg = null;
-    if (this.state.hidden) {
-      immg = <img className="companyImg" src={this.state.companyInfo[0].squareLogo }/>
-    }
     return (
       <div className="container">
         <CompanySearch getCompanyInfo={this.getCompanyInfo} handleChange={this.handleChange}/>
        <div>
-       {this.state.hidden ? <CompanyListComponent companyInfo={[this.state.companyInfo[0]]} companyView={this.state.companyView}/> : null}
+       {this.state.hidden ? <CompanyListComponent companyInfo={[this.state.companyInfo[0]]} /> : null}
         </div>
 
         <Modal
@@ -387,13 +381,13 @@ export default class CompanyComponent extends React.Component {
 
           <div className="inner-container">
             <div className='desc-header'>
-              Add an Interview Review Below:
+              Add Interview Review Information:
             </div>
             <div className='add-app-container'>
               <form id="add-app-form" onSubmit={this.submitApp}>
-                Job Title<br />
+                Role Interviewed For<br />
                 <input type='text' name='title' className='jobTitle' placeholder='i.e Frontend Developer..' onChange={this.handleChangeForModalTitle} required/><br />
-                Date<br />
+                Date of Interview<br />
                 <input type='text' name='company' className='date' placeholder='i.e 03/20/2017' onChange={this.handleChangeForModalDate} required/><br />
                 Describe the Interview Process<br />
                 <textarea name='description' form='add-app-form' className='interviewProcess' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewProcess}required></textarea><br />
@@ -421,16 +415,16 @@ export default class CompanyComponent extends React.Component {
 
           <div className="inner-container">
             <div className='desc-header'>
-              Employee Review Below:
+              Add Employee Review Information:
             </div>
             <div className='add-app-container'>
               <form id="add-app-form" onSubmit={this.employeeReviewForm}>
-                Review Title<br />
+                Your Role/Title<br />
                 <input type='text' name='title' onChange={this.handleChangeForModalReviewTitle} required/><br />
                 Pros<br />
-                <input type='text' name='Pros' onChange={this.handleChangeForModalPros} required/><br />
+                <textarea name='Pros' form='add-app-form' placeholder='Enter a comment...' onChange={this.handleChangeForModalPros} required/><br />
                 Cons<br />
-                <textarea name='description' form='add-app-form' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalCons}required></textarea><br />
+                <textarea name='description' form='add-app-form' placeholder='Enter a comment...' onChange={this.handleChangeForModalCons}required></textarea><br />
                 <div className="ratingStar">
                   <p>Overall Rating</p>
                 </div>
@@ -441,7 +435,21 @@ export default class CompanyComponent extends React.Component {
           </div>
 
         </Modal>
-        <div className="item animated fadeInDownBig  newDiv">
+
+        <div className="employeeReview">
+          <div>
+            <div className='add-app-btn' onClick={this.openTheModal}>CURRENT/FORMER EMPLOYEE? ADD A REVIEW</div>
+          </div>
+        </div>
+
+        <div className="newDiv">
+          <div>
+            <div className='add-app-btn' onClick={this.openModal}>INTERVIEW HERE?  ADD A REVIEW</div>
+          </div>
+        </div>
+        
+        <div className="newDiv">
+          <span><strong>Sort By: </strong></span>
           <select>
             <option value="helpful Reviews">helpful Reviews</option>
             <option value="other" selected>other</option>
@@ -449,7 +457,8 @@ export default class CompanyComponent extends React.Component {
           {this.state.renderData !== null ? <InterviewReviews validateDate={this.validateDate} userId={this.state.userId} renderData={this.state.renderData} imgUrl={this.state.hidden? this.state.companyInfo[0].squareLogo : null} companyName={this.state.value} retrieveDataFromDB={this.retrieveDataFromDB}/>: null }
         </div>
 
-        <div className="item animated fadeInDownBig  employeeReview">
+        <div className="employeeReview">
+          <span><strong>Sorty By: </strong></span>
           <select id="mySelect">
             <option value="helpful Reviews">helpful Reviews</option>
             <option value="other" selected>other</option>
@@ -457,21 +466,6 @@ export default class CompanyComponent extends React.Component {
          {this.state.renderEmployeeData !== null ? <EmployeeReview helpfulPoints={this.state.helpfulPoints} imgUrl={this.state.hidden? this.state.companyInfo[0].squareLogo : null} userId={this.state.userId} renderEmployeeData={this.state.renderEmployeeData}/> : null}
         </div>
 
-        <div className="item animated fadeInDownBig  employeeReview">
-
-          <br /> <br />Work at {this.state.value}? Share Your Experience<br /> <br />
-          {immg} <div id="stars">
-          </div> <br/> <br />
-          <textarea type='submit' className="textareas" value='Start Your Review Here ..' onClick={this.openTheModal}></textarea>
-        </div>
-
-        <div className="item animated fadeInDownBig  newDiv">
-
-        <br /> <br />Work at {this.state.value}? Share Your Experience<br /> <br />
-        {immg} <div id="stars">
-          </div> <br/> <br />
-          <textarea type='submit' className="textareas" value='Start Your Review Here ..' onClick={this.openModal}></textarea>
-        </div>
       </div>
     )
   }
