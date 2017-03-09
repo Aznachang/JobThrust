@@ -7,7 +7,7 @@
   margin-right: 100px; 
   margin-left: 150px; 
 }
-.singleFile {
+/*.singleFile {
   width: 650px;
   height:700px; 
 }
@@ -19,11 +19,11 @@
   width:0;
   height:0;
   border:0px solid #fff;
-}
-.roundstar {
+}*/
+/*.roundstar {
   width: 20px;
   height: 20px;
-}
+}*/
 .innerText {
   padding: 10px;
 }
@@ -53,7 +53,7 @@
   content: '';
 }*/
 
-.rating {
+/*.rating {
     unicode-bidi:bidi-override;
     direction:rtl;
     font-size:50px;
@@ -78,7 +78,7 @@
 }
 
 
-span.star.filled:before{ color:#e3cf7a; content:"\f005";}
+span.star.filled:before{ color:#e3cf7a; content:"\f005";}*/
 
 .ptage, .ptage1 {
   color: black;
