@@ -948,53 +948,6 @@ select {
   margin-bottom: 5px;
 }
 
-/* =========== Reviews ========= */
-.rating {
-    unicode-bidi:bidi-override;
-    direction:rtl;
-    font-size:50px;
-}
-.rating span.star {
-    font-family: FontAwesome;
-    font-weight:normal;
-    font-style:normal;
-    display:inline-block;
-}
-.rating span.star:hover {
-    cursor:pointer;
-}
-.rating span.star:before {
-    content:"\f006";
-    padding-right:5px;
-    color:#999999;
-}
-.rating span.star:hover:before, .rating span.star:hover~span.star:before {
-    content:"\f005";
-    color:#e3cf7a;
-}
-
-.roundstar {
-  width: 20px;
-  height: 20px;
-}
-span.star.filled:before{ color:#e3cf7a; content:"\f005";}
-
-/* =========== Upload View ========= */
-
-.singleFile {
-  width: 650px;
-  height:700px; 
-}
-.uploadFiles {
-  width: 200px;
-  height: 200px; 
-}
-#upload_target {
-  width:0;
-  height:0;
-  border:0px solid #fff;
-}
-
 /* =========== LOGIN ========= */
 
 .login-container {

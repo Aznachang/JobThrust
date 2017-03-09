@@ -152,38 +152,38 @@ export default class EmployeeReview extends React.Component {
     event.preventDefault();
     console.log('my array of inputs', this.arrayOfinputs)
     if (!this.state.editReviewTitle) {
-      var $editReviewTitle = '<li class='+ this.idForUpdateDB+'>' + this.arrayOfinputs[0] + '</li>';
+      var $editReviewTitle = '<p class='+ this.idForUpdateDB+'>Review Title:' + this.arrayOfinputs[0] + '</p>';
       var reviewTitle = {reviewTitle:this.arrayOfinputs[0]};
 
       this.setState({
         editReviewTitle: this.arrayOfinputs[0]
       })
     } else {
-      var $editReviewTitle = '<li class='+ this.idForUpdateDB +'>' + this.state.editReviewTitle + '</li>';
+      var $editReviewTitle = '<p class='+ this.idForUpdateDB +'>Review Title:' + this.state.editReviewTitle + '</p>';
       var reviewTitle = {reviewTitle: this.state.editReviewTitle}
     }
 
     if (!this.state.eidtProsReview) {
-      var $eidtProsReview = '<li>' + this.arrayOfinputs[1] + '</li>';
-      var prosReview = {prosReview: this.arrayOfinputs[1]};
+      var $eidtProsReview = '<p>Cons:' + this.arrayOfinputs[1] + '</p>';
+      var consReview = {consReview: this.arrayOfinputs[1]};
 
       this.setState({
         eidtProsReview: this.arrayOfinputs[1]
       })
     } else {
-      var $eidtProsReview = '<li>' + this.state.eidtProsReview + '</li>';
-      var prosReview = {prosReview: this.state.eidtProsReview};
+      var $eidtProsReview = '<p>Cons:' + this.state.eidtProsReview + '</p>';
+      var consReview = {consReview: this.state.eidtProsReview};
     }
 
     if(!this.state.editConsReview) {
-      var $editConsReview = '<li>' + this.arrayOfinputs[2] + '</li>';
-      var consReview = {consReview: this.arrayOfinputs[2]};
+      var $editConsReview = '<p>Pros:' + this.arrayOfinputs[2] + '</p>';
+      var prosReview = {prosReview: this.arrayOfinputs[2]};
       this.setState({
         editConsReview: this.arrayOfinputs[2]
       })
     } else {
-      var $editConsReview = '<li>' + this.state.editConsReview + '</li>';
-      var consReview = {consReview: this.state.editConsReview}
+      var $editConsReview = '<p>Pros:' + this.state.editConsReview + '</p>';
+      var prosReview = {prosReview: this.state.editConsReview}
     }
 
 
@@ -216,7 +216,7 @@ export default class EmployeeReview extends React.Component {
         }
     }
 
-    var $editStarElementList = '<li>'+ $editStarElement + '</li>';
+    var $editStarElementList = '<p>'+ $editStarElement + '</p>';
     console.log('This should be the new stars update',$editStarElementList )
     var $button = '<button class="editEmployeeReview" >Edit the Review</button>';
     var logoImage = '<img src='+ this.props.imgUrl +' '+'class="companyImg"/>';
@@ -225,7 +225,8 @@ export default class EmployeeReview extends React.Component {
     $(this.$ele).parent().html($editReviewTitle+$eidtProsReview+$editConsReview+$editStarElementList+$button+logoImage+helpfulButton);
     this.closeModal();
     var updatedEmployeeData = [reviewTitle, consReview, prosReview]
-    this.sendUpdatedEmployeeData([updatedEmployeeData, this.idForUpdateDB]);
+    console.log('This is the updated version', updatedEmployeeData)
+    this.sendUpdatedEmployeeData([updatedEmployeeData, this.idForUpdateDB, editCountStar]);
   }
 
   sendUpdatedEmployeeData(data) {
@@ -236,6 +237,7 @@ export default class EmployeeReview extends React.Component {
       contentType:'application/json',
       data: JSON.stringify(data),
       success: function(data) {
+        context.props.retrieveDataFromDB()
       }, 
       error: function(err) {
         console.log('You have an error', err);
@@ -271,9 +273,9 @@ export default class EmployeeReview extends React.Component {
         console.log('those are the children', $(this).parent()[0].children)
 
         context.arrayOfinputs = [ 
-          $(this).parent()[0].children[0].innerText, 
-          $(this).parent()[0].children[1].innerText,
-          $(this).parent()[0].children[2].innerText,
+          $(this).parent()[0].children[0].innerText.split(':')[1], 
+          $(this).parent()[0].children[1].innerText.split(':')[1],
+          $(this).parent()[0].children[2].innerText.split(':')[1],
           $(this).parent()[0].children[3],
           $(this).parent()[0].children[6]
         ]
