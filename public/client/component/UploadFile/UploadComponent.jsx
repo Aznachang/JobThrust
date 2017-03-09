@@ -12,8 +12,10 @@ export default class UploadComponent extends React.Component {
       filesDataPdf : null,
       filesDataImg: null
     }
-
+    var context = this
     this.getUploadedData = this.getUploadedData.bind(this); 
+
+  // this.getUploadedData();
   }
 
   getUploadedData() {
@@ -44,16 +46,25 @@ export default class UploadComponent extends React.Component {
       }
     })
   }
+// componentWillUpdate() {
+//   this.getUploadedData();
+// }
 componentDidMount() {
   this.getUploadedData();
 }
   render() {
+  // var context = this
+  //   $(function() {
+  //     $('.isUpload').click(function() {
+  //       context.getUploadedData();
+  //     })
+  //   })
     return (
       <div> 
         <form method="post" encType="multipart/form-data" action="/api/upload" target="upload_target">
           Select an image to upload:
           <input type="file" name="fileUpload" className="form-control"/>
-          <input type="submit" name="submitBtn" value="Upload" />
+          <input type="submit" name="submitBtn" value="Upload" className="isUpload"/>
         </form>
         <iframe id="upload_target" name="upload_target" src="#"></iframe>
         <div>

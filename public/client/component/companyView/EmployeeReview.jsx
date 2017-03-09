@@ -23,11 +23,13 @@ export default class EmployeeReview extends React.Component {
     this.editEmployeeInfo = this.editEmployeeInfo.bind(this);
     this.sendUpdatedEmployeeData = this.sendUpdatedEmployeeData.bind(this);
     this.produceStarsForEmployee = this.produceStarsForEmployee.bind(this);
+    this.editStarsForEmployee = this.editStarsForEmployee.bind(this);
 
     this.arrayOfinputs = [];
     this.idForUpdateDB = '';
     this.$ele = null;
     this.helpfulCheckpoint = {};
+    this.eidtStarCount = 0;
     // this.setState({helpfulCheckpoint:this.helpfulCheckpoint[this.props.userId] = true})
 
     var context = this;
@@ -88,6 +90,47 @@ export default class EmployeeReview extends React.Component {
      })
     })
   }
+
+
+  editStarsForEmployee() {
+    var context = this;
+    $(function() {
+
+      $(document).on('click', '.EditrateEmployee', function() {
+        context.$element = $(this)[0].classList[0];
+        var $stars = $(this)[0].classList[0];
+        console.log('star that was selected', $(this)[0].classList)
+        if (Number($stars[$stars.length-1]) === 1 ) {
+          context.eidtStarCount  = $stars[$stars.length-1];
+          console.log('11111')
+          // $('.rateForEmployee').attr('content','\2605');
+          $(this).remove($(this)[0].classList[0]);
+
+        } else if (Number($stars[$stars.length-1]) === 2) {
+                    console.log('2222')
+          context.eidtStarCount  = $stars[$stars.length-1];
+
+          $(this).remove($(this)[0].classList[0]);
+
+        } else if(Number($stars[$stars.length-1]) === 3) {
+                    console.log('33333')
+          context.eidtStarCount  = $stars[$stars.length-1];
+
+          $(this).remove($(this)[0].classList[0]);
+        } else if (Number($stars[$stars.length-1]) === 4) {
+                    console.log('444444')
+          context.eidtStarCount  = $stars[$stars.length-1];
+
+          $(this).remove($(this)[0].classList[0]);
+        } else if (Number($stars[$stars.length-1]) === 5) {
+                    console.log('555555')
+          context.eidtStarCount  = $stars[$stars.length-1];
+
+          $(this).remove($(this)[0].classList[0]);
+        }
+      })
+    })
+  }
   openModal(array) {
     this.setState({modalIsOpen: true});
     $('.reviewTitle').val(array[0])
@@ -109,14 +152,14 @@ export default class EmployeeReview extends React.Component {
     event.preventDefault();
     console.log('my array of inputs', this.arrayOfinputs)
     if (!this.state.editReviewTitle) {
-      var $editReviewTitle = '<li>' + this.arrayOfinputs[0] + '</li>';
+      var $editReviewTitle = '<li class='+ this.idForUpdateDB+'>' + this.arrayOfinputs[0] + '</li>';
       var reviewTitle = {reviewTitle:this.arrayOfinputs[0]};
 
       this.setState({
         editReviewTitle: this.arrayOfinputs[0]
       })
     } else {
-      var $editReviewTitle = '<li>' + this.state.editReviewTitle + '</li>';
+      var $editReviewTitle = '<li class='+ this.idForUpdateDB +'>' + this.state.editReviewTitle + '</li>';
       var reviewTitle = {reviewTitle: this.state.editReviewTitle}
     }
 
@@ -144,9 +187,42 @@ export default class EmployeeReview extends React.Component {
     }
 
 
-    var $button = '<button class="editEmployeeReview" >Edit the Review</button>';
 
-    $(this.$ele).parent().html($editReviewTitle+$eidtProsReview+$editConsReview+$button);
+    if (Number(this.eidtStarCount) === 0) {
+        var editCountStar = this.arrayOfinputs[4].children.length;
+        if (editCountStar === 1) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" />';
+        } else if (editCountStar === 2) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+        } else if (editCountStar === 3) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+        } else if (editCountStar === 4) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+        } else if (editCountStar === 5) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+        }
+    } else {
+      var editCountStar = Number(this.eidtStarCount);
+        if (editCountStar === 1) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" />';
+        } else if (editCountStar === 2) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+        } else if (editCountStar === 3) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+        } else if (editCountStar === 4) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+        } else if (editCountStar === 5) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+        }
+    }
+
+    var $editStarElementList = '<li>'+ $editStarElement + '</li>';
+    console.log('This should be the new stars update',$editStarElementList )
+    var $button = '<button class="editEmployeeReview" >Edit the Review</button>';
+    var logoImage = '<img src='+ this.props.imgUrl +' '+'class="companyImg"/>';
+    var helpfulButton = '<input type="button" value='+ this.arrayOfinputs[4].value+' '+'class="helpfulPoints" />';
+
+    $(this.$ele).parent().html($editReviewTitle+$eidtProsReview+$editConsReview+$editStarElementList+$button+logoImage+helpfulButton);
     this.closeModal();
     var updatedEmployeeData = [reviewTitle, consReview, prosReview]
     this.sendUpdatedEmployeeData([updatedEmployeeData, this.idForUpdateDB]);
@@ -192,12 +268,14 @@ export default class EmployeeReview extends React.Component {
       $(document).on('click', '.editEmployeeReview', function() { 
         context.idForUpdateDB = $(this).parent()[0].children[0].classList[0];
         context.$ele = this;
-        console.log('Check if the className is correct', $(this).parent()[0].children[0].classList[0])
+        console.log('those are the children', $(this).parent()[0].children)
 
         context.arrayOfinputs = [ 
           $(this).parent()[0].children[0].innerText, 
           $(this).parent()[0].children[1].innerText,
           $(this).parent()[0].children[2].innerText,
+          $(this).parent()[0].children[3],
+          $(this).parent()[0].children[6]
         ]
         context.openModal(context.arrayOfinputs);
       })
@@ -210,8 +288,11 @@ export default class EmployeeReview extends React.Component {
     }
     return array;
   }
-  render() {
+  componentDidMount() {
     this.editEmployeeInfo();
+    this.editStarsForEmployee();
+  }
+  render() {
     return (
       <div>
       <Modal
@@ -225,7 +306,7 @@ export default class EmployeeReview extends React.Component {
 
           <div className="inner-container">
             <div className='desc-header'>
-              Edit an Interview Review Below:
+              Edit Employee Review Below:
             </div>
             <div className='add-app-container'>
               <form id="add-app-form" onSubmit={this.editEmployeeReviewForm}>
@@ -235,8 +316,9 @@ export default class EmployeeReview extends React.Component {
                 <input type='text' name='Pros' className='pros' onChange={this.editHandleChangeForModalPros} required/><br />
                 Cons<br />
                 <textarea name='description' form='add-app-form' className='cons' placeholder='Enter a Comment ...' onChange={this.editHandleChangeForModalCons}required></textarea><br />
-                <div className="ratingStar">
+                  <div className="editRatingStar">
                   <p>Overall Rating</p>
+                  <span className="rating"><span className="five5 EditrateEmployee star"></span><span className="four4 EditrateEmployee star "></span><span className="three3 EditrateEmployee star"></span><span className="two2 EditrateEmployee star filled"></span><span className=" first1 EditrateEmployee star filled"></span></span>
                 </div>
                 <input type='submit' className='add-small' value='Submit Review' />
               </form>
@@ -248,14 +330,18 @@ export default class EmployeeReview extends React.Component {
         {
         this.props.renderEmployeeData.map((filed, index) =>
         <ul key={index} className={`comments ${index}`}>
-          <li className={filed.id}>{filed.employeeComments[0].reviewTitle}</li>
+         <strong>{`Review Title:`}</strong>
+         <li className={filed.id}>{filed.employeeComments[0].reviewTitle}</li>
+         <strong>{`Cons:`}</strong>
           <li>{filed.employeeComments[1].consReview}</li>
+          <strong>{`Pros:`}</strong>
           <li>{filed.employeeComments[2].prosReview}</li>
           <li>{
             this.produceStarsForEmployee(filed.countOfReviews).map((ele, indx) =>
               <img key={indx} className="roundstar" src='./roundstar1.png' />
             )
           }</li>
+          <img className="companyImg" src={filed.imgUrl}/>
           <button className="editEmployeeReview" >Edit the Review</button>
           <input type="button" className={`helpfulPoints ${index}`} value={`${filed.helpfulButtonScore}`}/>
 

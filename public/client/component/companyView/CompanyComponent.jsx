@@ -18,7 +18,6 @@ export default class CompanyComponent extends React.Component {
       modalIsOpen: false,
       modalOpen: false,
       title: null,
-      discription: null,
       date: null,
       interviewProcess: null,
       interviewQuestion: null,
@@ -36,7 +35,6 @@ export default class CompanyComponent extends React.Component {
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.submitApp = this.submitApp.bind(this);
-    this.handleChangeForModalDescriptionA = this.handleChangeForModalDescriptionA.bind(this);
     this.handleChangeForModalTitle = this.handleChangeForModalTitle.bind(this);
     this.handleChangeForModalDate = this.handleChangeForModalDate.bind(this);
     this.handleChangeForModalInterviewProcess = this.handleChangeForModalInterviewProcess.bind(this);
@@ -46,6 +44,7 @@ export default class CompanyComponent extends React.Component {
     this.openTheModal = this.openTheModal.bind(this);
     this.afterOpenTheModal = this.afterOpenTheModal.bind(this);
     this.closeTheModal = this.closeTheModal.bind(this);
+    this.sortReviewsBy = this.sortReviewsBy.bind(this);
 
     this.handleChangeForModalReviewTitle = this.handleChangeForModalReviewTitle.bind(this);
     this.handleChangeForModalPros = this.handleChangeForModalPros.bind(this);
@@ -54,22 +53,46 @@ export default class CompanyComponent extends React.Component {
     this.getEmployeeInfo = this.getEmployeeInfo.bind(this);
     this.addStars = this.addStars.bind(this);
     this.addStarsForEmployee = this.addStarsForEmployee.bind(this);
+    this.validateDate = this.validateDate.bind(this);
     this.starNumber = 0;
     this.starNumberForemployee = 0;
     this.$element;
+    this.dateChecker = false;
+
     var context = this;
+    $(function() {
+      $(document).on('click', '.rating span.star', function() {
+
+        var total=$(this).parent().children().length;
+        var clickedIndex=$(this).index();
+        $('.rating span.star').removeClass('filled');
+        for(var i=clickedIndex;i<total;i++) {
+          $('.rating span.star').eq(i).addClass('filled');
+        }
+
+      });
+      $(document).on('click', '#mySelect', function() {
+        var index = $('#mySelect').selectedIndex;
+        var selectedValue = document.getElementsByTagName("option")[x].value
+        context.sortReviewsBy(selectedValue);
+      });
+    })
+  }
+  sortReviewsBy(value) {
+
   }
   addStars() {
     var context = this;
     $(function() {
 
       $(document).on('click', '.rate', function() {
+        var contextClick = this;
         context.$element = $(this)[0].classList[0];
         var $stars = $(this)[0].classList[0];
-        console.log('star that was selected', $(this)[0].classList)
+        console.log('star that was selected', $stars)
         if (Number($stars[$stars.length-1]) === 1 ) {
           context.starNumber = $stars[$stars.length-1];
-          console.log('11111')
+          console.log($stars[$stars.length-1])
           $(this).remove($(this)[0].classList[0]);
 
         } else if (Number($stars[$stars.length-1]) === 2) {
@@ -108,6 +131,7 @@ export default class CompanyComponent extends React.Component {
         if (Number($stars[$stars.length-1]) === 1 ) {
           context.starNumberForemployee = $stars[$stars.length-1];
           console.log('11111')
+          // $('.rateForEmployee').attr('content','\2605');
           $(this).remove($(this)[0].classList[0]);
 
         } else if (Number($stars[$stars.length-1]) === 2) {
@@ -228,8 +252,9 @@ export default class CompanyComponent extends React.Component {
   openModal() {
     this.setState({modalIsOpen: true});
     $(function() {
+      $('.ratingStar').append('<span class="rating"><span class="five5 rate star"></span><span class="four4 rate star "></span><span class="three3 rate star"></span><span class="two2 rate star filled"></span><span class=" first1 rate star filled"></span></span>');
 
-      $('.ratingStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span><span class='four4 rate'>&#9734</span><span class='five5 rate'>&#9734</span>");
+      // $('.ratingStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span><span class='four4 rate'>&#9734</span><span class='five5 rate'>&#9734</span>");
     })
   }
   afterOpenModal() {
@@ -249,7 +274,7 @@ export default class CompanyComponent extends React.Component {
     this.setState({modalOpen: true});
     $(function() {
 
-      $('.ratingStar').append("<span class='first1 rateForEmployee'>&#9734</span><span class='two2 rateForEmployee'>&#9734</span><span class='three3 rateForEmployee'>&#9734</span><span class='four4 rateForEmployee'>&#9734</span><span class='five5 rateForEmployee'>&#9734</span>");
+      $('.ratingStar').append('<span class="rating"><span class="five5 rateForEmployee star"></span><span class="four4 rateForEmployee star "></span><span class="three3 rateForEmployee star"></span><span class="two2 rateForEmployee star filled"></span><span class=" first1 rateForEmployee star filled"></span></span>');
     })
   }
   afterOpenTheModal() {
@@ -284,30 +309,40 @@ export default class CompanyComponent extends React.Component {
 
   submitApp(event) {
     event.preventDefault();
-    var interviewCompany = {id:Math.floor(Math.random()* 900000000), name: this.state.value, imgUrl:this.state.companyInfo[0].squareLogo,countOfReviews: this.starNumber ,helpfulButtonScore:'helpful(0)',singleUl:'',companyComments: [{jobTitle:this.state.title},{date:this.state.date},{interviewProcess:{descriptionOfinterview:this.state.interviewProcess,interviewQuestion:this.state.interviewQuestion ,interviewProcess:this.state.description}}]};
-    var context = this;
-    $.ajax({
-      method:'POST',
-      url:'/api/interviewreview',
-      contentType: 'application/json',
-      data: JSON.stringify(interviewCompany),
-      success: function(data) {
-        context.retrieveDataFromDB();
-      },
-      error: function(err) {
-        console.log('You have an error', err)
-      }
-    })
+    if (this.dateChecker) {
 
-    this.closeModal();
-  }
+      var interviewCompany = {id:Math.floor(Math.random()* 900000000), name: this.state.value, imgUrl:this.state.companyInfo[0].squareLogo,countOfReviews: this.starNumber ,helpfulButtonScore:'helpful(0)',singleUl:'',companyComments: [{jobTitle:this.state.title},{date:this.state.date},{interviewProcess:{descriptionOfinterview:this.state.interviewProcess,interviewQuestion:this.state.interviewQuestion }}]};
+      var context = this;
+      $.ajax({
+        method:'POST',
+        url:'/api/interviewreview',
+        contentType: 'application/json',
+        data: JSON.stringify(interviewCompany),
+        success: function(data) {
+          context.retrieveDataFromDB();
+        },
+        error: function(err) {
+          console.log('You have an error', err)
+        }
+      })
 
-  handleChangeForModalDescriptionA(event){
-    this.setState({
-      description: event.target.value
-    });
+      this.closeModal();
+    } else {
+      alert('Please insert a vaild Date i.e MM/DD/YYYY');
+    }
   }
-  handleChangeForModalDate(event){
+  validateDate(testdate) {
+    var date_regex = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
+    return date_regex.test(testdate);
+  }
+  handleChangeForModalDate(event) {
+    if (this.validateDate(event.target.value.replace(/[' ']/g, ''))) {
+
+      this.dateChecker = true;
+
+    } else {
+      this.dateChecker = false;
+    }
     this.setState({
       date: event.target.value
     });
@@ -364,8 +399,6 @@ export default class CompanyComponent extends React.Component {
                 <textarea name='description' form='add-app-form' className='interviewProcess' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewProcess}required></textarea><br />
                 Interview Questions<br />
                 <textarea name='description' form='add-app-form' className='interviewQuestion' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewQuestion}required></textarea><br />
-                Question-Answer:
-                <textarea name='description' form='add-app-form' className='interviewAnswer' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalDescriptionA} required></textarea><br />
                 <div className="ratingStar">
                   <p>Overall Rating</p>
                 </div>
@@ -409,11 +442,19 @@ export default class CompanyComponent extends React.Component {
 
         </Modal>
         <div className="item animated fadeInDownBig  newDiv">
-          {this.state.renderData !== null ? <InterviewReviews userId={this.state.userId} renderData={this.state.renderData} imgUrl={this.state.hidden? this.state.companyInfo[0].squareLogo : null} companyName={this.state.value} retrieveDataFromDB={this.retrieveDataFromDB}/>: null }
+          <select>
+            <option value="helpful Reviews">helpful Reviews</option>
+            <option value="other" selected>other</option>
+          </select>
+          {this.state.renderData !== null ? <InterviewReviews validateDate={this.validateDate} userId={this.state.userId} renderData={this.state.renderData} imgUrl={this.state.hidden? this.state.companyInfo[0].squareLogo : null} companyName={this.state.value} retrieveDataFromDB={this.retrieveDataFromDB}/>: null }
         </div>
 
         <div className="item animated fadeInDownBig  employeeReview">
-         {this.state.renderEmployeeData !== null ? <EmployeeReview helpfulPoints={this.state.helpfulPoints} userId={this.state.userId} renderEmployeeData={this.state.renderEmployeeData}/> : null}
+          <select id="mySelect">
+            <option value="helpful Reviews">helpful Reviews</option>
+            <option value="other" selected>other</option>
+          </select>
+         {this.state.renderEmployeeData !== null ? <EmployeeReview helpfulPoints={this.state.helpfulPoints} imgUrl={this.state.hidden? this.state.companyInfo[0].squareLogo : null} userId={this.state.userId} renderEmployeeData={this.state.renderEmployeeData}/> : null}
         </div>
 
         <div className="item animated fadeInDownBig  employeeReview">

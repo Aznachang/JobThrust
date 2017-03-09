@@ -210,8 +210,12 @@ router.post('/updateEmployeeReview', function(req, res) {
 });
 
 router.post('/updateMongoDB', function(req, res) {
+  console.log('This should the updated review',req.body )
+
   Model.InterviewModel.findOne({id:req.body[1]}, function(err, doc) {
-    doc.name = req.body[0].name;
+    console.log('This is doc company comments', doc.companyComments);
+    // doc.name = req.body[0].name;
+    // doc.countOfReviews = req.body[0].countOfReviews;
     var company = [
       {
         "jobTitle" : req.body[0].companyComments[0].jobTitle
@@ -221,13 +225,13 @@ router.post('/updateMongoDB', function(req, res) {
       },
       {
         "interviewProcess" : {
-          "interviewProcess" : req.body[0].companyComments[2].interviewProcess.interviewProcess,
           "interviewQuestion" : req.body[0].companyComments[2].interviewProcess.interviewQuestion,
           "descriptionOfinterview" : req.body[0].companyComments[2].interviewProcess.descriptionOfinterview
         }
       }
     ];
     doc.companyComments = company;
+    console.log('This is doc company comments after being updated', doc.companyComments);
     doc.save();
     res.send('');
   })
