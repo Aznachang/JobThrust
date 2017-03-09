@@ -22,9 +22,7 @@ export default class ESResults extends React.Component {
     }
 
     axios.post('/api/job', appData).then(function(res) {
-      alert(this.props.results[i].title + ' (' + this.props.results[i].company + ') added to your pipeline!');
-    }).catch(function(err) {
-      console.log('Error adding to database.');
+      alert(context.props.results[i].title + ' (' + context.props.results[i].company + ') added to your pipeline!');
     });
   }
 
@@ -38,14 +36,16 @@ export default class ESResults extends React.Component {
           </div>
           <ul className='ext-search-results'>
             {this.props.results.map((result, i) =>
-              <li className='search-result' key={i} onClick={this.props.viewJob.bind(null, i)}>
+              <li className='search-result' key={i}>
                 <div className="buttons-div result-btn-div">
                   <div className="buttons-container">
                     <button className="result-btn select" onClick={this.addJob.bind(null, i)}>✔ Interested</button>
                   </div>
                 </div>
-                <p>{result.title}</p>
-                <p>{result.company} {result.location ? '(' + result.location + ')' : ''}</p>
+                <div onClick={this.props.viewJob.bind(null, i)}>
+                  <p>{result.title}</p>
+                  <p>{result.company} {result.location ? '(' + result.location + ')' : ''}</p>
+                </div>
               </li>
             )}
           </ul>

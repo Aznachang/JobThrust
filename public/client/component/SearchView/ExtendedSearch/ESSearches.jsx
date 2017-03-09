@@ -57,13 +57,15 @@ export default class ESSearches extends React.Component {
           </div>
           <ul className='saved-searches'>
             {this.props.searches.map((search, i) =>
-              <li className='search-result' key={i} onClick={this.props.selectResults.bind(null, i)}>
+              <li className='search-result' key={i}>
                 <div className="buttons-div">
                   <div className="buttons-container">
                     <button className="result-btn remove" onClick={this.props.deleteSearch.bind(null, this.props.searches[i]['_id'])}>✘ Delete</button>
                   </div>
                 </div>
-                <p>{search.label}</p>
+                <div onClick={this.props.selectResults.bind(null, i)}>
+                  <p>{search.label}</p>
+                </div>
               </li>
             )}
           </ul>
@@ -78,13 +80,15 @@ export default class ESSearches extends React.Component {
           </div>
           <ul className='saved-searches'>
             {this.props.searches.map((search, i) =>
-              <li className='search-result' key={i} onClick={this.props.selectResults.bind(null, i)}>
+              <li className='search-result' key={i}>
                 <div className="buttons-div">
                   <div className="buttons-container">
                     <button className="result-btn remove" onClick={this.props.deleteSearch.bind(null, this.props.searches[i]['_id'])}>✘ Delete</button>
                   </div>
                 </div>
-                <p>{search.label}</p>
+                <div onClick={this.props.selectResults.bind(null, i)}>
+                  <p>{search.label}</p>
+                </div>
               </li>
             )}
           </ul>
