@@ -352,7 +352,7 @@ router.get('/company', function(req, res) {
 router.get('/application', function(req, res) {
   table.Application.findAll({
   where: {
-    userId: String(req.session.passport.user || req.headers['job-thrust-native'])
+    userId: String(req.session.passport ? req.session.passport.user : req.headers['job-thrust-native'])
   }
   }).then(function(respond) {
     res.send(respond);

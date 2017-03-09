@@ -107,7 +107,7 @@ textarea {
 .noJobs {
   text-align: center;
   font-weight: 600;
-  color: #E41B17;
+  /*color: #E41B17;*/
 }
 
 /* ========== PAGINATION ========== */
@@ -521,7 +521,7 @@ th.th-archive {
 .add-app-btn {
   padding: 5px 8px;
   color: white;
-  background-color: rebeccapurple;
+  background-color: #007FFF;
   /*border-radius: 4px;*/
   cursor: pointer;
   font-weight: bold;
