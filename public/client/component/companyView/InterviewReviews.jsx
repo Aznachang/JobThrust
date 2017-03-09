@@ -30,6 +30,7 @@ export default class InterviewReviews extends React.Component {
     this.produceStars = this.produceStars.bind(this);
     this.editStarsForInterview = this.editStarsForInterview.bind(this);
     this.eidtStarCount = 0;
+    this.dateChecker = false;
     // this.setState({helpfulCheckpoint:this.helpfulCheckpoint[this.props.userId] = true})
 
     var context = this;
@@ -139,50 +140,53 @@ export default class InterviewReviews extends React.Component {
         context.importantId = $(this).parent()[0].children[0].classList[0];
         console.log('Those are the children of the edit', $(this).parent()[0].children)
         context.arrayOfinputs = [ 
-          $(this).parent()[0].children[0].innerText, 
-          $(this).parent()[0].children[1].innerText,
-          $(this).parent()[0].children[2].innerText,
-          $(this).parent()[0].children[3].innerText,
+          $(this).parent()[0].children[0].innerText.split(':')[1], 
+          $(this).parent()[0].children[1].innerText.split(':')[1],
+          $(this).parent()[0].children[2].innerText.split(':')[1],
+          $(this).parent()[0].children[3].innerText.split(':')[1],
           $(this).parent()[0].children[4],
           $(this).parent()[0].children[7]
         ]
         context.openModal(context.arrayOfinputs);
       })
       $(document).on('submit', '#editInterivew', function(event) { 
-        console.log('You have submitted your request------')
         event.preventDefault();
-
+        console.log('Lets see true or false', context.dateChecker)
+        if (!context.dateChecker) {
+          alert('Please insert a vaild date i.e MM/DD/YYYY');
+        } else {
+          // context.dateChecker = true;
         if (!context.state.title1) {
-          var $liJobTitle = "<li class="+context.importantId+">"+ context.arrayOfinputs[0] +"</li>";
+          var $liJobTitle = "<p class="+context.importantId+">Job Title:"+ context.arrayOfinputs[0] +"</p>";
           context.setState({
             title1: context.arrayOfinputs[0]
           })
         } else {
-          var $liJobTitle = "<li class="+context.importantId+">"+ context.state.title1 +"</li>";
+          var $liJobTitle = "<p class="+context.importantId+">Job Title:"+ context.state.title1 +"</p>";
         }
          if (!context.state.date1) {
-          var $liJobDate = "<li>"+ context.arrayOfinputs[1] +"</li>";
+          var $liJobDate = "<p>Date:"+ context.arrayOfinputs[1] +"</p>";
           context.setState({
             date1: context.arrayOfinputs[1]
           })
         } else {
-          var $liJobDate = "<li>"+ context.state.date1 +"</li>";
+          var $liJobDate = "<p>Date:"+ context.state.date1 +"</p>";
         }
         if (!context.state.interviewProcess1) {
-          var $liJobInterviewProcess = "<li>"+ context.arrayOfinputs[2] +"</li>";
+          var $liJobInterviewProcess = "<p>Description of Interview:"+ context.arrayOfinputs[2] +"</p>";
           context.setState({
             interviewProcess1: context.arrayOfinputs[2]
           })
         } else {
-          var $liJobInterviewProcess = "<li>"+ context.state.interviewProcess1 +"</li>";
+          var $liJobInterviewProcess = "<p>Description of Interview:"+ context.state.interviewProcess1 +"</p>";
         }
          if (!context.state.interviewQuestion1) {
-          var $liJobInterviewQuestion = "<li>"+ context.arrayOfinputs[3] +"</li>";
+          var $liJobInterviewQuestion = "<p>Interview Question:"+ context.arrayOfinputs[3] +"</p>";
           context.setState({
             interviewQuestion1: context.arrayOfinputs[3]
           })
         } else {
-          var $liJobInterviewQuestion = "<li>"+ context.state.interviewQuestion1 +"</li>";
+          var $liJobInterviewQuestion = "<p>Interview Question:"+ context.state.interviewQuestion1 +"</p>";
         }
         var logoImage = '<img src='+context.props.imgUrl +' '+'class="companyImg"/>'
         var $button = "<button class='editReview'>Edit the Review</button>";
@@ -218,7 +222,7 @@ export default class InterviewReviews extends React.Component {
         }
         console.log('this should be the value of the input', context.arrayOfinputs[5])
         var helpfulButton = '<input type="button" value='+context.arrayOfinputs[5].value +' '+'class="helpfulPointsForInterview"/>';
-        var $editStarElementList = '<li>'+ $editStarElement + '</li>';
+        var $editStarElementList = '<p>'+ $editStarElement + '</p>';
         // console.log('new star ratings', editCountStar)
         $($ele).parent().html($liJobTitle+$liJobDate+$liJobInterviewProcess+$liJobInterviewQuestion+ $editStarElementList + $button+logoImage+helpfulButton);
         context.closeModal();
@@ -226,6 +230,8 @@ export default class InterviewReviews extends React.Component {
         var updatedData = {name: context.props.companyName, imgUrl:context.props.imgUrl ,countOfReviews: editCountStar, companyComments: [{jobTitle:context.state.title1},{date:context.state.date1},{interviewProcess:{descriptionOfinterview:context.state.interviewProcess1, interviewQuestion:context.state.interviewQuestion1}}]};
         var dataToSend = [updatedData, context.importantId];
         context.sendUpdatedData(dataToSend);
+        context.dateChecker = false;
+      }
       })
     })
   }
@@ -274,7 +280,25 @@ export default class InterviewReviews extends React.Component {
       modalIsOpen: false,
     });
   }
-  handleChangeForModalDate1(event){
+  handleChangeForModalDate1(event) {
+    var checkDate = event.target.value;
+    if (checkDate.match(/\//g) === null) {
+      this.dateChecker = false;
+    }
+
+    if (checkDate.match(/\//g) !== null) {
+      console.log('I came to the after match method')
+      var checkDateNumbers = checkDate.split('/');
+
+      console.log('Lets see what is in you',checkDateNumbers )
+
+      if (checkDateNumbers[0].length === 2 && checkDateNumbers[1].length === 2 && checkDateNumbers[2].length === 4) {
+        console.log('I came to the after after match method')
+        this.dateChecker = true;
+      } else {
+        this.dateChecker = false;
+      }
+    } 
     this.setState({
       date1: event.target.value
     });
@@ -326,7 +350,7 @@ export default class InterviewReviews extends React.Component {
                 Job Title<br />
                 <input type='text' name='title' className='jobTitle' placeholder='i.e Frontend Developer..' onChange={this.handleChangeForModalTitle1} required/><br />
                 Date<br />
-                <input type='text' name='company' className='date' placeholder='i.e 03/20/2017' onChange={this.handleChangeForModalDate1} required/><br />
+                <input type='text' name='company' className='date' placeholder='i.e MM/DD/YYYY' onChange={this.handleChangeForModalDate1} required/><br />
                 Describe the Interview Process<br />
                 <textarea name='description' form='add-app-form1' className='interviewProcess' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewProcess1}required></textarea><br />
                 Interview Question<br />
@@ -343,21 +367,21 @@ export default class InterviewReviews extends React.Component {
 
         </Modal>
       {
-        this.props.renderData.map((filed, index) =>
-        <ul key={index} className={`comments addStar ${index}`}>
-          <li className={filed.id}>{filed.companyComments[0].jobTitle}</li>
-          <li>{filed.companyComments[1].date}</li>
-          <li>{filed.companyComments[2].interviewProcess.descriptionOfinterview}</li>
-          <li>{filed.companyComments[2].interviewProcess.interviewQuestion}</li>
-          <li className="changeStarRating">{
+        this.props.renderData.map((filed, index) => 
+        <div key={index} className={`comments addStar ${index}`}>
+         <p className={filed.id}>Job Title: {filed.companyComments[0].jobTitle}</p>
+         <p>Date: {filed.companyComments[1].date}</p>
+         <p>Description of Interview: {filed.companyComments[2].interviewProcess.descriptionOfinterview}</p>
+         <p>Interview Question: {filed.companyComments[2].interviewProcess.interviewQuestion}</p>
+          <p className="changeStarRating">{
             this.produceStars(filed.countOfReviews).map((ele, indx) =>
               <img key={indx} className="roundstar" src='roundstar1.png' />
             )
-          }</li>
+          }</p>
           <button className="editReview">Edit the Review</button>
           <img className="companyImg" src={this.props.imgUrl}/>
           <input type="button" className={`helpfulPointsForInterview ${index}`} value={`${filed.helpfulButtonScore}`}/>
-        </ul>
+        </div>
         )
       }
       </div>

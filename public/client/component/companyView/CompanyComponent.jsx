@@ -55,6 +55,8 @@ export default class CompanyComponent extends React.Component {
     this.starNumber = 0;
     this.starNumberForemployee = 0;
     this.$element;
+    this.dateChecker = false;
+
     var context = this;
     $(function() {
       $(document).on('click', '.rating span.star', function() {
@@ -297,25 +299,48 @@ export default class CompanyComponent extends React.Component {
 
   submitApp(event) {
     event.preventDefault();
-    var interviewCompany = {id:Math.floor(Math.random()* 900000000), name: this.state.value, imgUrl:this.state.companyInfo[0].squareLogo,countOfReviews: this.starNumber ,helpfulButtonScore:'helpful(0)',singleUl:'',companyComments: [{jobTitle:this.state.title},{date:this.state.date},{interviewProcess:{descriptionOfinterview:this.state.interviewProcess,interviewQuestion:this.state.interviewQuestion }}]};
-    var context = this;
-    $.ajax({
-      method:'POST',
-      url:'/api/interviewreview',
-      contentType: 'application/json',
-      data: JSON.stringify(interviewCompany),
-      success: function(data) {
-        context.retrieveDataFromDB();
-      },
-      error: function(err) {
-        console.log('You have an error', err)
-      }
-    })
+    if (this.dateChecker) {
 
-    this.closeModal();
+      var interviewCompany = {id:Math.floor(Math.random()* 900000000), name: this.state.value, imgUrl:this.state.companyInfo[0].squareLogo,countOfReviews: this.starNumber ,helpfulButtonScore:'helpful(0)',singleUl:'',companyComments: [{jobTitle:this.state.title},{date:this.state.date},{interviewProcess:{descriptionOfinterview:this.state.interviewProcess,interviewQuestion:this.state.interviewQuestion }}]};
+      var context = this;
+      $.ajax({
+        method:'POST',
+        url:'/api/interviewreview',
+        contentType: 'application/json',
+        data: JSON.stringify(interviewCompany),
+        success: function(data) {
+          context.retrieveDataFromDB();
+        },
+        error: function(err) {
+          console.log('You have an error', err)
+        }
+      })
+
+      this.closeModal();
+    } else {
+      alert('Please insert a vaild Date i.e MM/DD/YYYY');
+    }
   }
 
-  handleChangeForModalDate(event){
+  handleChangeForModalDate(event) {
+    var checkDate = event.target.value;
+    if (checkDate.match(/\//g) === null) {
+      this.dateChecker = false;
+    }
+
+    if (checkDate.match(/\//g) !== null) {
+      console.log('I came to the after match method')
+      var checkDateNumbers = checkDate.split('/');
+
+      console.log('Lets see what is in you',checkDateNumbers )
+
+      if (checkDateNumbers[0].length === 2 && checkDateNumbers[1].length === 2 && checkDateNumbers[2].length === 4) {
+        console.log('I came to the after after match method')
+        this.dateChecker = true;
+      } else {
+        this.dateChecker = false;
+      }
+    } 
     this.setState({
       date: event.target.value
     });

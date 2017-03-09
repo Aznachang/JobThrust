@@ -330,8 +330,11 @@ export default class EmployeeReview extends React.Component {
         {
         this.props.renderEmployeeData.map((filed, index) =>
         <ul key={index} className={`comments ${index}`}>
-          <li className={filed.id}>{filed.employeeComments[0].reviewTitle}</li>
+         <strong>{`Review Title:`}</strong>
+         <li className={filed.id}>{filed.employeeComments[0].reviewTitle}</li>
+         <strong>{`Cons:`}</strong>
           <li>{filed.employeeComments[1].consReview}</li>
+          <strong>{`Pros:`}</strong>
           <li>{filed.employeeComments[2].prosReview}</li>
           <li>{
             this.produceStarsForEmployee(filed.countOfReviews).map((ele, indx) =>
