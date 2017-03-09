@@ -44,6 +44,7 @@ export default class CompanyComponent extends React.Component {
     this.openTheModal = this.openTheModal.bind(this);
     this.afterOpenTheModal = this.afterOpenTheModal.bind(this);
     this.closeTheModal = this.closeTheModal.bind(this);
+    this.sortReviewsBy = this.sortReviewsBy.bind(this);
 
     this.handleChangeForModalReviewTitle = this.handleChangeForModalReviewTitle.bind(this);
     this.handleChangeForModalPros = this.handleChangeForModalPros.bind(this);
@@ -70,7 +71,15 @@ export default class CompanyComponent extends React.Component {
         }
 
       });
+      $(document).on('click', '#mySelect', function() {
+        var index = $('#mySelect').selectedIndex;
+        var selectedValue = document.getElementsByTagName("option")[x].value
+        context.sortReviewsBy(selectedValue);
+      });
     })
+  }
+  sortReviewsBy(value) {
+
   }
   addStars() {
     var context = this;
@@ -327,24 +336,6 @@ export default class CompanyComponent extends React.Component {
     return date_regex.test(testdate);
   }
   handleChangeForModalDate(event) {
-    // var checkDate = event.target.value.replace(/[' ']/g, '');
-    // if (checkDate.match(/\//g) === null) {
-    //   this.dateChecker = false;
-    // }
-
-    // if (checkDate.match(/\//g) !== null) {
-    //   console.log('I came to the after match method')
-    //   var checkDateNumbers = checkDate.split('/');
-
-    //   console.log('Lets see what is in you',checkDateNumbers )
-
-    //   if (checkDateNumbers[0].length === 2 && checkDateNumbers[1].length === 2 && checkDateNumbers[2].length === 4) {
-    //     console.log('I came to the after after match method')
-    //     this.dateChecker = true;
-    //   } else {
-    //     this.dateChecker = false;
-    //   }
-    // } 
     if (this.validateDate(event.target.value.replace(/[' ']/g, ''))) {
 
       this.dateChecker = true;
@@ -451,10 +442,18 @@ export default class CompanyComponent extends React.Component {
 
         </Modal>
         <div className="item animated fadeInDownBig  newDiv">
+          <select>
+            <option value="helpful Reviews">helpful Reviews</option>
+            <option value="other" selected>other</option>
+          </select>
           {this.state.renderData !== null ? <InterviewReviews validateDate={this.validateDate} userId={this.state.userId} renderData={this.state.renderData} imgUrl={this.state.hidden? this.state.companyInfo[0].squareLogo : null} companyName={this.state.value} retrieveDataFromDB={this.retrieveDataFromDB}/>: null }
         </div>
 
         <div className="item animated fadeInDownBig  employeeReview">
+          <select id="mySelect">
+            <option value="helpful Reviews">helpful Reviews</option>
+            <option value="other" selected>other</option>
+          </select>
          {this.state.renderEmployeeData !== null ? <EmployeeReview helpfulPoints={this.state.helpfulPoints} imgUrl={this.state.hidden? this.state.companyInfo[0].squareLogo : null} userId={this.state.userId} renderEmployeeData={this.state.renderEmployeeData}/> : null}
         </div>
 
