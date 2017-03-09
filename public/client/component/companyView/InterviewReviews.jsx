@@ -143,9 +143,8 @@ export default class InterviewReviews extends React.Component {
           $(this).parent()[0].children[1].innerText,
           $(this).parent()[0].children[2].innerText,
           $(this).parent()[0].children[3].innerText,
-          $(this).parent()[0].children[4].innerText,
-          $(this).parent()[0].children[5],
-          $(this).parent()[0].children[8]
+          $(this).parent()[0].children[4],
+          $(this).parent()[0].children[7]
         ]
         context.openModal(context.arrayOfinputs);
       })
@@ -185,15 +184,7 @@ export default class InterviewReviews extends React.Component {
         } else {
           var $liJobInterviewQuestion = "<li>"+ context.state.interviewQuestion1 +"</li>";
         }
-        // if(!context.state.discription1) {
-        //   var $liJobTitleInterviewQAnswer = "<li>"+ context.arrayOfinputs[4]+"</li>";
-        //   context.setState({
-        //     discription1: context.arrayOfinputs[4]
-        //   })
-        // } else {
-        //   var = "<li>"+ context.state.discription1 +"</li>";
-        // }
-
+        var logoImage = '<img src='+context.props.imgUrl +' '+'class="companyImg"/>'
         var $button = "<button class='editReview'>Edit the Review</button>";
 
 
@@ -225,10 +216,11 @@ export default class InterviewReviews extends React.Component {
               var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
             }
         }
-        // var helpfulButton = '<input type="button" value='+context.arrayOfinputs[8] +'class="helpfulPointsForInterview"/>';
+        console.log('this should be the value of the input', context.arrayOfinputs[5])
+        var helpfulButton = '<input type="button" value='+context.arrayOfinputs[5].value +' '+'class="helpfulPointsForInterview"/>';
         var $editStarElementList = '<li>'+ $editStarElement + '</li>';
-        console.log('new star ratings', editCountStar)
-        $($ele).parent().html($liJobTitle+$liJobDate+$liJobInterviewProcess+$liJobInterviewQuestion+ $editStarElementList + $button);
+        // console.log('new star ratings', editCountStar)
+        $($ele).parent().html($liJobTitle+$liJobDate+$liJobInterviewProcess+$liJobInterviewQuestion+ $editStarElementList + $button+logoImage+helpfulButton);
         context.closeModal();
         console.log('This is the name of the company', context.props.companyName)
         var updatedData = {name: context.props.companyName, imgUrl:context.props.imgUrl ,countOfReviews: editCountStar, companyComments: [{jobTitle:context.state.title1},{date:context.state.date1},{interviewProcess:{descriptionOfinterview:context.state.interviewProcess1, interviewQuestion:context.state.interviewQuestion1}}]};
@@ -269,7 +261,6 @@ export default class InterviewReviews extends React.Component {
       $('.date').val(text[1]); 
       $('.interviewProcess').val(text[2]); 
       $('.interviewQuestion').val(text[3]); 
-      $('.interviewAnswer').val(text[4]); 
     }
       this.setState({modalIsOpen: true});
   }
@@ -358,7 +349,6 @@ export default class InterviewReviews extends React.Component {
           <li>{filed.companyComments[1].date}</li>
           <li>{filed.companyComments[2].interviewProcess.descriptionOfinterview}</li>
           <li>{filed.companyComments[2].interviewProcess.interviewQuestion}</li>
-          <li>{filed.companyComments[2].interviewProcess.interviewProcess}</li>
           <li className="changeStarRating">{
             this.produceStars(filed.countOfReviews).map((ele, indx) =>
               <img key={indx} className="roundstar" src='roundstar1.png' />
