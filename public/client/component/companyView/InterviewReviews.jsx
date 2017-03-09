@@ -368,7 +368,6 @@ export default class InterviewReviews extends React.Component {
             )
           }</p>
           <button className="editReview">Edit the Review</button>
-          <img className="companyImg" src={this.props.imgUrl}/>
           <input type="button" className={`helpfulPointsForInterview ${index}`} value={`${filed.helpfulButtonScore}`}/>
         </div>
         )

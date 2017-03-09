@@ -341,19 +341,7 @@ router.get('/company', function(req, res) {
 
     respond = JSON.parse(respond);
 
-    var url = 'https://en.wikipedia.org/wiki/';
-    request(url+req.query.company, function(error, response, html) {
-      if(!error) {
-        var $ = cheerio.load(html);
-        // console.log($('.infobox').text());
-        var jobSummary = $('#mw-content-text').find('p').text() // A plain DOM element.
-        // console.log(jobSummary)
-        var result = jobSummary.split('.');
-        console.log(result[2])
-        var dataTobeSent = result[0] +'.'+ result[1] +'.'+ result[2]+'.' + result[3]+'.' + result[4]+'.' + result[5]+'.'+ result[6]+'.';
-        res.json([respond.response.employers,dataTobeSent, req.session.passport.user || req.headers['job-thrust-native']])
-      }
-    })
+    res.json([respond.response.employers, req.session.passport.user || req.headers['job-thrust-native']])
   }).catch(function(err) {
 
     console.log('There was an error with your request', err);

@@ -25,7 +25,7 @@
   height: 20px;
 }
 .innerText {
-  padding: 50px;
+  padding: 10px;
 }
 /*#stars  > span {
   display: inline-block;
@@ -81,24 +81,27 @@
 span.star.filled:before{ color:#e3cf7a; content:"\f005";}
 
 .ptage{
-/*  padding-top:20px;*/
   float: left;
-  color: white; text-shadow: black 0.1em 0.1em 0.2em;
+  color: black;
+  font-weight: bold;
+  margin-left: 20%;
 }
+
 .ptage1{
-  color: white; text-shadow: black 0.1em 0.1em 0.2em;
   float: right;
+  color: black;
+  font-weight: bold;
+  margin-right: 20%;
 }
-.companyInfo {
-  border-left:2px red solid; 
+
+div.companyInfo {
+  border-top: 1px solid #b3b3b3;
+  border-bottom: 1px solid #b3b3b3;
   background-color:rgba(256,256,256);
-  padding-bottom: 150px;
-  width: 1300px;
-  margin-top: 40px;
-/*  margin-right:150px;
-*/  margin-left:65px; 
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width: 90%;
+  margin: 10px auto 0 auto;
   text-align: center;
+  padding-bottom: 25px;
 }
 .textareas{
   width: 300px;
@@ -119,38 +122,34 @@ span.star.filled:before{ color:#e3cf7a; content:"\f005";}
   width:75px; 
   height: 75px;
   border-radius: 50%;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-top: 10px;
 }
-.newDiv {
+/*.newDiv {
   display: none;
   border-left:2px red solid; 
   background-color: #eee;
   width: 1300px;
   height: 100%;
   margin-top: 20px;
-/*  margin-right:100px;
-*/  margin-left: 65px; 
+  margin-right:100px;
+  margin-left: 65px; 
   text-align: center;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-.employeeReview {
+}*/
+.employeeReview, .newDiv {
   display: none;
-  border-left:2px red solid; 
+  border: 1px solid grey;
   background-color: #eee;
-  width: 80%;
+  width: 90%;
   height: 100%;
-  margin-top: 20px;
-/*  margin-right:100px;
-*/  margin-left: 65px; 
+  margin: 20px auto 0 auto;
   text-align: center;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .comments{
-  border-bottom:2px #2E8B57 solid; 
+  border: 1px solid red;
   padding-top: 15px;
-  width: 1000px;
-  margin-right: 80px;
-  margin-left: 150px;  
+  width: 90%;
+  margin: 0 auto;
 }
 .newDiv2 {
   display: block;

@@ -341,7 +341,6 @@ export default class EmployeeReview extends React.Component {
               <img key={indx} className="roundstar" src='./roundstar1.png' />
             )
           }</li>
-          <img className="companyImg" src={filed.imgUrl}/>
           <button className="editEmployeeReview" >Edit the Review</button>
           <input type="button" className={`helpfulPoints ${index}`} value={`${filed.helpfulButtonScore}`}/>
 
