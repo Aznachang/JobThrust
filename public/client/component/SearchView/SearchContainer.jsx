@@ -4,6 +4,7 @@ import SearchBar from './SearchBar.jsx';
 import SearchRecommendations from './SearchRecommendations.jsx';
 import axios from 'axios'
 import SearchResultsContainer from './SearchResultsContainer.jsx';
+import ESContainer from './ExtendedSearch/ESContainer.jsx';
 import $ from 'jQuery';
 import Modal from 'react-modal';
 
@@ -238,9 +239,9 @@ export default class SearchContainer extends React.Component {
           </div>
 
         </Modal>
-       <SearchRecommendations info={this.state.info} recommendations={this.state.recommendations} addRecommendation={this.addRecommendation} getInfo={this.getInfo} removeRecommendation={this.removeRecommendation} />
+       <ESContainer />
        <div className='search-container'>
-         <div className="page-header">Search For Current Openings</div>
+         <div className="page-header"><h3>Instant Search (powered by Indeed)</h3></div>
          <SearchBar getJobs={this.getJobs} searchHandler={this.searchHandler} />
        </div>
        { this.state.results.length > 0 ? (

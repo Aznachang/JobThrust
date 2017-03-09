@@ -229,11 +229,10 @@ export default class ManageComponent extends React.Component {
         <StageList boxClasses={this.state.boxClasses} filter={this.filter} filtered={this.state.filtered} stageCounts={this.state.stageCounts} stages={stages}/>
         <AddAppManual getJobs={this.getJobs} />
         <div className="add-app-manual">
-          <div className="add-app-btn" id='archived-btn'>
-            <Link to={'/archived'}>VIEW ARCHIVED JOBS</Link>
-          </div>
+          <Link to={'/archived'}><div className="add-app-btn" id='archived-btn'>
+            VIEW ARCHIVED OPPORTUNITIES
+          </div></Link>
         </div>
-        <br/>
         <ApplicationList sort={this.sort} filter={this.filter} filtered={this.state.filtered} filteredJobs={this.state.filteredJobs} jobInfo={this.state.jobs} sortList={this.sortListByStage} stages={stages} selectedAppJob={this.state.selectedAppJob} changeStage={this.changeStage} getJobs={this.getJobs} />
       </div>
     )

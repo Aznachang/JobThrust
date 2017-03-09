@@ -72,7 +72,6 @@ export default class EventForm extends React.Component {
       }
     };
 
-    console.log('Event data:', event);
 
     this.props.postEvent(event);
     console.log('Event created');
