@@ -27,6 +27,7 @@ export default class ESContainer extends React.Component {
     this.backtoResults = this.backtoResults.bind(this);
     this.viewJob = this.viewJob.bind(this);
     this.deleteSearch = this.deleteSearch.bind(this);
+    this.addSearch = this.addSearch.bind(this);
   }
 
   openModal() {
@@ -85,12 +86,31 @@ export default class ESContainer extends React.Component {
       console.log('Error attempting to delete search.');
     });
   }
+
+  addSearch(title, city, label) {
+    var context = this;
+
+    axios.get('/api/userdata').then(function(res) {
+      axios.post('/api/extsearch/add', {
+        title: title,
+        city: city,
+        label: label,
+        email: res.data.email,
+      }).then(function(response) {
+        alert('Search successfully submitted.  You will be notified by e-mail when it is done!');
+      }).catch(function(error) {
+        console.log('Error posting new search.');
+      });
+    }).catch(function(err) {
+      console.log('Error posting new search.');
+    });
+  }
   
 
   render() {
     var listDisplay;
     if (this.state.viewing === 'searches') {
-      listDisplay = <ESSearches selectResults={this.selectResults} deleteSearch={this.deleteSearch} searches={this.state.searches} />
+      listDisplay = <ESSearches selectResults={this.selectResults} addSearch={this.addSearch} deleteSearch={this.deleteSearch} searches={this.state.searches} />
     } else if (this.state.viewing === 'results') {
       listDisplay = <ESResults backToSearches={this.backToSearches} results={this.state.results} viewJob={this.viewJob} />
     } else {
@@ -98,7 +118,7 @@ export default class ESContainer extends React.Component {
     }
 
     return (
-      <div className='search-container'>
+      <div className='ext-search-container'>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
@@ -111,7 +131,7 @@ export default class ESContainer extends React.Component {
             {listDisplay}
           </div>
         </Modal>
-        <div className="page-header">Extended Search</div>
+        <div className='ext-search-title'><h3>Extended Search</h3></div>
         <div className='add-app-btn' onClick={this.openModal}>VIEW/EDIT YOUR SEARCHES</div>
       </div>
     )

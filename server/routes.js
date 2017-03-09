@@ -259,6 +259,8 @@ router.get('/extsearch/:email/', extSearch.getSearches);
 
 router.post('/extsearch/delete', extSearch.deleteSearch);
 
+router.post('/extsearch/add', extSearch.submitSearch);
+
 // ====
 
 

@@ -1,10 +1,31 @@
 import React from 'react';
 import SearchResultIcons from '../SearchResultIcons.jsx';
+import axios from 'axios';
 
 export default class ESResults extends React.Component {
 
   constructor(props) {
     super(props);
+    this.addJob = this.addJob.bind(this);
+  }
+
+  addJob(i) {
+    var context = this;
+
+    var appData = {
+      title: this.props.results[i].title,
+      company: this.props.results[i].company,
+      city: this.props.results[i].location,
+      state: '',
+      fullDescription: 'View posting at URL: ' + this.props.results[i].link,
+      key: 'EXTSEARCH-' + Math.round(Math.random() * 156202252523133562534)
+    }
+
+    axios.post('/api/job', appData).then(function(res) {
+      alert(this.props.results[i].title + ' (' + this.props.results[i].company + ') added to your pipeline!');
+    }).catch(function(err) {
+      console.log('Error adding to database.');
+    });
   }
 
   render() {
@@ -20,7 +41,7 @@ export default class ESResults extends React.Component {
               <li className='search-result' key={i} onClick={this.props.viewJob.bind(null, i)}>
                 <div className="buttons-div result-btn-div">
                   <div className="buttons-container">
-                    <button className="result-btn select">✔ Interested</button>
+                    <button className="result-btn select" onClick={this.addJob.bind(null, i)}>✔ Interested</button>
                   </div>
                 </div>
                 <p>{result.title}</p>

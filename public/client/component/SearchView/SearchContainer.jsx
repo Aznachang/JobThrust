@@ -241,7 +241,7 @@ export default class SearchContainer extends React.Component {
         </Modal>
        <ESContainer />
        <div className='search-container'>
-         <div className="page-header">Instant Search (powered by Indeed)</div>
+         <div className="page-header"><h3>Instant Search (powered by Indeed)</h3></div>
          <SearchBar getJobs={this.getJobs} searchHandler={this.searchHandler} />
        </div>
        { this.state.results.length > 0 ? (

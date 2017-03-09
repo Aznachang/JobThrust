@@ -21,7 +21,11 @@ export default class ESSearches extends React.Component {
   }
 
   submitSearch() {
-
+    this.props.addSearch(this.refs['ext-title'].value, this.refs['ext-city'].value, this.refs['ext-label'].value);
+    this.refs['ext-title'].value = '';
+    this.refs['ext-city'].value = '';
+    this.refs['ext-label'].value = '';
+    this.setState({creating: false});
   }
 
   render() {
@@ -42,12 +46,12 @@ export default class ESSearches extends React.Component {
                 </div>
                 <div>
                   <p>Name Your Search:</p>
-                  <input type='text' name='city' ref='ext-city' />
+                  <input type='text' name='city' ref='ext-label' />
                 </div>
               </div>
               <div className='ext-btn-container'>
                 <div className='app-btn cal-btn' onClick={this.toggleCreate}>Cancel</div>
-                <div className='app-btn cal-btn'>Initiate</div>
+                <div className='app-btn cal-btn' onClick={this.submitSearch}>Initiate</div>
               </div>
             </form>
           </div>

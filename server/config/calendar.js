@@ -16,8 +16,8 @@ module.exports.userTokens = {};
 
 module.exports.getCalData = function(req, res) {
   module.exports.oauth2C.setCredentials({
-      access_token: module.exports.userTokens[req.session.passport.user],
-      refresh_token: undefined
+      access_token: module.exports.userTokens[req.session.passport.user].token,
+      refresh_token: module.exports.userTokens[req.session.passport.user].refreshToken
   });
 
   var now = new Date();
@@ -64,7 +64,12 @@ module.exports.getCalData = function(req, res) {
 }
 
 module.exports.createEvent = function(req, res) {
-    calendar.events.insert({
+  module.exports.oauth2C.setCredentials({
+      access_token: module.exports.userTokens[req.session.passport.user].token,
+      refresh_token: module.exports.userTokens[req.session.passport.user].refreshToken
+  });
+
+  calendar.events.insert({
     auth: module.exports.oauth2C,
     calendarId: 'primary',
     resource: req.body,

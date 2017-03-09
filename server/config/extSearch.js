@@ -16,6 +16,20 @@ module.exports = {
     }).catch(function(err) {
       res.sendStatus(401);
     });
+  },
+
+  submitSearch: function(req, res) {
+    axios.post('http://localhost:4111/api/search', {
+      city: req.body.city,
+      title: req.body.title,
+      email: req.body.email,
+      label: req.body.label,
+      key: 'Ap2jgrawAB@R(@r903bur3b3bABFiabojosabij2r02bjrwabWABIFJBAWIBwjooeijsoijvoasijvowirAB'
+    }).then(function(response) {
+      res.sendStatus(200);
+    }).catch(function(err) {
+      res.sendStatus(401);
+    });
   }
 
 
