@@ -329,22 +329,30 @@ export default class EmployeeReview extends React.Component {
         </Modal>
         {
         this.props.renderEmployeeData.map((filed, index) =>
-        <ul key={index} className={`comments ${index}`}>
-         <strong>{`Title:`}</strong>
-         <li className={filed.id}>{filed.employeeComments[0].reviewTitle}</li>
-          <strong>{`Pros:`}</strong>
-          <li>{filed.employeeComments[2].prosReview}</li>
-         <strong>{`Cons:`}</strong>
-          <li>{filed.employeeComments[1].consReview}</li>
-          <li>{
-            this.produceStarsForEmployee(filed.countOfReviews).map((ele, indx) =>
-              <img key={indx} className="roundstar" src='./roundstar1.png' />
-            )
-          }</li>
+        <div key={index} className={`comments ${index}`}>
+          <div>
+            <span><strong>Overall Rating: </strong></span>
+            <span>{
+              this.produceStarsForEmployee(filed.countOfReviews).map((ele, indx) =>
+                <img key={indx} className="roundstar" src='./roundstar1.png' />
+              )
+            }</span>
+          </div>
+         <div className={filed.id + ' review-item'}>
+           <strong>{`Title:`}</strong>
+           {filed.employeeComments[0].reviewTitle}
+         </div>
+          <div className='review-item'> 
+            <strong>{`Pros:`}</strong>
+            <div className='review-sub'>{filed.employeeComments[2].prosReview}</div>
+          </div>
+          <div className='review-item'><strong>{`Cons:`}</strong>
+            <div className='review-sub'>{filed.employeeComments[1].consReview}</div>
+          </div>
           <button className="editEmployeeReview" >Edit</button>
           <input type="button" className={`helpfulPoints ${index}`} value={`${filed.helpfulButtonScore}`}/>
 
-        </ul>
+        </div>
         
         )
       }
