@@ -419,7 +419,7 @@ export default class CompanyComponent extends React.Component {
         </div>
 
         <div className="item animated fadeInDownBig  employeeReview">
-         {this.state.renderEmployeeData !== null ? <EmployeeReview helpfulPoints={this.state.helpfulPoints} userId={this.state.userId} renderEmployeeData={this.state.renderEmployeeData}/> : null}
+         {this.state.renderEmployeeData !== null ? <EmployeeReview helpfulPoints={this.state.helpfulPoints} imgUrl={this.state.hidden? this.state.companyInfo[0].squareLogo : null} userId={this.state.userId} renderEmployeeData={this.state.renderEmployeeData}/> : null}
         </div>
 
         <div className="item animated fadeInDownBig  employeeReview">

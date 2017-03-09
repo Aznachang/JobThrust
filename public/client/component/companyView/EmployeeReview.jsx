@@ -23,11 +23,13 @@ export default class EmployeeReview extends React.Component {
     this.editEmployeeInfo = this.editEmployeeInfo.bind(this);
     this.sendUpdatedEmployeeData = this.sendUpdatedEmployeeData.bind(this);
     this.produceStarsForEmployee = this.produceStarsForEmployee.bind(this);
+    this.editStarsForEmployee = this.editStarsForEmployee.bind(this);
 
     this.arrayOfinputs = [];
     this.idForUpdateDB = '';
     this.$ele = null;
     this.helpfulCheckpoint = {};
+    this.eidtStarCount = 0;
     // this.setState({helpfulCheckpoint:this.helpfulCheckpoint[this.props.userId] = true})
 
     var context = this;
@@ -88,6 +90,47 @@ export default class EmployeeReview extends React.Component {
      })
     })
   }
+
+
+  editStarsForEmployee() {
+    var context = this;
+    $(function() {
+
+      $(document).on('click', '.EditrateEmployee', function() {
+        context.$element = $(this)[0].classList[0];
+        var $stars = $(this)[0].classList[0];
+        console.log('star that was selected', $(this)[0].classList)
+        if (Number($stars[$stars.length-1]) === 1 ) {
+          context.eidtStarCount  = $stars[$stars.length-1];
+          console.log('11111')
+          // $('.rateForEmployee').attr('content','\2605');
+          $(this).remove($(this)[0].classList[0]);
+
+        } else if (Number($stars[$stars.length-1]) === 2) {
+                    console.log('2222')
+          context.eidtStarCount  = $stars[$stars.length-1];
+
+          $(this).remove($(this)[0].classList[0]);
+
+        } else if(Number($stars[$stars.length-1]) === 3) {
+                    console.log('33333')
+          context.eidtStarCount  = $stars[$stars.length-1];
+
+          $(this).remove($(this)[0].classList[0]);
+        } else if (Number($stars[$stars.length-1]) === 4) {
+                    console.log('444444')
+          context.eidtStarCount  = $stars[$stars.length-1];
+
+          $(this).remove($(this)[0].classList[0]);
+        } else if (Number($stars[$stars.length-1]) === 5) {
+                    console.log('555555')
+          context.eidtStarCount  = $stars[$stars.length-1];
+
+          $(this).remove($(this)[0].classList[0]);
+        }
+      })
+    })
+  }
   openModal(array) {
     this.setState({modalIsOpen: true});
     $('.reviewTitle').val(array[0])
@@ -144,9 +187,42 @@ export default class EmployeeReview extends React.Component {
     }
 
 
-    var $button = '<button class="editEmployeeReview" >Edit the Review</button>';
 
-    $(this.$ele).parent().html($editReviewTitle+$eidtProsReview+$editConsReview+$button);
+    if (Number(this.eidtStarCount) === 0) {
+        var editCountStar = this.arrayOfinputs[4].children.length;
+        if (editCountStar === 1) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" />';
+        } else if (editCountStar === 2) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+        } else if (editCountStar === 3) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+        } else if (editCountStar === 4) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+        } else if (editCountStar === 5) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+        }
+    } else {
+      var editCountStar = Number(this.eidtStarCount);
+        if (editCountStar === 1) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" />';
+        } else if (editCountStar === 2) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+        } else if (editCountStar === 3) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+        } else if (editCountStar === 4) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+        } else if (editCountStar === 5) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+        }
+    }
+
+    var $editStarElementList = '<li>'+ $editStarElement + '</li>';
+    console.log('This should be the new stars update',$editStarElementList )
+    var $button = '<button class="editEmployeeReview" >Edit the Review</button>';
+    var logoImage = '<img src='+ this.props.imgUrl +' '+'class="companyImg"/>';
+    var helpfulButton = '<input type="button" value='+ this.arrayOfinputs[4].value+' '+'class="helpfulPoints" />';
+
+    $(this.$ele).parent().html($editReviewTitle+$eidtProsReview+$editConsReview+$editStarElementList+$button+logoImage+helpfulButton);
     this.closeModal();
     var updatedEmployeeData = [reviewTitle, consReview, prosReview]
     this.sendUpdatedEmployeeData([updatedEmployeeData, this.idForUpdateDB]);
@@ -192,12 +268,14 @@ export default class EmployeeReview extends React.Component {
       $(document).on('click', '.editEmployeeReview', function() { 
         context.idForUpdateDB = $(this).parent()[0].children[0].classList[0];
         context.$ele = this;
-        console.log('Check if the className is correct', $(this).parent()[0].children[0].classList[0])
+        console.log('those are the children', $(this).parent()[0].children)
 
         context.arrayOfinputs = [ 
           $(this).parent()[0].children[0].innerText, 
           $(this).parent()[0].children[1].innerText,
-          $(this).parent()[0].children[2].innerText
+          $(this).parent()[0].children[2].innerText,
+          $(this).parent()[0].children[3],
+          $(this).parent()[0].children[6]
         ]
         context.openModal(context.arrayOfinputs);
       })
@@ -212,6 +290,7 @@ export default class EmployeeReview extends React.Component {
   }
   componentDidMount() {
     this.editEmployeeInfo();
+    this.editStarsForEmployee();
   }
   render() {
     return (
@@ -239,7 +318,7 @@ export default class EmployeeReview extends React.Component {
                 <textarea name='description' form='add-app-form' className='cons' placeholder='Enter a Comment ...' onChange={this.editHandleChangeForModalCons}required></textarea><br />
                   <div className="editRatingStar">
                   <p>Overall Rating</p>
-                  <span className="rating"><span className="five5 rate star"></span><span className="four4 rate star "></span><span className="three3 rate star"></span><span className="two2 rate star filled"></span><span className=" first1 rate star filled"></span></span>
+                  <span className="rating"><span className="five5 EditrateEmployee star"></span><span className="four4 EditrateEmployee star "></span><span className="three3 EditrateEmployee star"></span><span className="two2 EditrateEmployee star filled"></span><span className=" first1 EditrateEmployee star filled"></span></span>
                 </div>
                 <input type='submit' className='add-small' value='Submit Review' />
               </form>
@@ -259,6 +338,7 @@ export default class EmployeeReview extends React.Component {
               <img key={indx} className="roundstar" src='./roundstar1.png' />
             )
           }</li>
+          <img className="companyImg" src={filed.imgUrl}/>
           <button className="editEmployeeReview" >Edit the Review</button>
           <input type="button" className={`helpfulPoints ${index}`} value={`${filed.helpfulButtonScore}`}/>
 
