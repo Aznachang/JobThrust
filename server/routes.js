@@ -34,7 +34,7 @@ router.get('/upload',function(req, res) {
   } ,function(err, data) {
     if (!err) {
       // console.log('This what was in DB', data);
-      res.json(data);
+      res.send(data);
     }
   })
 })
@@ -61,9 +61,9 @@ router.post('/upload',function(req, res) {
               var uploadObj = {id: Math.floor(Math.random() * 100000), imgeUrl: createS3Url, userId: req.session.passport.user || req.headers['job-thrust-native'], name:file.fileUpload.originalFilename}
               Model.UploadFiles.insertMany(uploadObj, function(err, data) {
                 if (err) {
-                  res.json(err);
+                  res.send(err);
                 } else {
-                  res.json('Hi');
+                  res.send('Hi');
                 }
               })
           })
@@ -81,9 +81,9 @@ router.post('/upload',function(req, res) {
               var uploadObj = {id: Math.floor(Math.random() * 100000), imgeUrl: createS3Url, userId: req.session.passport.user  || req.headers['job-thrust-native'], name:file.fileUpload.originalFilename}
               Model.UploadFiles.insertMany(uploadObj, function(err, data) {
                 if (err) {
-                  res.json(err);
+                  res.send(err);
                 } else {
-                  res.json('Hi');
+                  res.send('Hi');
                 }
               })
           })
@@ -110,9 +110,9 @@ router.route('/jobs/:jk').get(function(req, res) {
 router.post('/employeeReviews', function(req, res) {
   Model.EmployeeModel.insertMany(req.body, function(err, data) {
     if (err) {
-      res.json(err);
+      res.send(err);
     } else {
-      res.json('Data Was inserted successfully');
+      res.send('Data Was inserted successfully');
     }
   })
 });
@@ -120,9 +120,9 @@ router.post('/employeeReviews', function(req, res) {
 router.post('/interviewreview', function(req, res) {
   Model.InterviewModel.insertMany(req.body, function(err, data) {
     if (err) {
-      res.json(err);
+      res.send(err);
     } else {
-      res.json('Data Was inserted successfully');
+      res.send('Data Was inserted successfully');
     }
   })
 });
@@ -133,9 +133,9 @@ router.get('/buttonsInfoForInterview', function(req, res) {
     id:Number(req.query.name)
   }, function(err, data) {
     if (err) {
-      res.json(err);
+      res.send(err);
     } else {
-      res.json(data);
+      res.send(data);
     }
   })
 });
@@ -146,9 +146,9 @@ router.get('/buttonsInfo', function(req, res) {
     id:Number(req.query.name)
   }, function(err, data) {
     if (err) {
-      res.json(err);
+      res.send(err);
     } else {
-      res.json(data);
+      res.send(data);
     }
   })
 });
@@ -158,9 +158,9 @@ router.get('/employeeReviews', function(req, res) {
     name:req.query.name
   }, function(err, data) {
     if (err) {
-      res.json(err);
+      res.send(err);
     } else {
-      res.json(data);
+      res.send(data);
     }
   })
 });
@@ -179,7 +179,7 @@ router.post('/updateHelpfulButtonForInterview', function(req, res) {
     doc.helpfulButtonScore = req.body[0];
     doc.singleUl = req.body[3]
     doc.save();
-    res.json('');
+    res.send('');
   })
 });
 
@@ -197,7 +197,7 @@ router.post('/updateHelpfulButton', function(req, res) {
     doc.helpfulButtonScore = req.body[0];
     doc.singleUl = req.body[3]
     doc.save();
-    res.json('');
+    res.send('');
   })
 });
 
@@ -242,9 +242,9 @@ router.get('/interviewreview', function(req, res) {
     name:req.query.name
   }, function(err, data) {
     if (err) {
-      res.json(err);
+      res.send(err);
     } else {
-      res.json(data);
+      res.send(data);
     }
   })
 });
@@ -304,7 +304,7 @@ router.get('/job/:jobId', function(req, res) {
   table.Job.findOne({
     where: {id: req.params.jobId}
   }).then(function(jobinfo) {
-    res.json(jobinfo);
+    res.send(jobinfo);
   });
 })
 
@@ -329,7 +329,7 @@ router.get('/userdata', function(req, res) {
       id: req.session.passport.user  || req.headers['job-thrust-native']
     }
   }).then(function(data) {
-    res.json(data);
+    res.send(data);
   });
 })
 
@@ -341,7 +341,7 @@ router.get('/company', function(req, res) {
 
     respond = JSON.parse(respond);
 
-    res.json([respond.response.employers, req.session.passport.user || req.headers['job-thrust-native']])
+    res.send([respond.response.employers, req.session.passport.user || req.headers['job-thrust-native']])
   }).catch(function(err) {
 
     console.log('There was an error with your request', err);
@@ -355,7 +355,7 @@ router.get('/application', function(req, res) {
     userId: String(req.session.passport.user || req.headers['job-thrust-native'])
   }
   }).then(function(respond) {
-    res.json(respond);
+    res.send(respond);
   })
 });
 
@@ -369,7 +369,7 @@ router.get('/application/:id/notes', function(req, res) {
       applicationId: req.params.id
     }
   }).then(function(notes){
-    res.json(notes);
+    res.send(notes);
   })
 });
 
@@ -391,7 +391,7 @@ router.post('/application/notes', function(req, res) {
         applicationId: req.body.applicationId
       }).then(function(notes){
         console.log('A new note was created!');
-        res.json(notes);
+        res.send(notes);
       })
       // update existing note
     } else {
@@ -447,7 +447,7 @@ router.get('/contact/:appId', function(req, res) {
     if (created) {
       console.log('NO EXISTING CONTACT WAS FOUND FOR APP ' + req.params.appId + '.  CREATING.');
     }
-    res.json(contactInfo);
+    res.send(contactInfo);
   });
 })
 
@@ -473,7 +473,7 @@ router.route('/search/:id').get(function(req, res) {
     }
   }).then(function(search) {
     console.log(search);
-    res.json(search);
+    res.send(search);
   })
 })
 
@@ -483,7 +483,7 @@ router.get('/query', function(req, res) {
       userId: req.session.passport.user || req.headers['job-thrust-native']
     }
   }).then(function(query) {
-    res.json(query);
+    res.send(query);
   })
 })
 
@@ -500,7 +500,7 @@ router.get('/application/offers', function(req, res) {
      userId: req.session.passport.user || req.headers['job-thrust-native']
    }
   }).then(function(offers){
-    res.json(offers);
+    res.send(offers);
   }); //end of Application then()
 });
 

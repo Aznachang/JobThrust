@@ -59,7 +59,7 @@ export default class EmployeeReview extends React.Component {
                 context.helpfulCheckpoint[context.props.userId] = context.props.userId;
                 // console.log('I am console logging the helpfulCheckpoint', context.helpfulCheckpoint)
 
-                var $buttonValue = 'helpful(' + (Number($(secondContext).val().match(/[0-9]/g)[0]) + 1) +')';
+                var $buttonValue = 'Helpful (' + (Number($(secondContext).val().match(/[0-9]/g)[0]) + 1) +')';
 
                 $(secondContext).val($buttonValue);
 
@@ -330,18 +330,18 @@ export default class EmployeeReview extends React.Component {
         {
         this.props.renderEmployeeData.map((filed, index) =>
         <ul key={index} className={`comments ${index}`}>
-         <strong>{`Review Title:`}</strong>
+         <strong>{`Title:`}</strong>
          <li className={filed.id}>{filed.employeeComments[0].reviewTitle}</li>
-         <strong>{`Cons:`}</strong>
-          <li>{filed.employeeComments[1].consReview}</li>
           <strong>{`Pros:`}</strong>
           <li>{filed.employeeComments[2].prosReview}</li>
+         <strong>{`Cons:`}</strong>
+          <li>{filed.employeeComments[1].consReview}</li>
           <li>{
             this.produceStarsForEmployee(filed.countOfReviews).map((ele, indx) =>
               <img key={indx} className="roundstar" src='./roundstar1.png' />
             )
           }</li>
-          <button className="editEmployeeReview" >Edit the Review</button>
+          <button className="editEmployeeReview" >Edit</button>
           <input type="button" className={`helpfulPoints ${index}`} value={`${filed.helpfulButtonScore}`}/>
 
         </ul>

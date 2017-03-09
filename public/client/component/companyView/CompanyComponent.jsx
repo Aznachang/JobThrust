@@ -381,13 +381,13 @@ export default class CompanyComponent extends React.Component {
 
           <div className="inner-container">
             <div className='desc-header'>
-              Add an Interview Review Below:
+              Add Interview Review Information:
             </div>
             <div className='add-app-container'>
               <form id="add-app-form" onSubmit={this.submitApp}>
-                Job Title<br />
+                Role Interviewed For<br />
                 <input type='text' name='title' className='jobTitle' placeholder='i.e Frontend Developer..' onChange={this.handleChangeForModalTitle} required/><br />
-                Date<br />
+                Date of Interview<br />
                 <input type='text' name='company' className='date' placeholder='i.e 03/20/2017' onChange={this.handleChangeForModalDate} required/><br />
                 Describe the Interview Process<br />
                 <textarea name='description' form='add-app-form' className='interviewProcess' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalInterviewProcess}required></textarea><br />
@@ -415,16 +415,16 @@ export default class CompanyComponent extends React.Component {
 
           <div className="inner-container">
             <div className='desc-header'>
-              Employee Review Below:
+              Add Employee Review Information:
             </div>
             <div className='add-app-container'>
               <form id="add-app-form" onSubmit={this.employeeReviewForm}>
-                Review Title<br />
+                Your Role/Title<br />
                 <input type='text' name='title' onChange={this.handleChangeForModalReviewTitle} required/><br />
                 Pros<br />
-                <input type='text' name='Pros' onChange={this.handleChangeForModalPros} required/><br />
+                <textarea name='Pros' form='add-app-form' placeholder='Enter a comment...' onChange={this.handleChangeForModalPros} required/><br />
                 Cons<br />
-                <textarea name='description' form='add-app-form' placeholder='Enter a Comment ...' onChange={this.handleChangeForModalCons}required></textarea><br />
+                <textarea name='description' form='add-app-form' placeholder='Enter a comment...' onChange={this.handleChangeForModalCons}required></textarea><br />
                 <div className="ratingStar">
                   <p>Overall Rating</p>
                 </div>
@@ -449,6 +449,7 @@ export default class CompanyComponent extends React.Component {
         </div>
         
         <div className="newDiv">
+          <span><strong>Sort By: </strong></span>
           <select>
             <option value="helpful Reviews">helpful Reviews</option>
             <option value="other" selected>other</option>
