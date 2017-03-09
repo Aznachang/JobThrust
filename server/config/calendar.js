@@ -35,7 +35,7 @@ module.exports.getCalData = function(req, res) {
   }, function(err, response) {
     if (err) {
       console.log(err);
-      res.sendStatus(401);
+      // res.sendStatus(401);
     } else {
       calData = response.items;
       calendar.events.list({
@@ -84,8 +84,8 @@ module.exports.createEvent = function(req, res) {
 
 module.exports.getThread = function(req, res) {
   module.exports.oauth2C.setCredentials({
-      access_token: module.exports.userTokens[req.session.passport.user],
-      refresh_token: undefined
+      access_token: module.exports.userTokens[req.session.passport.user].token,
+      refresh_token: module.exports.userTokens[req.session.passport.user].refreshToken
   });
 
   if (req.body.email) {

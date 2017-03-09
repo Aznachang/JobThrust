@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import ESSearches from './ESSearches.jsx';
 import ESResults from './ESResults.jsx';
+import ESViewJob from './ESViewJob.jsx';
 
 export default class ESContainer extends React.Component {
 
@@ -13,7 +14,8 @@ export default class ESContainer extends React.Component {
       searches: [],
       results: [],
       modalIsOpen: false,
-      viewingSearches: true
+      viewing: 'searches',
+      jobview: null
     };
 
     this.openModal = this.openModal.bind(this);
@@ -21,10 +23,14 @@ export default class ESContainer extends React.Component {
     this.closeModal = this.closeModal.bind(this);
     this.getSearches = this.getSearches.bind(this);
     this.selectResults = this.selectResults.bind(this);
+    this.backToSearches = this.backToSearches.bind(this);
+    this.backtoResults = this.backtoResults.bind(this);
+    this.viewJob = this.viewJob.bind(this);
+    this.deleteSearch = this.deleteSearch.bind(this);
   }
 
   openModal() {
-    this.setState({modalIsOpen: true, viewingSearches: true});
+    this.setState({modalIsOpen: true, viewing: 'searches'});
   }
 
   afterOpenModal() {
@@ -40,7 +46,15 @@ export default class ESContainer extends React.Component {
   selectResults(index) {
     console.log('Displaying results for search at index', index);
     var selected = this.state.searches[index].results;
-    this.setState({results: selected, viewingSearches: false});
+    this.setState({results: selected, viewing: 'results'});
+  }
+
+  backToSearches() {
+    this.setState({viewing: 'searches'});
+  }
+
+  backtoResults() {
+    this.setState({viewing: 'results'});
   }
 
   getSearches() {
@@ -53,14 +67,34 @@ export default class ESContainer extends React.Component {
       });
     });
   }
+
+  viewJob(i) {
+    console.log(this.state.results[i].link);
+    this.setState({jobview: this.state.results[i]})
+    this.setState({viewing: 'jobpage'});
+  }
+
+  deleteSearch(id) {
+    var context = this;
+
+    axios.post('/api/extsearch/delete', {
+      searchId: id
+    }).then(function(res) {
+      context.getSearches();
+    }).catch(function(err) {
+      console.log('Error attempting to delete search.');
+    });
+  }
   
 
   render() {
     var listDisplay;
-    if (this.state.viewingSearches) {
-      listDisplay = <ESSearches selectResults={this.selectResults} searches={this.state.searches} />
+    if (this.state.viewing === 'searches') {
+      listDisplay = <ESSearches selectResults={this.selectResults} deleteSearch={this.deleteSearch} searches={this.state.searches} />
+    } else if (this.state.viewing === 'results') {
+      listDisplay = <ESResults backToSearches={this.backToSearches} results={this.state.results} viewJob={this.viewJob} />
     } else {
-      listDisplay = <ESResults results={this.state.results} />
+      listDisplay = <ESViewJob backToResults={this.backtoResults} job={this.state.jobview} />
     }
 
     return (

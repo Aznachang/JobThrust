@@ -362,6 +362,43 @@ ul.recommendation {
   margin: auto;
 }
 
+/* ======= EXTENDED SEARCH ====== */
+
+.ext-search-header {
+  text-align: center;
+  padding-bottom: 5px;
+  border-bottom: 2px solid grey;
+}
+
+.saved-searches, .ext-search-results, .no-results {
+  margin-top: 10px;
+}
+
+.ext-results-container, .ext-searches-container, .ext-view-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.ext-view-container {
+  align-items: center;
+}
+
+.result-btn-div {
+  margin-top: 8px;
+}
+
+div.back-btn {
+  margin-bottom: 6px;
+  padding: 3px 6px 5px 6px;
+}
+
+iframe {
+  position: absolute;
+  height: 78%;
+  width: 94%;
+  margin-top: 10px;
+}
+
 /* ========= MANAGE =========== */
 
 #pipeline {

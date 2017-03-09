@@ -257,6 +257,8 @@ router.post('/mail/thread/', cal.getThread);
 
 router.get('/extsearch/:email/', extSearch.getSearches);
 
+router.post('/extsearch/delete', extSearch.deleteSearch);
+
 // ====
 
 

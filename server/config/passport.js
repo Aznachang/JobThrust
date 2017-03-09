@@ -40,7 +40,11 @@ module.exports = function(passport) {
   },
   function(token, refreshToken, profile, done) {
 
-    cal.userTokens[profile.id] = token;
+    cal.userTokens[profile.id] = {
+      token: token,
+      refreshToken: refreshToken
+    }
+    console.log('REFRESH TOKEN:', refreshToken);
     console.log('setting user token for', profile.id, 'as', token);
 
       // make the code asynchronous
