@@ -126,10 +126,6 @@ textarea {
 
 /* ========== JOB OFFERS VIEW ========== */
 
-/*#compare-offer {
-  width: 10%;
-}*/
-
 .offer-equal {
   width: 40%;
 }
@@ -148,7 +144,20 @@ textarea {
   text-align: center;
 }
 
-/* ========== JOB OFFERS List ========== */
+/* ========== ARCHIVE JOBS LIST ========== */
+.archive-role-company {
+  width: 30%;
+}
+
+.archive-stage-reason {
+  width: 15%;
+}
+
+.archive-created {
+  width: 10%;
+}
+
+/* ========== JOB OFFERS LIST ========== */
 
 #offer-breakdown{
   text-align: center;
