@@ -83,8 +83,8 @@ export default class JobOfferList extends React.Component {
             <table>
              <thead>
                <tr className='application'>
-                 <th className ='offer-equal'>Company</th>
                  <th className ='offer-equal'>Role</th>
+                 <th className ='offer-equal'>Company</th>
                  <th id ='update-offer'>Update</th>
                </tr>
              </thead>

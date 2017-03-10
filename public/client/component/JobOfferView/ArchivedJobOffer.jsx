@@ -31,13 +31,13 @@ export default class ArchivedJobOffer extends React.Component {
 
   render() {
     return (
-      <tr>
-        <td>{this.props.archivedOffers.companyName} - {this.props.archivedOffers.jobTitle}</td>
+      <tr className='archive-offer-row'>
+        <td>{this.props.archivedOffers.jobTitle} - {this.props.archivedOffers.companyName}</td>
         <td>${this.props.archivedOffers.salary}</td>
         <td>${this.props.archivedOffers.signBonus}</td>
         <td>{this.props.archivedOffers.vacationDays}</td>
         <td>{this.props.archivedOffers.retireMatchPercent}%</td>
-        <td onClick={this.openModal}>📔</td>
+        <td onClick={this.openModal}><span className='offer-click-icon'>📔</span></td>
 
         <Modal
         isOpen={this.state.modalIsOpen}

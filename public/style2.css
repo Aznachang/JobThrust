@@ -54,6 +54,15 @@ iframe.singleFile {
   background-color: #ccc;
 }
 
+.company-page-header {
+  text-align: center;
+  padding: 10px 0;
+  border-bottom: 2px solid grey;
+  font-weight: bold;
+  margin: 0 auto 15px auto;
+  width: 90%;
+}
+
 input[type=file] {
   /*border: 2px solid red;*/
   border-radius: 2px;

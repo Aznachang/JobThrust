@@ -79,9 +79,9 @@ export default class JobOfferForm extends React.Component {
   render() {
     return (
       <tr>
-       <td>{this.props.jobOffers.companyName}</td>
        <td>{this.props.jobOffers.jobTitle}</td>
-       <td onClick={this.openModal}>📂</td>
+       <td>{this.props.jobOffers.companyName}</td>
+       <td onClick={this.openModal}><span className='offer-click-icon'>📂</span></td>
         <Modal
         isOpen={this.state.modalIsOpen}
         onAfterOpen={this.afterOpenModal}
@@ -96,7 +96,7 @@ export default class JobOfferForm extends React.Component {
 
             <div className='add-app-container'>
               <div className='desc-header'>
-                <b> Detailed Job Offers Comparison: </b>
+                <b> Offer Details </b>
               </div>
               <table id='job-offer'>
                 <tbody>
@@ -121,27 +121,40 @@ export default class JobOfferForm extends React.Component {
             </div>
           </div>
 
-          <div className='add-app-container'>
+          <div className='offer-detail-container'>
             <div className='desc-header'>
-              <b> Update Your Job Offer: </b>
+              <b> Update Offer </b>
             </div>
-            <form id="add-app-form" onSubmit={this.submitJobOffer}>
-              Salary<br />
-              <input type='text' name='salary' ref='salary' placeholder='50000' defaultValue={this.props.jobOffers.salary}/><br />
-              Signing Bonus<br />
-              <input type='text' name='signBonus' ref='signBonus' placeholder='5000' defaultValue = {this.props.jobOffers.signBonus} /><br />
-              Vacation Days<br />
-              <input type='text' name='vacationDays' ref='vacationDays' placeholder='14' defaultValue = {this.props.jobOffers.vacationDays}/><br />
-              401K Company Match %<br />
-              <input type='text' name='retireMatchPercent' ref='retireMatchPercent' placeholder='5' defaultValue = {this.props.jobOffers.retireMatchPercent}/><br />
-
-              <input type='submit' value='Add' /> <br />
+            <form id="archive-offer-form" onSubmit={this.submitJobOffer}>
+              <div className='form-box'>
+                <div>
+                  Salary<br />
+                  <input type='text' name='salary' ref='salary' placeholder='50000' defaultValue={this.props.jobOffers.salary}/><br />
+                </div>
+                <div>
+                  Signing Bonus<br />
+                  <input type='text' name='signBonus' ref='signBonus' placeholder='5000' defaultValue = {this.props.jobOffers.signBonus} /><br />
+                </div>
+              </div>
+              <div className='form-box'>
+                <div>
+                  Vacation Days<br />
+                  <input type='text' name='vacationDays' ref='vacationDays' placeholder='14' defaultValue = {this.props.jobOffers.vacationDays}/><br />
+                </div>
+                <div>
+                  401K Company Match %<br />
+                  <input type='text' name='retireMatchPercent' ref='retireMatchPercent' placeholder='5' defaultValue = {this.props.jobOffers.retireMatchPercent}/><br />
+                </div>
+              </div>
+              <div>
+                <input type='submit' value='Add' /> <br />
+              </div>
             </form>
           </div>
 
           <div className='add-app-container'>
             <div className='desc-header'>
-              <b> Archiving Your Job Offer: </b>
+              <b> Archive Offer </b>
             </div>
             <form id="add-app-form" onSubmit={this.submitArchiveJob}>
               <b>Reason: </b>

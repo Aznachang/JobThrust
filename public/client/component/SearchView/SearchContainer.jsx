@@ -33,7 +33,6 @@ export default class SearchContainer extends React.Component {
     this.getInfo = this.getInfo.bind(this);
     this.removeJob = this.removeJob.bind(this);
     this.addJob = this.addJob.bind(this);
-    this.addSearch = this.addSearch.bind(this);
     this.getRecommendations = this.getRecommendations.bind(this);
     this.addRecommendation = this.addRecommendation.bind(this);
     this.removeRecommendation = this.removeRecommendation.bind(this);
@@ -75,7 +74,6 @@ export default class SearchContainer extends React.Component {
         results: json.results,
         info: {}
       });
-      context.addSearch();
     });
   }
 
@@ -106,15 +104,6 @@ export default class SearchContainer extends React.Component {
     })
   }
 
-  // ADD SEARCH AND QUERY TO DB
-  addSearch() {
-  // TODO SEE IF SEARCH EXIST PRIOR SO USER CAN STILL CREATE QUERY
-    axios.post('/api/search', {
-      query: this.state.search
-    })
-  }
-
-
   /**********SEARCH RESULT ICON FUNCTIONS**********/
 
   // ADD JOB TO DB
@@ -139,12 +128,6 @@ export default class SearchContainer extends React.Component {
 
   // REMOVE INDIVIDUAL JOB COMPONENT FROM VIEW (NOT DB)
   removeJob(jobIndex) {
-    $('.remove').click(function() {
-      $(this).closest('.search-result').addClass('item animated hinge').empty()
-    });
-    $('.select').click(function() {
-      $(this).closest('.search-result').addClass('item animated fadeOutLeft');
-    });
     var context = this;
     context.state.results.splice(jobIndex, 1)
     context.setState({

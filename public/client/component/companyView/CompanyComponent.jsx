@@ -417,6 +417,9 @@ export default class CompanyComponent extends React.Component {
     this.addStarsForEmployee();
     return (
       <div className="container">
+        <div className='company-page-header'>
+          <h3>Company Database</h3>
+        </div>
         <CompanySearch getCompanyInfo={this.getCompanyInfo} handleChange={this.handleChange}/>
        <div>
        {this.state.hidden ? <CompanyListComponent companyInfo={[this.state.companyInfo[0]]} /> : null}

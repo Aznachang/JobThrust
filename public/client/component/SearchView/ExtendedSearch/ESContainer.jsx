@@ -131,7 +131,7 @@ export default class ESContainer extends React.Component {
             {listDisplay}
           </div>
         </Modal>
-        <div className='ext-search-title'><h3>Extended Search</h3></div>
+        <div className='ext-search-title'><h3>Background Extended Search</h3></div>
         <div className='add-app-btn' onClick={this.openModal}>VIEW/EDIT YOUR SEARCHES</div>
       </div>
     )
