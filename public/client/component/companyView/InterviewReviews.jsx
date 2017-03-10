@@ -198,7 +198,7 @@ console.log('This is the importantId', context.importantId)
           var $liJobInterviewQuestion = "<div class='review-item'>Interview Questions:<div class='review-sub'>"+ context.state.interviewQuestion1 +"</div></div>";
         }
         var logoImage = '<img src='+context.props.imgUrl +' '+'class="companyImg"/>'
-        var $button = "<button class='editReview'>Edit the Review</button>";
+        var $button = "<button class='editReview'>Edit</button>";
 
 
 
