@@ -82,7 +82,7 @@ export default class InterviewReviews extends React.Component {
               
               } else if (existUser === true) {
 
-                alert('You already clicked me dude');
+                alert("Sorry, you can't vote twice on the same post ");
               }
             }, 
             error: function(err) {
@@ -232,17 +232,7 @@ console.log('This is the importantId', context.importantId)
         console.log('this should be the value of the input', context.arrayOfinputs[5].value)
 
         var helpfulButton = '<input type="button" value='+context.arrayOfinputs[5].value.replace(/[' ']/g, '') +' '+'class="helpfulPointsForInterview"/>';
-        /*
-          <div lassName="changeStarRating">
-            <strong>Overall Rating: </strong>
-            {
-              this.produceStars(filed.countOfReviews).map((ele, indx) =>
-                <img key={indx} className="roundstar" src='roundstar1.png' />
-              )
-            }
-         </div>
 
-        */
         var $editStarElementList = '<div class="changeStarRating"><strong>Overall Rating: </strong>'+ $editStarElement + '</div>';
         // console.log('new star ratings', editCountStar)
         $($ele).parent().html($editStarElementList+$liJobTitle+$liJobDate+$liJobInterviewProcess+$liJobInterviewQuestion+ $button+helpfulButton);
@@ -267,18 +257,6 @@ console.log('This is the importantId', context.importantId)
     .catch(function (error) {
       console.log(error);
     });
-    // $.ajax({
-    //   method: 'POST',
-    //   url:'http://localhost:3000/api/updateMongoDB',
-    //   contentType:'application/json',
-    //   data:JSON.stringify(dataToSend),
-    //   success: function(data) {
-    //     context.props.retrieveDataFromDB()
-    //   },
-    //   error: function(err) {
-    //     console.log('You have an error', err)
-    //   }
-    // })
   }
   openModal(text) {
     console.log(text)
@@ -388,10 +366,10 @@ console.log('This is the importantId', context.importantId)
               )
             }
          </div>
-         <div className={filed.id +' '+'review-item'}><strong>Job Interviewed For:</strong> {filed.companyComments[0].jobTitle}</div>
-         <div className='review-item'><strong>Date of Interview:</strong>{filed.companyComments[1].date}</div>
-         <div className='review-item'><strong>Description of Interview:</strong><div className='review-sub'>{filed.companyComments[2].interviewProcess.descriptionOfinterview}</div></div>
-         <div className='review-item'><strong>Interview Questions:</strong><div className='review-sub'>{filed.companyComments[2].interviewProcess.interviewQuestion}</div></div>
+         <div className={filed.id +' '+'review-item'}><strong>Job Interviewed For: </strong> {filed.companyComments[0].jobTitle}</div>
+         <div className='review-item'><strong>Date of Interview: </strong>{filed.companyComments[1].date}</div>
+         <div className='review-item'><strong>Description of Interview: </strong><div className='review-sub'>{filed.companyComments[2].interviewProcess.descriptionOfinterview}</div></div>
+         <div className='review-item'><strong>Interview Questions: </strong><div className='review-sub'>{filed.companyComments[2].interviewProcess.interviewQuestion}</div></div>
        {filed.userId === this.props.userId ? <button className="editReview">Edit</button> : null}
           <input type="button" className={`helpfulPointsForInterview ${index}`} value={`${filed.helpfulButtonScore}`}/>
         </div>
