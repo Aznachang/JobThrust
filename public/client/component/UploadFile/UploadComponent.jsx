@@ -26,7 +26,7 @@ export default class UploadComponent extends React.Component {
     var context = this;
     $.ajax({
       method: 'GET',
-      url: 'http://localhost:3000/api/upload',
+      url: '/api/upload',
       success: function(data) {
         console.log('This is the uploaded data', data);
         var pdfFiles = [];
