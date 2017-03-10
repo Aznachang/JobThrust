@@ -74,6 +74,10 @@ input.isUpload {
   height:0;
   border:0px solid #fff;
 }
+.paddingClass {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
 .roundstar {
   width: 20px;
   height: 20px;

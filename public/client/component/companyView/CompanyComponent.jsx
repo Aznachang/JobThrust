@@ -71,14 +71,36 @@ export default class CompanyComponent extends React.Component {
 
       });
       $(document).on('click', '#mySelect', function() {
-        var index = $('#mySelect').selectedIndex;
-        var selectedValue = document.getElementsByTagName("option")[x].value
-        context.sortReviewsBy(selectedValue);
+        var elem = document.getElementById("mySelect"),
+        selectedNode = elem.options[elem.selectedIndex].value
+        // var index = $('#mySelect').selectedIndex;
+        // var selectedValue = document.getElementsByTagName("option")[index].value
+        context.sortReviewsBy(selectedNode);
       });
     })
   }
   sortReviewsBy(value) {
+    // this.getEmployeeInfo();
+    var oldState = this.state.renderEmployeeData;
+    console.log('This is the value of option', value)
+    if (this.state.renderEmployeeData !== null) {
 
+      if (value === 'Helpful Reviews') {
+
+        this.setState({
+         renderEmployeeData: this.state.renderEmployeeData.sort(function(a, b) {
+          return Number(b.helpfulButtonScore.match(/[0-9]+/g)[0]) - Number(a.helpfulButtonScore.match(/[0-9]+/g)[0])
+         })
+        })
+
+      } else {
+        this.setState({
+         renderEmployeeData: this.state.renderEmployeeData.sort(function(a, b) {
+          return Number(b.countOfReviews) - Number(a.countOfReviews)
+         })
+        })
+      }
+    }
   }
   addStars() {
     var context = this;
@@ -202,6 +224,7 @@ export default class CompanyComponent extends React.Component {
   getEmployeeInfo() { 
     var context = this;
     var name = this.state.value;
+    console.log('This is the name that needs to be queried', name);
     $.ajax({
       method:'GET',
       url:'/api/employeeReviews?name='+ name,
@@ -451,8 +474,8 @@ export default class CompanyComponent extends React.Component {
         <div className="newDiv">
           <span><strong>Sort By: </strong></span>
           <select>
-            <option value="helpful Reviews">helpful Reviews</option>
-            <option value="other" selected>other</option>
+            <option value="Helpful Reviews">Helpful Reviews</option>
+            <option value="Rating Stars">Rating Stars</option>
           </select>
           {this.state.renderData !== null ? <InterviewReviews validateDate={this.validateDate} userId={this.state.userId} renderData={this.state.renderData} imgUrl={this.state.hidden? this.state.companyInfo[0].squareLogo : null} companyName={this.state.value} retrieveDataFromDB={this.retrieveDataFromDB}/>: null }
         </div>
@@ -460,8 +483,8 @@ export default class CompanyComponent extends React.Component {
         <div className="employeeReview">
           <span><strong>Sort By: </strong></span>
           <select id="mySelect">
-            <option value="helpful Reviews">helpful Reviews</option>
-            <option value="other" selected>other</option>
+           <option value="Helpful Reviews">Helpful Reviews</option>
+            <option value="Rating Stars">Rating Stars</option>
           </select>
          {this.state.renderEmployeeData !== null ? <EmployeeReview helpfulPoints={this.state.helpfulPoints} imgUrl={this.state.hidden? this.state.companyInfo[0].squareLogo : null} userId={this.state.userId} renderEmployeeData={this.state.renderEmployeeData} retrieveDataFromDB={this.retrieveDataFromDB} /> : null}
         </div>

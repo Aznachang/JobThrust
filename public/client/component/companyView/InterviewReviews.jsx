@@ -392,7 +392,7 @@ console.log('This is the importantId', context.importantId)
          <div className='review-item'><strong>Date of Interview:</strong>{filed.companyComments[1].date}</div>
          <div className='review-item'><strong>Description of Interview:</strong><div className='review-sub'>{filed.companyComments[2].interviewProcess.descriptionOfinterview}</div></div>
          <div className='review-item'><strong>Interview Questions:</strong><div className='review-sub'>{filed.companyComments[2].interviewProcess.interviewQuestion}</div></div>
-       {filed.userId === this.props.userId ? <button className="editReview">Edit the Review</button> : null}
+       {filed.userId === this.props.userId ? <button className="editReview">Edit</button> : null}
           <input type="button" className={`helpfulPointsForInterview ${index}`} value={`${filed.helpfulButtonScore}`}/>
         </div>
         )
