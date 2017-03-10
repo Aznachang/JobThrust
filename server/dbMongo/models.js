@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://jobthrust:getj0bsm8@ds119810.mlab.com:19810/jobthrust-mongo');
 
+// mongoose.connect('mongodb://localhost/companyView');
 
 var mongoose = require('mongoose');
 
@@ -10,6 +11,7 @@ var interviewSchema = mongoose.Schema({
     unique: true
     },
   name: String,
+  userId: String,
   companyComments: Array,
   imgUrl: String,
   helpfulButtonScore: String,
@@ -25,6 +27,7 @@ var employeeSchema = mongoose.Schema({
     unique: true
     },
   name: String,
+  userId: String,
   employeeComments: Array,
   imgUrl: String,
   helpfulButtonScore: String,

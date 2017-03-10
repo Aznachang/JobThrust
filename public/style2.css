@@ -12,6 +12,7 @@
   height:700px; 
 }
 .uploadFiles {
+  background-color: red;
   width: 200px;
   height: 200px; 
 }
@@ -27,31 +28,6 @@
 .innerText {
   padding: 10px;
 }
-/*#stars  > span {
-  display: inline-block;
-  font-size: 30px;
-  color: #2384a7;
-}
-#stars:hover > span:before {
-  content: '\2605';
-  position: absolute;
-}
-#stars > span:hover ~ span:before {
-  content: '';
-}*/
-
-/*.ratingStar  > span {
-  display: inline-block;
-  font-size: 30px;
-  color: #2384a7;
-}*/
-/*.ratingStar:hover > span:before {
-  content: '\2605';
-  position: absolute;
-}*/
-/*.ratingStar > span:hover ~ span:before {
-  content: '';
-}*/
 
 .rating {
     unicode-bidi:bidi-override;

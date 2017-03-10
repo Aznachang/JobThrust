@@ -15,7 +15,11 @@ export default class UploadComponent extends React.Component {
     var context = this
     this.getUploadedData = this.getUploadedData.bind(this); 
 
-  // this.getUploadedData();
+  this.getUploadedData();
+    var context = this;
+    setInterval(function() { 
+      context.getUploadedData();
+    }, 3000);
   }
 
   getUploadedData() {
@@ -46,12 +50,9 @@ export default class UploadComponent extends React.Component {
       }
     })
   }
-// componentWillUpdate() {
-//   this.getUploadedData();
-// }
 componentDidMount() {
-  this.getUploadedData();
 }
+
   render() {
   // var context = this
   //   $(function() {
@@ -70,13 +71,13 @@ componentDidMount() {
         <div>
 
           {
-            (this.state.filesDataImg !== null) ? <FilesLists displayFiles={this.state.filesDataImg}/> : null
+            (this.state.filesDataImg !== null) ? <FilesLists displayFilesImg={this.state.filesDataImg}/> : null
           }
         </div>
         <div>
           
           {
-            (this.state.filesDataPdf !== null) ? <PdfFiles displayFiles={this.state.filesDataPdf}/> : null
+            (this.state.filesDataPdf !== null) ? <PdfFiles displayFilesPdf={this.state.filesDataPdf}/> : null
           }
         </div>
       </div>

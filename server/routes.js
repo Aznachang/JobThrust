@@ -108,6 +108,8 @@ router.route('/jobs/:jk').get(function(req, res) {
 /******************* Company component ********************/
 
 router.post('/employeeReviews', function(req, res) {
+  var insertObj = req.body;
+  insertObj.userId = req.session.passport.user;
   Model.EmployeeModel.insertMany(req.body, function(err, data) {
     if (err) {
       res.send(err);
@@ -118,7 +120,9 @@ router.post('/employeeReviews', function(req, res) {
 });
 
 router.post('/interviewreview', function(req, res) {
-  Model.InterviewModel.insertMany(req.body, function(err, data) {
+  var insertObj = req.body;
+  insertObj.userId = req.session.passport.user;
+  Model.InterviewModel.insertMany(insertObj, function(err, data) {
     if (err) {
       res.send(err);
     } else {
@@ -168,8 +172,8 @@ router.get('/employeeReviews', function(req, res) {
 router.post('/updateHelpfulButtonForInterview', function(req, res) {
   Model.InterviewModel.findOne({id:req.body[1]}, function(err, doc) {
     for (var i = 0; i < doc.userInfo.length; i++) {
-      console.log(JSON.strigify(doc.userInfo[i]) === JSON.strigify(req.body[2]))
-      if (JSON.strigify(doc.userInfo[i]) !== JSON.strigify(req.body[2])) {
+      console.log(JSON.stringify(doc.userInfo[i]) === JSON.stringify(req.body[2]))
+      if (JSON.stringify(doc.userInfo[i]) !== JSON.stringify(req.body[2])) {
         doc.userInfo.push(req.body[2]);
       }
     }
@@ -186,8 +190,8 @@ router.post('/updateHelpfulButtonForInterview', function(req, res) {
 router.post('/updateHelpfulButton', function(req, res) {
   Model.EmployeeModel.findOne({id:req.body[1]}, function(err, doc) {
     for (var i = 0; i < doc.userInfo.length; i++) {
-      console.log(JSON.strigify(doc.userInfo[i]) === JSON.strigify(req.body[2]))
-      if (JSON.strigify(doc.userInfo[i]) !== JSON.strigify(req.body[2])) {
+      console.log(JSON.stringify(doc.userInfo[i]) === JSON.stringify(req.body[2]))
+      if (JSON.stringify(doc.userInfo[i]) !== JSON.stringify(req.body[2])) {
         doc.userInfo.push(req.body[2]);
       }
     }
@@ -203,6 +207,7 @@ router.post('/updateHelpfulButton', function(req, res) {
 
 router.post('/updateEmployeeReview', function(req, res) {
   Model.EmployeeModel.findOne({id:req.body[1]}, function(err, doc) {
+    doc.countOfReviews = req.body[2];
     doc.employeeComments = req.body[0];
     doc.save();
     res.send('');
@@ -214,8 +219,8 @@ router.post('/updateMongoDB', function(req, res) {
 
   Model.InterviewModel.findOne({id:req.body[1]}, function(err, doc) {
     console.log('This is doc company comments', doc.companyComments);
-    // doc.name = req.body[0].name;
-    // doc.countOfReviews = req.body[0].countOfReviews;
+    doc.name = req.body[0].name;
+    doc.countOfReviews = req.body[0].countOfReviews;
     var company = [
       {
         "jobTitle" : req.body[0].companyComments[0].jobTitle
@@ -334,7 +339,7 @@ router.get('/userdata', function(req, res) {
 })
 
 router.get('/company', function(req, res) {
-
+console.log('------This is the userId----', req.session.passport.user)
   var basicUrl = 'http://api.glassdoor.com/api/api.htm?';
   var endpoints = 't.p=126535&t.k=jzi4LSmsrF5&userip=199.87.82.66&useragent=&format=json&v=1&action=employers&q=';
   rp(basicUrl+endpoints+req.query.company).then(function(respond) {

@@ -181,7 +181,7 @@ export default class CompanyComponent extends React.Component {
   employeeReviewForm(event) {
     var context = this;
     event.preventDefault();
-    var employee = {id:Math.floor(Math.random()* 900000000), name: this.state.value, countOfReviews: this.starNumberForemployee ,employeeComments: [{reviewTitle: this.state.reviewTitle}, {consReview:this.state.consReview},{prosReview:this.state.prosReview}], imgUrl:this.state.companyInfo[0].squareLogo, helpfulButtonScore:'helpful(0)', userInfo:[], singleUl:''}
+    var employee = {id:Math.floor(Math.random()* 900000000), name: this.state.value, userId:'' ,countOfReviews: this.starNumberForemployee ,employeeComments: [{reviewTitle: this.state.reviewTitle}, {consReview:this.state.consReview},{prosReview:this.state.prosReview}], imgUrl:this.state.companyInfo[0].squareLogo, helpfulButtonScore:'helpful(0)', userInfo:[], singleUl:''}
     $.ajax({
       method: 'POST',
       url:'/api/employeeReviews',
@@ -309,7 +309,7 @@ export default class CompanyComponent extends React.Component {
     event.preventDefault();
     if (this.dateChecker) {
 
-      var interviewCompany = {id:Math.floor(Math.random()* 900000000), name: this.state.value, imgUrl:this.state.companyInfo[0].squareLogo,countOfReviews: this.starNumber ,helpfulButtonScore:'helpful(0)',singleUl:'',companyComments: [{jobTitle:this.state.title},{date:this.state.date},{interviewProcess:{descriptionOfinterview:this.state.interviewProcess,interviewQuestion:this.state.interviewQuestion }}]};
+      var interviewCompany = {id:Math.floor(Math.random()* 900000000), userId: '', name: this.state.value, imgUrl:this.state.companyInfo[0].squareLogo,countOfReviews: this.starNumber ,helpfulButtonScore:'helpful(0)',singleUl:'',companyComments: [{jobTitle:this.state.title},{date:this.state.date},{interviewProcess:{descriptionOfinterview:this.state.interviewProcess,interviewQuestion:this.state.interviewQuestion }}]};
       var context = this;
       $.ajax({
         method:'POST',
@@ -463,7 +463,7 @@ export default class CompanyComponent extends React.Component {
             <option value="helpful Reviews">helpful Reviews</option>
             <option value="other" selected>other</option>
           </select>
-         {this.state.renderEmployeeData !== null ? <EmployeeReview helpfulPoints={this.state.helpfulPoints} imgUrl={this.state.hidden? this.state.companyInfo[0].squareLogo : null} userId={this.state.userId} renderEmployeeData={this.state.renderEmployeeData}/> : null}
+         {this.state.renderEmployeeData !== null ? <EmployeeReview helpfulPoints={this.state.helpfulPoints} imgUrl={this.state.hidden? this.state.companyInfo[0].squareLogo : null} userId={this.state.userId} renderEmployeeData={this.state.renderEmployeeData} retrieveDataFromDB={this.retrieveDataFromDB} /> : null}
         </div>
 
       </div>
