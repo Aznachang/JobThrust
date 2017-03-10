@@ -34,7 +34,7 @@ class NavBar extends React.Component {
             <Link to={'/company'}>Companies</Link>
           </li>
             <li>
-            <Link to={'/upload'}>Upload File</Link>
+            <Link to={'/upload'}>Uploads</Link>
           </li>
         </ul>
         <div className='logout-link'>
