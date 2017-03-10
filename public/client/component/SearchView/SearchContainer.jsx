@@ -33,7 +33,6 @@ export default class SearchContainer extends React.Component {
     this.getInfo = this.getInfo.bind(this);
     this.removeJob = this.removeJob.bind(this);
     this.addJob = this.addJob.bind(this);
-    this.addSearch = this.addSearch.bind(this);
     this.getRecommendations = this.getRecommendations.bind(this);
     this.addRecommendation = this.addRecommendation.bind(this);
     this.removeRecommendation = this.removeRecommendation.bind(this);
