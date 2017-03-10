@@ -75,7 +75,7 @@ export default class SearchContainer extends React.Component {
         results: json.results,
         info: {}
       });
-      context.addSearch();
+      // context.addSearch();
     });
   }
 
@@ -139,12 +139,6 @@ export default class SearchContainer extends React.Component {
 
   // REMOVE INDIVIDUAL JOB COMPONENT FROM VIEW (NOT DB)
   removeJob(jobIndex) {
-    $('.remove').click(function() {
-      $(this).closest('.search-result').addClass('item animated hinge').empty()
-    });
-    $('.select').click(function() {
-      $(this).closest('.search-result').addClass('item animated fadeOutLeft');
-    });
     var context = this;
     context.state.results.splice(jobIndex, 1)
     context.setState({
