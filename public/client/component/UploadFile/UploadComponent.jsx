@@ -66,7 +66,7 @@ componentDidMount() {
 
         <div className='create-upload-container'>
           <form method="post" encType="multipart/form-data" action="/api/upload" target="upload_target">
-            <div>Select an image to upload:</div>
+            <div>Select an image or PDF to upload:</div>
             <div className='upload-choose-file'>
               <input type="file" name="fileUpload" className="form-control"/>
             </div>
