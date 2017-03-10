@@ -13,7 +13,7 @@ export default class ArchiveJobsList extends React.Component {
     // Show This Messsage - No Archived Job Offers
     if (noArchived === 0) {
       noArchivedOffers = <tr className='noJobs'>
-        <td colSpan='6'>No Record of Archived Job Offers Yet</td>
+        <td colSpan='6'>No Archived Opportunities</td>
       </tr>
     } else {
       noArchivedOffers = <tr></tr>
@@ -21,7 +21,7 @@ export default class ArchiveJobsList extends React.Component {
 
     if (this.props.filtered === null) {
       return (
-        <div id="AppList">
+        <div id="AppList" className='archived-list'>
           <table>
             <thead>
               <tr>
@@ -43,14 +43,15 @@ export default class ArchiveJobsList extends React.Component {
       )
     } else {
       return (
-        <div id="AppList">
+        <div id="AppList" className='archived-list'>
           <table>
             <thead>
               <tr>
-                <th onClick={this.props.sort.bind(null, 'title')}>Role</th>
-                <th onClick={this.props.sort.bind(null, 'company')}>Company</th>
-                <th className='th-stage' onClick={this.props.sort.bind(null, 'stageId')}>Current Stage</th>
-                <th className='th-created' onClick={this.props.sort.bind(null, 'createdAt')}>Created</th>
+                <th className='.archive-role-company' onClick={this.props.sort.bind(null, 'title')}>Role</th>
+                <th className='.archive-role-company' onClick={this.props.sort.bind(null, 'company')}>Company</th>
+                <th className='archive-stage-reason' onClick={this.props.sort.bind(null, 'stageId')}>Stage</th>
+                <th className='archive-stage-reason' onClick={this.props.sort.bind(null, 'reason')}>Reason</th>
+                <th className='archive-created' onClick={this.props.sort.bind(null, 'createdAt')}>Created</th>
               </tr>
             </thead>
             <tbody>

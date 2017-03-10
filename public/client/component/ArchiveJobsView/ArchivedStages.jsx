@@ -17,11 +17,11 @@ class ArchivedStages extends React.Component {
 
   isSelected(num) {
     if (num === this.props.filtered) {
-      return "stage-box selected-box";
+      return "archive-box selected-box";
       console.log(num, 'SELECTED');
     } else {
       console.log(num, 'NOT SELECTED');
-      return "stage-box";
+      return "archive-box";
     }
   }
 

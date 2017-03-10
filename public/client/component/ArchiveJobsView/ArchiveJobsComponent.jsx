@@ -21,12 +21,12 @@ export default class ArchiveJobsComponent extends React.Component {
       },
       filtered: null,
       boxClasses: {
-        0: 'stage-box',
-        1: 'stage-box',
-        2: 'stage-box',
-        3: 'stage-box',
-        4: 'stage-box',
-        5: 'stage-box'
+        0: 'archive-box',
+        1: 'archive-box',
+        2: 'archive-box',
+        3: 'archive-box',
+        4: 'archive-box',
+        5: 'archive-box'
       },
       ascending: true
     }
@@ -95,16 +95,16 @@ export default class ArchiveJobsComponent extends React.Component {
 
   filter(stageNum) {
     var boxClasses = {
-      0: 'stage-box',
-      1: 'stage-box',
-      2: 'stage-box',
-      3: 'stage-box',
-      4: 'stage-box',
-      5: 'stage-box'
+      0: 'archive-box',
+      1: 'archive-box',
+      2: 'archive-box',
+      3: 'archive-box',
+      4: 'archive-box',
+      5: 'archive-box'
     }
 
     if (stageNum !== undefined) {
-      boxClasses[stageNum] = 'stage-box selected-box';
+      boxClasses[stageNum] = 'archive-box selected-box';
       var currentJobs = this.state.archivedJobs;
       var filteredArchivedJobs = currentJobs.filter(function(job) {
         return job.stageId === stageNum;
