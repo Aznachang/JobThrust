@@ -170,6 +170,7 @@ router.get('/employeeReviews', function(req, res) {
 });
 
 router.post('/updateHelpfulButtonForInterview', function(req, res) {
+  console.log('This is the request------', req.body)
   Model.InterviewModel.findOne({id:req.body[1]}, function(err, doc) {
     for (var i = 0; i < doc.userInfo.length; i++) {
       console.log(JSON.stringify(doc.userInfo[i]) === JSON.stringify(req.body[2]))

@@ -16,7 +16,7 @@ export default class EmployeeReview extends React.Component {
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    this.editEmployeeReviewForm = this.editEmployeeReviewForm.bind(this);
+    // this.editEmployeeReviewForm = this.editEmployeeReviewForm.bind(this);
     this.editHandleChangeForModalReviewTitle = this.editHandleChangeForModalReviewTitle.bind(this);
     this.editHandleChangeForModalPros = this.editHandleChangeForModalPros.bind(this);
     this.editHandleChangeForModalCons = this.editHandleChangeForModalCons.bind(this);
@@ -37,7 +37,8 @@ export default class EmployeeReview extends React.Component {
     $(function() {
       $(document).on('click', '.helpfulPoints', function() {
         var secondContext = this;
-        var id = $(this).parent()[0].children[0].classList[0];
+        var id = $(this).parent()[0].children[1].classList[0];
+        console.log('This is parent', $(this).parent()[0].children);
         $.ajax({
             method: 'GET',
             url: '/api/buttonsInfo?name='+ id,
@@ -45,7 +46,6 @@ export default class EmployeeReview extends React.Component {
             success: function(data) {
               console.log('hers is a single data ', data);
               var existUser = false;
-              // console.log(data[0].length)
               for (var i = 0; i < data[0].userInfo.length; i++) {
                 // console.log('result ',data[0][i].context.props.userId === context.props.userId)
                 if (data[0].userInfo[i][context.props.userId] === context.props.userId) {
@@ -64,7 +64,7 @@ export default class EmployeeReview extends React.Component {
                 $(secondContext).val($buttonValue);
 
                 $(secondContext).removeClass($(secondContext)[0].classList[0]);
-                var buttonData = [$(secondContext).val(), $(secondContext).parent()[0].children[0].classList[0], context.helpfulCheckpoint, $(secondContext).parent()[0].children[0].classList[0] ]
+                var buttonData = [$(secondContext).val(), $(secondContext).parent()[0].children[1].classList[0], context.helpfulCheckpoint, $(secondContext).parent()[0].children[0].classList[0] ]
                 $.ajax({
                     method: 'POST',
                     url: '/api/updateHelpfulButton',
@@ -133,9 +133,9 @@ export default class EmployeeReview extends React.Component {
   }
   openModal(array) {
     this.setState({modalIsOpen: true});
-    $('.reviewTitle').val(array[0])
-    $('.pros').val(array[1]); 
-    $('.cons').val(array[2]); 
+    $('.reviewTitle').val(array[1])
+    $('.pros').val(array[2]); 
+    $('.cons').val(array[3]); 
   }
   afterOpenModal() {
     // references are now sync'd and can be accessed.
@@ -148,88 +148,8 @@ export default class EmployeeReview extends React.Component {
     });
   }
 
-  editEmployeeReviewForm(event) {
-    event.preventDefault();
-    console.log('my array of inputs', this.arrayOfinputs)
-    if (!this.state.editReviewTitle) {
-      var $editReviewTitle = '<p class='+ this.idForUpdateDB+'>Review Title:' + this.arrayOfinputs[0] + '</p>';
-      var reviewTitle = {reviewTitle:this.arrayOfinputs[0]};
-
-      this.setState({
-        editReviewTitle: this.arrayOfinputs[0]
-      })
-    } else {
-      var $editReviewTitle = '<p class='+ this.idForUpdateDB +'>Review Title:' + this.state.editReviewTitle + '</p>';
-      var reviewTitle = {reviewTitle: this.state.editReviewTitle}
-    }
-
-    if (!this.state.eidtProsReview) {
-      var $eidtProsReview = '<p>Cons:' + this.arrayOfinputs[1] + '</p>';
-      var consReview = {consReview: this.arrayOfinputs[1]};
-
-      this.setState({
-        eidtProsReview: this.arrayOfinputs[1]
-      })
-    } else {
-      var $eidtProsReview = '<p>Cons:' + this.state.eidtProsReview + '</p>';
-      var consReview = {consReview: this.state.eidtProsReview};
-    }
-
-    if(!this.state.editConsReview) {
-      var $editConsReview = '<p>Pros:' + this.arrayOfinputs[2] + '</p>';
-      var prosReview = {prosReview: this.arrayOfinputs[2]};
-      this.setState({
-        editConsReview: this.arrayOfinputs[2]
-      })
-    } else {
-      var $editConsReview = '<p>Pros:' + this.state.editConsReview + '</p>';
-      var prosReview = {prosReview: this.state.editConsReview}
-    }
-
-
-
-    if (Number(this.eidtStarCount) === 0) {
-        var editCountStar = this.arrayOfinputs[4].children.length;
-        if (editCountStar === 1) {
-          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" />';
-        } else if (editCountStar === 2) {
-          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
-        } else if (editCountStar === 3) {
-          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
-        } else if (editCountStar === 4) {
-          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
-        } else if (editCountStar === 5) {
-          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
-        }
-    } else {
-      var editCountStar = Number(this.eidtStarCount);
-        if (editCountStar === 1) {
-          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" />';
-        } else if (editCountStar === 2) {
-          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
-        } else if (editCountStar === 3) {
-          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
-        } else if (editCountStar === 4) {
-          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
-        } else if (editCountStar === 5) {
-          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
-        }
-    }
-
-    var $editStarElementList = '<p>'+ $editStarElement + '</p>';
-    console.log('This should be the new stars update',$editStarElementList )
-    var $button = '<button class="editEmployeeReview" >Edit the Review</button>';
-    var logoImage = '<img src='+ this.props.imgUrl +' '+'class="companyImg"/>';
-    var helpfulButton = '<input type="button" value='+ this.arrayOfinputs[4].value+' '+'class="helpfulPoints" />';
-
-    $(this.$ele).parent().html($editReviewTitle+$eidtProsReview+$editConsReview+$editStarElementList+$button+logoImage+helpfulButton);
-    this.closeModal();
-    var updatedEmployeeData = [reviewTitle, consReview, prosReview]
-    console.log('This is the updated version', updatedEmployeeData)
-    this.sendUpdatedEmployeeData([updatedEmployeeData, this.idForUpdateDB, editCountStar]);
-  }
-
   sendUpdatedEmployeeData(data) {
+    console.log('This is the data-----', data)
     var context = this;
     $.ajax({
       method: 'POST',
@@ -266,21 +186,115 @@ export default class EmployeeReview extends React.Component {
 
   editEmployeeInfo() {
     var context = this;
+    var $ele;
     $(function() {
-      $(document).on('click', '.editEmployeeReview', function() { 
-        context.idForUpdateDB = $(this).parent()[0].children[0].classList[0];
-        context.$ele = this;
+      $(document).on('click', '.editEmployeeReview', function() {
+        $ele = this; 
+        context.idForUpdateDB = $(this).parent()[0].children[1].classList[0];
         console.log('those are the children', $(this).parent()[0].children)
-
+        console.log('this is the error', $(this).parent()[0].children[3])
         context.arrayOfinputs = [ 
-          $(this).parent()[0].children[0].innerText.split(':')[1], 
+          $(this).parent()[0].children[0], 
           $(this).parent()[0].children[1].innerText.split(':')[1],
           $(this).parent()[0].children[2].innerText.split(':')[1],
-          $(this).parent()[0].children[3],
-          $(this).parent()[0].children[6]
+          $(this).parent()[0].children[3].innerText.split(':')[1],
+          $(this).parent()[0].children[5]
         ]
         context.openModal(context.arrayOfinputs);
       })
+
+    $(document).on('submit', '#editEmployee', function(event) { 
+    console.log('my array of inputs', this.arrayOfinputs)
+    //<div className={filed.id +' '+'review-item'}><strong>Title:</strong>{filed.employeeComments[0].reviewTitle}</div>
+    event.preventDefault();
+    if (!context.state.editReviewTitle) {
+      var $editReviewTitle = "<div class="+ context.idForUpdateDB+' '+'review-item' +">Review Title:" + context.arrayOfinputs[1] + "</div>";
+      var reviewTitle = {reviewTitle:context.arrayOfinputs[1]};
+
+      context.setState({
+        editReviewTitle: context.arrayOfinputs[1]
+      })
+    } else {
+      var $editReviewTitle = "<div class="+ context.idForUpdateDB+' '+'review-item' +">Review Title:" + context.state.editReviewTitle + "</div>";
+      var reviewTitle = {reviewTitle: context.state.editReviewTitle}
+    }
+// <div className='review-item'><strong>Cons:</strong><div class="review-sub">{filed.employeeComments[1].consReview}</div></div>
+    if (!context.state.eidtProsReview) {
+      var $eidtProsReview = "<div class='review-item'>Cons<div class='review-sub'>:" + context.arrayOfinputs[2] + "</div></div>";
+      var consReview = {consReview: context.arrayOfinputs[2]};
+
+      context.setState({
+        eidtProsReview: context.arrayOfinputs[2]
+      })
+    } else {
+      var $eidtProsReview = "<div class='review-item'>Cons:<div class='review-sub'>" + context.state.eidtProsReview + "</div></div>";
+      var consReview = {consReview: context.state.eidtProsReview};
+    }
+// <div className='review-item'> <strong>Pros:</strong><div className='review-sub'>{filed.employeeComments[2].prosReview}</div></div>
+
+    if(!context.state.editConsReview) {
+      var $editConsReview = "<div class='review-item'>Pros:<div class='review-sub'>" + context.arrayOfinputs[3] + "</div></div>";
+      var prosReview = {prosReview: context.arrayOfinputs[3]};
+      context.setState({
+        editConsReview: context.arrayOfinputs[3]
+      })
+    } else {
+      var $editConsReview = "<div class='review-item'>Pros:<div classame='review-sub'>" + context.state.editConsReview + "</div></div>";
+      var prosReview = {prosReview: context.state.editConsReview}
+    }
+
+
+
+    if (Number(context.eidtStarCount) === 0) {
+        var editCountStar = context.arrayOfinputs[0].children.length-1;
+        if (editCountStar === 1) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" />';
+        } else if (editCountStar === 2) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+        } else if (editCountStar === 3) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+        } else if (editCountStar === 4) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+        } else if (editCountStar === 5) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+        }
+    } else {
+      var editCountStar = Number(context.eidtStarCount);
+        if (editCountStar === 1) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" />';
+        } else if (editCountStar === 2) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+        } else if (editCountStar === 3) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+        } else if (editCountStar === 4) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+        } else if (editCountStar === 5) {
+          var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
+        }
+    }
+
+    var $editStarElementList = '<div><strong>Overall Rating: </strong>'+ $editStarElement + '</div>';
+    // console.log('This should be the new stars update',$editStarElementList )
+    var $button = '<button class="editEmployeeReview" >Edit</button>';
+    // var logoImage = '<img src='+ context.props.imgUrl +' '+'class="companyImg"/>';
+    var helpfulButton = '<input type="button" value='+ context.arrayOfinputs[4].value.replace(/[' ']/g, '')+' '+'class="helpfulPoints" />';
+    console.log('----This the the main $$ele---',$editStarElementList )
+    console.log('----This the the main $$ele---',$editReviewTitle )
+    console.log('----This the the main $$ele---',$eidtProsReview)
+        console.log('----This the the main $$ele---',$editConsReview)
+
+    console.log('THis is also the element', $($ele).parent())
+    /*
+    so I just figure out what was the problem at some point after editing more than once. for some reason the $button and helpfulbutton gets wrapped up 
+    inside the pros div. they should be separate
+    */
+    $($ele).parent().html($editStarElementList+$editReviewTitle+$eidtProsReview+$editConsReview+$button+helpfulButton);
+    context.closeModal();
+    var updatedEmployeeData = [reviewTitle, consReview, prosReview]
+    console.log('This is the updated version', updatedEmployeeData)
+    context.sendUpdatedEmployeeData([updatedEmployeeData, context.idForUpdateDB, editCountStar]);
+   })
+
     })
   }
   produceStarsForEmployee(num) {
@@ -311,7 +325,7 @@ export default class EmployeeReview extends React.Component {
               Edit Employee Review Below:
             </div>
             <div className='add-app-container'>
-              <form id="add-app-form" onSubmit={this.editEmployeeReviewForm}>
+              <form id="add-app-form" id="editEmployee">
                 Review Title<br />
                 <input type='text' name='title' className='reviewTitle' onChange={this.editHandleChangeForModalReviewTitle} required/><br />
                 Pros<br />
@@ -333,27 +347,18 @@ export default class EmployeeReview extends React.Component {
         this.props.renderEmployeeData.map((filed, index) =>
         <div key={index} className={`comments ${index}`}>
           <div>
-            <span><strong>Overall Rating: </strong></span>
-            <span>{
+            <strong>Overall Rating: </strong>
+            {
               this.produceStarsForEmployee(filed.countOfReviews).map((ele, indx) =>
                 <img key={indx} className="roundstar" src='./roundstar1.png' />
               )
-            }</span>
+            }
           </div>
-         <div className={filed.id + ' review-item'}>
-           <strong>{`Title:`}</strong>
-           {filed.employeeComments[0].reviewTitle}
-         </div>
-          <div className='review-item'> 
-            <strong>{`Pros:`}</strong>
-            <div className='review-sub'>{filed.employeeComments[2].prosReview}</div>
-          </div>
-          <div className='review-item'><strong>{`Cons:`}</strong>
-            <div className='review-sub'>{filed.employeeComments[1].consReview}</div>
-          </div>
-          <button className="editEmployeeReview" >Edit</button>
+         <div className={filed.id +' '+'review-item'}><strong>Title:</strong>{filed.employeeComments[0].reviewTitle}</div>
+          <div className='review-item'> <strong>Pros:</strong><div className='review-sub'>{filed.employeeComments[2].prosReview}</div></div>
+          <div className='review-item'><strong>Cons:</strong><div className='review-sub'>{filed.employeeComments[1].consReview}</div></div>
+          {filed.userId === this.props.userId ? <button className="editEmployeeReview">Edit</button> : null}
           <input type="button" className={`helpfulPoints ${index}`} value={`${filed.helpfulButtonScore}`}/>
-
         </div>
         
         )

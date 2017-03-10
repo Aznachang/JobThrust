@@ -44,6 +44,7 @@ export default class CompanyComponent extends React.Component {
     this.afterOpenTheModal = this.afterOpenTheModal.bind(this);
     this.closeTheModal = this.closeTheModal.bind(this);
     this.sortReviewsBy = this.sortReviewsBy.bind(this);
+    this.sortInterviewReviewsBy = this.sortInterviewReviewsBy.bind(this);
 
     this.handleChangeForModalReviewTitle = this.handleChangeForModalReviewTitle.bind(this);
     this.handleChangeForModalPros = this.handleChangeForModalPros.bind(this);
@@ -71,14 +72,64 @@ export default class CompanyComponent extends React.Component {
 
       });
       $(document).on('click', '#mySelect', function() {
-        var index = $('#mySelect').selectedIndex;
-        var selectedValue = document.getElementsByTagName("option")[x].value
-        context.sortReviewsBy(selectedValue);
+        var elem = document.getElementById("mySelect");
+        var selectedNode = elem.options[elem.selectedIndex].value
+        // var index = $('#mySelect').selectedIndex;
+        // var selectedValue = document.getElementsByTagName("option")[index].value
+        context.sortReviewsBy(selectedNode);
+      });
+      $(document).on('click', '#mySelectInterview', function() {
+        var elem = document.getElementById("mySelectInterview");
+         var selectedNode = elem.options[elem.selectedIndex].value
+        // var index = $('#mySelect').selectedIndex;
+        // var selectedValue = document.getElementsByTagName("option")[index].value
+        context.sortInterviewReviewsBy(selectedNode);
       });
     })
   }
-  sortReviewsBy(value) {
+  sortInterviewReviewsBy(value) {
+    // this.getEmployeeInfo();
+    console.log('This is the value of option', value)
+    if (this.state.renderData !== null) {
 
+      if (value === 'Helpful Reviews') {
+
+        this.setState({
+         renderData: this.state.renderData.sort(function(a, b) {
+          return Number(b.helpfulButtonScore.match(/[0-9]+/g)[0]) - Number(a.helpfulButtonScore.match(/[0-9]+/g)[0])
+         })
+        })
+
+      } else {
+        this.setState({
+         renderData: this.state.renderData.sort(function(a, b) {
+          return Number(b.countOfReviews) - Number(a.countOfReviews)
+         })
+        })
+      }
+    }
+  }
+  sortReviewsBy(value) {
+    // this.getEmployeeInfo();
+    console.log('This is the value of option', value)
+    if (this.state.renderEmployeeData !== null) {
+
+      if (value === 'Helpful Reviews') {
+
+        this.setState({
+         renderEmployeeData: this.state.renderEmployeeData.sort(function(a, b) {
+          return Number(b.helpfulButtonScore.match(/[0-9]+/g)[0]) - Number(a.helpfulButtonScore.match(/[0-9]+/g)[0])
+         })
+        })
+
+      } else {
+        this.setState({
+         renderEmployeeData: this.state.renderEmployeeData.sort(function(a, b) {
+          return Number(b.countOfReviews) - Number(a.countOfReviews)
+         })
+        })
+      }
+    }
   }
   addStars() {
     var context = this;
@@ -202,6 +253,7 @@ export default class CompanyComponent extends React.Component {
   getEmployeeInfo() { 
     var context = this;
     var name = this.state.value;
+    console.log('This is the name that needs to be queried', name);
     $.ajax({
       method:'GET',
       url:'/api/employeeReviews?name='+ name,
@@ -308,7 +360,7 @@ export default class CompanyComponent extends React.Component {
   submitApp(event) {
     event.preventDefault();
     if (this.dateChecker) {
-
+      console.log('inline text or block', this.state.interviewProcess);
       var interviewCompany = {id:Math.floor(Math.random()* 900000000), userId: '', name: this.state.value, imgUrl:this.state.companyInfo[0].squareLogo,countOfReviews: this.starNumber ,helpfulButtonScore:'helpful(0)',singleUl:'',companyComments: [{jobTitle:this.state.title},{date:this.state.date},{interviewProcess:{descriptionOfinterview:this.state.interviewProcess,interviewQuestion:this.state.interviewQuestion }}]};
       var context = this;
       $.ajax({
@@ -450,9 +502,9 @@ export default class CompanyComponent extends React.Component {
         
         <div className="newDiv">
           <span><strong>Sort By: </strong></span>
-          <select>
-            <option value="helpful Reviews">helpful Reviews</option>
-            <option value="other" selected>other</option>
+          <select id="mySelectInterview">
+            <option value="Helpful Reviews">Helpful Reviews</option>
+            <option value="Rating Stars">Rating Stars</option>
           </select>
           {this.state.renderData !== null ? <InterviewReviews validateDate={this.validateDate} userId={this.state.userId} renderData={this.state.renderData} imgUrl={this.state.hidden? this.state.companyInfo[0].squareLogo : null} companyName={this.state.value} retrieveDataFromDB={this.retrieveDataFromDB}/>: null }
         </div>
@@ -460,8 +512,8 @@ export default class CompanyComponent extends React.Component {
         <div className="employeeReview">
           <span><strong>Sort By: </strong></span>
           <select id="mySelect">
-            <option value="helpful Reviews">helpful Reviews</option>
-            <option value="other" selected>other</option>
+           <option value="Helpful Reviews">Helpful Reviews</option>
+            <option value="Rating Stars">Rating Stars</option>
           </select>
          {this.state.renderEmployeeData !== null ? <EmployeeReview helpfulPoints={this.state.helpfulPoints} imgUrl={this.state.hidden? this.state.companyInfo[0].squareLogo : null} userId={this.state.userId} renderEmployeeData={this.state.renderEmployeeData} retrieveDataFromDB={this.retrieveDataFromDB} /> : null}
         </div>
