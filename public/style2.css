@@ -1,21 +1,74 @@
 #app {
 /*	background-color:#eee;
 */}
-.innercontainer{
+
+.innercontainer {
+  margin: 0 auto;
+  width: 90%;
+  height: 100%;
+}
+
+.innercontainer img {
   width: 100%;
-  height: 500px;
-  margin-right: 100px; 
-  margin-left: 150px; 
+  margin: 30px auto;
 }
-.singleFile {
-  width: 650px;
-  height:700px; 
+
+iframe.singleFile {
+  height:95%;
+  position: relative;
+  width: 100%;
 }
-.uploadFiles {
-  background-color: red;
-  width: 200px;
-  height: 200px; 
+.upload-container {
+  width: 95%;
+  margin: 0 auto;
 }
+.upload-header {
+  border-bottom: 2px solid grey;
+  text-align: center;
+  padding: 7px 0;
+  margin-bottom: 6px;
+}
+.uploadFiles a {
+  color: black;
+}
+
+.create-upload-container {
+  margin-top: 8px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+.create-upload-container div:nth-child(1) {
+  font-size: 0.9em;
+  margin-bottom: 3px;
+}
+
+.uploadFiles th {
+  background-color: black;
+  color: white;
+  cursor: auto;
+}
+
+.upload-choose-file button {
+  border: 1px solid #d9d9d9;
+  background-color: #ccc;
+}
+
+input[type=file] {
+  /*border: 2px solid red;*/
+  border-radius: 2px;
+  background-color: #f2f2f2;
+  margin-bottom: 3px;
+}
+
+input.isUpload {
+  padding: 4px 4px;
+}
+
+.upload-tables {
+  margin-top: 15px;
+}
+
 #upload_target {
   width:0;
   height:0;

@@ -21,7 +21,7 @@ export default class FilesLists extends React.Component {
         var url = $(this)[0].classList[1];
         console.log('This is the url', url)
         var image = "<img src="+ url+' '+"class=singleFileForImage />";
-        $('.innercontainerForImage').append(image);
+        $('.innercontainer').append(image);
       })
     })
   }
@@ -42,11 +42,18 @@ export default class FilesLists extends React.Component {
 
     return(
       <div className="uploadFiles">
-        {
-          this.props.displayFilesImg.map((file, indx)  =>
-          <a key={indx} href="#" className={`singleFileForImage ${file.imgeUrl}`} >{file.name}</a>
-         )
-        }
+        <table>
+          <thead>
+            <th>Images</th>
+          </thead>
+          <tbody>
+            {this.props.displayFilesImg.map((file, indx)  =>
+              <tr>
+                <td><a key={indx} href="#" className={`singleFileForImage ${file.imgeUrl}`} >{file.name}</a></td>
+              </tr>
+            )}
+          </tbody>
+        </table>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
@@ -55,10 +62,7 @@ export default class FilesLists extends React.Component {
           className="modal-content"
           overlayClassName="modal-overlay"
         >
-        <div className="innercontainerForImage">
-          <br/><br/>
-          <button type="button" onClick={this.closeModal}>Done Reviewing</button> 
-          <br/><br/>
+        <div className="innercontainer">
 
         </div>
 

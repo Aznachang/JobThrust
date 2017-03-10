@@ -14,7 +14,7 @@ export default class ApplicationList extends React.Component {
     if (this.props.jobInfo.length === 0) {
       noJobApps =
       <tr className='noJobs'>
-        <td colSpan='4'>No Record of Active Jobs Saved</td>
+        <td colSpan='4'>No Active Opportunities</td>
       </tr>
     } else {
       noJobApps = <tr></tr>
