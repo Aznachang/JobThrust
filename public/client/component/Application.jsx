@@ -158,8 +158,12 @@ export default class Application extends React.Component {
 
     timeHour -= 8;
 
-    if (timeHour < 0) {
+    if (+timeHour < 0) {
       timeHour += 24;
+    }
+
+    if (+timeHour <= 11) {
+      timeHour = +timeHour.toString();
     }
 
     if (+timeHour > 11) {
@@ -168,7 +172,7 @@ export default class Application extends React.Component {
     }
 
     // Make Sure it is '12' and not '00'
-    if (timeHour === '00') {
+    if (timeHour === '00' || timeHour === '0') {
       timeHour = '12';
     }
 

@@ -34,13 +34,23 @@ export default class JobOfferContainer extends React.Component {
 
     var amPm = 'AM';
 
+    timeHour -= 8;
+
+    if (+timeHour < 0) {
+      timeHour += 24;
+    }
+
+    if (+timeHour <= 11) {
+      timeHour = +timeHour.toString();
+    }
+
     if (+timeHour > 11) {
       amPm = 'PM';
       timeHour = (+timeHour - 12).toString();
     }
 
     // Make Sure it is '12' and not '00'
-    if (timeHour === '00') {
+    if (timeHour === '00' || timeHour === '0') {
       timeHour = '12';
     }
 
