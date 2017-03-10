@@ -78,7 +78,7 @@ router.post('/upload',function(req, res) {
               console.log('This is the path for the image in s3 amazon Web', fsImplStyles);
 
               var createS3Url = 'https://s3.amazonaws.com/uploadImages92/' + name
-              var uploadObj = {id: Math.floor(Math.random() * 100000), imgeUrl: createS3Url, userId: req.session.passport.user  || req.headers['job-thrust-native'], name:file.fileUpload.originalFilename}
+              var uploadObj = {id: Math.floor(Math.random() * 100000), imgeUrl: createS3Url, userId: req.session.passport ? req.session.passport.user ? req.headers['job-thrust-native'], name:file.fileUpload.originalFilename}
               Model.UploadFiles.insertMany(uploadObj, function(err, data) {
                 if (err) {
                   res.send(err);
@@ -320,13 +320,13 @@ router.post('/application/stagechange', function(req, res) {
 });
 
 router.get('/user', function(req, res) {
-  res.send(req.session.passport.user  || req.headers['job-thrust-native']);
+  res.send(req.session.passport ? req.session.passport.user : req.headers['job-thrust-native']);
 });
 
 router.get('/userdata', function(req, res) {
   table.User.findOne({
     where: {
-      id: req.session.passport.user  || req.headers['job-thrust-native']
+      id: req.session.passport ? req.session.passport.user : req.headers['job-thrust-native']
     }
   }).then(function(data) {
     res.send(data);
@@ -428,7 +428,7 @@ router.post('/search', function(req, res) {
   .then(function(response) {
     table.Query.create({
       searchId: response.dataValues.id,
-      userId: req.session.passport.user  || req.headers['job-thrust-native'],
+      userId: req.session.passport ? req.session.passport.user : req.headers['job-thrust-native'],
     })
   })
 })
