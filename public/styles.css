@@ -653,7 +653,7 @@ input.st-input {
   cursor: pointer;
 }
 
-.app-tab:nth-child(5) {
+.app-tab-last {
   border: none;
 }
 
@@ -1031,8 +1031,12 @@ div.archived-list {
   margin: 0 auto;
 }
 
-.archived-list td {
+.archived-list tbody tr {
   background-color: #d9d9d9;
+}
+
+.archived-list tbody tr:hover {
+  background-color: #bfbfbf;
 }
 
 .selected-box {
