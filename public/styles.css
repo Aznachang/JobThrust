@@ -110,6 +110,10 @@ textarea {
   /*color: #E41B17;*/
 }
 
+.noJobs td {
+  background-color: #d9d9d9;
+}
+
 /* ========== PAGINATION ========== */
 
 #page-numbers {
@@ -142,19 +146,6 @@ textarea {
   font-weight: bold;
   font-size: 0.8em;
   text-align: center;
-}
-
-/* ========== ARCHIVE JOBS LIST ========== */
-.archive-role-company {
-  width: 30%;
-}
-
-.archive-stage-reason {
-  width: 15%;
-}
-
-.archive-created {
-  width: 10%;
 }
 
 /* ========== JOB OFFERS LIST ========== */
@@ -461,7 +452,7 @@ iframe {
   border-bottom: 2px grey solid;
 }
 
-.stage-box {
+.stage-box, .archive-box {
   border: 2px solid grey;
   height: 100px;
   flex-basis: 100%;
@@ -471,10 +462,6 @@ iframe {
   font-weight: bold;
   display: flex;
   flex-direction: column;
-}
-
-.selected-box {
-  background-color: rgba(255, 255, 0, 0.4);
 }
 
 .stage-box:hover {
@@ -1011,4 +998,43 @@ select {
   color: white;
   font-weight: bold;
   font-size: 1.4em;
+}
+
+/* ========== ARCHIVE JOBS LIST ========== */
+.archive-role-company {
+  width: 30%;
+}
+
+.archive-stage-reason {
+  width: 15%;
+}
+
+.archive-created {
+  width: 10%;
+}
+
+.archive-box {
+  background-color: #d9d9d9;
+}
+
+.archive-box:nth-child(1) {
+  margin-left: 0;
+}
+
+.archive-box:hover {
+  cursor: pointer;
+  background-color: #bfbfbf;
+}
+
+div.archived-list {
+  width: 95%;
+  margin: 0 auto;
+}
+
+.archived-list td {
+  background-color: #d9d9d9;
+}
+
+.selected-box {
+  background-color: rgba(255, 255, 0, 0.4);
 }

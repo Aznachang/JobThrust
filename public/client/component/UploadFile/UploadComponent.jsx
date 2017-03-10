@@ -61,24 +61,34 @@ componentDidMount() {
   //     })
   //   })
     return (
-      <div> 
-        <form method="post" encType="multipart/form-data" action="/api/upload" target="upload_target">
-          Select an image to upload:
-          <input type="file" name="fileUpload" className="form-control"/>
-          <input type="submit" name="submitBtn" value="Upload" className="isUpload"/>
-        </form>
-        <iframe id="upload_target" name="upload_target" src="#"></iframe>
-        <div>
+      <div className='upload-container'> 
+        <div className='upload-header'><h3>Uploads</h3></div>
 
-          {
-            (this.state.filesDataImg !== null) ? <FilesLists displayFilesImg={this.state.filesDataImg}/> : null
-          }
+        <div className='create-upload-container'>
+          <form method="post" encType="multipart/form-data" action="/api/upload" target="upload_target">
+            <div>Select an image or PDF to upload:</div>
+            <div className='upload-choose-file'>
+              <input type="file" name="fileUpload" className="form-control"/>
+            </div>
+            <div>
+              <input type="submit" name="submitBtn" value="Upload" className="isUpload"/>
+            </div>
+          </form>
         </div>
-        <div>
-          
-          {
-            (this.state.filesDataPdf !== null) ? <PdfFiles displayFilesPdf={this.state.filesDataPdf}/> : null
-          }
+        <iframe id="upload_target" name="upload_target" src="#"></iframe>
+        <div className='upload-tables'>
+          <div>
+            
+            {
+              (this.state.filesDataPdf !== null) ? <PdfFiles displayFilesPdf={this.state.filesDataPdf}/> : null
+            }
+          </div>
+          <div>
+
+            {
+              (this.state.filesDataImg !== null) ? <FilesLists displayFilesImg={this.state.filesDataImg}/> : null
+            }
+          </div>
         </div>
       </div>
     )

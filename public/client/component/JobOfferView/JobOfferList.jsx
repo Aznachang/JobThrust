@@ -25,8 +25,8 @@ export default class JobOfferList extends React.Component {
 
     // Show This Message - No Job Offers
     if (Offers === 0) {
-      noOffers = <tr className='noJobs'>
-        <td colSpan='6'>No Record of Job Offers Yet</td>
+      noOffers = <tr>
+        <td colSpan='6'><strong>No Job Offers</strong></td>
       </tr>
     } else {
       noOffers = <tr></tr>
@@ -34,8 +34,8 @@ export default class JobOfferList extends React.Component {
 
     // Show This Message - No Archived Job Offers
     if (deadOffers === 0) {
-      oldOffers = <tr className='noJobs'>
-        <td colSpan='6'>No Record of Archived Job Offers Yet</td>
+      oldOffers = <tr>
+        <td colSpan='6'><strong>No Record of Archived Job Offers Yet</strong></td>
       </tr>
     } else {
       oldOffers = <tr></tr>
@@ -79,7 +79,7 @@ export default class JobOfferList extends React.Component {
       <div id='JobOfferView'>
         <div className="add-app-manual">
           <div className='JobOffer'>
-           <h2 id='Job-Table'>Job Offers List</h2>
+           <h2 id='Job-Table'>Active Job Offers</h2>
             <table>
              <thead>
                <tr className='application'>

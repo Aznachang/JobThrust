@@ -458,7 +458,7 @@ export default class CompanyComponent extends React.Component {
         </div>
 
         <div className="employeeReview">
-          <span><strong>Sorty By: </strong></span>
+          <span><strong>Sort By: </strong></span>
           <select id="mySelect">
             <option value="helpful Reviews">helpful Reviews</option>
             <option value="other" selected>other</option>

@@ -43,12 +43,18 @@ export default class PdfFiles extends React.Component {
     console.log('I came to the render secition', this.props)
     return(
       <div className="uploadFiles">
-        {
-          this.props.displayFilesPdf.map((file, indx)  => 
-          <a key={indx} href="#" className={`singleFile ${file.imgeUrl}`} >{file.name}</a>
-        
-         )
-        }
+        <table>
+          <thead>
+            <th>PDFs / Documents</th>
+          </thead>
+          <tbody>
+            {this.props.displayFilesPdf.map((file, indx)  => 
+              <tr>
+                <td><a key={indx} href="#" className={`singleFile ${file.imgeUrl}`} >{file.name}</a></td>
+              </tr>
+            )}
+          </tbody>
+        </table>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
@@ -58,9 +64,6 @@ export default class PdfFiles extends React.Component {
           overlayClassName="modal-overlay"
         >
         <div className="innercontainer">
-          <br/><br/>
-          <button type="button" onClick={this.closeModal}>Done Reviewing</button> 
-          <br/><br/>
 
         </div>
 
