@@ -30,7 +30,7 @@ var multiparty = require('connect-multiparty'),
 router.use(multipartyMiddleware);
 router.get('/upload',function(req, res) {
   Model.UploadFiles.find({
-    userId: req.session.passport.user || req.headers['job-thrust-native']
+    userId: req.session.passport ? req.session.passport.user : req.headers['job-thrust-native']
   } ,function(err, data) {
     if (!err) {
       // console.log('This what was in DB', data);
@@ -58,7 +58,7 @@ router.post('/upload',function(req, res) {
               console.log('This is the path for the image in s3 amazon Web', fsImplStyles);
 
               var createS3Url = 'https://s3.amazonaws.com/uploadImages92/' + name;
-              var uploadObj = {id: Math.floor(Math.random() * 100000), imgeUrl: createS3Url, userId: req.session.passport.user || req.headers['job-thrust-native'], name:file.fileUpload.originalFilename}
+              var uploadObj = {id: Math.floor(Math.random() * 100000), imgeUrl: createS3Url, userId: req.session.passport ? req.session.passport.user : req.headers['job-thrust-native'], name:file.fileUpload.originalFilename}
               Model.UploadFiles.insertMany(uploadObj, function(err, data) {
                 if (err) {
                   res.send(err);
@@ -282,7 +282,7 @@ router.post('/job', function(req, res) {
   }).spread(function(job, created) {
     table.Application.create({
         jobId: job.dataValues.id,
-        userId: req.session.passport.user || req.headers['job-thrust-native'],
+        userId: req.session.passport ? req.session.passport.user : req.headers['job-thrust-native'],
         stageId: 0,
         title: req.body.title,
         company: req.body.company
@@ -313,7 +313,7 @@ router.post('/application/stagechange', function(req, res) {
   table.Application.update(
     {stageId: req.body.stageId},
     {where: {id: req.body.applicationId}}
-  ).then(function(thing) {
+  ).then(function(thing) {  
     res.sendStatus('200');
     console.log('Application stage updated');
   });
@@ -341,7 +341,7 @@ router.get('/company', function(req, res) {
 
     respond = JSON.parse(respond);
 
-    res.send([respond.response.employers, req.session.passport.user || req.headers['job-thrust-native']])
+    res.send([respond.response.employers, req.session.passport ? req.session.passport.user : req.headers['job-thrust-native']])
   }).catch(function(err) {
 
     console.log('There was an error with your request', err);
@@ -480,7 +480,7 @@ router.route('/search/:id').get(function(req, res) {
 router.get('/query', function(req, res) {
   table.Query.findAll({
     where: {
-      userId: req.session.passport.user || req.headers['job-thrust-native']
+      userId: req.session.passport ? req.session.passport.user : req.headers['job-thrust-native']
     }
   }).then(function(query) {
     res.send(query);
@@ -497,7 +497,7 @@ router.get('/application/offers', function(req, res) {
   console.log('GETTING OFFERS!');
   table.Offer.findAll({
    where: {
-     userId: req.session.passport.user || req.headers['job-thrust-native']
+     userId: req.session.passport ? req.session.passport.user : req.headers['job-thrust-native']
    }
   }).then(function(offers){
     res.send(offers);
@@ -517,7 +517,7 @@ router.post('/application/offers', function(req, res) {
     res.sendStatus(200);
 
     table.Offer.create({
-      userId: req.session.passport.user || req.headers['job-thrust-native'],
+      userId: req.session.passport ? req.session.passport.user : req.headers['job-thrust-native'],
       companyName: job.company,
       jobTitle: job.title,
       applicationId: req.body.applicationId
@@ -536,7 +536,7 @@ router.put('/application/:appId', function(req, res) {
   },{
     where: {
       id: req.params.appId,
-      userId: req.session.passport.user || req.headers['job-thrust-native']
+      userId: req.session.passport ? req.session.passport.user : req.headers['job-thrust-native']
     }
   })
   .then(function(archiveJob) {
@@ -554,7 +554,7 @@ router.put('/application/:appId/offer/:offerId', function(req, res) {
   },{
     where: {
       id: req.params.offerId,
-      userId: req.session.passport.user || req.headers['job-thrust-native']
+      userId: req.session.passport ? req.session.passport.user : req.headers['job-thrust-native']
     }
   })
   .then(function(archivedOffer){
@@ -590,7 +590,7 @@ router.put('/application/offers/:offerId', function(req, res) {
   },{
     where: {
       id: req.params.offerId,
-      userId: req.session.passport.user || req.headers['job-thrust-native']
+      userId: req.session.passport ? req.session.passport.user : req.headers['job-thrust-native']
     }
   })
   .then(function(updatedOffer){
