@@ -156,6 +156,12 @@ export default class Application extends React.Component {
 
     var amPm = 'AM';
 
+    timeHour -= 8;
+
+    if (timeHour < 0) {
+      timeHour += 24;
+    }
+
     if (+timeHour > 11) {
       amPm = 'PM';
       timeHour = (+timeHour - 12).toString();

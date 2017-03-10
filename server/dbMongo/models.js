@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-// mongoose.connect('mongodb://jobthrust:getj0bsm8@ds119810.mlab.com:19810/jobthrust-mongo');
+mongoose.connect('mongodb://jobthrust:getj0bsm8@ds119810.mlab.com:19810/jobthrust-mongo');
 
 mongoose.connect('mongodb://localhost/companyView');
 
