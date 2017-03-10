@@ -78,7 +78,7 @@ router.post('/upload',function(req, res) {
               console.log('This is the path for the image in s3 amazon Web', fsImplStyles);
 
               var createS3Url = 'https://s3.amazonaws.com/uploadImages92/' + name
-              var uploadObj = {id: Math.floor(Math.random() * 100000), imgeUrl: createS3Url, userId: req.session.passport ? req.session.passport.user ? req.headers['job-thrust-native'], name:file.fileUpload.originalFilename}
+              var uploadObj = {id: Math.floor(Math.random() * 100000), imgeUrl: createS3Url, userId: req.session.passport ? req.session.passport.user : req.headers['job-thrust-native'], name:file.fileUpload.originalFilename}
               Model.UploadFiles.insertMany(uploadObj, function(err, data) {
                 if (err) {
                   res.send(err);
