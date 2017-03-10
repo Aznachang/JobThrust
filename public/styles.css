@@ -181,6 +181,15 @@ textarea {
   margin-top: 6px;
 }
 
+#offer-filterbar {
+  text-align: center;
+  margin: 0 auto;
+}
+
+#offer-filterbar input[type=text] {
+  margin: 0;
+}
+
 /* ========== JOB OFFERS LIST ========== */
 
 #offer-breakdown{
