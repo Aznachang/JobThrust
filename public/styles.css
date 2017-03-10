@@ -148,6 +148,39 @@ textarea {
   text-align: center;
 }
 
+#JobOfferView th:hover {
+  cursor: auto;
+  background-color: black;
+}
+
+#archive-offer-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 1px solid #bfbfbf;
+  padding-bottom: 15px;
+}
+
+.form-box {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.form-box > div {
+  margin: 8px;
+}
+
+.offer-detail-container {
+  width: 95%;
+  margin: 0 auto;
+}
+
+.offer-detail-container input[type=text], .offer-detail-container input[type=submit] {
+  margin-top: 6px;
+}
+
 /* ========== JOB OFFERS LIST ========== */
 
 #offer-breakdown{
@@ -180,6 +213,18 @@ textarea {
 
 #benefits {
   width: 7%;
+}
+
+tr.archive-offer-row {
+  background-color: #d9d9d9;
+}
+
+tr.archive-offer-row:hover {
+  background-color: #bfbfbf;
+}
+
+.offer-click-icon {
+  cursor: pointer;
 }
 
 /* ========== NAV BAR ========== */

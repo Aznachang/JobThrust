@@ -32,12 +32,12 @@ export default class JobOfferCompare extends React.Component {
   render() {
     return (
       <tr>
-        <td>{this.props.jobOffer.companyName} - {this.props.jobOffer.jobTitle}</td>
+        <td>{this.props.jobOffer.jobTitle} - {this.props.jobOffer.companyName}</td>
         <td>${this.props.jobOffer.salary}</td>
         <td>${this.props.jobOffer.signBonus}</td>
         <td>{this.props.jobOffer.vacationDays}</td>
         <td>{this.props.jobOffer.retireMatchPercent}%</td>
-        <td onClick={this.openModal}>📔</td>
+        <td onClick={this.openModal}><span className='offer-click-icon'>📔</span></td>
         <Modal
         isOpen={this.state.modalIsOpen}
         onAfterOpen={this.afterOpenModal}

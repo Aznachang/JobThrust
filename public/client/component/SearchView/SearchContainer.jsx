@@ -75,7 +75,6 @@ export default class SearchContainer extends React.Component {
         results: json.results,
         info: {}
       });
-      // context.addSearch();
     });
   }
 
@@ -105,15 +104,6 @@ export default class SearchContainer extends React.Component {
       }
     })
   }
-
-  // ADD SEARCH AND QUERY TO DB
-  addSearch() {
-  // TODO SEE IF SEARCH EXIST PRIOR SO USER CAN STILL CREATE QUERY
-    axios.post('/api/search', {
-      query: this.state.search
-    })
-  }
-
 
   /**********SEARCH RESULT ICON FUNCTIONS**********/
 
