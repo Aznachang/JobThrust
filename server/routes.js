@@ -550,6 +550,19 @@ router.put('/application/:appId', function(req, res) {
   });
 });
 
+// DELETE ALL APPLICATIONS FOR A USER - JUST FOR DEVELOPMENT
+
+router.get('/deleteapps', function(req, res) {
+  var user = req.session.passport ? req.session.passport.user : req.headers['job-thrust-native']; 
+  table.Application.destroy({
+    where: {
+      userId: user
+    }
+  }).then(function() {
+    res.send('All application data for user ' + user + ' deleted successfully.');
+  });
+});
+
 // 'UPDATE' Specific Job Offer --> 'ARCHIVE'
 router.put('/application/:appId/offer/:offerId', function(req, res) {
   // console.log('POST A JOB OFFER: ', req.body);
