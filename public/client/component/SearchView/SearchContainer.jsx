@@ -21,8 +21,7 @@ export default class SearchContainer extends React.Component {
       modalTitle: '',
       modalCompany: '',
       modalLoc: '',
-      currentPage: 1,
-      resultsPerPage: 10
+      currentPage: 1
     }
 
     this.openModal = this.openModal.bind(this);
@@ -75,33 +74,6 @@ export default class SearchContainer extends React.Component {
         info: {}
       });
     });
-  }
-
-  // GET RECOMMENDATIONS BASED ON PREVIOUS SEARCHES
-  getRecommendations() {
-    var context = this;
-    $.get("/api/query")
-    .done(function(response) {
-      if (response[0]) {
-        $.get("api/search/" + response[0].searchId)
-        .done(function(response) {
-          $.getJSON("http://api.indeed.com/ads/apisearch?callback=?", {
-            publisher: '5024495540845813', // TODO: HIDE THIS!!!
-            l: context.state.location,
-            q: response[0].query,
-            limit: 5,
-            format: 'json',
-            v: '2'
-          }, function(json){
-            context.setState({
-              recommendations: json.results,
-              info: {}
-            })
-          })
-        })
-
-      }
-    })
   }
 
   /**********SEARCH RESULT ICON FUNCTIONS**********/
