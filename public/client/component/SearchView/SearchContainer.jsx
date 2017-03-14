@@ -32,9 +32,6 @@ export default class SearchContainer extends React.Component {
     this.getInfo = this.getInfo.bind(this);
     this.removeJob = this.removeJob.bind(this);
     this.addJob = this.addJob.bind(this);
-    this.getRecommendations = this.getRecommendations.bind(this);
-    this.addRecommendation = this.addRecommendation.bind(this);
-    this.removeRecommendation = this.removeRecommendation.bind(this);
   };
 
 
@@ -66,6 +63,7 @@ export default class SearchContainer extends React.Component {
       l: context.state.location,
       q: context.state.search,
       limit: 1000,
+      start: (this.state.currentPage - 1) * 25 + 1,
       format: 'json',
       v: '2'
     }, function(json){
@@ -124,44 +122,12 @@ export default class SearchContainer extends React.Component {
 
   /********************/
 
-  /**********RECOMMENDATION ICON FUNCTIONS**********/
-
-  // ADD JOB TO DB
-  addRecommendation(result, index) {
-    var context = this
-    axios.post('/api/job', {
-      title: result.jobtitle,
-      description: result.snippet.replace(/\//g,'').replace(/<b>/g, ''),
-      company: result.company,
-      key: result.jobkey
-    }).then(function() {
-      context.state.recommendations.splice(index, 1)
-      context.setState({
-        recommendations: context.state.recommendations,
-        info: {}
-      })
-    })
-  }
-
-  // REMOVE INDIVIDUAL JOB COMPONENT FROM VIEW (NOT DB)
-  removeRecommendation(jobIndex) {
-    var context = this;
-    context.state.recommendations.splice(jobIndex, 1)
-    context.setState({
-      recommendations: context.state.recommendations,
-      info: {}
-    })
-  }
-
-  /********************/
-
   // HANDLES STATE RELATED TO FORMS
   searchHandler(event) {
     this.setState({[event.target.name]: event.target.value})
   }
 
   componentWillMount() {
-    this.getRecommendations();
   }
 
   render() {
