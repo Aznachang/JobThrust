@@ -1041,6 +1041,7 @@ select {
   justify-content: center;
   border-radius: 5px;
   font-size: 1.4em;
+  color: white;
 }
 
 .google-button:hover {
