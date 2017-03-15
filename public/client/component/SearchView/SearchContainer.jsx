@@ -1,7 +1,6 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 import SearchBar from './SearchBar.jsx';
-import SearchRecommendations from './SearchRecommendations.jsx';
 import axios from 'axios'
 import SearchResultsContainer from './SearchResultsContainer.jsx';
 import ESContainer from './ExtendedSearch/ESContainer.jsx';

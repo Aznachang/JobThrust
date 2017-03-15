@@ -26,10 +26,6 @@ a {
   text-decoration: none;
 }
 
-a:visited {
-    color: white;
-}
-
 h3, p {
   margin: 3px;
 }

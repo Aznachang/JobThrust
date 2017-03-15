@@ -15,11 +15,7 @@ export default class UploadComponent extends React.Component {
     var context = this
     this.getUploadedData = this.getUploadedData.bind(this); 
 
-  this.getUploadedData();
-    var context = this;
-    setInterval(function() { 
-      context.getUploadedData();
-    }, 3000);
+    this.getUploadedData();
   }
 
   getUploadedData() {
@@ -43,11 +39,16 @@ export default class UploadComponent extends React.Component {
           context.setState({
             filesDataPdf: pdfFiles,
             filesDataImg: imagesFiles
-          })
+          }, function() {
+            if (window.location.pathname === '/upload' || window.location.pathname === '/upload#') {
+              setTimeout(context.getUploadedData, 3000);
+            }
+          });
         }
       }
     })
   }
+
 componentDidMount() {
 }
 
