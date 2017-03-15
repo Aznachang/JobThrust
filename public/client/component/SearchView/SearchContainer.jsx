@@ -146,7 +146,7 @@ export default class SearchContainer extends React.Component {
   // HANDLES STATE RELATED TO FORMS
   searchHandler(event) {
     this.setState({[event.target.name]: event.target.value});
-    this.setState({results: [], currentPage: 1});
+    this.setState({currentPage: 1});
   }
 
   componentWillMount() {
