@@ -311,6 +311,31 @@ tr.archive-offer-row:hover {
   text-align: center;
 }
 
+.page-control {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.page-control div {
+  margin: 2px 4px 4px 4px;
+}
+
+#prev-page, #next-page {
+  padding: 3px 5px;
+  background-color: #d9d9d9;
+  cursor: pointer;
+}
+
+#prev-page:hover, #next-page:hover {
+  background-color: #bfbfbf;
+}
+
+#current-page-num {
+  padding: 3px 14px;
+  border: 1px solid #d9d9d9;
+}
+
 input[type=text] {
   width: 200px;
   margin: 0 10px 0 0;
@@ -362,6 +387,13 @@ input[type=submit]:hover {
 
 .search-result:hover {
   background-color: rgba(0, 153, 255, 0.6)
+}
+
+.indeed-url {
+  font-size: 0.9em;
+  text-align: center;
+  padding-top: 6px;
+  border-top: 1px solid #d9d9d9;
 }
 
 .buttons-div {

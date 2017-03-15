@@ -21,8 +21,8 @@ export default class SearchContainer extends React.Component {
       modalTitle: '',
       modalCompany: '',
       modalLoc: '',
-      currentPage: 1,
-      resultsPerPage: 10
+      modalLink: '',
+      currentPage: 1
     }
 
     this.openModal = this.openModal.bind(this);
@@ -33,9 +33,8 @@ export default class SearchContainer extends React.Component {
     this.getInfo = this.getInfo.bind(this);
     this.removeJob = this.removeJob.bind(this);
     this.addJob = this.addJob.bind(this);
-    this.getRecommendations = this.getRecommendations.bind(this);
-    this.addRecommendation = this.addRecommendation.bind(this);
-    this.removeRecommendation = this.removeRecommendation.bind(this);
+    this.nextPage = this.nextPage.bind(this);
+    this.prevPage = this.prevPage.bind(this);
   };
 
 
@@ -44,7 +43,8 @@ export default class SearchContainer extends React.Component {
       modalIsOpen: true,
       modalLoc: this.state.results[index].formattedLocation,
       modalTitle: this.state.results[index].jobtitle,
-      modalCompany: this.state.results[index].company
+      modalCompany: this.state.results[index].company,
+      modalLink: this.state.results[index].url
     });
     this.getInfo(jobkey, index);
   }
@@ -59,7 +59,9 @@ export default class SearchContainer extends React.Component {
 
   // GET JOBS FROM INDEED API
   getJobs(event) {
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
     var context = this;
     //JSONP request to bypass CORS HEADERS
     $.getJSON("http://api.indeed.com/ads/apisearch?callback=?", {
@@ -67,6 +69,7 @@ export default class SearchContainer extends React.Component {
       l: context.state.location,
       q: context.state.search,
       limit: 1000,
+      start: ((this.state.currentPage - 1) * 25) + 1,
       format: 'json',
       v: '2'
     }, function(json){
@@ -77,31 +80,23 @@ export default class SearchContainer extends React.Component {
     });
   }
 
-  // GET RECOMMENDATIONS BASED ON PREVIOUS SEARCHES
-  getRecommendations() {
-    var context = this;
-    $.get("/api/query")
-    .done(function(response) {
-      if (response[0]) {
-        $.get("api/search/" + response[0].searchId)
-        .done(function(response) {
-          $.getJSON("http://api.indeed.com/ads/apisearch?callback=?", {
-            publisher: '5024495540845813', // TODO: HIDE THIS!!!
-            l: context.state.location,
-            q: response[0].query,
-            limit: 5,
-            format: 'json',
-            v: '2'
-          }, function(json){
-            context.setState({
-              recommendations: json.results,
-              info: {}
-            })
-          })
-        })
+  nextPage() {
+    var currPage = this.state.currentPage;
+    var next = currPage + 1;
+    if (currPage <= 40) {
+      this.setState({currentPage: next}, function() {
+        this.getJobs();
+      });
+    }
+  }
 
-      }
-    })
+  prevPage() {
+    var currPage = this.state.currentPage;
+    if (currPage > 1) {
+      this.setState({currentPage: currPage - 1}, function() {
+        this.getJobs();
+      });
+    }
   }
 
   /**********SEARCH RESULT ICON FUNCTIONS**********/
@@ -152,44 +147,13 @@ export default class SearchContainer extends React.Component {
 
   /********************/
 
-  /**********RECOMMENDATION ICON FUNCTIONS**********/
-
-  // ADD JOB TO DB
-  addRecommendation(result, index) {
-    var context = this
-    axios.post('/api/job', {
-      title: result.jobtitle,
-      description: result.snippet.replace(/\//g,'').replace(/<b>/g, ''),
-      company: result.company,
-      key: result.jobkey
-    }).then(function() {
-      context.state.recommendations.splice(index, 1)
-      context.setState({
-        recommendations: context.state.recommendations,
-        info: {}
-      })
-    })
-  }
-
-  // REMOVE INDIVIDUAL JOB COMPONENT FROM VIEW (NOT DB)
-  removeRecommendation(jobIndex) {
-    var context = this;
-    context.state.recommendations.splice(jobIndex, 1)
-    context.setState({
-      recommendations: context.state.recommendations,
-      info: {}
-    })
-  }
-
-  /********************/
-
   // HANDLES STATE RELATED TO FORMS
   searchHandler(event) {
-    this.setState({[event.target.name]: event.target.value})
+    this.setState({[event.target.name]: event.target.value});
+    this.setState({currentPage: 1});
   }
 
   componentWillMount() {
-    this.getRecommendations();
   }
 
   render() {
@@ -220,6 +184,9 @@ export default class SearchContainer extends React.Component {
               <span key={index}>{chunk}<br/></span>
             ) }
           </div>
+          <div className='indeed-url'>
+            <a target="_blank" href={this.state.modalLink}>View this job on Indeed.</a>
+          </div>
 
         </Modal>
        <ESContainer />
@@ -228,7 +195,7 @@ export default class SearchContainer extends React.Component {
          <SearchBar getJobs={this.getJobs} searchHandler={this.searchHandler} />
        </div>
        { this.state.results.length > 0 ? (
-         <SearchResultsContainer info={this.state.info} openModal={this.openModal} results={this.state.results} addJob={this.addJob} getInfo={this.getInfo} removeJob={this.removeJob} />
+         <SearchResultsContainer info={this.state.info} openModal={this.openModal} results={this.state.results} prevPage={this.prevPage} nextPage={this.nextPage} currPage={this.state.currentPage} addJob={this.addJob} getInfo={this.getInfo} removeJob={this.removeJob} />
        ) : (
          <div></div>
        ) }
