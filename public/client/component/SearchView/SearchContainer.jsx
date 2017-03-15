@@ -21,6 +21,7 @@ export default class SearchContainer extends React.Component {
       modalTitle: '',
       modalCompany: '',
       modalLoc: '',
+      modalLink: '',
       currentPage: 1
     }
 
@@ -42,7 +43,8 @@ export default class SearchContainer extends React.Component {
       modalIsOpen: true,
       modalLoc: this.state.results[index].formattedLocation,
       modalTitle: this.state.results[index].jobtitle,
-      modalCompany: this.state.results[index].company
+      modalCompany: this.state.results[index].company,
+      modalLink: this.state.results[index].url
     });
     this.getInfo(jobkey, index);
   }
@@ -179,6 +181,9 @@ export default class SearchContainer extends React.Component {
             { this.state.modalInfo.map((chunk, index) =>
               <span key={index}>{chunk}<br/></span>
             ) }
+          </div>
+          <div className='indeed-url'>
+            <a href={this.state.modalLink}>View this job on Indeed.</a>
           </div>
 
         </Modal>

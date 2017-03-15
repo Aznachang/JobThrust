@@ -389,6 +389,13 @@ input[type=submit]:hover {
   background-color: rgba(0, 153, 255, 0.6)
 }
 
+.indeed-url {
+  font-size: 0.9em;
+  text-align: center;
+  padding-top: 6px;
+  border-top: 1px solid #d9d9d9;
+}
+
 .buttons-div {
   float: right;
   width: 25%;
