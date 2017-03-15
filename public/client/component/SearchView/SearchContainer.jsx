@@ -32,6 +32,8 @@ export default class SearchContainer extends React.Component {
     this.getInfo = this.getInfo.bind(this);
     this.removeJob = this.removeJob.bind(this);
     this.addJob = this.addJob.bind(this);
+    this.nextPage = this.nextPage.bind(this);
+    this.prevPage = this.prevPage.bind(this);
   };
 
 
@@ -55,7 +57,9 @@ export default class SearchContainer extends React.Component {
 
   // GET JOBS FROM INDEED API
   getJobs(event) {
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
     var context = this;
     //JSONP request to bypass CORS HEADERS
     $.getJSON("http://api.indeed.com/ads/apisearch?callback=?", {
@@ -63,7 +67,7 @@ export default class SearchContainer extends React.Component {
       l: context.state.location,
       q: context.state.search,
       limit: 1000,
-      start: (this.state.currentPage - 1) * 25 + 1,
+      start: ((this.state.currentPage - 1) * 25) + 1,
       format: 'json',
       v: '2'
     }, function(json){
@@ -72,6 +76,23 @@ export default class SearchContainer extends React.Component {
         info: {}
       });
     });
+  }
+
+  nextPage() {
+    var currPage = this.state.currentPage;
+    var next = currPage + 1;
+    this.setState({currentPage: next}, function() {
+      this.getJobs();
+    });
+  }
+
+  prevPage() {
+    var currPage = this.state.currentPage;
+    if (currPage > 1) {
+      this.setState({currentPage: currPage - 1}, function() {
+        this.getJobs();
+      });
+    }
   }
 
   /**********SEARCH RESULT ICON FUNCTIONS**********/
@@ -124,7 +145,8 @@ export default class SearchContainer extends React.Component {
 
   // HANDLES STATE RELATED TO FORMS
   searchHandler(event) {
-    this.setState({[event.target.name]: event.target.value})
+    this.setState({[event.target.name]: event.target.value});
+    this.setState({results: [], currentPage: 1});
   }
 
   componentWillMount() {
@@ -166,7 +188,7 @@ export default class SearchContainer extends React.Component {
          <SearchBar getJobs={this.getJobs} searchHandler={this.searchHandler} />
        </div>
        { this.state.results.length > 0 ? (
-         <SearchResultsContainer info={this.state.info} openModal={this.openModal} results={this.state.results} addJob={this.addJob} getInfo={this.getInfo} removeJob={this.removeJob} />
+         <SearchResultsContainer info={this.state.info} openModal={this.openModal} results={this.state.results} prevPage={this.prevPage} nextPage={this.nextPage} currPage={this.state.currentPage} addJob={this.addJob} getInfo={this.getInfo} removeJob={this.removeJob} />
        ) : (
          <div></div>
        ) }
