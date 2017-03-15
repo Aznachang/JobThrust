@@ -40,13 +40,10 @@ router.get('/upload',function(req, res) {
 })
 router.post('/upload',function(req, res) {
     var file = req.files;
- console.log('this is the files name',file.fileUpload.originalFilename)
-  console.log('this is the files name',file.fileUpload.path)
 
    var stream = fs.createReadStream(file.fileUpload.path);
 
    var name = file.fileUpload.originalFilename.slice(0, file.fileUpload.originalFilename.length-4).replace(/[^a-zA-Z]/g,'');
-   console.log('This is final name', name)
 
    if (file.fileUpload.originalFilename.split('.')[1] === 'pdf' || file.fileUpload.originalFilename.split('.')[1] === 'PDF') {
 
@@ -67,15 +64,12 @@ router.post('/upload',function(req, res) {
                 }
               })
           })
-          console.log("Sucessfully uploaded to Amazon S3 server");
       });
    } else if (file.fileUpload.originalFilename.split('.')[1] === 'png' || file.fileUpload.originalFilename.split('.')[1] === 'jpg') {
          return s3fsImpl.writeFile(name, stream, {"ContentType":"image/png"}).then(function(data) {
           fs.unlink(file.fileUpload.path, function(err){
               console.error(err);
               var fsImplStyles = s3fsImpl.getPath(file.fileUpload.originalFilename);
-
-              console.log('This is the path for the image in s3 amazon Web', fsImplStyles);
 
               var createS3Url = 'https://s3.amazonaws.com/uploadImages92/' + name
               var uploadObj = {id: Math.floor(Math.random() * 100000), imgeUrl: createS3Url, userId: req.session.passport ? req.session.passport.user : req.headers['job-thrust-native'], name:file.fileUpload.originalFilename}
@@ -87,7 +81,6 @@ router.post('/upload',function(req, res) {
                 }
               })
           })
-          console.log("Sucessfully uploaded to Amazon S3 server");
       });
    }
 });
@@ -132,7 +125,6 @@ router.post('/interviewreview', function(req, res) {
 });
 
 router.get('/buttonsInfoForInterview', function(req, res) {
-  console.log('sdafdasf333333-----', req.query.name)
   Model.InterviewModel.find({
     id:Number(req.query.name)
   }, function(err, data) {
@@ -145,7 +137,6 @@ router.get('/buttonsInfoForInterview', function(req, res) {
 });
 
 router.get('/buttonsInfo', function(req, res) {
-  console.log('sdafdasf333333-----', req.query.name)
   Model.EmployeeModel.find({
     id:Number(req.query.name)
   }, function(err, data) {
@@ -170,10 +161,8 @@ router.get('/employeeReviews', function(req, res) {
 });
 
 router.post('/updateHelpfulButtonForInterview', function(req, res) {
-  console.log('This is the request------', req.body)
   Model.InterviewModel.findOne({id:req.body[1]}, function(err, doc) {
     for (var i = 0; i < doc.userInfo.length; i++) {
-      console.log(JSON.stringify(doc.userInfo[i]) === JSON.stringify(req.body[2]))
       if (JSON.stringify(doc.userInfo[i]) !== JSON.stringify(req.body[2])) {
         doc.userInfo.push(req.body[2]);
       }
@@ -216,10 +205,8 @@ router.post('/updateEmployeeReview', function(req, res) {
 });
 
 router.post('/updateMongoDB', function(req, res) {
-  console.log('This should the updated review',req.body )
 
   Model.InterviewModel.findOne({id:req.body[1]}, function(err, doc) {
-    console.log('This is doc company comments', doc.companyComments);
     doc.name = req.body[0].name;
     doc.countOfReviews = req.body[0].countOfReviews;
     var company = [
@@ -237,7 +224,6 @@ router.post('/updateMongoDB', function(req, res) {
       }
     ];
     doc.companyComments = company;
-    console.log('This is doc company comments after being updated', doc.companyComments);
     doc.save();
     res.send('');
   })
@@ -315,13 +301,11 @@ router.get('/job/:jobId', function(req, res) {
 })
 
 router.post('/application/stagechange', function(req, res) {
-  console.log('Application post request:', req.body);
   table.Application.update(
     {stageId: req.body.stageId},
     {where: {id: req.body.applicationId}}
   ).then(function(thing) {  
     res.sendStatus('200');
-    console.log('Application stage updated');
   });
 });
 
@@ -340,7 +324,6 @@ router.get('/userdata', function(req, res) {
 })
 
 router.get('/company', function(req, res) {
-console.log('------This is the userId----', req.session.passport.user)
   var basicUrl = 'http://api.glassdoor.com/api/api.htm?';
   var endpoints = 't.p=126535&t.k=jzi4LSmsrF5&userip=199.87.82.66&useragent=&format=json&v=1&action=employers&q=';
   rp(basicUrl+endpoints+req.query.company).then(function(respond) {
@@ -391,17 +374,14 @@ router.post('/application/notes', function(req, res) {
     // if note does not exist
     if (!note) {
       // Find All Notes where
-      console.log('NOTE DOES NOT EXIST YET!');
       table.Note.create({
         note: req.body.note,
         applicationId: req.body.applicationId
       }).then(function(notes){
-        console.log('A new note was created!');
         res.send(notes);
       })
       // update existing note
     } else {
-      console.log('req.body.id for Notes: ', req.body.id);
       table.Note.update(
       {note: req.body.note},
         {where: {
@@ -451,7 +431,6 @@ router.get('/contact/:appId', function(req, res) {
     }
   }).spread(function(contactInfo, created) {
     if (created) {
-      console.log('NO EXISTING CONTACT WAS FOUND FOR APP ' + req.params.appId + '.  CREATING.');
     }
     res.send(contactInfo);
   });
@@ -467,18 +446,15 @@ router.post('/contact/', function(req, res) {
     {where: {applicationId: req.body.appId}}
   ).then(function(contactInfo) {
     res.sendStatus(200);
-    console.log('Contact info updated for app #', req.body.appId);
   });
 })
 
 router.route('/search/:id').get(function(req, res) {
-  console.log('search/:id', req.params.id)
   table.Search.findAll({
     where: {
       id: Number(req.params.id)
     }
   }).then(function(search) {
-    console.log(search);
     res.send(search);
   })
 })
@@ -500,7 +476,6 @@ router.get('/query', function(req, res) {
 // GET ALL 'JOB OFFERS'
 router.get('/application/offers', function(req, res) {
   // Find All Notes For Specific Job Application ID#
-  console.log('GETTING OFFERS!');
   table.Offer.findAll({
    where: {
      userId: req.session.passport ? req.session.passport.user : req.headers['job-thrust-native']
@@ -519,8 +494,7 @@ router.post('/application/offers', function(req, res) {
     }
   })
   .then(function(job){
-    console.log('Job Record Found is: ', job);
-    res.sendStatus(200);
+    // res.sendStatus(200);
 
     table.Offer.create({
       userId: req.session.passport ? req.session.passport.user : req.headers['job-thrust-native'],
@@ -546,7 +520,6 @@ router.put('/application/:appId', function(req, res) {
     }
   })
   .then(function(archiveJob) {
-    console.log('Successfully Archived this job record!');
     res.sendStatus(200);
   });
 });
@@ -599,7 +572,6 @@ router.put('/application/:appId/offer/:offerId', function(req, res) {
 
 // 'UPDATE' a 'JOB OFFER' CONTRACT DETAILS
 router.put('/application/offers/:offerId', function(req, res) {
-  // console.log('POST A JOB OFFER: ', req.body);
   // See if this offer exists and is the CORRECT USER
   table.Offer.update({
     salary: req.body.salary,

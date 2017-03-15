@@ -89,7 +89,6 @@ export default class CompanyComponent extends React.Component {
   }
   sortInterviewReviewsBy(value) {
     // this.getEmployeeInfo();
-    console.log('This is the value of option', value)
     if (this.state.renderData !== null) {
 
       if (value === 'Helpful Reviews') {
@@ -111,7 +110,6 @@ export default class CompanyComponent extends React.Component {
   }
   sortReviewsBy(value) {
     // this.getEmployeeInfo();
-    console.log('This is the value of option', value)
     if (this.state.renderEmployeeData !== null) {
 
       if (value === 'Helpful Reviews') {
@@ -139,30 +137,24 @@ export default class CompanyComponent extends React.Component {
         var contextClick = this;
         context.$element = $(this)[0].classList[0];
         var $stars = $(this)[0].classList[0];
-        console.log('star that was selected', $stars)
         if (Number($stars[$stars.length-1]) === 1 ) {
           context.starNumber = $stars[$stars.length-1];
-          console.log($stars[$stars.length-1])
           $(this).remove($(this)[0].classList[0]);
 
         } else if (Number($stars[$stars.length-1]) === 2) {
-                    console.log('2222')
           context.starNumber = $stars[$stars.length-1];
 
           $(this).remove($(this)[0].classList[0]);
 
         } else if(Number($stars[$stars.length-1]) === 3) {
-                    console.log('33333')
           context.starNumber = $stars[$stars.length-1];
 
           $(this).remove($(this)[0].classList[0]);
         } else if (Number($stars[$stars.length-1]) === 4) {
-                    console.log('444444')
           context.starNumber = $stars[$stars.length-1];
 
           $(this).remove($(this)[0].classList[0]);
         } else if (Number($stars[$stars.length-1]) === 5) {
-                    console.log('555555')
           context.starNumber = $stars[$stars.length-1];
 
           $(this).remove($(this)[0].classList[0]);
@@ -177,31 +169,25 @@ export default class CompanyComponent extends React.Component {
       $(document).on('click', '.rateForEmployee', function() {
         context.$element = $(this)[0].classList[0];
         var $stars = $(this)[0].classList[0];
-        console.log('star that was selected', $(this)[0].classList)
         if (Number($stars[$stars.length-1]) === 1 ) {
           context.starNumberForemployee = $stars[$stars.length-1];
-          console.log('11111')
           // $('.rateForEmployee').attr('content','\2605');
           $(this).remove($(this)[0].classList[0]);
 
         } else if (Number($stars[$stars.length-1]) === 2) {
-                    console.log('2222')
           context.starNumberForemployee = $stars[$stars.length-1];
 
           $(this).remove($(this)[0].classList[0]);
 
         } else if(Number($stars[$stars.length-1]) === 3) {
-                    console.log('33333')
           context.starNumberForemployee = $stars[$stars.length-1];
 
           $(this).remove($(this)[0].classList[0]);
         } else if (Number($stars[$stars.length-1]) === 4) {
-                    console.log('444444')
           context.starNumberForemployee = $stars[$stars.length-1];
 
           $(this).remove($(this)[0].classList[0]);
         } else if (Number($stars[$stars.length-1]) === 5) {
-                    console.log('555555')
           context.starNumberForemployee = $stars[$stars.length-1];
 
           $(this).remove($(this)[0].classList[0]);
@@ -253,17 +239,14 @@ export default class CompanyComponent extends React.Component {
   getEmployeeInfo() { 
     var context = this;
     var name = this.state.value;
-    console.log('This is the name that needs to be queried', name);
     $.ajax({
       method:'GET',
       url:'/api/employeeReviews?name='+ name,
       contentType: 'application/json',
       success: function(data) {
-        console.log('employee----data', data);
         context.setState({
           renderEmployeeData: data
         })
-        console.log('is the state updated?', context.state.renderEmployeeData);
       },
       error: function(err) {
         console.log('You have an error', err)
@@ -276,13 +259,11 @@ export default class CompanyComponent extends React.Component {
     this.retrieveDataFromDB();
     this.getEmployeeInfo();
     var context = this;
-    console.log('this is the state value' ,this.state.value)
     $.ajax({
       method:'GET',
       url:'/api/company?company='+ this.state.value,
       contentType: 'application/json',
       success: function(data) {
-        console.log('User IDIDIDIDIDDD', typeof data[2])
         context.setState({
           companyInfo: data[0],
           userId: data[1]
@@ -307,11 +288,10 @@ export default class CompanyComponent extends React.Component {
       // $('.ratingStar').append("<span class='first1 rate'>&#9734</span><span class='two2 rate'>&#9734</span><span class='three3 rate'>&#9734</span><span class='four4 rate'>&#9734</span><span class='five5 rate'>&#9734</span>");
     })
   }
+
   afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    // this.refs.subtitle.style.color = '#f00';
-    // this.refs.testingthis.style = 'color: orange; font-weight: bold;';
   }
+
   closeModal() {
     this.setState({
       modalIsOpen: false,
@@ -328,10 +308,9 @@ export default class CompanyComponent extends React.Component {
     })
   }
   afterOpenTheModal() {
-    // references are now sync'd and can be accessed.
-    // this.refs.subtitle.style.color = '#f00';
-    // this.refs.testingthis.style = 'color: orange; font-weight: bold;';
+
   }
+
   closeTheModal() {
     this.setState({
       modalOpen: false,
@@ -360,7 +339,6 @@ export default class CompanyComponent extends React.Component {
   submitApp(event) {
     event.preventDefault();
     if (this.dateChecker) {
-      console.log('inline text or block', this.state.interviewProcess);
       var interviewCompany = {id:Math.floor(Math.random()* 900000000), userId: '', name: this.state.value, imgUrl:this.state.companyInfo[0].squareLogo,countOfReviews: this.starNumber ,helpfulButtonScore:'helpful(0)',singleUl:'',companyComments: [{jobTitle:this.state.title},{date:this.state.date},{interviewProcess:{descriptionOfinterview:this.state.interviewProcess,interviewQuestion:this.state.interviewQuestion }}]};
       var context = this;
       $.ajax({

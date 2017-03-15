@@ -15,11 +15,7 @@ export default class UploadComponent extends React.Component {
     var context = this
     this.getUploadedData = this.getUploadedData.bind(this); 
 
-  this.getUploadedData();
-    var context = this;
-    setInterval(function() { 
-      context.getUploadedData();
-    }, 3000);
+    this.getUploadedData();
   }
 
   getUploadedData() {
@@ -28,14 +24,12 @@ export default class UploadComponent extends React.Component {
       method: 'GET',
       url: '/api/upload',
       success: function(data) {
-        console.log('This is the uploaded data', data);
         var pdfFiles = [];
         var imagesFiles = [];
 
         if (data !== null) {
           data.forEach(function(file) {
             var lastChars = file.name.split('.')[1]
-            console.log('Ending url ', lastChars);
             if (lastChars === 'pdf') {
               pdfFiles.push(file);
             } else {
@@ -45,11 +39,16 @@ export default class UploadComponent extends React.Component {
           context.setState({
             filesDataPdf: pdfFiles,
             filesDataImg: imagesFiles
-          })
+          }, function() {
+            if (window.location.pathname === '/upload' || window.location.pathname === '/upload#') {
+              setTimeout(context.getUploadedData, 3000);
+            }
+          });
         }
       }
     })
   }
+
 componentDidMount() {
 }
 

@@ -45,7 +45,6 @@ export default class ESContainer extends React.Component {
   }
 
   selectResults(index) {
-    console.log('Displaying results for search at index', index);
     var selected = this.state.searches[index].results;
     this.setState({results: selected, viewing: 'results'});
   }
@@ -63,14 +62,12 @@ export default class ESContainer extends React.Component {
 
     axios.get('/api/userdata').then(function(res) {
       axios.get('/api/extsearch/' + res.data.email).then(function(response) {
-        console.log('Retrieved search data:', response);
         context.setState({searches: response.data});
       });
     });
   }
 
   viewJob(i) {
-    console.log(this.state.results[i].link);
     this.setState({jobview: this.state.results[i]})
     this.setState({viewing: 'jobpage'});
   }

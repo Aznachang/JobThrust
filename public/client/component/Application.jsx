@@ -191,26 +191,17 @@ export default class Application extends React.Component {
     var context = this;
 
     axios.post('/api/goog/cal', data).then(function(res) {
-      console.log('Created event!');
       context.getEvents();
       context.setState({addingEvent: false});
     });
   }
 
-  sendMessage() {
-    axios.get('/api/mail/send').then(function(res) {
-      console.log('Sent successfully!');
-    });
-  }
-
   getContact() {
-    console.log('Getting contact info!');
     var context = this;
     axios.get('/api/contact/' + context.props.id).then(function(res) {
       context.setState({
         contactInfo: res.data
       });
-      console.log('Contact info is now set to:', context.state.contactInfo);
 
       // Once contact info in place, get emails
       axios.post('/api/mail/thread', {email: context.state.contactInfo.email}).then(function(res) {
@@ -233,7 +224,6 @@ export default class Application extends React.Component {
 
     axios.put('/api/application/' + context.props.id, archiveJobData)
     .then(function(offers) {
-      console.log('Archived Job Application!');
       context.props.getJobs();
     });
 

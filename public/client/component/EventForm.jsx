@@ -74,7 +74,6 @@ export default class EventForm extends React.Component {
 
 
     this.props.postEvent(event);
-    console.log('Event created');
 
     this.refs.name.value = '';
 

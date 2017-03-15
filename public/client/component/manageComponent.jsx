@@ -93,7 +93,6 @@ export default class ManageComponent extends React.Component {
       jobId: jobId
     })
     .then(function(response){
-      console.log('INSIDE postStageChange!');
       // stageId === 5 --> fire up the form
       if (stageId === 5) {
         axios.post('/api/application/offers', {
@@ -108,14 +107,11 @@ export default class ManageComponent extends React.Component {
   }
 
   changeStage(id, newStageId) {
-    console.log('Running changeStage from parent!');
     var jobsCurrent = this.state.jobs;
     for (var i = 0; i < jobsCurrent.length; i++) {
       if (id === jobsCurrent[i].id && jobsCurrent[i].stageId < 5) {
-        console.log('Changing stage ID for:', jobsCurrent[i]);
         jobsCurrent[i].stageId = newStageId;
         this.postStageChange(jobsCurrent[i].id, jobsCurrent[i].stageId, jobsCurrent[i].jobId);
-        console.log('StageID changed:', jobsCurrent[i]);
 
         // Re-sort jobsCurrent by stageID
         this.setState({jobs: jobsCurrent});
@@ -144,21 +140,17 @@ export default class ManageComponent extends React.Component {
         return job.stageId === stageNum;
       });
       this.setState({filtered: stageNum, boxClasses: boxClasses, filteredJobs: filteredJobs});
-      console.log('FILTER HAPPENED: ');
       this.render();
     } else {
       this.setState({filtered: null, boxClasses: boxClasses});
-      console.log('UNFILTER HAPPENED');
       this.render();
     }
   }
 
   sort(value) {
     var context = this;
-    console.log("this.state.jobs", this.state.jobs[0][value], typeof this.state.jobs[0][value])
     if(this.state.filteredJobs.length && typeof this.state.filteredJobs[0][value] === 'string') {
-      console.log('#filtered: ', value)
-      console.log(this.state.filteredJobs.sort(function(a, b) {
+      this.state.filteredJobs.sort(function(a, b) {
         var A = a[value].toUpperCase();
         var B = b[value].toUpperCase();
 
@@ -171,11 +163,10 @@ export default class ManageComponent extends React.Component {
            if( A > B) {return -1;}
            return 0;
          }
-      }))
+      })
     }
     if(typeof this.state.jobs[0][value] === 'string') {
-      console.log('#nofilter')
-      console.log(this.state.jobs.sort(function(a, b) {
+      this.state.jobs.sort(function(a, b) {
         var A = a[value].toUpperCase();
         var B = b[value].toUpperCase();
 
@@ -188,19 +179,17 @@ export default class ManageComponent extends React.Component {
            if( A > B) {return -1;}
            return 0;
          }
-      }))
+      })
     }
     if(this.state.filteredJobs.length && typeof this.state.filteredJobs[0][value] === 'number') {
-      console.log('#filtered', value)
-      console.log(this.state.filteredJobs.sort(function(a, b) {
+      this.state.filteredJobs.sort(function(a, b) {
         return a[value] - b[value];
-      }))
+      })
     }
     if(typeof this.state.jobs[0][value] === 'number') {
-      console.log('#nofilter', value)
-      console.log(this.state.jobs.sort(function(a, b) {
+      this.state.jobs.sort(function(a, b) {
         return a[value] - b[value];
-      }))
+      })
     }
     this.setState({
       jobs: this.state.jobs,

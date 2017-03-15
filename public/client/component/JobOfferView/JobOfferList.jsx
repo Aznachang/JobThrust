@@ -47,7 +47,6 @@ export default class JobOfferList extends React.Component {
         //return only jobOffers whose 'companyName' matches with 'user serach input text'
         return jobOffer.companyName.toLowerCase().indexOf(this.props.filterText.toLowerCase()) >= 0
     }).map(jobOffer => {
-      // console.log('THIS OFFERs APP ID IS: ', jobOffer.applicationId);
       return (
        <JobOfferForm key ={jobOffer.id} index={jobOffer.id} getOffer={this.props.getOffer} offerId ={jobOffer.id} getArchivedJobOffers={this.props.getArchivedJobOffers} jobOffers = {jobOffer} appId={jobOffer.applicationId} />
       )

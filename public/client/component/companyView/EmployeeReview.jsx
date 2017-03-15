@@ -38,13 +38,11 @@ export default class EmployeeReview extends React.Component {
       $(document).on('click', '.helpfulPoints', function() {
         var secondContext = this;
         var id = $(this).parent()[0].children[1].classList[0];
-        console.log('This is parent', $(this).parent()[0].children);
         $.ajax({
             method: 'GET',
             url: '/api/buttonsInfo?name='+ id,
             contentType:'application/json',
             success: function(data) {
-              console.log('hers is a single data ', data);
               var existUser = false;
               for (var i = 0; i < data[0].userInfo.length; i++) {
                 // console.log('result ',data[0][i].context.props.userId === context.props.userId)
@@ -52,10 +50,7 @@ export default class EmployeeReview extends React.Component {
                   existUser = true;
                 }
               }
-              console.log('existUser should be true', existUser);
               if (existUser === false) {
-                console.log('I came to create a new click')
-
                 context.helpfulCheckpoint[context.props.userId] = context.props.userId;
                 // console.log('I am console logging the helpfulCheckpoint', context.helpfulCheckpoint)
 
@@ -99,31 +94,25 @@ export default class EmployeeReview extends React.Component {
       $(document).on('click', '.EditrateEmployee', function() {
         context.$element = $(this)[0].classList[0];
         var $stars = $(this)[0].classList[0];
-        console.log('star that was selected', $(this)[0].classList)
         if (Number($stars[$stars.length-1]) === 1 ) {
           context.eidtStarCount  = $stars[$stars.length-1];
-          console.log('11111')
           // $('.rateForEmployee').attr('content','\2605');
           $(this).remove($(this)[0].classList[0]);
 
         } else if (Number($stars[$stars.length-1]) === 2) {
-                    console.log('2222')
           context.eidtStarCount  = $stars[$stars.length-1];
 
           $(this).remove($(this)[0].classList[0]);
 
         } else if(Number($stars[$stars.length-1]) === 3) {
-                    console.log('33333')
           context.eidtStarCount  = $stars[$stars.length-1];
 
           $(this).remove($(this)[0].classList[0]);
         } else if (Number($stars[$stars.length-1]) === 4) {
-                    console.log('444444')
           context.eidtStarCount  = $stars[$stars.length-1];
 
           $(this).remove($(this)[0].classList[0]);
         } else if (Number($stars[$stars.length-1]) === 5) {
-                    console.log('555555')
           context.eidtStarCount  = $stars[$stars.length-1];
 
           $(this).remove($(this)[0].classList[0]);
@@ -149,7 +138,6 @@ export default class EmployeeReview extends React.Component {
   }
 
   sendUpdatedEmployeeData(data) {
-    console.log('This is the data-----', data)
     var context = this;
     $.ajax({
       method: 'POST',
@@ -191,8 +179,6 @@ export default class EmployeeReview extends React.Component {
       $(document).on('click', '.editEmployeeReview', function() {
         $ele = this; 
         context.idForUpdateDB = $(this).parent()[0].children[1].classList[0];
-        console.log('those are the children', $(this).parent()[0].children)
-        console.log('this is the error', $(this).parent()[0].children[3])
         context.arrayOfinputs = [ 
           $(this).parent()[0].children[0], 
           $(this).parent()[0].children[1].innerText.split(':')[1],
@@ -204,7 +190,6 @@ export default class EmployeeReview extends React.Component {
       })
 
     $(document).on('submit', '#editEmployee', function(event) { 
-    console.log('my array of inputs', this.arrayOfinputs)
     //<div className={filed.id +' '+'review-item'}><strong>Title:</strong>{filed.employeeComments[0].reviewTitle}</div>
     event.preventDefault();
     if (!context.state.editReviewTitle) {
@@ -278,12 +263,7 @@ export default class EmployeeReview extends React.Component {
     var $button = '<button class="editEmployeeReview" >Edit</button>';
     // var logoImage = '<img src='+ context.props.imgUrl +' '+'class="companyImg"/>';
     var helpfulButton = '<input type="button" value='+ context.arrayOfinputs[4].value.replace(/[' ']/g, '')+' '+'class="helpfulPoints" />';
-    console.log('----This the the main $$ele---',$editStarElementList )
-    console.log('----This the the main $$ele---',$editReviewTitle )
-    console.log('----This the the main $$ele---',$eidtProsReview)
-        console.log('----This the the main $$ele---',$editConsReview)
 
-    console.log('THis is also the element', $($ele).parent())
     /*
     so I just figure out what was the problem at some point after editing more than once. for some reason the $button and helpfulbutton gets wrapped up 
     inside the pros div. they should be separate
@@ -291,7 +271,6 @@ export default class EmployeeReview extends React.Component {
     $($ele).parent().html($editStarElementList+$editReviewTitle+$eidtProsReview+$editConsReview+$button+helpfulButton);
     context.closeModal();
     var updatedEmployeeData = [reviewTitle, consReview, prosReview]
-    console.log('This is the updated version', updatedEmployeeData)
     context.sendUpdatedEmployeeData([updatedEmployeeData, context.idForUpdateDB, editCountStar]);
    })
 

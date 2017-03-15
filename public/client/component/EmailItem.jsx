@@ -9,8 +9,6 @@ export default class EmailItem extends React.Component {
   }
 
   componentWillMount() {
-    console.log('Thread length:', this.props.threadLength);
-    console.log('Key:', this.props.itemNum);
     if (this.props.itemNum === this.props.threadLength - 1) {
       this.setState({collapsed: false});
     } else {

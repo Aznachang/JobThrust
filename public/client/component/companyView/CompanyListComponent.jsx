@@ -3,7 +3,6 @@ import $ from 'jQuery';
 
 export default class CompanyListComponent extends React.Component {
 	constructor(props) {
-    console.log('props',props)
     super(props);
     this.state = {
       counter: true
@@ -46,7 +45,6 @@ export default class CompanyListComponent extends React.Component {
   appendDiv() {
     $('.newDiv').css('display','block');
     if (this.state['counter']) {
-      console.log('I came here')
       // $('#stars').append("<span>&#9734</span><span>&#9734</span><span>&#9734</span><span>&#9734</span><span>&#9734</span>");
     }
     this.setState({
@@ -57,7 +55,6 @@ export default class CompanyListComponent extends React.Component {
   appendingEmployee() {
     $('.newDiv').css('display','none');
     if (this.state['counter']) {
-      console.log('I came here')
       // $('#stars').append("<span>&#9734</span><span>&#9734</span><span>&#9734</span><span>&#9734</span><span>&#9734</span>");
     }
     this.setState({

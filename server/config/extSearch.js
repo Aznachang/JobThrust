@@ -3,7 +3,6 @@ var axios = require('axios');
 module.exports = {
   getSearches: function(req, res) {
     axios.get('http://lowcost-env.a2uvfbnd4f.us-west-2.elasticbeanstalk.com/api/search/' + req.params.email).then(function(response) {
-      console.log('EXTENDED SEARCH RESPONSE DATA:', response.data);
       res.json(response.data);
     }).catch(function(err) {
       res.sendStatus(401);

@@ -66,15 +66,7 @@ var PointOfContact = db.define('pointOfContact', {
   applicationId: Sequelize.INTEGER
 });
 
-db.sync(/*{force: true}*/).then(function() {
-  // Application.create({
-  //   jobID: 2940525,
-  //   userId: '108755274178308228818',
-  //   stageId: 1,
-  //   title: 'Software Engineer',
-  //   company: 'BasedAvocado'
-  // });
-});
+db.sync();
 
 module.exports.User = User;
 module.exports.Job = Job;
