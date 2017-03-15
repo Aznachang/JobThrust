@@ -37,7 +37,6 @@ export default class NoteContainer extends React.Component {
     var context = this;
 
     axios.delete('/api/application/notes/' + noteId).then(function(noteDeleted){
-      console.log('Deletion of Note Triggered!');
       context.getNotes();
     });
   }
@@ -61,12 +60,10 @@ export default class NoteContainer extends React.Component {
 
     axios.get('/api/application/' + context.props.appId + '/notes')
     .then(function(response){
-      console.log('Getting All Notes: ', response.data);
       var notes = response.data.sort(function(a, b) {
         return b.id - a.id;
       });
       context.setState({notes: notes});
-      console.log('getNotes setState: ', context.state.notes );
     });
   }
 

@@ -31,7 +31,6 @@ export default class Contact extends React.Component {
       phone: context.refs.contactPhone.value,
       appId: context.props.appId
     }).then(function(res) {
-      console.log('Contact info updated:', res);
       context.props.getContact();
       context.toggleEdit();
     });

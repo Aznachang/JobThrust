@@ -27,7 +27,6 @@ export default class JobOfferForm extends React.Component {
     var context = this;
     axios.get('/api/user').then(function(res) {
       context.setState({ user: res.data });
-      console.log('USER:', res.data);
     });
   }
 

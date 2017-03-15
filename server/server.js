@@ -55,7 +55,6 @@ app.get('/auth/google/callback',
 app.get('/auth/logout', function(req, res) {
   req.logout();
   req.session.destroy();
-  console.log('LOGGED OUT');
   res.end();
 });
 

@@ -53,7 +53,6 @@ export default class ArchiveJobsComponent extends React.Component {
         var archived = [];
 
         data.forEach(function(job){
-          console.log('Inside forEach Data - job!');
           if (job.active === false) {
             archived.push(job);
 
@@ -62,15 +61,8 @@ export default class ArchiveJobsComponent extends React.Component {
             });
           }
         });
-          // context.setState({
-          //   archivedJobs: archived
-          // });
 
-        console.log('State jobs data:', context.state.jobs);
-        console.log('Archived Jobs data: ', context.state.archivedJobs);
         context.getStageCounts();
-
-        console.log('Counts for stages:', context.state.stageCounts);
       }
     })
   }
@@ -110,21 +102,17 @@ export default class ArchiveJobsComponent extends React.Component {
         return job.stageId === stageNum;
       });
       this.setState({filtered: stageNum, boxClasses: boxClasses, filteredArchivedJobs: filteredArchivedJobs});
-      console.log('FILTER HAPPENED: ');
       this.render();
     } else {
       this.setState({filtered: null, boxClasses: boxClasses});
-      console.log('UNFILTER HAPPENED');
       this.render();
     }
   }
 
   sort(value) {
     var context = this;
-    // console.log("this.state.jobs", this.state.jobs[0][value], typeof this.state.jobs[0][value])
     if(this.state.filteredArchivedJobs.length && typeof this.state.filteredArchivedJobs[0][value] === 'string') {
-      console.log('#filtered: ', value)
-      console.log(this.state.filteredArchivedJobs.sort(function(a, b) {
+      this.state.filteredArchivedJobs.sort(function(a, b) {
         var A = a[value].toUpperCase();
         var B = b[value].toUpperCase();
 
@@ -137,11 +125,10 @@ export default class ArchiveJobsComponent extends React.Component {
            if( A > B) {return -1;}
            return 0;
          }
-      }))
+      })
     }
     if(typeof this.state.archivedJobs[0][value] === 'string') {
-      console.log('#nofilter')
-      console.log(this.state.archivedJobs.sort(function(a, b) {
+      this.state.archivedJobs.sort(function(a, b) {
         var A = a[value].toUpperCase();
         var B = b[value].toUpperCase();
 
@@ -154,19 +141,17 @@ export default class ArchiveJobsComponent extends React.Component {
            if( A > B) {return -1;}
            return 0;
          }
-      }))
+      })
     }
     if(this.state.filteredArchivedJobs.length && typeof this.state.filteredArchivedJobs[0][value] === 'number') {
-      console.log('#filtered', value)
-      console.log(this.state.filteredArchivedJobs.sort(function(a, b) {
+      this.state.filteredArchivedJobs.sort(function(a, b) {
         return a[value] - b[value];
-      }))
+      })
     }
     if(typeof this.state.archivedJobs[0][value] === 'number') {
-      console.log('#nofilter', value)
-      console.log(this.state.archivedJobs.sort(function(a, b) {
+      this.state.archivedJobs.sort(function(a, b) {
         return a[value] - b[value];
-      }))
+      })
     }
     this.setState({
       //filteredArchivedJobs: this.state.filteredArchivedJobs,

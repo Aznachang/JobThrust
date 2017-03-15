@@ -25,7 +25,6 @@ export default class JobOfferContainer extends React.Component {
 
   convertDate(date) {
     // 2017-02-28T11:30:00-08:00
-    console.log('Converting', date);
     var month = date.substring(5, 7);
     var day = date.substring(8, 10);
     var year = date.substring(0, 4);
@@ -70,14 +69,11 @@ export default class JobOfferContainer extends React.Component {
           return archivedOffer.active === false;
         });
 
-      console.log('Archived Job Offers: ', archivedJobOffers);
-
       var sortedArchivedJobOffers = archivedJobOffers.sort(function(a, b) {
         return b.id - a.id;
       });
 
       context.setState({archivedJobOffers: sortedArchivedJobOffers});
-      console.log('jobOffers: ', context.state.archivedJobOffers);
     });
   }
 
@@ -87,7 +83,6 @@ export default class JobOfferContainer extends React.Component {
 
     axios.get('/api/application/offers')
     .then(function(offers){
-      console.log('Getting All Job Offers: ', offers.data);
       var jobOffers = offers.data.filter(offer => {
         return offer.active === true;
       });

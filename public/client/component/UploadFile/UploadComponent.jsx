@@ -28,14 +28,12 @@ export default class UploadComponent extends React.Component {
       method: 'GET',
       url: '/api/upload',
       success: function(data) {
-        console.log('This is the uploaded data', data);
         var pdfFiles = [];
         var imagesFiles = [];
 
         if (data !== null) {
           data.forEach(function(file) {
             var lastChars = file.name.split('.')[1]
-            console.log('Ending url ', lastChars);
             if (lastChars === 'pdf') {
               pdfFiles.push(file);
             } else {

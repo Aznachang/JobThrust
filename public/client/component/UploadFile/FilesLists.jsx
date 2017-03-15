@@ -12,14 +12,11 @@ export default class FilesLists extends React.Component {
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.openModal = this.openModal.bind(this);
-    console.log('This is the images files', this.props)
     var context = this;
     $(function() {
       $(document).on('click', '.singleFileForImage', function() {
         context.openModal();
-        console.log('This is the url that was clicked', $(this)[0].classList)
         var url = $(this)[0].classList[1];
-        console.log('This is the url', url)
         var image = "<img src="+ url+' '+"class=singleFileForImage />";
         $('.innercontainer').append(image);
       })

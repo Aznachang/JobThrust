@@ -79,7 +79,6 @@ module.exports.createEvent = function(req, res) {
       res.sendStatus(401);
       return;
     } else {
-      console.log('Event created: %s', event.htmlLink);
       res.sendStatus(200);
     }
   });
@@ -95,8 +94,6 @@ module.exports.getThread = function(req, res) {
 
   if (req.body.email) {
 
-    console.log('Checking FROM threads');
-
     gmail.users.threads.list({
       userId: 'me',
       auth: module.exports.oauth2C,
@@ -109,8 +106,6 @@ module.exports.getThread = function(req, res) {
         var threadIds = pulledThreads.map(function(threadObj) {
           return threadObj.id;
         });
-
-        console.log('Checking for TO ONLY threads');
 
         gmail.users.threads.list({
           userId: 'me',
@@ -142,7 +137,6 @@ module.exports.getThread = function(req, res) {
                 return;
               }
 
-              console.log('Getting emails from thread:', threadIds[index]);
               gmail.users.threads.get({
                 userId: 'me',
                 auth: module.exports.oauth2C,
@@ -156,15 +150,7 @@ module.exports.getThread = function(req, res) {
 
                   var messageArray = [];
 
-                  console.log('messages!!!!', response.messages);
-
                   response.messages.forEach(function(message, i) {
-                    if (message.payload.headers.length === 12) {
-                      for (var i = 0; i < message.payload.headers.length; i++) {
-                        console.log('Header ' + i + ': ' + message.payload.headers[i].name, message.payload.headers[i].value );
-                      }
-                    }
-                    console.log(i, message.payload.headers.length);
 
                     // Edits body text location based on whether there's an attachment or not
                     var msgComponents = {
@@ -206,11 +192,8 @@ module.exports.getThread = function(req, res) {
                 return getThreadEmails(currentThread);
 
               });
-
-
             }     
           }
-          console.log('Running getThreadEmails!');
 
           if (pulledThreads.length > 0) {
             getThreadEmails(currentThread);

@@ -39,24 +39,18 @@ export default class InterviewReviews extends React.Component {
       $(document).on('click', '.helpfulPointsForInterview', function() {
         var secondContext = this;
         var id = $(this).parent()[0].children[1].classList[0];
-        console.log('This is parent', $(this).parent()[0].children);
         $.ajax({
             method: 'GET',
             url: '/api/buttonsInfoForInterview?name='+ id,
             contentType:'application/json',
             success: function(data) {
-              console.log('hers is a single data ', data);
               var existUser = false;
-              // console.log(data[0].length)
               for (var i = 0; i < data[0].userInfo.length; i++) {
-                // console.log('result ',data[0][i].context.props.userId === context.props.userId)
                 if (data[0].userInfo[i][context.props.userId] === context.props.userId) {
                   existUser = true;
                 }
               }
-              console.log('existUser should be true', existUser);
               if (existUser === false) {
-                console.log('I came to create a new click')
 
                 context.helpfulCheckpoint[context.props.userId] = context.props.userId;
                 // console.log('I am console logging the helpfulCheckpoint', context.helpfulCheckpoint)
@@ -100,31 +94,25 @@ export default class InterviewReviews extends React.Component {
       $(document).on('click', '.Editrate', function() {
         context.$element = $(this)[0].classList[0];
         var $stars = $(this)[0].classList[0];
-        console.log('star that was selected', $(this)[0].classList)
         if (Number($stars[$stars.length-1]) === 1 ) {
           context.eidtStarCount  = $stars[$stars.length-1];
-          console.log('11111')
           // $('.rateForEmployee').attr('content','\2605');
           $(this).remove($(this)[0].classList[0]);
 
         } else if (Number($stars[$stars.length-1]) === 2) {
-                    console.log('2222')
           context.eidtStarCount  = $stars[$stars.length-1];
 
           $(this).remove($(this)[0].classList[0]);
 
         } else if(Number($stars[$stars.length-1]) === 3) {
-                    console.log('33333')
           context.eidtStarCount  = $stars[$stars.length-1];
 
           $(this).remove($(this)[0].classList[0]);
         } else if (Number($stars[$stars.length-1]) === 4) {
-                    console.log('444444')
           context.eidtStarCount  = $stars[$stars.length-1];
 
           $(this).remove($(this)[0].classList[0]);
         } else if (Number($stars[$stars.length-1]) === 5) {
-                    console.log('555555')
           context.eidtStarCount  = $stars[$stars.length-1];
 
           $(this).remove($(this)[0].classList[0]);
@@ -139,7 +127,6 @@ export default class InterviewReviews extends React.Component {
       $(document).on('click', '.editReview', function() { 
         $ele = this;
         context.importantId = $(this).parent()[0].children[1].classList[0];
-        console.log('Those are the children of the edit', $(this).parent()[0].children)
         context.arrayOfinputs = [ 
           $(this).parent()[0].children[0], 
           $(this).parent()[0].children[1].innerText.split(':')[1],
@@ -152,13 +139,11 @@ export default class InterviewReviews extends React.Component {
       })
       $(document).on('submit', '#editInterivew', function(event) { 
         event.preventDefault();
-        console.log('Lets see true or false', context.dateChecker)
         if (!context.dateChecker) {
           alert('Please insert a vaild date i.e MM/DD/YYYY');
         } else {
           // context.dateChecker = true;
 //<div className={filed.id + ' review-item'}><strong>Job Interviewed For:</strong> {filed.companyComments[0].jobTitle}</div>
-console.log('This is the importantId', context.importantId)
         if (!context.state.title1) {
           var $liJobTitle = "<div class="+context.importantId+' '+'review-item'+ ">Job Interviewed For:"+ context.arrayOfinputs[1] +"</div>";
           context.setState({
@@ -229,7 +214,6 @@ console.log('This is the importantId', context.importantId)
               var $editStarElement = '<img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" /><img key={indx} class="roundstar" src="roundstar1.png" />';
             }
         }
-        console.log('this should be the value of the input', context.arrayOfinputs[5].value)
 
         var helpfulButton = '<input type="button" value='+context.arrayOfinputs[5].value.replace(/[' ']/g, '') +' '+'class="helpfulPointsForInterview"/>';
 
@@ -252,14 +236,12 @@ console.log('This is the importantId', context.importantId)
     axios.post('/api/updateMongoDB',dataToSend)
     .then(function (response) {
       context.props.retrieveDataFromDB()
-      console.log(response);
     })
     .catch(function (error) {
       console.log(error);
     });
   }
   openModal(text) {
-    console.log(text)
     if (text) {
       this.setState({modalIsOpen: true});
       $('.jobTitle').val(text[1])
@@ -270,10 +252,8 @@ console.log('This is the importantId', context.importantId)
       this.setState({modalIsOpen: true});
   }
   afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    // this.refs.subtitle.style.color = '#f00';
-    // this.refs.testingthis.style = 'color: orange; font-weight: bold;';
   }
+
   closeModal() {
     this.setState({
       modalIsOpen: false,
@@ -282,10 +262,8 @@ console.log('This is the importantId', context.importantId)
   handleChangeForModalDate1(event) {
 
     if (this.props.validateDate(event.target.value.replace(/[' ']/g, ''))) {
-      console.log('I came to the true regx function')
       this.dateChecker = true;
     } else {
-      console.log('I came to the false regx function')
       this.dateChecker = false;
     }
     this.setState({
