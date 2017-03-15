@@ -83,7 +83,7 @@ export default class SearchContainer extends React.Component {
   nextPage() {
     var currPage = this.state.currentPage;
     var next = currPage + 1;
-    if (currPage > 40) {
+    if (currPage < 40) {
       this.setState({currentPage: next}, function() {
         this.getJobs();
       });
