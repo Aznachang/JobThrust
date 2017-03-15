@@ -185,7 +185,7 @@ export default class SearchContainer extends React.Component {
             ) }
           </div>
           <div className='indeed-url'>
-            <a href={this.state.modalLink}>View this job on Indeed.</a>
+            <a target="_blank" href={this.state.modalLink}>View this job on Indeed.</a>
           </div>
 
         </Modal>
