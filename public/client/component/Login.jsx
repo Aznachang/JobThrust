@@ -8,8 +8,9 @@ export default class SignUp extends React.Component {
     return (
       <div className='screen-frame'>
         <div className="login-container">
-          <img src='../rocket.png' />
-          <p>WELCOME TO JOBTHRUST</p>
+          <p id="welcome">WELCOME TO JOBTHRUST</p>
+          <p><i>Making your job search process just a little bit easier.</i></p>
+          <br />
           <br />
           <p>LOGIN OR REGISTER WITH:</p>
           <br />

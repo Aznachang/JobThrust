@@ -1043,11 +1043,10 @@ select {
   /*background-image: url("http://hd-wall-papers.com/images/wallpapers/wallpaper-stars/wallpaper-stars-15.jpg");
   background-size: contain;
   color: white;*/
-  height: 100%;
-  width: 100%;
+  height: 90%;
+  width: 90%;
   margin: auto;
   position: absolute;
-  font-weight: bold;
   top: 0;
   bottom: 0;
   left: 0;
@@ -1056,15 +1055,21 @@ select {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border: 2px solid black;
+  background-color: rgba(0, 153, 255, 0.4);
 }
 
 .login-container p {
-  font-size: 1.5em;
+  font-size: 1.2em;
 }
 
 .login-container img {
   margin-bottom: 8px;
   height: 100px;
+}
+
+p#welcome {
+  font-size: 3em;
 }
 
 .button-container {
@@ -1081,6 +1086,7 @@ select {
   border-radius: 5px;
   font-size: 1.4em;
   color: white;
+  font-weight: bold;
 }
 
 .google-button:hover {
