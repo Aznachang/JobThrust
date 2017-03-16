@@ -255,7 +255,7 @@ export default class Application extends React.Component {
               <div className="app-tab notes-select" onClick={this.toggle.bind(null, 'notes')}>Notes</div>
               <div className="app-tab desc-select" onClick={this.toggle.bind(null, 'job-desc')}>Job Description</div>
               <div className="app-tab stage-select" onClick={this.toggle.bind(null, 'change-stage')}>Change Stage</div>
-              <div className="app-tab app-tab-last archives-select" onClick={this.toggle.bind(null, 'archives')}>Archives</div>
+              <div className="app-tab app-tab-last archives-select" onClick={this.toggle.bind(null, 'archives')}>Archive</div>
             </div>
 
             <div className={this.state.modalSections['contact']}>
@@ -273,7 +273,7 @@ export default class Application extends React.Component {
               <div className="add-event-help">Receive a calendar invite related to this job?  Add "APPID-{this.props.id}" to the invite description to be able to see it here.</div>
               <div className="btn-container cal-event-buttons">
                 <div className="app-btn cal-btn" onClick={this.toggleEventCreate}>📅 Create</div>
-                <div className="app-btn cal-btn" onClick={this.getEvents}>🗘 Refresh</div>
+                <div className="app-btn cal-btn" onClick={this.getEvents}>Refresh</div>
               </div>
               <EventForm appId={this.props.id} job={this.props.job} company={this.props.company} postEvent={this.postEvent} addingEvent={this.state.addingEvent}/>
               <EventList calendarItems={this.state.calendarItems} />
@@ -292,13 +292,17 @@ export default class Application extends React.Component {
             </div>
 
             <div className={this.state.modalSections['archives']}>
+                <div className='archive-job-header'>
                   <h3> Archive This Job </h3>
+                </div>
                 <form id="add-app-form" onSubmit={this.archiveOneJob}>
                   <b>Reason: </b>
                   <select id ='job-offer'>
-                    <option value="rejected">Lost Interest</option>
-                     <option value="cancelled">Cancelled</option>
-                    <option value="not interested">Rejected</option>
+                    <option value="lost interest">I Lost Interest</option>
+                    <option value="non-responsive">They Stopped Responding</option> 
+                    <option value="role filled">The Role Was Filled</option>
+                    <option value="rejected">I Was Rejected</option>
+                    <option value="unknown">Unknown</option>
                   </select>
                   <br/><br/>
                   <input type='submit' value='OK' />

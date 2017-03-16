@@ -176,7 +176,7 @@ export default class ArchiveJobsComponent extends React.Component {
       <div>
         <ArchivedStages boxClasses={this.state.boxClasses} filter={this.filter} filtered={this.state.filtered} stageCounts={this.state.stageCounts} stages={stages}/>
         <div className="add-app-manual">
-          <Link to={'/manage'}><div className="add-app-btn" id='archived-btn'>
+          <Link to={'/manage'}><div className="add-app-btn">
             VIEW ACTIVE OPPORTUNITIES
           </div></Link>
         </div>
