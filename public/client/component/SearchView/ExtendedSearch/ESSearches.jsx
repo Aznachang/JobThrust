@@ -29,6 +29,15 @@ export default class ESSearches extends React.Component {
   }
 
   render() {
+
+    var searchInstructions;
+
+    if (this.props.searches.length === 0) {
+      searchInstructions = <div className='ext-instructions'><p>It looks like you don't have any saved background searches yet.  To get started, click "Create New Search" above.  Fill in the fields, and the JobThrust background search will attempt to surface relevant openings for you.</p><p>It will notify you via e-mail when it's done, and you can find the saved results here!</p></div>;
+    } else {
+      searchInstructions = <div></div>;
+    }
+
     if (this.state.creating) {
       return (
         <div className='ext-searches-container'>
@@ -78,6 +87,7 @@ export default class ESSearches extends React.Component {
           <div className='add-ext-search'>
             <div className='add-app-btn' onClick={this.toggleCreate}>CREATE NEW SEARCH</div>
           </div>
+          {searchInstructions}
           <ul className='saved-searches'>
             {this.props.searches.map((search, i) =>
               <li className='search-result' key={i}>
