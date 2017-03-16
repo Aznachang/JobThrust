@@ -86,11 +86,18 @@ export default class ESContainer extends React.Component {
 
   addSearch(title, city, label) {
     var context = this;
+    var loc;
+
+    if (city.includes(',')) {
+      loc = city.split(',')[0];
+    } else {
+      loc = city;
+    }
 
     axios.get('/api/userdata').then(function(res) {
       axios.post('/api/extsearch/add', {
-        title: title,
-        city: city,
+        title: title.toLowerCase(),
+        city: loc.toLowerCase(),
         label: label,
         email: res.data.email,
       }).then(function(response) {

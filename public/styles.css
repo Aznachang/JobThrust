@@ -467,6 +467,16 @@ ul.recommendation {
   border-bottom: 2px solid grey;
 }
 
+.ext-instructions {
+  color: grey;
+  font-size: 0.9em;
+  margin-top: 8px;
+}
+
+.ext-instructions p {
+  margin: 5px 0;
+}
+
 .saved-searches, .ext-search-results, .no-results {
   margin-top: 10px;
 }
@@ -665,6 +675,7 @@ input.st-input {
   width: 65%;
   height: 90%;
   overflow: auto;
+  box-shadow: 1px 5px 9px grey;
 }
 
 .modal-content div.inner-container {
