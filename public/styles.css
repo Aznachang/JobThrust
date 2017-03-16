@@ -157,6 +157,14 @@ textarea {
   padding-bottom: 15px;
 }
 
+.archived-offer-empty {
+  background-color: #d9d9d9;
+}
+
+.archived-offer-empty:hover {
+  background-color: #bfbfbf;
+}
+
 .form-box {
   display: flex;
   flex-direction: row;

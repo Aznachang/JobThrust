@@ -35,7 +35,7 @@ export default class JobOfferList extends React.Component {
     // Show This Message - No Archived Job Offers
     if (deadOffers === 0) {
       oldOffers = <tr>
-        <td colSpan='6'><strong>No Record of Archived Job Offers Yet</strong></td>
+        <td className='archived-offer-empty' colSpan='6'><strong>No Archived Offers</strong></td>
       </tr>
     } else {
       oldOffers = <tr></tr>
