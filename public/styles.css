@@ -625,16 +625,16 @@ th.th-archive {
   text-align: center;
 }
 
-#archived-btn {
-  background-color: green;
-}
-
-#archived-btn:hover{
-  background-color: #006BB3;
+.archived-btn {
+  background-color: #808080;
 }
 
 .add-app-btn:hover {
   background-color: #006BB3;
+}
+
+.archived-btn:hover{
+  background-color: #595959;
 }
 
 input.add-small {
