@@ -641,6 +641,13 @@ input.add-small {
   padding: 3px 6px;
 }
 
+.archive-job-header {
+  text-align: center;
+  margin: 10px 0;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #d3d3d3;
+}
+
 /* ======== MANUAL APPLICATION ADD ======= */
 
 .add-app-container {
@@ -1078,6 +1085,7 @@ select {
 
 p#welcome {
   font-size: 3em;
+  font-weight: bold;
 }
 
 .button-container {

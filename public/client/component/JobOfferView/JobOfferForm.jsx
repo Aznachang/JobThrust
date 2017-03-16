@@ -158,8 +158,10 @@ export default class JobOfferForm extends React.Component {
             <form id="add-app-form" onSubmit={this.submitArchiveJob}>
               <b>Reason: </b>
               <select id ='archive-offer'>
-                <option value="rejected">Declined Offer</option>
-                <option value="not interested">Rescinded Offer</option>
+                <option value="accepted">I Accepted Offer</option>
+                <option value="declined offer">I Declined Offer</option>
+                <option value="rescinded">They Rescinded Offer</option>
+                <option value="unknown">Unknown</option>
               </select>
               <br/><br/>
               <input type='submit' value='OK' />
